@@ -4,15 +4,11 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.50727</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{454690D0-5B5E-49D4-B69C-996440435C88}</ProjectGuid>
+    <ProjectGuid>{0FD86E59-801B-458C-BC44-FF51B6D15F70}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>System.Windows.Forms.Vista</RootNamespace>
-    <AssemblyName>VistaControls</AssemblyName>
-    <SccProjectName>SAK</SccProjectName>
-    <SccLocalPath>SAK</SccLocalPath>
-    <SccAuxPath>SAK</SccAuxPath>
-    <SccProvider>SAK</SccProvider>
+    <RootNamespace>VistaControlsApp</RootNamespace>
+    <AssemblyName>VistaControlsApp</AssemblyName>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -40,36 +36,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Controls\CueBannerTextBox.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Controls\ShieldLink.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Controls\TreeViewEx.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="frmExample.cs">
+    <Compile Include="Main.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmExample.Designer.cs">
-      <DependentUpon>frmExample.cs</DependentUpon>
-    </Compile>
-    <Compile Include="frmTreeViewEx.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="frmTreeViewEx.Designer.cs">
-      <DependentUpon>frmTreeViewEx.cs</DependentUpon>
+    <Compile Include="Main.Designer.cs">
+      <DependentUpon>Main.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="frmExample.resx">
+    <EmbeddedResource Include="Main.resx">
       <SubType>Designer</SubType>
-      <DependentUpon>frmExample.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="frmTreeViewEx.resx">
-      <SubType>Designer</SubType>
-      <DependentUpon>frmTreeViewEx.cs</DependentUpon>
+      <DependentUpon>Main.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -90,9 +67,12 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="Controls\ShieldButton.cs">
-      <SubType>Component</SubType>
-    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\VistaControls\VistaControls.csproj">
+      <Project>{058F123E-D366-4023-94EF-E4AF8EC5D101}</Project>
+      <Name>VistaControls</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
