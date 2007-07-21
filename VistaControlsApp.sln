@@ -1,0 +1,38 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 9.00
+# Visual Studio 2005
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VistaControlsApp", "VistaControlsApp\VistaControlsApp.csproj", "{0FD86E59-801B-458C-BC44-FF51B6D15F70}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VistaControls", "VistaControls\VistaControls.csproj", "{058F123E-D366-4023-94EF-E4AF8EC5D101}"
+EndProject
+Global
+	GlobalSection(TeamFoundationVersionControl) = preSolution
+		SccNumberOfProjects = 3
+		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccTeamFoundationServer = https://tfs02.codeplex.com/
+		SccLocalPath0 = .
+		SccProjectUniqueName1 = VistaControls\\VistaControls.csproj
+		SccProjectName1 = VistaControls
+		SccLocalPath1 = VistaControls
+		SccProjectUniqueName2 = VistaControlsApp\\VistaControlsApp.csproj
+		SccProjectName2 = VistaControlsApp
+		SccLocalPath2 = VistaControlsApp
+	EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{0FD86E59-801B-458C-BC44-FF51B6D15F70}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0FD86E59-801B-458C-BC44-FF51B6D15F70}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0FD86E59-801B-458C-BC44-FF51B6D15F70}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0FD86E59-801B-458C-BC44-FF51B6D15F70}.Release|Any CPU.Build.0 = Release|Any CPU
+		{058F123E-D366-4023-94EF-E4AF8EC5D101}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{058F123E-D366-4023-94EF-E4AF8EC5D101}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{058F123E-D366-4023-94EF-E4AF8EC5D101}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{058F123E-D366-4023-94EF-E4AF8EC5D101}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
