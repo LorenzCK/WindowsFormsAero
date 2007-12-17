@@ -1,18 +1,45 @@
-﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="3.5">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>8.0.50727</ProductVersion>
+    <ProductVersion>9.0.21022</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{058F123E-D366-4023-94EF-E4AF8EC5D101}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>VistaControls</RootNamespace>
     <AssemblyName>VistaControls</AssemblyName>
-    <SccProjectName>SAK</SccProjectName>
-    <SccLocalPath>SAK</SccLocalPath>
-    <SccAuxPath>SAK</SccAuxPath>
-    <SccProvider>SAK</SccProvider>
+    <SccProjectName>
+    </SccProjectName>
+    <SccLocalPath>
+    </SccLocalPath>
+    <SccAuxPath>
+    </SccAuxPath>
+    <SccProvider>
+    </SccProvider>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <OldToolsVersion>2.0</OldToolsVersion>
+    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+    <StartupObject>
+    </StartupObject>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -22,6 +49,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -30,6 +58,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -48,20 +77,83 @@
     <Compile Include="CommandLink.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="DWM\DWMCompositionException.cs" />
+    <Compile Include="DWM\DWMManager.cs" />
+    <Compile Include="DWM\GlassHelper.cs" />
+    <Compile Include="DWM\Margins.cs" />
+    <Compile Include="DWM\NativeMethods.cs" />
+    <Compile Include="DWM\Thumbnail.cs" />
     <Compile Include="ListView.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Native\Bitmap.cs" />
+    <Compile Include="Native\GDI.cs" />
+    <Compile Include="Native\Messaging.cs" />
+    <Compile Include="Native\POINT.cs" />
+    <Compile Include="Native\RECT.cs" />
+    <Compile Include="Native\Windows.cs" />
+    <Compile Include="Native\WindowStyle.cs" />
+    <Compile Include="OSSupport.cs" />
     <Compile Include="Progressbar.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TaskDialog\CustomButton.cs" />
+    <Compile Include="TaskDialog\EventArgs.cs" />
+    <Compile Include="TaskDialog\Message.cs" />
+    <Compile Include="TaskDialog\NativeMethods.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="TaskDialog\Results.cs" />
+    <Compile Include="TaskDialog\TaskDialog.cs" />
+    <Compile Include="TaskDialog\TaskDialogButton.cs" />
+    <Compile Include="TaskDialog\TaskDialogIcon.cs" />
     <Compile Include="TextBox.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="ThemeText\NativeMethods.cs" />
+    <Compile Include="ThemeText\Options\BorderOption.cs" />
+    <Compile Include="ThemeText\Options\GlowOption.cs" />
+    <Compile Include="ThemeText\Options\IThemeTextOption.cs" />
+    <Compile Include="ThemeText\Options\OverlayOption.cs" />
+    <Compile Include="ThemeText\Options\ShadowOption.cs" />
+    <Compile Include="ThemeText\ThemedLabel.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="ThemeText\ThemedText.cs" />
+    <Compile Include="ThemeText\ThemedTextCreate.cs" />
     <Compile Include="TreeView.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="NativeMethods.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.2.0">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 2.0 %28x86%29</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.0">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.0 %28x86%29</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Windows.Installer.3.1">
+      <Visible>False</Visible>
+      <ProductName>Windows Installer 3.1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\ThemedLabel.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\ThemedLabel.bmp" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
