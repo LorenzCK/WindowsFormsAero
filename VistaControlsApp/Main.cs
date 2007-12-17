@@ -102,7 +102,7 @@ namespace VistaControlsApp {
         }
 
         private void tskDlgComplex(object sender, EventArgs e) {
-            TaskDialog dlg = new TaskDialog("This is the main instruction", "Comples Task Dialog");
+            TaskDialog dlg = new TaskDialog("This is the main instruction", "Complex Task Dialog");
             dlg.CommonIcon = TaskDialogIcon.SecurityShieldBlue;
             dlg.Content = "You may write long and informative messages, with <a href=\"http://www.google.com\">hyperlinks</a> and linebreaks.\nButtons can also be shaped as Command Link buttons instead of standard buttons. You may also use radio buttons or add a progress bar.";
             dlg.UseCommandLinks = true;
