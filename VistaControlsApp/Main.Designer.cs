@@ -304,7 +304,6 @@ namespace VistaControlsApp
 			this.themedLabel2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
 			this.themedLabel2.Cursor = System.Windows.Forms.Cursors.Default;
 			this.themedLabel2.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.themedLabel2.GlowSize = 9;
 			this.themedLabel2.Location = new System.Drawing.Point(45, 430);
 			this.themedLabel2.Name = "themedLabel2";
 			this.themedLabel2.Padding = new System.Windows.Forms.Padding(0, 0, 6, 6);

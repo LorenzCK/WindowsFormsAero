@@ -62,11 +62,12 @@ namespace VistaControls.DWM {
 			void form_MouseDown(object sender, MouseEventArgs e) {
 				if (e.Button == MouseButtons.Left) {
 					Form f = (Form)sender;
-					if (e.X <= _margins.Left ||
-					    e.X >= f.ClientSize.Width - _margins.Right ||
-					    e.Y <= _margins.Top ||
-					    e.Y >= f.ClientSize.Height - _margins.Bottom) {
-
+					if (_margins.IsMarginless || (
+							e.X <= _margins.Left ||
+							e.X >= f.ClientSize.Width - _margins.Right ||
+							e.Y <= _margins.Top ||
+							e.Y >= f.ClientSize.Height - _margins.Bottom)
+						) {
 						_tracking = true;
 						_lastPos = f.PointToScreen(e.Location);
 					}
@@ -88,6 +89,14 @@ namespace VistaControls.DWM {
 			HandleFormMovement tmpHandler = new HandleFormMovement(form, margins);
 		}
 
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <remarks>
+		/// Handler will be kept alive by the event references on the form.
+		/// As soon as the form is disposed, the handler will be disposed as well.
+		/// </remarks>
 		class HandleBackground {
 			Margins _margins;
 
@@ -116,6 +125,11 @@ namespace VistaControls.DWM {
 			}
 		}
 
+		/// <summary>
+		/// Adds a handler on the Form that automatically paints the glass background black
+		/// </summary>
+		/// <param name="form">The form that will be controlled.</param>
+		/// <param name="margins">Margins of the glass sheet.</param>
 		public static void HandleBackgroundPainting(Form form, Margins margins) {
 			HandleBackground tmpHandler = new HandleBackground(form, margins);
 		}

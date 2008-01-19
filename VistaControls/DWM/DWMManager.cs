@@ -17,13 +17,15 @@ using System.Runtime.InteropServices;
 
 namespace VistaControls.DWM
 {
+
+	/// <summary>Main DWM class, provides Thumbnail registration, glass sheet effect and blur behind.</summary>
     public static class DWMManager
     {
 
         #region Thumbnail registration and unregistration
 
         /// <summary>Registers a thumbnail to be drawn on a Windows Form.</summary>
-        /// <remarks>The thumbnail will not be drawn until you update the thumbnail's properties.</remarks>
+        /// <remarks>The thumbnail will not be drawn until you update the thumbnail's properties calling Update().</remarks>
         /// <param name="destination">The Windows Form instance on which to draw the thumbnail.</param>
         /// <param name="source">The handle (HWND) of the window that has to be drawn.</param>
         /// <returns>A Thumbnail instance, needed to unregister and to update properties.</returns>
@@ -32,7 +34,7 @@ namespace VistaControls.DWM
         }
 
         /// <summary>Registers a thumbnail to be drawn on a window.</summary>
-        /// <remarks>The thumbnail will not be drawn until you update the thumbnail's properties.</remarks>
+        /// <remarks>The thumbnail will not be drawn until you update the thumbnail's properties calling Update().</remarks>
         /// <param name="destination">The handle (HWND) of the window on which the thumbnail will be drawn.</param>
         /// <param name="source">The handle (HWND) of the window that has to be drawn.</param>
         /// <returns>A Thumbnail instance, needed to unregister and to update properties.</returns>
@@ -58,8 +60,8 @@ namespace VistaControls.DWM
 
 
         /// <summary>Unregisters the thumbnail handle.</summary>
-        /// <remarks>The handle is unvalid after the call and should not be used.</remarks>
-        /// <param name="handle">An open and valid handle to a registered thumbnail.</param>
+        /// <remarks>The handle is unvalid after the call and should not be used again.</remarks>
+        /// <param name="handle">A handle to a registered thumbnail.</param>
         public static void Unregister(Thumbnail handle) {
             if (handle != null && !handle.IsInvalid) {
                 handle.Close();
@@ -80,7 +82,13 @@ namespace VistaControls.DWM
             NativeMethods.DwmEnableBlurBehindWindow(hWnd, ref bb);
         }
 
-        /// <summary>Enable the Aero "Blur Behind" effect on a specific region. Background must be black.</summary>
+		/// <summary>Enable the Aero "Blur Behind" effect on the whole client area. Background must be black.</summary>
+		/// <param name="form"></param>
+		public static void EnableBlurBehind(Form form) {
+			EnableBlurBehind(form.Handle);
+		}
+
+        /// <summary>Enable the Aero "Blur Behind" effect on a specific region. Background of the region must be black.</summary>
         public static void EnableBlurBehind(IntPtr hWnd, IntPtr regionHandle) {
             NativeMethods.BlurBehind bb = new NativeMethods.BlurBehind();
             bb.dwFlags = NativeMethods.BlurBehindFlags.Enable | NativeMethods.BlurBehindFlags.BlurRegion;
@@ -90,6 +98,7 @@ namespace VistaControls.DWM
             NativeMethods.DwmEnableBlurBehindWindow(hWnd, ref bb);
         }
 
+		/// <summary>Disables the Aero "Blur Behind" effect.</summary>
         public static void DisableBlurBehind(IntPtr hWnd) {
             NativeMethods.BlurBehind bb = new NativeMethods.BlurBehind();
             bb.dwFlags = NativeMethods.BlurBehindFlags.Enable;

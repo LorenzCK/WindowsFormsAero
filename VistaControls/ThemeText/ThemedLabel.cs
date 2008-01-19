@@ -19,6 +19,9 @@ using System.Windows.Forms.VisualStyles;
 
 namespace VistaControls.ThemeText {
 
+	/// <summary>
+	/// A Label containing some text that will be drawn with glowing border on top of the Glass Sheet effect.
+	/// </summary>
 	[ToolboxBitmap(typeof(VistaControls.ThemeText.ThemedLabel), "VistaControls.Resources.ThemedLabel.png")]
 	public class ThemedLabel : Control {
 
@@ -87,8 +90,8 @@ namespace VistaControls.ThemeText {
 		}
 
 		protected override void OnResize(EventArgs e) {
-			UpdateText();
 			base.OnResize(e);
+			UpdateText();
 		}
 
 		#endregion
@@ -96,6 +99,8 @@ namespace VistaControls.ThemeText {
 		#region Glow properties
 
 		int _glowSize = 9;
+
+		/// <summary>Size of the glow effect around the text.</summary>
 		[Description("Size of the glow effect around the text."), Category("Appearance"), DefaultValue(9)]
 		public int GlowSize {
 			get { return _glowSize; }
@@ -106,6 +111,8 @@ namespace VistaControls.ThemeText {
 		}
 
 		bool _glowEnable = true;
+
+		/// <summary>Enables or disables the glow effect around the text.</summary>
 		[Description("Enables or disables the glow effect around the text."), Category("Appearance"), DefaultValue(true)]
 		public bool GlowEnabled {
 			get { return _glowEnable; }
@@ -120,6 +127,8 @@ namespace VistaControls.ThemeText {
 		#region Shadow properties
 
 		Options.ShadowOption.ShadowType _shadowType = Options.ShadowOption.ShadowType.Continuous;
+
+		/// <summary>Shadow type.</summary>
 		[Description("Shadow type."), Category("Appearance"), DefaultValue(Options.ShadowOption.ShadowType.Continuous)]
 		public Options.ShadowOption.ShadowType ShadowType {
 			get { return _shadowType; }
@@ -212,6 +221,8 @@ namespace VistaControls.ThemeText {
 		#region Text format properties
 
 		HorizontalAlignment _horizontal = HorizontalAlignment.Left;
+
+		/// <summary>Gets and sets the horizontal text alignment setting.</summary>
 		[Description("Horizontal text alignment."), Category("Appearance"), DefaultValue(typeof(HorizontalAlignment), "Left")]
 		public HorizontalAlignment TextAlign {
 			get { return _horizontal; }
@@ -222,6 +233,8 @@ namespace VistaControls.ThemeText {
 		}
 
 		VerticalAlignment _vertical = VerticalAlignment.Top;
+
+		/// <summary>Gets and sets the vertical text alignment setting.</summary>
 		[Description("Vertical text alignment."), Category("Appearance"), DefaultValue(typeof(VerticalAlignment), "Top")]
 		public VerticalAlignment TextAlignVertical {
 			get { return _vertical; }
@@ -232,6 +245,8 @@ namespace VistaControls.ThemeText {
 		}
 
 		bool _singleLine = true;
+
+		/// <summary>Gets and sets whether the text will be laid out on a single line or on multiple lines.</summary>
 		[Description("Single line text."), Category("Appearance"), DefaultValue(true)]
 		public bool SingleLine {
 			get { return _singleLine; }
@@ -242,6 +257,8 @@ namespace VistaControls.ThemeText {
 		}
 
 		bool _endEllipsis = false;
+
+		/// <summary>Gets and sets whether the text lines over the label's border should be trimmed with an ellipsis.</summary>
 		[Description("Removes the end of trimmed lines and replaces them with an ellipsis."), Category("Appearance"), DefaultValue(false)]
 		public bool EndEllipsis {
 			get { return _endEllipsis; }
@@ -252,6 +269,8 @@ namespace VistaControls.ThemeText {
 		}
 
 		bool _wordBreak = false;
+
+		/// <summary>Gets and sets whether the text should break only at the end of a word.</summary>
 		[Description("Break the text at the end of a word."), Category("Appearance"), DefaultValue(false)]
 		public bool WordBreak {
 			get { return _wordBreak; }
@@ -262,6 +281,8 @@ namespace VistaControls.ThemeText {
 		}
 
 		bool _wordEllipsis = false;
+
+		/// <summary>Gets and sets whether the text should be trimmed to the last word and an ellipse should be placed at the end of the line.</summary>
 		[Description("Trims the line to the nearest word and an ellipsis is placed at the end of a trimmed line."), Category("Appearance"), DefaultValue(false)]
 		public bool WordEllipsis {
 			get { return _wordBreak; }
@@ -372,6 +393,13 @@ namespace VistaControls.ThemeText {
 				ret |= TextFormatFlags.RightToLeft;
 
 			return ret;
+		}
+
+		protected override void OnInvalidated(InvalidateEventArgs e) {
+			base.OnInvalidated(e);
+
+			//Invalidate parent
+			this.Parent.Invalidate(this.ClientRectangle, false);
 		}
 
 		protected override void OnPaint(PaintEventArgs e) {
