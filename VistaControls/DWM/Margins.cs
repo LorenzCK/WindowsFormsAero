@@ -15,7 +15,7 @@ using System.Runtime.InteropServices;
 
 namespace VistaControls.DWM {
 
-    /// <summary>Native MARGINS struct.</summary>
+    /// <summary>Margins structure for the Glass Sheet effect.</summary>
     [StructLayout(LayoutKind.Sequential)]
     public struct Margins {
         public Margins(int left, int right, int top, int bottom) {
@@ -40,8 +40,8 @@ namespace VistaControls.DWM {
 		public bool IsMarginless {
 			get {
 				return (
-					Left == -1 && Right == -1 &&
-					Top == -1 && Bottom == -1
+					Left < 0 && Right < 0 &&
+					Top < 0 && Bottom < 0
 				);
 			}
 		}

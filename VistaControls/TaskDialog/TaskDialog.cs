@@ -275,7 +275,7 @@ namespace VistaControls.TaskDialog {
 
         #region Flag Properties
 
-        /// <summary>Enables or disables Hyperlinks in the content (in the form of <![CDATA[<A HREF="link">]]>).</summary>
+        /// <summary>Enables or disables Hyperlinks in the content (in the form of &lt;A HREF="link"&gt;).</summary>
         public bool EnableHyperlinks {
             get { return GetConfigFlag(NativeMethods.TaskDialogFlags.TDF_ENABLE_HYPERLINKS); }
             set { SetConfigFlag(NativeMethods.TaskDialogFlags.TDF_ENABLE_HYPERLINKS, value); }
