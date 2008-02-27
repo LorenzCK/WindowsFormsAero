@@ -175,5 +175,26 @@ namespace VistaControlsApp {
 
 		#endregion
 
+		#region Split button
+
+		private void Split_click(object sender, EventArgs e) {
+			progressBar1.Value += 10;
+		}
+
+		private void SplitMenu_increment(object sender, EventArgs e) {
+			progressBar1.Value += 10;
+		}
+
+		private void SplitMenu_decrease(object sender, EventArgs e) {
+			progressBar1.Value -= 10;
+		}
+
+		private void Split_opening(object sender, VistaControls.SplitButton.SplitMenuEventArgs e) {
+			contextMenuStrip1.Items[0].Enabled = (progressBar1.Value < 100);
+			contextMenuStrip1.Items[1].Enabled = (progressBar1.Value > 0);
+		}
+
+		#endregion
+
 	}
 }

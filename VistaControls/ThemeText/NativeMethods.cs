@@ -19,7 +19,7 @@ namespace VistaControls.ThemeText {
 
 		#region DWM Text drawing
 
-		[DllImport("UxTheme.dll", CharSet = CharSet.Unicode, SetLastError = true)]
+		[DllImport("uxtheme.dll", CharSet = CharSet.Unicode, SetLastError = true)]
 		public static extern int DrawThemeTextEx(IntPtr hTheme, IntPtr hdc, int iPartId, int iStateId, string text, int iCharCount, int dwFlags, ref Native.RECT pRect, ref DTTOPTS pOptions);
 
 		[StructLayout(LayoutKind.Sequential)]

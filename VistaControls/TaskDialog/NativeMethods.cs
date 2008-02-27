@@ -24,8 +24,8 @@ namespace VistaControls.TaskDialog {
             int dwCommonButtons, IntPtr pszIcon, out int pnButton);
 
         /// <summary>Indirect Task Dialog call. Allows complex dialogs with interaction logic (via callback).</summary>
-        [DllImport("ComCtl32", CharSet = CharSet.Unicode, PreserveSig = false)]
-        internal static extern IntPtr TaskDialogIndirect(TaskDialogConfig pTaskConfig,
+        [DllImport("comctl32.dll", CharSet = CharSet.Unicode, PreserveSig=false)]
+        public static extern IntPtr TaskDialogIndirect(ref TaskDialogConfig pTaskConfig,
             out int pnButton, out int pnRadioButton, out bool pfVerificationFlagChecked);
 
         internal delegate IntPtr TaskDialogCallback(IntPtr hwnd, uint msg, UIntPtr wParam, IntPtr lParam, IntPtr refData);

@@ -717,7 +717,7 @@ namespace VistaControls.TaskDialog {
 				PreConfig(owner);
 
 				//Call native method
-				if(NativeMethods.TaskDialogIndirect(config, out ret, out selRadio, out setVerification) != IntPtr.Zero)
+				if (NativeMethods.TaskDialogIndirect(ref config, out ret, out selRadio, out setVerification) != IntPtr.Zero)
 					throw new Exception("Native TaskDialogIndirect call failed.");
 			}
 			catch (Exception ex) {

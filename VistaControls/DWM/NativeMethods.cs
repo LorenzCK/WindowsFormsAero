@@ -12,6 +12,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Runtime.InteropServices;
+using System.Drawing;
 
 namespace VistaControls.DWM
 {
@@ -42,6 +43,17 @@ namespace VistaControls.DWM
             public bool fSourceClientAreaOnly;
         }
 
+		[StructLayout(LayoutKind.Sequential)]
+		public struct DwmSize
+		{
+			public int Width;
+			public int Height;
+
+			public Size ToSize(){
+				return new Size(Width, Height);
+			}
+		}
+
 
 
         [DllImport("dwmapi.dll")]
@@ -55,6 +67,9 @@ namespace VistaControls.DWM
 
         [DllImport("dwmapi.dll")]
         public static extern int DwmIsCompositionEnabled([MarshalAs(UnmanagedType.Bool)] out bool pfEnabled);
+
+		[DllImport("dwmapi.dll")]
+		public static extern int DwmQueryThumbnailSourceSize(Thumbnail hThumbnail, out DwmSize pSize);
 
         #endregion
 
