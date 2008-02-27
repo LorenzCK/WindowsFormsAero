@@ -30,10 +30,16 @@ namespace VistaControls.Native {
 			get {
 				return Right - Left;
 			}
+			set {
+				Right = Left + value;
+			}
 		}
 		public int Height {
 			get {
 				return Bottom - Top;
+			}
+			set {
+				Bottom = Top + value;
 			}
 		}
 

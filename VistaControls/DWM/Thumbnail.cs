@@ -12,6 +12,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Drawing;
+using System.Security.Permissions;
 
 namespace VistaControls.DWM
 {
@@ -26,13 +27,13 @@ namespace VistaControls.DWM
 
         /// <summary>Returns true if the handle is valid, false if the handle has been closed or hasn't been initialized.</summary>
         public override bool IsInvalid {
-            [System.Security.Permissions.SecurityPermission(System.Security.Permissions.SecurityAction.LinkDemand, UnmanagedCode = true)]
+            [SecurityPermission(SecurityAction.LinkDemand, UnmanagedCode = true)]
             get {
                 return (IsClosed || handle == IntPtr.Zero);
             }
         }
 
-        [System.Security.Permissions.SecurityPermission(System.Security.Permissions.SecurityAction.LinkDemand, UnmanagedCode = true)]
+        [SecurityPermission(SecurityAction.LinkDemand, UnmanagedCode = true)]
         protected override bool ReleaseHandle() {
             //Unregister the thumbnail
             return (NativeMethods.DwmUnregisterThumbnail(handle) == 0);
@@ -107,6 +108,17 @@ namespace VistaControls.DWM
                     throw new DWMCompositionException("Unable to update thumbnail properties.");
             }
         }
+
+		/// <summary>Gets the thumbnail's original size.</summary>
+		public Size SourceSize {
+			get {
+				NativeMethods.DwmSize size;
+				if (NativeMethods.DwmQueryThumbnailSourceSize(this, out size) != 0)
+					throw new DWMCompositionException("Unable to query original thumbnail size.");
+
+				return size.ToSize();
+			}
+		}
 
         #endregion
 

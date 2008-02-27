@@ -137,6 +137,10 @@ namespace VistaControlsApp
 			this.button5 = new System.Windows.Forms.Button();
 			this.button4 = new System.Windows.Forms.Button();
 			this.button3 = new System.Windows.Forms.Button();
+			this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
+			this.element1ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.element2ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.splitButton1 = new VistaControls.SplitButton();
 			this.themedLabel2 = new VistaControls.ThemeText.ThemedLabel();
 			this.themedLabel1 = new VistaControls.ThemeText.ThemedLabel();
 			this.treeView1 = new VistaControls.TreeView();
@@ -153,6 +157,7 @@ namespace VistaControlsApp
 			this.button1 = new VistaControls.Button();
 			this.groupBox1.SuspendLayout();
 			this.groupBox2.SuspendLayout();
+			this.contextMenuStrip1.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// groupBox1
@@ -298,6 +303,42 @@ namespace VistaControlsApp
 			this.button3.Text = "SecurityError";
 			this.button3.UseVisualStyleBackColor = true;
 			this.button3.Click += new System.EventHandler(this.tskDlg1Click);
+			// 
+			// contextMenuStrip1
+			// 
+			this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.element1ToolStripMenuItem,
+            this.element2ToolStripMenuItem});
+			this.contextMenuStrip1.Name = "contextMenuStrip1";
+			this.contextMenuStrip1.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
+			this.contextMenuStrip1.Size = new System.Drawing.Size(122, 48);
+			// 
+			// element1ToolStripMenuItem
+			// 
+			this.element1ToolStripMenuItem.Name = "element1ToolStripMenuItem";
+			this.element1ToolStripMenuItem.Size = new System.Drawing.Size(121, 22);
+			this.element1ToolStripMenuItem.Text = "Increase";
+			this.element1ToolStripMenuItem.Click += new System.EventHandler(this.SplitMenu_increment);
+			// 
+			// element2ToolStripMenuItem
+			// 
+			this.element2ToolStripMenuItem.Name = "element2ToolStripMenuItem";
+			this.element2ToolStripMenuItem.Size = new System.Drawing.Size(121, 22);
+			this.element2ToolStripMenuItem.Text = "Decrease";
+			this.element2ToolStripMenuItem.Click += new System.EventHandler(this.SplitMenu_decrease);
+			// 
+			// splitButton1
+			// 
+			this.splitButton1.FlatStyle = System.Windows.Forms.FlatStyle.System;
+			this.splitButton1.Location = new System.Drawing.Point(233, 234);
+			this.splitButton1.Name = "splitButton1";
+			this.splitButton1.Size = new System.Drawing.Size(121, 23);
+			this.splitButton1.SplitMenu = this.contextMenuStrip1;
+			this.splitButton1.TabIndex = 27;
+			this.splitButton1.Text = "Increase";
+			this.splitButton1.UseVisualStyleBackColor = true;
+			this.splitButton1.SplitMenuOpening += new System.EventHandler<VistaControls.SplitButton.SplitMenuEventArgs>(this.Split_opening);
+			this.splitButton1.Click += new System.EventHandler(this.Split_click);
 			// 
 			// themedLabel2
 			// 
@@ -587,6 +628,7 @@ namespace VistaControlsApp
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(682, 453);
+			this.Controls.Add(this.splitButton1);
 			this.Controls.Add(this.themedLabel2);
 			this.Controls.Add(this.themedLabel1);
 			this.Controls.Add(this.groupBox2);
@@ -607,6 +649,7 @@ namespace VistaControlsApp
 			this.groupBox1.ResumeLayout(false);
 			this.groupBox1.PerformLayout();
 			this.groupBox2.ResumeLayout(false);
+			this.contextMenuStrip1.ResumeLayout(false);
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -641,5 +684,9 @@ namespace VistaControlsApp
 		private System.Windows.Forms.Button button3;
 		private VistaControls.ThemeText.ThemedLabel themedLabel1;
 		private VistaControls.ThemeText.ThemedLabel themedLabel2;
+		private VistaControls.SplitButton splitButton1;
+		private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
+		private System.Windows.Forms.ToolStripMenuItem element1ToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem element2ToolStripMenuItem;
     }
 }

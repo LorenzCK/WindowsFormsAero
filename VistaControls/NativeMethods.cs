@@ -24,6 +24,8 @@ namespace VistaControls
         public static extern int GetWindowLong(IntPtr hWnd, int nIndex);
         [DllImport("uxtheme.dll", CharSet = CharSet.Unicode)]
         public extern static int SetWindowTheme(IntPtr hWnd, string pszSubAppName, string pszSubIdList);
+		[DllImport("user32.dll", CharSet = CharSet.Auto)]
+		public static extern IntPtr SendMessage(IntPtr hWnd, int msg, int wParam, ref BUTTON_SPLITINFO info);
         
         //Button styles
         public const int BS_COMMANDLINK = 0x0000000E;
@@ -32,6 +34,9 @@ namespace VistaControls
         public const int BCM_SETNOTE = 0x00001609;
         public const int BCM_SETSHIELD = 0x0000160C;
         public const int BM_SETIMAGE = 0x00F7;
+		public const int BCM_SETSPLITINFO = 0x1600 + 0x0007;
+
+		public const uint BCN_DROPDOWN = 4294966046 + 0x0002;	//(0U - 1250U)
 
         public const int ECM_FIRST = 0x1500;
         public const int EM_SETCUEBANNER = ECM_FIRST + 1;
@@ -295,5 +300,48 @@ namespace VistaControls
 
         public const int WM_USER = 0x400;
         public const int WM_APP = 0x8000;
+
+		//SplitInfo structures
+		[StructLayout(LayoutKind.Sequential)]
+		public struct BUTTON_SPLITINFO {
+			public SplitInfoMask Mask;
+			public IntPtr ImageList;
+			public SplitInfoStyle SplitStyle;
+			public SIZE Size;
+		}
+
+		public enum SplitInfoMask : uint {
+			Glyph = 0x0001,
+			Image = 0x0002,
+			Style = 0x0004,
+			Size = 0x0008
+		}
+
+		public enum SplitInfoStyle : uint {
+			NoSplit = 0x0001,
+			Stretch = 0x0002,
+			AlignLeft = 0x0004,
+			Image = 0x0008
+		}
+
+		[StructLayout(LayoutKind.Sequential)]
+		public struct SIZE {
+			long Width;
+			long Height;
+		}
+
+		//Split button notification
+		[StructLayout(LayoutKind.Sequential)]
+		public struct NMHDR {
+			public IntPtr HwndFrom;
+			public IntPtr IdFrom;
+			public uint Code;
+		}
+
+		[StructLayout(LayoutKind.Sequential)]
+		public struct NMBCDROPDOWN {
+			public NMHDR NMHDR;
+			public Native.RECT DropDownArea;
+		}
     }
 }
