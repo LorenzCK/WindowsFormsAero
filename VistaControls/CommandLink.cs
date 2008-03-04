@@ -119,8 +119,9 @@ namespace VistaControls
             NativeMethods.SendMessage(this.Handle, NativeMethods.BCM_SETSHIELD, IntPtr.Zero, new IntPtr(showshield_ ? 1 : 0));
         }
 
-        [Description("Gets or sets the note that is displayed on a button control."), Category("Appearance"), DefaultValue("")]
         private string note_ = string.Empty;
+
+		[Description("Gets or sets the note that is displayed on a button control."), Category("Appearance"), DefaultValue("")]
         public string Note
         {
             get

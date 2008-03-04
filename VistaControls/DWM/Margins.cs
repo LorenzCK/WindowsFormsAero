@@ -12,6 +12,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Runtime.InteropServices;
+using System.ComponentModel;
 
 namespace VistaControls.DWM {
 
@@ -19,29 +20,43 @@ namespace VistaControls.DWM {
     [StructLayout(LayoutKind.Sequential)]
     public struct Margins {
         public Margins(int left, int right, int top, int bottom) {
-            Left = left;
-            Right = right;
-            Top = top;
-            Bottom = bottom;
+            _left = left;
+            _right = right;
+            _top = top;
+            _bottom = bottom;
         }
 
         public Margins(int allMargins) {
-            Left = allMargins;
-            Right = allMargins;
-            Top = allMargins;
-            Bottom = allMargins;
+            _left = allMargins;
+            _right = allMargins;
+            _top = allMargins;
+            _bottom = allMargins;
         }
 
-        public int Left;
-        public int Right;
-        public int Top;
-        public int Bottom;
+        private int _left;
+		private int _right;
+		private int _top;
+		private int _bottom;
+
+		public int Left { get { return _left; } set { _left = value; } }
+		public int Right { get { return _right; } set { _right = value; } }
+		public int Top { get { return _top; } set { _top = value; } }
+		public int Bottom { get { return _bottom; } set { _bottom = value; } }
 
 		public bool IsMarginless {
 			get {
 				return (
-					Left < 0 && Right < 0 &&
-					Top < 0 && Bottom < 0
+					_left < 0 && _right < 0 &&
+					_top < 0 && _bottom < 0
+				);
+			}
+		}
+
+		public bool IsNull {
+			get {
+				return (
+					_left == 0 && _right == 0 &&
+					_top == 0 && _bottom == 0
 				);
 			}
 		}

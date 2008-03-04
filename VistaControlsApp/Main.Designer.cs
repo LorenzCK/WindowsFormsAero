@@ -128,8 +128,12 @@ namespace VistaControlsApp
 			this.label3 = new System.Windows.Forms.Label();
 			this.label2 = new System.Windows.Forms.Label();
 			this.label1 = new System.Windows.Forms.Label();
+			this.progressBar1 = new VistaControls.ProgressBar();
+			this.progressBar2 = new VistaControls.ProgressBar();
+			this.progressBar3 = new VistaControls.ProgressBar();
 			this.imageList1 = new System.Windows.Forms.ImageList(this.components);
 			this.groupBox2 = new System.Windows.Forms.GroupBox();
+			this.button2 = new System.Windows.Forms.Button();
 			this.button9 = new System.Windows.Forms.Button();
 			this.button8 = new System.Windows.Forms.Button();
 			this.button7 = new System.Windows.Forms.Button();
@@ -144,9 +148,6 @@ namespace VistaControlsApp
 			this.themedLabel2 = new VistaControls.ThemeText.ThemedLabel();
 			this.themedLabel1 = new VistaControls.ThemeText.ThemedLabel();
 			this.treeView1 = new VistaControls.TreeView();
-			this.progressBar1 = new VistaControls.ProgressBar();
-			this.progressBar2 = new VistaControls.ProgressBar();
-			this.progressBar3 = new VistaControls.ProgressBar();
 			this.comboBox2 = new VistaControls.ComboBox();
 			this.listView2 = new VistaControls.ListView();
 			this.columnHeader1 = new System.Windows.Forms.ColumnHeader();
@@ -202,6 +203,35 @@ namespace VistaControlsApp
 			this.label1.TabIndex = 8;
 			this.label1.Text = "Normal:";
 			// 
+			// progressBar1
+			// 
+			this.progressBar1.Location = new System.Drawing.Point(54, 20);
+			this.progressBar1.Margin = new System.Windows.Forms.Padding(2);
+			this.progressBar1.Name = "progressBar1";
+			this.progressBar1.Size = new System.Drawing.Size(349, 19);
+			this.progressBar1.TabIndex = 5;
+			this.progressBar1.Value = 50;
+			// 
+			// progressBar2
+			// 
+			this.progressBar2.Location = new System.Drawing.Point(54, 43);
+			this.progressBar2.Margin = new System.Windows.Forms.Padding(2);
+			this.progressBar2.Name = "progressBar2";
+			this.progressBar2.ProgressState = VistaControls.ProgressBar.States.Error;
+			this.progressBar2.Size = new System.Drawing.Size(349, 19);
+			this.progressBar2.TabIndex = 6;
+			this.progressBar2.Value = 50;
+			// 
+			// progressBar3
+			// 
+			this.progressBar3.Location = new System.Drawing.Point(54, 66);
+			this.progressBar3.Margin = new System.Windows.Forms.Padding(2);
+			this.progressBar3.Name = "progressBar3";
+			this.progressBar3.ProgressState = VistaControls.ProgressBar.States.Paused;
+			this.progressBar3.Size = new System.Drawing.Size(349, 19);
+			this.progressBar3.TabIndex = 7;
+			this.progressBar3.Value = 50;
+			// 
 			// imageList1
 			// 
 			this.imageList1.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageList1.ImageStream")));
@@ -220,6 +250,7 @@ namespace VistaControlsApp
 			// 
 			// groupBox2
 			// 
+			this.groupBox2.Controls.Add(this.button2);
 			this.groupBox2.Controls.Add(this.button9);
 			this.groupBox2.Controls.Add(this.button8);
 			this.groupBox2.Controls.Add(this.button7);
@@ -233,6 +264,16 @@ namespace VistaControlsApp
 			this.groupBox2.TabIndex = 24;
 			this.groupBox2.TabStop = false;
 			this.groupBox2.Text = "Task Dialog";
+			// 
+			// button2
+			// 
+			this.button2.Location = new System.Drawing.Point(18, 20);
+			this.button2.Name = "button2";
+			this.button2.Size = new System.Drawing.Size(68, 67);
+			this.button2.TabIndex = 39;
+			this.button2.Text = "Marquee Progress";
+			this.button2.UseVisualStyleBackColor = true;
+			this.button2.Click += new System.EventHandler(this.tskDlgMarquee);
 			// 
 			// button9
 			// 
@@ -498,35 +539,6 @@ namespace VistaControlsApp
 			this.treeView1.Size = new System.Drawing.Size(112, 146);
 			this.treeView1.TabIndex = 23;
 			// 
-			// progressBar1
-			// 
-			this.progressBar1.Location = new System.Drawing.Point(54, 20);
-			this.progressBar1.Margin = new System.Windows.Forms.Padding(2);
-			this.progressBar1.Name = "progressBar1";
-			this.progressBar1.Size = new System.Drawing.Size(349, 19);
-			this.progressBar1.TabIndex = 5;
-			this.progressBar1.Value = 50;
-			// 
-			// progressBar2
-			// 
-			this.progressBar2.Location = new System.Drawing.Point(54, 43);
-			this.progressBar2.Margin = new System.Windows.Forms.Padding(2);
-			this.progressBar2.Name = "progressBar2";
-			this.progressBar2.ProgressState = VistaControls.ProgressBar.States.Error;
-			this.progressBar2.Size = new System.Drawing.Size(349, 19);
-			this.progressBar2.TabIndex = 6;
-			this.progressBar2.Value = 50;
-			// 
-			// progressBar3
-			// 
-			this.progressBar3.Location = new System.Drawing.Point(54, 66);
-			this.progressBar3.Margin = new System.Windows.Forms.Padding(2);
-			this.progressBar3.Name = "progressBar3";
-			this.progressBar3.ProgressState = VistaControls.ProgressBar.States.Paused;
-			this.progressBar3.Size = new System.Drawing.Size(349, 19);
-			this.progressBar3.TabIndex = 7;
-			this.progressBar3.Value = 50;
-			// 
 			// comboBox2
 			// 
 			this.comboBox2.CueBannerText = "Select an item";
@@ -688,5 +700,6 @@ namespace VistaControlsApp
 		private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
 		private System.Windows.Forms.ToolStripMenuItem element1ToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem element2ToolStripMenuItem;
+		private System.Windows.Forms.Button button2;
     }
 }

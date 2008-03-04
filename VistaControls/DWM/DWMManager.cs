@@ -40,22 +40,22 @@ namespace VistaControls.DWM
         /// <returns>A Thumbnail instance, needed to unregister and to update properties.</returns>
         public static Thumbnail Register(IntPtr destination, IntPtr source) {
             if (!OSSupport.IsVistaOrBetter)
-                throw new DWMCompositionException("Desktop composition is not supported by this Operating System.");
+                throw new DWMCompositionException(Resources.ExceptionMessages.DWMOsNotSupported);
 
             if (!OSSupport.IsCompositionEnabled)
-                throw new DWMCompositionException("Desktop composition is currently not enabled.");
+                throw new DWMCompositionException(Resources.ExceptionMessages.DWMNotEnabled);
 
             if (destination == source)
-                throw new DWMCompositionException("Source and destination windows cannot match.");
+                throw new DWMCompositionException(Resources.ExceptionMessages.DWMWindowMatch);
 
             Thumbnail ret = new Thumbnail();
 
-            if (NativeMethods.DwmRegisterThumbnail(destination, source, out ret) == 0) {
-                return ret;
-            }
-            else {
-                throw new DWMCompositionException("Failed to register the thumbnail.");
-            }
+			if (NativeMethods.DwmRegisterThumbnail(destination, source, out ret) == 0) {
+				return ret;
+			}
+			else {
+				throw new DWMCompositionException(String.Format(Resources.ExceptionMessages.NativeCallFailure, "DwmRegisterThumbnail"));
+			}
         }
 
 
@@ -143,7 +143,7 @@ namespace VistaControls.DWM
 
         private static void InternalGlassFrame(IntPtr hWnd, Margins margins) {
             if (NativeMethods.DwmExtendFrameIntoClientArea(hWnd, ref margins) != 0)
-                throw new DWMCompositionException("Unable to set glass frame.");
+                throw new DWMCompositionException(String.Format(Resources.ExceptionMessages.NativeCallFailure, "DwmExtendFrameIntoClientArea"));
         }
 
         #endregion

@@ -47,6 +47,13 @@ namespace VistaControls.TaskDialog {
             lParam = (l) ? 1 : 0;
         }
 
+		/// <summary>Simple bool, int message.</summary>
+		public Message(NativeMethods.TaskDialogMessages msg, bool w, int l) {
+			MessageType = msg;
+			wParam = (w) ? 1 : 0;
+			lParam = l;
+		}
+
         /// <summary>Simple int, long (hi word and lo word) message.</summary>
         public Message(NativeMethods.TaskDialogMessages msg, int w, int l_hi, int l_lo) {
             MessageType = msg;
