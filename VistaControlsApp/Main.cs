@@ -11,7 +11,7 @@ using System.Drawing.Drawing2D;
 using System.Diagnostics;
 
 namespace VistaControlsApp {
-    public partial class Main : Form {
+    public partial class Main : VistaControls.DWM.Helpers.GlassForm {
 
 		Timer _timer;
 
@@ -25,10 +25,7 @@ namespace VistaControlsApp {
 			base.OnShown(e);
 
 			//Initialize glass sheet
-			VistaControls.DWM.Margins m = new VistaControls.DWM.Margins(0, 0, 58, 28);
-			VistaControls.DWM.DWMManager.EnableGlassFrame(this, m);
-			VistaControls.DWM.GlassHelper.HandleFormMovementOnGlass(this, m);
-			VistaControls.DWM.GlassHelper.HandleBackgroundPainting(this, m);
+			GlassMargins = new VistaControls.DWM.Margins(0, 0, 58, 28);
 
 			//Init timer for animated footer
 			_timer = new Timer();
@@ -86,11 +83,11 @@ namespace VistaControlsApp {
         }
 
         private void tskDlg3Click(object sender, EventArgs e) {
-            TaskDialog.Show("Stop", "Error", "Some error has occurred. Sorry.", TaskDialogButton.OK, TaskDialogIcon.Stop);
+            TaskDialog.Show("Stop", "Error", "An error has occurred.", TaskDialogButton.OK, TaskDialogIcon.Stop);
         }
 
         private void tskDlg4Click(object sender, EventArgs e) {
-            TaskDialog.Show("Warning", "Warning", "I must warn you...", TaskDialogButton.OK, TaskDialogIcon.Warning);
+            TaskDialog.Show("Warning", "Warning", "I must warn you about something.", TaskDialogButton.OK, TaskDialogIcon.Warning);
         }
 
         private void tskDlg5Click(object sender, EventArgs e) {
@@ -100,6 +97,13 @@ namespace VistaControlsApp {
         private void tskDlg6Click(object sender, EventArgs e) {
             TaskDialog.Show("UAC Shield", "UAC Shield", "You need Administrator privilegies.", TaskDialogButton.OK, TaskDialogIcon.SecurityShield);
         }
+
+		private void tskDlgMarquee(object sender, EventArgs e) {
+			TaskDialog dlg = new TaskDialog("This dialog displays a progress bar", "Marquee Progress Bar", "The progress bar below is in 'marquee' mode, that is it will not show the exact percentage of the work done, but it will show that some work is being done.", TaskDialogButton.Close);
+			dlg.SetMarqueeProgressBar(true, 30);
+
+			dlg.Show(this);
+		}
 
         private void tskDlgComplex(object sender, EventArgs e) {
             TaskDialog dlg = new TaskDialog("This is the main instruction", "Complex Task Dialog");

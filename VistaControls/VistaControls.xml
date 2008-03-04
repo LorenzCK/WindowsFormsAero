@@ -11,6 +11,11 @@
             <summary>Provides data for the clicking of split buttons and the opening
             of context menus.</summary>
         </member>
+        <member name="P:VistaControls.SplitButton.SplitMenuEventArgs.DrawArea">
+            <summary>Represents the bounding box of the clicked button.</summary>
+            <remarks>A menu should be opened, with top-left coordinates in the left-bottom point of
+            the rectangle and with width equal (or greater) than the width of the rectangle.</remarks>
+        </member>
         <member name="T:VistaControls.DWM.Margins">
             <summary>Margins structure for the Glass Sheet effect.</summary>
         </member>
@@ -85,6 +90,15 @@
             <param name="buttonId">Id of the button.</param>
             <param name="requiresElevation">Sets whether to display a Shield icon or not.</param>
         </member>
+        <member name="M:VistaControls.TaskDialog.TaskDialog.SetMarqueeProgressBar(System.Boolean)">
+            <summary>Sets whether the dialog's progress bar should be in standard or in marquee mode.</summary>
+            <param name="enabled">True if the progress bar should be displayed in marquee mode (no explicit progress).</param>
+        </member>
+        <member name="M:VistaControls.TaskDialog.TaskDialog.SetMarqueeProgressBar(System.Boolean,System.Int32)">
+            <summary>Sets whether the dialog's progress bar should be in standard or in marquee mode and sets its marquee speed.</summary>
+            <param name="enabled">True if the progress bar should be displayed in marquee mode (no explicit progress).</param>
+            <param name="speed">Speed of the progress bar in marquee mode.</param>
+        </member>
         <member name="M:VistaControls.TaskDialog.TaskDialog.CommonCallbackProc(System.IntPtr,System.UInt32,System.UIntPtr,System.IntPtr,System.IntPtr)">
             <summary>Common native callback for Task Dialogs. Will route events to the user event handler.</summary>
             <param name="refData">TODO: Currently unused, would need complex marshaling of data.</param>
@@ -97,11 +111,15 @@
             <summary>Frees the unmanages memory allocated by PreConfig().</summary>
         </member>
         <member name="M:VistaControls.TaskDialog.TaskDialog.Show">
-            <summary>Displays the task dialog as a modeless dialog.</summary>
+            <summary>Displays the task dialog without an explicit parent.</summary>
         </member>
         <member name="M:VistaControls.TaskDialog.TaskDialog.Show(System.IntPtr)">
-            <summary>Displays the task dialog as a modal dialog.</summary>
-            <param name="owner">Handle to the parent window of the task dialog.</param>
+            <summary>Displays the task dialog with an explicit parent window.</summary>
+            <param name="owner">Handle to the dialog's parent window.</param>
+        </member>
+        <member name="M:VistaControls.TaskDialog.TaskDialog.Show(System.Windows.Forms.Form)">
+            <summary>Displays the task dialog with an explicit parent form.</summary>
+            <param name="owner">Instance of the dialog's parent form.</param>
         </member>
         <member name="M:VistaControls.TaskDialog.TaskDialog.Show(System.String)">
             <summary>Displays a task dialog that has a message.</summary>
@@ -132,6 +150,55 @@
             <param name="instruction">The instruction shown below the main text.</param>
             <param name="buttons">Value that specifies which button or buttons to display.</param>
             <param name="icon">The icon to display.</param>
+        </member>
+        <member name="P:VistaControls.TaskDialog.TaskDialog.IsShowing">
+            <summary>Is true if the task dialog is currently displayed.</summary>
+        </member>
+        <member name="P:VistaControls.TaskDialog.TaskDialog.Title">
+            <summary>Gets or sets the title of the dialog.</summary>
+        </member>
+        <member name="P:VistaControls.TaskDialog.TaskDialog.CommonIcon">
+            <summary>Gets or sets the icon of the dialog, from a set of common icons.</summary>
+        </member>
+        <member name="P:VistaControls.TaskDialog.TaskDialog.CustomIcon">
+            <summary>Gets or sets the icon of the dialog, from a custom Icon instance.</summary>
+        </member>
+        <member name="P:VistaControls.TaskDialog.TaskDialog.CommonButtons">
+            <summary>Gets or sets the dialog's buttons, from one or more common button types.</summary>
+        </member>
+        <member name="P:VistaControls.TaskDialog.TaskDialog.CustomButtons">
+            <summary>Gets or sets a set of custom buttons which will be displayed on the dialog.</summary>
+            <remarks>These buttons can also be shown as Command Links optionally.</remarks>
+        </member>
+        <member name="P:VistaControls.TaskDialog.TaskDialog.DefaultButton">
+            <summary>Gets or sets the integer identificator of the dialog's default button.</summary>
+        </member>
+        <member name="P:VistaControls.TaskDialog.TaskDialog.RadioButtons">
+            <summary>Gets or sets a set of custom buttons which will be displayed as radio buttons.</summary>
+        </member>
+        <member name="P:VistaControls.TaskDialog.TaskDialog.EnabledRadioButton">
+            <summary>Gets or sets the identificator of the enabled radio button by default.</summary>
+        </member>
+        <member name="P:VistaControls.TaskDialog.TaskDialog.VerificationText">
+            <summary>Gets or sets the text that will be shown next to a verification checkbox.</summary>
+        </member>
+        <member name="P:VistaControls.TaskDialog.TaskDialog.ExpandedControlText">
+            <summary>Gets or sets the text displayed on the control that enables the user to expand and collapse the dialog,
+            when the dialog is in expanded mode.</summary>
+        </member>
+        <member name="P:VistaControls.TaskDialog.TaskDialog.CollapsedControlText">
+            <summary>Gets or sets the text displayed on the control that enables the user to expand and collapse the dialog,
+            when the dialog is in collapsed mode.</summary>
+        </member>
+        <member name="P:VistaControls.TaskDialog.TaskDialog.FooterCommonIcon">
+            <summary>Gets or sets the icon shown in the dialog's footer, from a set of common icons.</summary>
+        </member>
+        <member name="P:VistaControls.TaskDialog.TaskDialog.FooterCustomIcon">
+            <summary>Gets or sets the icon shown in the dialog's footer, from a custom Icon instance.</summary>
+        </member>
+        <member name="P:VistaControls.TaskDialog.TaskDialog.Width">
+            <summary>Explicitly sets the desiderd width in pixels of the dialog.</summary>
+            <remarks>Will be set automatically by the task dialog to an optimal size.</remarks>
         </member>
         <member name="P:VistaControls.TaskDialog.TaskDialog.Instruction">
             <summary>Gets or Sets the Main Instruction text of the TaskDialog.</summary>
@@ -184,9 +251,6 @@
         </member>
         <member name="P:VistaControls.TaskDialog.TaskDialog.ShowProgressBar">
             <summary>Gets or sets whether a progress bar should be displayed on the dialog.</summary>
-        </member>
-        <member name="P:VistaControls.TaskDialog.TaskDialog.ShowMarqueeProgressBar">
-            <summary>Indicates that the progress bars should be displayed in Marquee mode (no explicit progress).</summary>
         </member>
         <member name="P:VistaControls.TaskDialog.TaskDialog.EnableCallbackTimer">
             <summary>Sets or gets whether the user specified callback (if any) should be called every 200ms.</summary>
@@ -262,22 +326,22 @@
             <summary>Shadow type.</summary>
         </member>
         <member name="P:VistaControls.ThemeText.ThemedLabel.TextAlign">
-            <summary>Gets and sets the horizontal text alignment setting.</summary>
+            <summary>Gets or sets the horizontal text alignment setting.</summary>
         </member>
         <member name="P:VistaControls.ThemeText.ThemedLabel.TextAlignVertical">
-            <summary>Gets and sets the vertical text alignment setting.</summary>
+            <summary>Gets or sets the vertical text alignment setting.</summary>
         </member>
         <member name="P:VistaControls.ThemeText.ThemedLabel.SingleLine">
-            <summary>Gets and sets whether the text will be laid out on a single line or on multiple lines.</summary>
+            <summary>Gets or sets whether the text will be laid out on a single line or on multiple lines.</summary>
         </member>
         <member name="P:VistaControls.ThemeText.ThemedLabel.EndEllipsis">
-            <summary>Gets and sets whether the text lines over the label's border should be trimmed with an ellipsis.</summary>
+            <summary>Gets or sets whether the text lines over the label's border should be trimmed with an ellipsis.</summary>
         </member>
         <member name="P:VistaControls.ThemeText.ThemedLabel.WordBreak">
-            <summary>Gets and sets whether the text should break only at the end of a word.</summary>
+            <summary>Gets or sets whether the text should break only at the end of a word.</summary>
         </member>
         <member name="P:VistaControls.ThemeText.ThemedLabel.WordEllipsis">
-            <summary>Gets and sets whether the text should be trimmed to the last word and an ellipse should be placed at the end of the line.</summary>
+            <summary>Gets or sets whether the text should be trimmed to the last word and an ellipse should be placed at the end of the line.</summary>
         </member>
         <member name="T:VistaControls.TaskDialog.TaskDialogButton">
             <summary>Common Task Dialog buttons. OK is the default button.</summary>
@@ -321,6 +385,9 @@
         <member name="M:VistaControls.TaskDialog.Message.#ctor(VistaControls.TaskDialog.NativeMethods.TaskDialogMessages,System.Boolean,System.Boolean)">
             <summary>Simple bool, bool message.</summary>
         </member>
+        <member name="M:VistaControls.TaskDialog.Message.#ctor(VistaControls.TaskDialog.NativeMethods.TaskDialogMessages,System.Boolean,System.Int32)">
+            <summary>Simple bool, int message.</summary>
+        </member>
         <member name="M:VistaControls.TaskDialog.Message.#ctor(VistaControls.TaskDialog.NativeMethods.TaskDialogMessages,System.Int32,System.Int32,System.Int32)">
             <summary>Simple int, long (hi word and lo word) message.</summary>
         </member>
@@ -338,6 +405,62 @@
         <member name="T:VistaControls.NativeMethods">
             <summary>
             Control style and notification constants
+            </summary>
+        </member>
+        <member name="T:VistaControls.Resources.ExceptionMessages">
+            <summary>
+              A strongly-typed resource class, for looking up localized strings, etc.
+            </summary>
+        </member>
+        <member name="P:VistaControls.Resources.ExceptionMessages.ResourceManager">
+            <summary>
+              Returns the cached ResourceManager instance used by this class.
+            </summary>
+        </member>
+        <member name="P:VistaControls.Resources.ExceptionMessages.Culture">
+            <summary>
+              Overrides the current thread's CurrentUICulture property for all
+              resource lookups using this strongly typed resource class.
+            </summary>
+        </member>
+        <member name="P:VistaControls.Resources.ExceptionMessages.CommonControlEntryPointNotFound">
+            <summary>
+              Looks up a localized string similar to Common Controls library version 6.0 not loaded. Must run on Vista and must provide a manifest..
+            </summary>
+        </member>
+        <member name="P:VistaControls.Resources.ExceptionMessages.DWMNotEnabled">
+            <summary>
+              Looks up a localized string similar to Desktop composition is not enabled..
+            </summary>
+        </member>
+        <member name="P:VistaControls.Resources.ExceptionMessages.DWMOsNotSupported">
+            <summary>
+              Looks up a localized string similar to Desktop composition is not supported by operating system..
+            </summary>
+        </member>
+        <member name="P:VistaControls.Resources.ExceptionMessages.DWMThumbnailQueryFailure">
+            <summary>
+              Looks up a localized string similar to Unable to get thumbnail&apos;s original size..
+            </summary>
+        </member>
+        <member name="P:VistaControls.Resources.ExceptionMessages.DWMThumbnailUpdateFailure">
+            <summary>
+              Looks up a localized string similar to Unable to update thumbnail properties..
+            </summary>
+        </member>
+        <member name="P:VistaControls.Resources.ExceptionMessages.DWMWindowMatch">
+            <summary>
+              Looks up a localized string similar to Source and target windows cannot be the same..
+            </summary>
+        </member>
+        <member name="P:VistaControls.Resources.ExceptionMessages.NativeCallFailure">
+            <summary>
+              Looks up a localized string similar to Native call to {0} failed..
+            </summary>
+        </member>
+        <member name="P:VistaControls.Resources.ExceptionMessages.TaskDialogFailure">
+            <summary>
+              Looks up a localized string similar to Failed to create TaskDialog..
             </summary>
         </member>
         <member name="M:VistaControls.DWM.GlassHelper.HandleFormMovementOnGlass(System.Windows.Forms.Form,VistaControls.DWM.Margins)">

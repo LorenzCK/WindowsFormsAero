@@ -38,15 +38,15 @@ namespace VistaControls.TaskDialog {
 
     /// <summary>Results returned by Task Dialogs when closed by the user.</summary>
     public enum Result : int {
-        None = 0,
-        OK = 1,
-        Cancel = 2,
-        Abort = 3,
-        Retry = 4,
-        Ignore = 5,
-        Yes = 6,
-        No = 7,
-        Close = 8
+		None = 0,
+		OK = 1,
+		Cancel = 2,
+		Abort = 3,
+		Retry = 4,
+		Ignore = 5,
+		Yes = 6,
+		No = 7,
+		Close = 8
     }
 
 }

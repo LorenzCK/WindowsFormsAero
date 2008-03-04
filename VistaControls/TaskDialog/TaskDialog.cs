@@ -18,154 +18,176 @@ using System.Runtime.InteropServices;
 namespace VistaControls.TaskDialog {
 
     /// <summary>Displays a dialog box that can contain text, icons, buttons, command links, radio buttons and/or a progress bar.</summary>
-    public class TaskDialog {
+    public partial class TaskDialog {
 
-        #region Data
+		#region Initialization and C'tors
+
+		private void Init() {
+			Title = defaultTitle;
+			Instruction = defaultInstruction;
+			Content = defaultContent;
+
+			CommonIcon = defaultIcon;
+			CustomIcon = null;
+
+			CommonButtons = 0;
+			CustomButtons = null;
+			DefaultButton = (int)TaskDialogButton.OK;
+
+			RadioButtons = null;
+			EnabledRadioButton = 0;
+
+			VerificationText = null;
+			ExpandedInformation = null;
+			ExpandedControlText = null;
+			CollapsedControlText = null;
+
+			Footer = null;
+			FooterCommonIcon = TaskDialogIcon.None;
+			FooterCustomIcon = null;
+
+			Width = 0;
+
+			config = new NativeMethods.TaskDialogConfig();
+		}
+
+		/// <summary>Initializes a new Task Dialog instance without text.</summary>
+		public TaskDialog() {
+			Init();
+		}
+
+		/// <summary>Initializes a new Task Dialog instance with text.</summary>
+		/// <param name="instruction">The main instruction to display.</param>
+		public TaskDialog(string instruction) {
+			Init();
+			Instruction = instruction;
+		}
+
+		/// <summary>Initializes a new Task Dialog instance with an instruction and a title.</summary>
+		/// <param name="instruction">The main instruction to display.</param>
+		/// <param name="title">The title of the Task Dialog.</param>
+		public TaskDialog(string instruction, string title) {
+			Init();
+
+			Title = title;
+			Instruction = instruction;
+		}
+
+		/// <summary>Initializes a new Task Dialog instance with an instruction, a title and some content text.</summary>
+		/// <param name="instruction">The main instruction to display.</param>
+		/// <param name="title">The title of the Task Dialog.</param>
+		/// <param name="content">The content text that will be displayes below the main instruction.</param>
+		public TaskDialog(string instruction, string title, string content) {
+			Init();
+
+			Title = title;
+			Instruction = instruction;
+			Content = content;
+		}
+
+		/// <summary>Initializes a new Task Dialog instance with an instruction, a title, some content text and a specific button.</summary>
+		/// <param name="instruction">The main instruction to display.</param>
+		/// <param name="title">The title of the Task Dialog.</param>
+		/// <param name="content">The content text that will be displayes below the main instruction.</param>
+		/// <param name="commonButtons">Specifies one or more buttons to be displayed on the bottom of the dialog, instead of the default OK button.</param>
+		public TaskDialog(string instruction, string title, string content, TaskDialogButton commonButtons) {
+			Init();
+
+			Title = title;
+			Instruction = instruction;
+			Content = content;
+			CommonButtons = commonButtons;
+		}
+
+		/// <summary>Initializes a new Task Dialog instance with an instruction, a title, some content text, a specific button and an icon.</summary>
+		/// <param name="instruction">The main instruction to display.</param>
+		/// <param name="title">The title of the Task Dialog.</param>
+		/// <param name="content">The content text that will be displayes below the main instruction.</param>
+		/// <param name="commonButtons">Specifies one or more buttons to be displayed on the bottom of the dialog, instead of the default OK button.</param>
+		/// <param name="icon">The icon to display.</param>
+		public TaskDialog(string instruction, string title, string content, TaskDialogButton commonButtons, TaskDialogIcon icon) {
+			Init();
+
+			Title = title;
+			Instruction = instruction;
+			Content = content;
+			CommonButtons = commonButtons;
+			CommonIcon = icon;
+		}
+
+		#endregion
+
+        #region Data & Properties
 
         //Defaults
         const string defaultTitle = "";
         const string defaultInstruction = "";
         const string defaultContent = null;
+		const int defaultProgressBarMax = 100;
+		const int defaultMarqueeSpeed = 50;
         const TaskDialogButton defaultButton = TaskDialogButton.OK;
         const TaskDialogIcon defaultIcon = TaskDialogIcon.None;
 
         //State (is automatically updated on reponse to events)
-        private bool _IsShowing = false;
         private IntPtr _hwnd = IntPtr.Zero;
+		/// <summary>Is true if the task dialog is currently displayed.</summary>
         public bool IsShowing { get { return _hwnd != IntPtr.Zero; } }
 
         //Public settable data
-		//Non public data has a special Property that handles setting via messages (see Data Properties, below)
+		//Non public fields have a special Property that handles setting via messages (see Properties, below)
+
+		/// <summary>Gets or sets the title of the dialog.</summary>
         public string Title { get; set; }
         string _Instruction;
         string _Content;
         
+		/// <summary>Gets or sets the icon of the dialog, from a set of common icons.</summary>
         public TaskDialogIcon CommonIcon { get; set; }
+		/// <summary>Gets or sets the icon of the dialog, from a custom Icon instance.</summary>
         public System.Drawing.Icon CustomIcon { get; set; }
 
+		/// <summary>Gets or sets the dialog's buttons, from one or more common button types.</summary>
         public TaskDialogButton CommonButtons { get; set; }
+		/// <summary>Gets or sets a set of custom buttons which will be displayed on the dialog.</summary>
+		/// <remarks>These buttons can also be shown as Command Links optionally.</remarks>
         public CustomButton[] CustomButtons { get; set; }
+		/// <summary>Gets or sets the integer identificator of the dialog's default button.</summary>
         public int DefaultButton { get; set; }
         
+		/// <summary>Gets or sets a set of custom buttons which will be displayed as radio buttons.</summary>
         public CustomButton[] RadioButtons { get; set; }
+		/// <summary>Gets or sets the identificator of the enabled radio button by default.</summary>
         public int EnabledRadioButton { get; set; }
 
+		/// <summary>Gets or sets the text that will be shown next to a verification checkbox.</summary>
         public string VerificationText { get; set; }
-        string _ExpandedInformation;
+        
+		string _ExpandedInformation;
+		/// <summary>Gets or sets the text displayed on the control that enables the user to expand and collapse the dialog,
+		/// when the dialog is in expanded mode.</summary>
         public string ExpandedControlText { get; set; }
+		/// <summary>Gets or sets the text displayed on the control that enables the user to expand and collapse the dialog,
+		/// when the dialog is in collapsed mode.</summary>
         public string CollapsedControlText { get; set; }
 
         string _Footer;
+		/// <summary>Gets or sets the icon shown in the dialog's footer, from a set of common icons.</summary>
         public TaskDialogIcon FooterCommonIcon { get; set; }
+		/// <summary>Gets or sets the icon shown in the dialog's footer, from a custom Icon instance.</summary>
         public System.Drawing.Icon FooterCustomIcon { get; set; }
 
+		/// <summary>Explicitly sets the desiderd width in pixels of the dialog.</summary>
+		/// <remarks>Will be set automatically by the task dialog to an optimal size.</remarks>
         public uint Width { get; set; }
 
-        int _ProgressBarPosition = 0;
-        int _ProgressBarMinRange = 0,
-            _ProgressBarMaxRange = 100;
+		int _ProgressBarPosition = 0,
+			_ProgressBarMinRange = 0,
+			_ProgressBarMaxRange = defaultProgressBarMax;
         VistaControls.ProgressBar.States _ProgressBarState = ProgressBar.States.Normal;
 
         #endregion
 
-        #region Initialization and C'tors
-
-        private void Init() {
-            Title = defaultTitle;
-            Instruction = defaultInstruction;
-            Content = defaultContent;
-
-            CommonIcon = defaultIcon;
-            CustomIcon = null;
-
-            CommonButtons = 0;
-            CustomButtons = null;
-            DefaultButton = (int)TaskDialogButton.OK;
-
-            RadioButtons = null;
-            EnabledRadioButton = 0;
-
-            VerificationText = null;
-            ExpandedInformation = null;
-            ExpandedControlText = null;
-            CollapsedControlText = null;
-
-            Footer = null;
-            FooterCommonIcon = TaskDialogIcon.None;
-            FooterCustomIcon = null;
-
-            Width = 0;
-
-            config = new NativeMethods.TaskDialogConfig();
-        }
-
-        /// <summary>Initializes a new Task Dialog instance without text.</summary>
-        public TaskDialog() {
-            Init();
-        }
-
-        /// <summary>Initializes a new Task Dialog instance with text.</summary>
-        /// <param name="instruction">The main instruction to display.</param>
-        public TaskDialog(string instruction) {
-            Init();
-            Instruction = instruction;
-        }
-
-        /// <summary>Initializes a new Task Dialog instance with an instruction and a title.</summary>
-        /// <param name="instruction">The main instruction to display.</param>
-        /// <param name="title">The title of the Task Dialog.</param>
-        public TaskDialog(string instruction, string title) {
-            Init();
-            
-            Title = title;
-            Instruction = instruction;
-        }
-
-        /// <summary>Initializes a new Task Dialog instance with an instruction, a title and some content text.</summary>
-        /// <param name="instruction">The main instruction to display.</param>
-        /// <param name="title">The title of the Task Dialog.</param>
-        /// <param name="content">The content text that will be displayes below the main instruction.</param>
-        public TaskDialog(string instruction, string title, string content) {
-            Init();
-
-            Title = title;
-            Instruction = instruction;
-            Content = content;
-        }
-
-        /// <summary>Initializes a new Task Dialog instance with an instruction, a title, some content text and a specific button.</summary>
-        /// <param name="instruction">The main instruction to display.</param>
-        /// <param name="title">The title of the Task Dialog.</param>
-        /// <param name="content">The content text that will be displayes below the main instruction.</param>
-        /// <param name="commonButtons">Specifies one or more buttons to be displayed on the bottom of the dialog, instead of the default OK button.</param>
-        public TaskDialog(string instruction, string title, string content, TaskDialogButton commonButtons) {
-            Init();
-
-            Title = title;
-            Instruction = instruction;
-            Content = content;
-            CommonButtons = commonButtons;
-        }
-
-        /// <summary>Initializes a new Task Dialog instance with an instruction, a title, some content text, a specific button and an icon.</summary>
-        /// <param name="instruction">The main instruction to display.</param>
-        /// <param name="title">The title of the Task Dialog.</param>
-        /// <param name="content">The content text that will be displayes below the main instruction.</param>
-        /// <param name="commonButtons">Specifies one or more buttons to be displayed on the bottom of the dialog, instead of the default OK button.</param>
-        /// <param name="icon">The icon to display.</param>
-        public TaskDialog(string instruction, string title, string content, TaskDialogButton commonButtons, TaskDialogIcon icon) {
-            Init();
-
-            Title = title;
-            Instruction = instruction;
-            Content = content;
-            CommonButtons = commonButtons;
-            CommonIcon = icon;
-        }
-
-        #endregion
-
-        #region Data Properties
+        #region Properties (with message support)
 
 		/// <summary>Gets or Sets the Main Instruction text of the TaskDialog.</summary>
 		/// <remarks>Text written in blue and slightly bigger font in Windows Aero.</remarks>
@@ -323,17 +345,6 @@ namespace VistaControls.TaskDialog {
             set { SetConfigFlag(NativeMethods.TaskDialogFlags.TDF_SHOW_PROGRESS_BAR, value); }
         }
 
-        /// <summary>Indicates that the progress bars should be displayed in Marquee mode (no explicit progress).</summary>
-        public bool ShowMarqueeProgressBar {
-            get { return GetConfigFlag(NativeMethods.TaskDialogFlags.TDF_SHOW_MARQUEE_PROGRESS_BAR); }
-            set {
-                if (IsShowing)
-                    PostMessage(new Message(NativeMethods.TaskDialogMessages.TDM_SET_MARQUEE_PROGRESS_BAR, value, false));
-
-                SetConfigFlag(NativeMethods.TaskDialogFlags.TDF_ALLOW_DIALOG_CANCELLATION, value);
-            }
-        }
-
         /// <summary>Sets or gets whether the user specified callback (if any) should be called every 200ms.</summary>
         public bool EnableCallbackTimer {
             get { return GetConfigFlag(NativeMethods.TaskDialogFlags.TDF_CALLBACK_TIMER); }
@@ -381,7 +392,7 @@ namespace VistaControls.TaskDialog {
 
         //Local message queue
         //Buffers message before the dialog is created and shown
-        internal Stack<Message> _msgQueue = new Stack<Message>();
+        internal Queue<Message> _msgQueue = new Queue<Message>(5);
 
         private void DispatchMessageQueue() {
             while (IsShowing && _msgQueue.Count > 0) {
@@ -391,7 +402,7 @@ namespace VistaControls.TaskDialog {
 
                 //Delete the message (may contain unmanaged memory pointers)
                 msg.Dispose();
-                _msgQueue.Pop();
+                _msgQueue.Dequeue();
             }
         }
 
@@ -400,7 +411,7 @@ namespace VistaControls.TaskDialog {
                 VistaControls.NativeMethods.SendMessage(_hwnd, (uint)msg.MessageType, msg.wParam, msg.lParam);
             }
             else {
-                _msgQueue.Push(msg);
+                _msgQueue.Enqueue(msg);
             }
         }
 
@@ -454,7 +465,7 @@ namespace VistaControls.TaskDialog {
             nextDialog.config.pfCallback = config.pfCallback;
             //Copy queued messages
             while (nextDialog._msgQueue.Count > 0)
-                _msgQueue.Push(nextDialog._msgQueue.Pop());
+                _msgQueue.Enqueue(nextDialog._msgQueue.Dequeue());
             
             //Navigate
             PostMessage(new Message(NativeMethods.TaskDialogMessages.TDM_NAVIGATE_PAGE, 0, nextDialog.config));
@@ -470,6 +481,21 @@ namespace VistaControls.TaskDialog {
         public void SetShieldButton(int buttonId, bool requiresElevation) {
             PostMessage(new Message(NativeMethods.TaskDialogMessages.TDM_SET_BUTTON_ELEVATION_REQUIRED_STATE, buttonId, requiresElevation));
         }
+
+		/// <summary>Sets whether the dialog's progress bar should be in standard or in marquee mode.</summary>
+		/// <param name="enabled">True if the progress bar should be displayed in marquee mode (no explicit progress).</param>
+		public void SetMarqueeProgressBar(bool enabled) {
+			SetMarqueeProgressBar(enabled, defaultMarqueeSpeed);
+		}
+
+		/// <summary>Sets whether the dialog's progress bar should be in standard or in marquee mode and sets its marquee speed.</summary>
+		/// <param name="enabled">True if the progress bar should be displayed in marquee mode (no explicit progress).</param>
+		/// <param name="speed">Speed of the progress bar in marquee mode.</param>
+		public void SetMarqueeProgressBar(bool enabled, int speed) {
+			SetConfigFlag(NativeMethods.TaskDialogFlags.TDF_SHOW_MARQUEE_PROGRESS_BAR, enabled);
+
+			PostMessage(new Message(NativeMethods.TaskDialogMessages.TDM_SET_PROGRESS_BAR_MARQUEE, enabled, speed));
+		}
 
         #endregion
 
@@ -508,9 +534,6 @@ namespace VistaControls.TaskDialog {
             //Handle event
             switch ((NativeMethods.TaskDialogNotification)uEvent) {
                 case NativeMethods.TaskDialogNotification.TDN_CREATED:
-                    //Set dialog as "showing"
-                    _IsShowing = true;
-
                     //Dispatch buffered messages
                     DispatchMessageQueue();
 
@@ -553,7 +576,6 @@ namespace VistaControls.TaskDialog {
 
                 case NativeMethods.TaskDialogNotification.TDN_DESTROYED:
                     //Set dialog as not "showing" and drop handle to window
-                    _IsShowing = false;
                     _hwnd = IntPtr.Zero;
 
                     if (Destroyed != null)
@@ -696,16 +718,22 @@ namespace VistaControls.TaskDialog {
 
         #region Display methods
 
-        /// <summary>Displays the task dialog as a modeless dialog.</summary>
+        /// <summary>Displays the task dialog without an explicit parent.</summary>
         public Results Show() {
             return InternalShow(IntPtr.Zero);
         }
 
-        /// <summary>Displays the task dialog as a modal dialog.</summary>
-        /// <param name="owner">Handle to the parent window of the task dialog.</param>
+        /// <summary>Displays the task dialog with an explicit parent window.</summary>
+        /// <param name="owner">Handle to the dialog's parent window.</param>
         public Results Show(IntPtr owner) {
             return InternalShow(owner);
         }
+
+		/// <summary>Displays the task dialog with an explicit parent form.</summary>
+		/// <param name="owner">Instance of the dialog's parent form.</param>
+		public Results Show(Form owner) {
+			return InternalShow(owner.Handle);
+		}
 
         private Results InternalShow(IntPtr owner) {
             //Return state
@@ -718,78 +746,19 @@ namespace VistaControls.TaskDialog {
 
 				//Call native method
 				if (NativeMethods.TaskDialogIndirect(ref config, out ret, out selRadio, out setVerification) != IntPtr.Zero)
-					throw new Exception("Native TaskDialogIndirect call failed.");
+					throw new Exception(String.Format(Resources.ExceptionMessages.NativeCallFailure, "TaskDialogIndirect"));
+			}
+			catch (EntryPointNotFoundException ex) {
+				throw new Exception(Resources.ExceptionMessages.CommonControlEntryPointNotFound, ex);
 			}
 			catch (Exception ex) {
-				throw new Exception("Unable to create Task Dialog.", ex);
+				throw new Exception(Resources.ExceptionMessages.TaskDialogFailure, ex);
 			}
             finally {
                 PostConfig();
             }
 
             return new Results(ret, selRadio, setVerification);
-        }
-
-        #endregion
-
-        #region Static display methods
-
-        /// <summary>Displays a task dialog that has a message.</summary>
-        /// <param name="text">The text to display.</param>
-        public static Result Show(string instruction) {
-            return InternalShow(IntPtr.Zero, defaultTitle, instruction, defaultContent, TaskDialogButton.OK, TaskDialogIcon.None);
-        }
-
-        /// <summary>Displays a task dialog that has a message and a title.</summary>
-        /// <param name="text">The text to display.</param>
-        /// <param name="title">The title bar caption of the dialog.</param>
-        public static Result Show(string instruction, string title) {
-            return InternalShow(IntPtr.Zero, title, instruction, defaultContent, TaskDialogButton.OK, TaskDialogIcon.None);
-        }
-
-        /// <summary>Displays a task dialog that has a message, a title and an instruction.</summary>
-        /// <param name="text">The text to display.</param>
-        /// <param name="title">The title bar caption of the dialog.</param>
-        /// <param name="instruction">The instruction shown below the main text.</param>
-        public static Result Show(string instruction, string title, string content) {
-            return InternalShow(IntPtr.Zero, title, instruction, content, TaskDialogButton.OK, TaskDialogIcon.None);
-        }
-
-        /// <summary>Displays a task dialog that has a message, a title, an instruction and one or more buttons.</summary>
-        /// <param name="text">The text to display.</param>
-        /// <param name="title">The title bar caption of the dialog.</param>
-        /// <param name="instruction">The instruction shown below the main text.</param>
-        /// <param name="buttons">Value that specifies which button or buttons to display.</param>
-        public static Result Show(string instruction, string title, string content, TaskDialogButton buttons) {
-            return InternalShow(IntPtr.Zero, title, instruction, content, buttons, TaskDialogIcon.None);
-        }
-
-        /// <summary>Displays a task dialog that has a message, a title, an instruction, one or more buttons and an icon.</summary>
-        /// <param name="text">The text to display.</param>
-        /// <param name="title">The title bar caption of the dialog.</param>
-        /// <param name="instruction">The instruction shown below the main text.</param>
-        /// <param name="buttons">Value that specifies which button or buttons to display.</param>
-        /// <param name="icon">The icon to display.</param>
-        public static Result Show(string instruction, string title, string content, TaskDialogButton buttons, TaskDialogIcon icon) {
-            return InternalShow(IntPtr.Zero, title, instruction, content, buttons, icon);
-        }
-
-
-        private static Result InternalShow(IntPtr parent, string title, string instruction, string content, TaskDialogButton commonButtons, TaskDialogIcon icon) {
-            int dlgValue;
-
-            //Get handle for parent window if none specified (behave like MessageBox)
-            if(parent == IntPtr.Zero)
-                parent = Native.Windows.GetActiveWindow();
-
-            if (NativeMethods.TaskDialog(parent, IntPtr.Zero, title, instruction, content, (int)commonButtons, new IntPtr((long)icon), out dlgValue) != 0)
-                throw new Exception("Failed to create TaskDialog.");
-
-            //Convert int value to common dialog result
-            if (dlgValue > 0 && dlgValue <= 8)
-                return (Result)dlgValue;
-            else
-                return Result.None;
         }
 
         #endregion
