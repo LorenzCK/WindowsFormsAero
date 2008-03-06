@@ -3,7 +3,9 @@
  * 
  * http://www.codeplex.com/vistacontrols
  * 
- * @author: Lorenz Cuno Klopfenstein
+ * @author: Nicholas Kwan
+ * @integration: Lorenz Cuno Klopfenstein
+ * @www-ref: 
  * Licensed under Microsoft Community License (Ms-CL)
  * 
  *****************************************************/
@@ -20,9 +22,12 @@ namespace VistaControls {
 
 	public class SplitButton : Button {
 
-		/// <summary>Creates a new instance of SplitButton.</summary>
-		public SplitButton() {
-			this.SetStyle(ControlStyles.EnableNotifyMessage, true);
+		protected override CreateParams CreateParams {
+			get {
+				CreateParams p = base.CreateParams;
+				p.Style |= (this.IsDefault) ? NativeMethods.BS_DEFSPLITBUTTON : NativeMethods.BS_SPLITBUTTON;
+				return p;
+			}
 		}
 
 		#region Split Context Menu
@@ -39,6 +44,10 @@ namespace VistaControls {
 		/// <summary>Provides data for the clicking of split buttons and the opening
 		/// of context menus.</summary>
 		public class SplitMenuEventArgs : EventArgs {
+			public SplitMenuEventArgs() {
+				PreventOpening = false;
+			}
+
 			public SplitMenuEventArgs(Rectangle drawArea) {
 				DrawArea = drawArea;
 			}
@@ -47,25 +56,43 @@ namespace VistaControls {
 			/// <remarks>A menu should be opened, with top-left coordinates in the left-bottom point of
 			/// the rectangle and with width equal (or greater) than the width of the rectangle.</remarks>
 			public Rectangle DrawArea { get; set; }
+
+			/// <summary>Set to true if you want to prevent the menu from opening.</summary>
+			public bool PreventOpening { get; set; }
 		}
 
 		protected virtual void OnSplitClick(SplitMenuEventArgs e) {
-			if (SplitMenu != null) {
-				if (SplitMenuOpening != null)
-					SplitMenuOpening(this, e);
+			//Raise opening event before opening any menu
+			if (SplitMenuOpening != null &&
+				(SplitMenu != null || SplitMenuStrip != null))
+				SplitMenuOpening(this, e);
 
-				SplitMenu.Width = e.DrawArea.Width;
-				SplitMenu.Show(this, new Point(e.DrawArea.Left, e.DrawArea.Bottom));
+			Point pos = new Point(e.DrawArea.Left, e.DrawArea.Bottom);
+
+			if (!e.PreventOpening) {
+				if (SplitMenu != null) {
+					SplitMenu.Show(this, pos);
+				}
+				else if (SplitMenuStrip != null) {
+					SplitMenuStrip.Width = e.DrawArea.Width;
+					SplitMenuStrip.Show(this, pos);
+				}
 			}
 
+			//Raise the event after the user click
 			if (SplitClick != null)
 				SplitClick(this, e);
 		}
 
 		[Description("Sets the context menu that is displayed by clicking on the split button."), Category("Behavior"), DefaultValue(null)]
-		/// <summary>Get and set the associated context menu that is displayed when the split
-		/// label of the button is clicked.</summary>
-		public ContextMenuStrip SplitMenu { get; set; }
+		/// <summary>Gets or sets the associated context menu that is displayed when the split
+		/// glyph of the button is clicked.</summary>
+		public ContextMenuStrip SplitMenuStrip { get; set; }
+
+		[Description("Sets the context menu that is displayed by clicking on the split button."), Category("Behavior"), DefaultValue(null)]
+		/// <summary>Gets or sets the associated context menu that is displayed when the split
+		/// glyph of the button is clicked. Exposed for backward compatibility.</summary>
+		public ContextMenu SplitMenu { get; set; }
 
 		#endregion
 
@@ -115,18 +142,14 @@ namespace VistaControls {
 
 		#endregion
 
-		protected override void OnNotifyMessage(Message m) {
-			/*if (m.Msg == NativeMethods.WM_NOTIFY) {
-				NativeMethods.NMHDR info = (NativeMethods.NMHDR)Marshal.PtrToStructure(m.LParam, typeof(NativeMethods.NMHDR));
+		protected override void WndProc(ref Message m) {
+		    if (m.Msg == NativeMethods.BCN_SETDROPDOWNSTATE) {
+		        if (m.WParam.ToInt32() == 1) {
+		            OnSplitClick(new SplitMenuEventArgs(this.ClientRectangle));
+		        }
+		    }			
 
-				if (info.Code == NativeMethods.BCN_DROPDOWN) {
-					NativeMethods.NMBCDROPDOWN dropinfo = (NativeMethods.NMBCDROPDOWN)Marshal.PtrToStructure(m.LParam, typeof(NativeMethods.NMBCDROPDOWN));
-
-					OnSplitClick(new SplitMenuEventArgs(dropinfo.DropDownArea.ToRectangle()));
-				}
-			}*/
-
-			base.OnNotifyMessage(m);
+			base.WndProc(ref m);
 		}
 	}
 }

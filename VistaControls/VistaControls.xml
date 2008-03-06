@@ -4,9 +4,6 @@
         <name>VistaControls</name>
     </assembly>
     <members>
-        <member name="M:VistaControls.SplitButton.#ctor">
-            <summary>Creates a new instance of SplitButton.</summary>
-        </member>
         <member name="T:VistaControls.SplitButton.SplitMenuEventArgs">
             <summary>Provides data for the clicking of split buttons and the opening
             of context menus.</summary>
@@ -15,6 +12,9 @@
             <summary>Represents the bounding box of the clicked button.</summary>
             <remarks>A menu should be opened, with top-left coordinates in the left-bottom point of
             the rectangle and with width equal (or greater) than the width of the rectangle.</remarks>
+        </member>
+        <member name="P:VistaControls.SplitButton.SplitMenuEventArgs.PreventOpening">
+            <summary>Set to true if you want to prevent the menu from opening.</summary>
         </member>
         <member name="T:VistaControls.DWM.Margins">
             <summary>Margins structure for the Glass Sheet effect.</summary>
@@ -311,6 +311,13 @@
         <member name="P:VistaControls.OSSupport.IsCompositionEnabled">
             <summary>Is true if the DWM composition engine is currently enabled.</summary>
         </member>
+        <member name="P:VistaControls.TextBox.CueBannerText">
+            <summary>Gets or sets the cue text that is displayed on the TextBox control.</summary>
+        </member>
+        <member name="P:VistaControls.TextBox.ShowCueFocused">
+            <summary>Gets or sets whether the Cue text should be displyed even when the control has keybord focus.</summary>
+            <remarks>If true, the Cue text will disappear as soon as the user starts typing.</remarks>
+        </member>
         <member name="T:VistaControls.ThemeText.ThemedLabel">
             <summary>
             A Label containing some text that will be drawn with glowing border on top of the Glass Sheet effect.
@@ -372,6 +379,22 @@
         <member name="T:VistaControls.TaskDialog.NativeMethods.TaskDialogMessages">
             <summary>Messages that can be sent to Task Dialogs.</summary>
             <remarks>From CommCtrl.h.</remarks>
+        </member>
+        <member name="T:VistaControls.Resources.Pictures">
+            <summary>
+              A strongly-typed resource class, for looking up localized strings, etc.
+            </summary>
+        </member>
+        <member name="P:VistaControls.Resources.Pictures.ResourceManager">
+            <summary>
+              Returns the cached ResourceManager instance used by this class.
+            </summary>
+        </member>
+        <member name="P:VistaControls.Resources.Pictures.Culture">
+            <summary>
+              Overrides the current thread's CurrentUICulture property for all
+              resource lookups using this strongly typed resource class.
+            </summary>
         </member>
         <member name="T:VistaControls.TaskDialog.Message">
             <summary>Stores a Task Dialog message that will be sent to a dialog in order to update its state.</summary>
@@ -499,6 +522,18 @@
             Handler will be kept alive by the event references on the form.
             As soon as the form is disposed, the handler will be disposed as well.
             </remarks>
+        </member>
+        <member name="M:VistaControls.SearchTextBox.Dispose(System.Boolean)">
+            <summary> 
+            Clean up any resources being used.
+            </summary>
+            <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        </member>
+        <member name="M:VistaControls.SearchTextBox.InitializeComponent">
+            <summary> 
+            Required method for Designer support - do not modify 
+            the contents of this method with the code editor.
+            </summary>
         </member>
         <member name="T:VistaControls.TaskDialog.TaskDialogIcon">
             <summary>Common Task Dialog icons. Determine the look of the main instruction.</summary>

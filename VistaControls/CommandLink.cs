@@ -28,7 +28,7 @@ namespace VistaControls
 
         [DllImport("user32.dll", CharSet = CharSet.Auto)]
         private static extern IntPtr SendMessage(IntPtr hWnd, int msg, int wParam, int lParam);
-        private Boolean useicon = true; //Checks if user wants to use an icon instead of a bitmap
+        private bool useicon = true; //Checks if user wants to use an icon instead of a bitmap
         private Bitmap image_;
         
         //Image alignment is ignored at the moment. Property overrides inherited image property
@@ -95,9 +95,9 @@ namespace VistaControls
             SendMessage(this.Handle, NativeMethods.BM_SETIMAGE, 1, (int)iconhandle);
         }
 
-        private Boolean showshield_ = false;
+        private bool showshield_ = false;
         [Description("Gets or sets whether if the control should use an elevated shield icon."), Category("Appearance"), DefaultValue(false)]
-        public Boolean ShowShield
+        public bool ShowShield
         {
             get
             {
@@ -114,7 +114,7 @@ namespace VistaControls
             }
         }
 
-        public void SetShield(Boolean Value)
+        public void SetShield(bool Value)
         {
             NativeMethods.SendMessage(this.Handle, NativeMethods.BCM_SETSHIELD, IntPtr.Zero, new IntPtr(showshield_ ? 1 : 0));
         }

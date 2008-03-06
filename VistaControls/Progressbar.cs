@@ -77,7 +77,7 @@ namespace VistaControls
             // Listen for operating system messages.
             switch (m.Msg)
             {
-                case 15:
+                case NativeMethods.WM_PAINT:
                     //Paint event
                     SetState(ps_); //Paint the progressbar properly
                     break;

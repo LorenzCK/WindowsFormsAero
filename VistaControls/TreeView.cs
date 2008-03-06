@@ -10,53 +10,47 @@
 */
 
 using System;
-using System.Collections.Generic;
-using System.Text;
+using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
-using System.ComponentModel;
 
-namespace VistaControls
-{
-    [ToolboxBitmap(typeof(TreeView))]
-    public class TreeView : System.Windows.Forms.TreeView
-    {
-       public TreeView()
-       {
-           base.HotTracking = true;
-           base.ShowLines = false;
-       }
+namespace VistaControls {
+	[ToolboxBitmap(typeof(TreeView))]
+	public class TreeView : System.Windows.Forms.TreeView {
+		public TreeView() {
+			base.HotTracking = true;
+			base.ShowLines = false;
+		}
 
-       protected override CreateParams CreateParams
-       {
-           get
-           {
-               CreateParams cp = base.CreateParams;
-               cp.Style |= NativeMethods.TVS_NOHSCROLL;
-               return cp;
-           }
-       }
+		protected override CreateParams CreateParams {
+			get {
+				CreateParams cp = base.CreateParams;
+				cp.Style |= NativeMethods.TVS_NOHSCROLL;
+				return cp;
+			}
+		}
 
-       public new bool HotTracking
-       {
-           get { return base.HotTracking; }
-           set { base.HotTracking = true; }
-       }
+		[Browsable(false)]
+		public new bool HotTracking {
+			get { return base.HotTracking; }
+			set { base.HotTracking = true; }
+		}
 
-       public new bool ShowLines
-       {
-           get { return base.ShowLines; }
-           set { base.ShowLines = false; }
-       }
+		[Browsable(false)]
+		public new bool ShowLines {
+			get { return base.ShowLines; }
+			set { base.ShowLines = false; }
+		}
 
-       protected override void OnHandleCreated(EventArgs e)
-       {
-           base.OnHandleCreated(e);
+		protected override void OnHandleCreated(EventArgs e) {
+			base.OnHandleCreated(e);
 
-           int style = NativeMethods.SendMessage(base.Handle, Convert.ToUInt32(NativeMethods.TVM_GETEXTENDEDSTYLE), 0, 0);
-           style |= (NativeMethods.TVS_EX_AUTOHSCROLL | NativeMethods.TVS_EX_FADEINOUTEXPANDOS);
-           NativeMethods.SendMessage(base.Handle, NativeMethods.TVM_SETEXTENDEDSTYLE, 0, style);
-           NativeMethods.SetWindowTheme(base.Handle, "explorer", null);
-       }
-    }
+			NativeMethods.SetWindowTheme(base.Handle, "explorer", null);
+
+			int style = NativeMethods.SendMessage(base.Handle, Convert.ToUInt32(NativeMethods.TVM_GETEXTENDEDSTYLE), 0, 0);
+			style |= (NativeMethods.TVS_EX_AUTOHSCROLL | NativeMethods.TVS_EX_FADEINOUTEXPANDOS);
+			NativeMethods.SendMessage(base.Handle, NativeMethods.TVM_SETEXTENDEDSTYLE, 0, style);
+			
+		}
+	}
 }
