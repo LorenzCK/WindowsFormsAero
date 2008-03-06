@@ -11,11 +11,11 @@ using System.Drawing.Drawing2D;
 using System.Diagnostics;
 
 namespace VistaControlsApp {
-    public partial class Main : VistaControls.DWM.Helpers.GlassForm {
+    public partial class NewMain : VistaControls.DWM.Helpers.GlassForm {
 
 		Timer _timer;
 
-        public Main() {
+        public NewMain() {
             InitializeComponent();
 
 			this.ResizeRedraw = true;
@@ -32,7 +32,6 @@ namespace VistaControlsApp {
 			_timer.Interval = 4200;
 			_timer.Enabled = true;
 			_timer.Tick += new EventHandler(_timer_Tick);
-
 		}
 
 		int _count = 0;
@@ -51,61 +50,57 @@ namespace VistaControlsApp {
 			themedLabel2.Text = _vFooterMsg[(_count++ % _vFooterMsg.Length)];
 		}
 
-		#region Command link events
+		private void Search(object sender, EventArgs e) {
+			string txt = searchTextBox1.Text;
 
-		private void commandLink1_Click(object sender, EventArgs e) {
-            if (this.progressBar2.Value != this.progressBar2.Maximum) {
-                this.progressBar1.Value += 10;
-                this.progressBar2.Value += 10;
-                this.progressBar3.Value += 10;
-            }
+			foreach (TabPage p in tabControl1.TabPages) {
+				if (p.Text.IndexOf(txt, StringComparison.InvariantCultureIgnoreCase) >= 0) {
+					tabControl1.SelectTab(p);
+					return;
+				}
+			}
 
-        }
-
-        private void commandLink2_Click(object sender, EventArgs e) {
-            if (this.progressBar2.Value != this.progressBar2.Minimum) {
-                this.progressBar1.Value -= 10;
-                this.progressBar2.Value -= 10;
-                this.progressBar3.Value -= 10;
-            }
+			searchTextBox1.Focus();
+			//searchTextBox1.SetFocusWithoutSelection();
 		}
 
-		#endregion
-
-		#region Task Dialog buttons
-
-		private void tskDlg1Click(object sender, EventArgs e) {
-            TaskDialog.Show("Security error", "Security error", "A security error has occurred.", TaskDialogButton.OK, TaskDialogIcon.SecurityError);
-        }
-
-        private void tskDlg2Click(object sender, EventArgs e) {
-            TaskDialog.Show("Security success", "Security success", "Authentication successful.", TaskDialogButton.OK, TaskDialogIcon.SecuritySuccess);
-        }
-
-        private void tskDlg3Click(object sender, EventArgs e) {
-            TaskDialog.Show("Stop", "Error", "An error has occurred.", TaskDialogButton.OK, TaskDialogIcon.Stop);
-        }
-
-        private void tskDlg4Click(object sender, EventArgs e) {
-            TaskDialog.Show("Warning", "Warning", "I must warn you about something.", TaskDialogButton.OK, TaskDialogIcon.Warning);
-        }
-
-        private void tskDlg5Click(object sender, EventArgs e) {
-            TaskDialog.Show("Info", "Information", "This really is important.", TaskDialogButton.OK, TaskDialogIcon.Information);
-        }
-
-        private void tskDlg6Click(object sender, EventArgs e) {
-            TaskDialog.Show("UAC Shield", "UAC Shield", "You need Administrator privilegies.", TaskDialogButton.OK, TaskDialogIcon.SecurityShield);
-        }
-
-		private void tskDlgMarquee(object sender, EventArgs e) {
-			TaskDialog dlg = new TaskDialog("This dialog displays a progress bar", "Marquee Progress Bar", "The progress bar below is in 'marquee' mode, that is it will not show the exact percentage of the work done, but it will show that some work is being done.", TaskDialogButton.Close);
-			dlg.SetMarqueeProgressBar(true, 30);
-
-			dlg.Show(this);
+		private void Search_cancelled(object sender, EventArgs e) {
+			tabControl1.SelectTab(0);
 		}
 
-        private void tskDlgComplex(object sender, EventArgs e) {
+		private void td_info(object sender, EventArgs e) {
+			TaskDialog.Show("Information", "Task Dialog", "Content of the task dialog.", TaskDialogButton.OK, TaskDialogIcon.Information);
+		}
+
+		private void ts_warning(object sender, EventArgs e) {
+			TaskDialog.Show("Warning", "Task Dialog", "Content of the task dialog.", TaskDialogButton.OK, TaskDialogIcon.Warning);
+		}
+
+		private void td_error(object sender, EventArgs e) {
+			TaskDialog.Show("Error", "Task Dialog", "Content of the task dialog.", TaskDialogButton.OK, TaskDialogIcon.Stop);
+		}
+
+		private void td_shield(object sender, EventArgs e) {
+			TaskDialog.Show("Shield", "Task Dialog", "Content of the task dialog.", TaskDialogButton.OK, TaskDialogIcon.SecurityShield);
+		}
+
+		private void td_shielderror(object sender, EventArgs e) {
+			TaskDialog.Show("Security error", "Task Dialog", "Content of the task dialog.", TaskDialogButton.OK, TaskDialogIcon.SecurityError);
+		}
+
+		private void td_shieldsuccess(object sender, EventArgs e) {
+			TaskDialog.Show("Security success", "Task Dialog", "Content of the task dialog.", TaskDialogButton.OK, TaskDialogIcon.SecuritySuccess);
+		}
+
+		private void td_blueshield(object sender, EventArgs e) {
+			TaskDialog.Show("Blue shield", "Task Dialog", "Content of the task dialog.", TaskDialogButton.OK, TaskDialogIcon.SecurityShieldBlue);
+		}
+
+		private void td_grayshield(object sender, EventArgs e) {
+			TaskDialog.Show("Gray shield", "Task Dialog", "Content of the task dialog.", TaskDialogButton.OK, TaskDialogIcon.SecurityShieldGray);
+		}
+
+		private void td_complex(object sender, EventArgs e) {
             TaskDialog dlg = new TaskDialog("This is the main instruction", "Complex Task Dialog");
             dlg.CommonIcon = TaskDialogIcon.SecurityShieldBlue;
             dlg.Content = "You may write long and informative messages, with <a href=\"http://www.google.com\">hyperlinks</a> and linebreaks.\nButtons can also be shaped as Command Link buttons instead of standard buttons. You may also use radio buttons or add a progress bar.";
@@ -177,29 +172,12 @@ namespace VistaControlsApp {
             }
 		}
 
-		#endregion
+		private void td_progress(object sender, EventArgs e) {
+			TaskDialog dlg = new TaskDialog("This dialog displays a progress bar", "Marquee Progress Bar", "The progress bar below is in 'marquee' mode, that is it will not show the exact percentage of the work done, but it will show that some work is being done.", TaskDialogButton.Close);
+			dlg.SetMarqueeProgressBar(true, 30);
 
-		#region Split button
-
-		private void Split_click(object sender, EventArgs e) {
-			if (progressBar1.Value + 10 <= progressBar1.Maximum) ;
-				progressBar1.Value += 10;
+			dlg.Show(this);
 		}
-
-		private void SplitMenu_increment(object sender, EventArgs e) {
-			progressBar1.Value += 10;
-		}
-
-		private void SplitMenu_decrease(object sender, EventArgs e) {
-			progressBar1.Value -= 10;
-		}
-
-		private void Split_opening(object sender, VistaControls.SplitButton.SplitMenuEventArgs e) {
-			contextMenu1.MenuItems[0].Enabled = (progressBar1.Value < 100);
-			contextMenu1.MenuItems[1].Enabled = (progressBar1.Value > 0);
-		}
-
-		#endregion
 
 	}
 }

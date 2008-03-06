@@ -17,12 +17,14 @@ using System.ComponentModel;
 using VistaControls.ThemeText.Options;
 using System.Windows.Forms.VisualStyles;
 
+
 namespace VistaControls.ThemeText {
 
 	/// <summary>
 	/// A Label containing some text that will be drawn with glowing border on top of the Glass Sheet effect.
 	/// </summary>
-	[ToolboxBitmap(typeof(VistaControls.ThemeText.ThemedLabel), "VistaControls.Resources.ThemedLabel.png")]
+	//[Designer("VistaControls.Design.ThemedLabelDesigner")]
+	[DefaultProperty("Text")]
 	public class ThemedLabel : Control {
 
 		ThemedText _hText = null;
@@ -74,16 +76,19 @@ namespace VistaControls.ThemeText {
 			}
 		}
 
+		[Browsable(false)]
 		public new Color BackColor {
 			get { return base.BackColor; }
 			set { base.BackColor = value; }
 		}
 
+		[Browsable(false)]
 		public new Image BackgroundImage {
 			get { return base.BackgroundImage; }
 			set { base.BackgroundImage = value; }
 		}
 
+		[Browsable(false)]
 		public new ImageLayout BackgroundImageLayout {
 			get { return base.BackgroundImageLayout; }
 			set { base.BackgroundImageLayout = value; }
@@ -93,6 +98,14 @@ namespace VistaControls.ThemeText {
 			base.OnResize(e);
 			UpdateText();
 		}
+
+		/*bool _transparent = true;
+
+		[Description("Sets whether the control should handle mouse events or not."), Category("Behavior"), DefaultValue(true)]
+		public bool Transparent {
+			get { return _transparent; }
+			set { _transparent = value; }
+		}*/
 
 		#endregion
 
@@ -296,22 +309,12 @@ namespace VistaControls.ThemeText {
 
 		#region Events
 
-		const int cMouseStart = 0x0200;
-		const int cMouseEnd = 0x020E;
-		//const int cMouseClick = 0x0201;
-
 		protected override void WndProc(ref Message m) {
-			if (m.Msg >= cMouseStart && m.Msg <= cMouseEnd) {
-				//Redirect mouse event to parent (faking transparency)
-				if(this.Parent != null)
-					Native.Messaging.PostMessage(this.Parent.Handle, (uint)m.Msg, m.WParam, m.LParam);
+			if (/*_transparent &&*/ m.Msg == VistaControls.NativeMethods.WM_NCHITTEST) {
+				base.WndProc(ref m);
 
-				//Raise click event (TODO: raise mouse events correctly even if it is not a Button control)
-				/*if (m.Msg == cMouseClick)
-				    OnClick(new EventArgs());*/
+				m.Result = new IntPtr(VistaControls.NativeMethods.HTTRANSPARENT);
 
-				//Signal as handled
-				m.Result = IntPtr.Zero;
 				return;
 			}
 

@@ -35,7 +35,7 @@ namespace VistaControls {
 			get {
 				try {
 					bool enabled;
-					DwmIsCompositionEnabled(out enabled);
+					DWM.NativeMethods.DwmIsCompositionEnabled(out enabled);
 
 					return enabled;
 				}
@@ -45,8 +45,6 @@ namespace VistaControls {
 			}
 		}
 
-		[DllImport("dwmapi.dll")]
-		private static extern int DwmIsCompositionEnabled([MarshalAs(UnmanagedType.Bool)] out bool pfEnabled);
 	}
 
 }

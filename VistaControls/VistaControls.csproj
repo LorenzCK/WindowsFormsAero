@@ -65,6 +65,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Design" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
@@ -79,6 +80,8 @@
     <Compile Include="CommandLink.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Design\SearchTextBoxDesigner.cs" />
+    <None Include="Design\ThemedLabelDesigner.cs" />
     <Compile Include="DWM\DWMCompositionException.cs" />
     <Compile Include="DWM\DWMManager.cs" />
     <Compile Include="DWM\GlassHelper.cs" />
@@ -108,12 +111,18 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ExceptionMessages.resx</DependentUpon>
     </Compile>
-    <Compile Include="SplitButton.cs">
+    <Compile Include="Resources\Pictures.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Pictures.resx</DependentUpon>
+    </Compile>
+    <Compile Include="SearchTextBox.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="SplitButton_old.cs">
+    <Compile Include="SearchTextBox.designer.cs">
+      <DependentUpon>SearchTextBox.cs</DependentUpon>
     </Compile>
-    <Compile Include="SplitButtonInner.cs">
+    <Compile Include="SplitButton.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="TaskDialog\CustomButton.cs" />
@@ -177,7 +186,15 @@
       <LastGenOutput>ExceptionMessages.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Pictures.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Pictures.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="Resources\ThemedLabel.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Wizard\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

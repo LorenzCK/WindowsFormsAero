@@ -24,19 +24,32 @@ namespace VistaControls
         public static extern int GetWindowLong(IntPtr hWnd, int nIndex);
         [DllImport("uxtheme.dll", CharSet = CharSet.Unicode)]
         public extern static int SetWindowTheme(IntPtr hWnd, string pszSubAppName, string pszSubIdList);
-		[DllImport("user32.dll", CharSet = CharSet.Auto)]
-		public static extern IntPtr SendMessage(IntPtr hWnd, int msg, int wParam, ref BUTTON_SPLITINFO info);
+
+		[DllImport("user32.dll", EntryPoint = "ReleaseCapture")]
+		public static extern bool StopMouseCapture();
+
+		[DllImport("user32.dll", EntryPoint = "SetCapture")]
+		public static extern IntPtr StartMouseCapture(IntPtr hWnd);
+
+		//Window styles
+		public const int WS_EX_CONTROLPARENT = 0x00010000;
+		public const int WS_EX_CLIENTEDGE = 0x00000200;
+		public const int WS_BORDER = 0x00800000;
+
+		//Window NCHITTEST values
+		public const int HTTRANSPARENT = -1;
         
         //Button styles
         public const int BS_COMMANDLINK = 0x0000000E;
         public const int BS_SPLITBUTTON = 0x0000000C;
+		public const int BS_DEFSPLITBUTTON = 0x0000000D;
         //Button messages
         public const int BCM_SETNOTE = 0x00001609;
         public const int BCM_SETSHIELD = 0x0000160C;
         public const int BM_SETIMAGE = 0x00F7;
 		public const int BCM_SETSPLITINFO = 0x1600 + 0x0007;
 
-		public const uint BCN_DROPDOWN = 4294966046 + 0x0002;	//(0U - 1250U)
+		public const int BCN_SETDROPDOWNSTATE = 0x1606;
 
         public const int ECM_FIRST = 0x1500;
         public const int EM_SETCUEBANNER = ECM_FIRST + 1;
@@ -302,7 +315,7 @@ namespace VistaControls
         public const int WM_APP = 0x8000;
 
 		//SplitInfo structures
-		[StructLayout(LayoutKind.Sequential)]
+		/*[StructLayout(LayoutKind.Sequential)]
 		public struct BUTTON_SPLITINFO {
 			public SplitInfoMask Mask;
 			public IntPtr ImageList;
@@ -328,10 +341,10 @@ namespace VistaControls
 		public struct SIZE {
 			long Width;
 			long Height;
-		}
+		}*/
 
 		//Split button notification
-		[StructLayout(LayoutKind.Sequential)]
+		/*[StructLayout(LayoutKind.Sequential)]
 		public struct NMHDR {
 			public IntPtr HwndFrom;
 			public IntPtr IdFrom;
@@ -342,6 +355,6 @@ namespace VistaControls
 		public struct NMBCDROPDOWN {
 			public NMHDR NMHDR;
 			public Native.RECT DropDownArea;
-		}
+		}*/
     }
 }
