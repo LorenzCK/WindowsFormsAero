@@ -1,6 +1,14 @@
+/*
+* VISTA CONTROLS FOR .NET 2.0
+* 
+* Written by Marco Minerva, mailto:marco.minerva@gmail.com
+* 
+* This code is released under the Microsoft Community License (Ms-CL).
+* A copy of this license is available at
+* http://www.microsoft.com/resources/sharedsource/licensingbasics/limitedcommunitylicense.mspx
+*/
+
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Runtime.InteropServices;
 
 namespace VistaControls
@@ -313,48 +321,5 @@ namespace VistaControls
 
         public const int WM_USER = 0x400;
         public const int WM_APP = 0x8000;
-
-		//SplitInfo structures
-		/*[StructLayout(LayoutKind.Sequential)]
-		public struct BUTTON_SPLITINFO {
-			public SplitInfoMask Mask;
-			public IntPtr ImageList;
-			public SplitInfoStyle SplitStyle;
-			public SIZE Size;
-		}
-
-		public enum SplitInfoMask : uint {
-			Glyph = 0x0001,
-			Image = 0x0002,
-			Style = 0x0004,
-			Size = 0x0008
-		}
-
-		public enum SplitInfoStyle : uint {
-			NoSplit = 0x0001,
-			Stretch = 0x0002,
-			AlignLeft = 0x0004,
-			Image = 0x0008
-		}
-
-		[StructLayout(LayoutKind.Sequential)]
-		public struct SIZE {
-			long Width;
-			long Height;
-		}*/
-
-		//Split button notification
-		/*[StructLayout(LayoutKind.Sequential)]
-		public struct NMHDR {
-			public IntPtr HwndFrom;
-			public IntPtr IdFrom;
-			public uint Code;
-		}
-
-		[StructLayout(LayoutKind.Sequential)]
-		public struct NMBCDROPDOWN {
-			public NMHDR NMHDR;
-			public Native.RECT DropDownArea;
-		}*/
     }
 }

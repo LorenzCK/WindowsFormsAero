@@ -4,19 +4,16 @@
  * http://www.codeplex.com/vistacontrols
  * 
  * @author: Nicholas Kwan
+ * @www: http://www.codeproject.com/KB/vista/themedvistacontrols.aspx
  * @integration: Lorenz Cuno Klopfenstein
- * @www-ref: 
  * Licensed under Microsoft Community License (Ms-CL)
  * 
  *****************************************************/
 
 using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Runtime.InteropServices;
-using System.Windows.Forms;
-using System.Drawing;
 using System.ComponentModel;
+using System.Drawing;
+using System.Windows.Forms;
 
 namespace VistaControls {
 

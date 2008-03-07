@@ -1,3 +1,15 @@
+/*****************************************************
+ *            Vista Controls for .NET 2.0
+ * 
+ * http://www.codeplex.com/vistacontrols
+ * 
+ * @author: Nick Berardi
+ * @www: http://www.coderjournal.com/2007/03/creating-a-vista-like-search-box/
+ * @integration: Lorenz Cuno Klopfenstein
+ * Licensed under Microsoft Community License (Ms-CL)
+ * 
+ *****************************************************/
+
 using System;
 using System.Collections;
 using System.ComponentModel;
