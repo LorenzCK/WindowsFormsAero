@@ -1,10 +1,17 @@
-using System;
-using System.Collections.Generic;
-using System.Text;
+/*
+* VISTA CONTROLS FOR .NET 2.0
+* ENHANCED PROGRESSBAR
+* 
+* Written by Marco Minerva, mailto:marco.minerva@gmail.com
+* 
+* This code is released under the Microsoft Community License (Ms-CL).
+* A copy of this license is available at
+* http://www.microsoft.com/resources/sharedsource/licensingbasics/limitedcommunitylicense.mspx
+*/
+
+using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
-using System.Runtime.InteropServices;
-using System.ComponentModel;
 
 namespace VistaControls
 {

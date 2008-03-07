@@ -81,7 +81,6 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Design\SearchTextBoxDesigner.cs" />
-    <None Include="Design\ThemedLabelDesigner.cs" />
     <Compile Include="DWM\DWMCompositionException.cs" />
     <Compile Include="DWM\DWMManager.cs" />
     <Compile Include="DWM\GlassHelper.cs" />
