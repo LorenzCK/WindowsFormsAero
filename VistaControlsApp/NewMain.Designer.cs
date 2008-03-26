@@ -147,14 +147,14 @@ namespace VistaControlsApp
 			this.tabPage4 = new System.Windows.Forms.TabPage();
 			this.flowLayoutPanel3 = new System.Windows.Forms.FlowLayoutPanel();
 			this.textBox1 = new VistaControls.TextBox();
+			this.textBox2 = new VistaControls.TextBox();
 			this.comboBox1 = new VistaControls.ComboBox();
 			this.searchTextBox2 = new VistaControls.SearchTextBox();
 			this.treeView1 = new VistaControls.TreeView();
 			this.listView1 = new VistaControls.ListView();
+			this.imageList2 = new System.Windows.Forms.ImageList(this.components);
 			this.tabPage5 = new System.Windows.Forms.TabPage();
 			this.label1 = new System.Windows.Forms.Label();
-			this.textBox2 = new VistaControls.TextBox();
-			this.imageList2 = new System.Windows.Forms.ImageList(this.components);
 			this.tabControl1.SuspendLayout();
 			this.tabPage1.SuspendLayout();
 			this.flowLayoutPanel1.SuspendLayout();
@@ -218,10 +218,11 @@ namespace VistaControlsApp
 			this.searchTextBox1.BackColor = System.Drawing.SystemColors.InactiveBorder;
 			this.searchTextBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.searchTextBox1.ForeColor = System.Drawing.SystemColors.GrayText;
-			this.searchTextBox1.InactiveFont = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Italic);
 			this.searchTextBox1.Location = new System.Drawing.Point(389, 62);
 			this.searchTextBox1.Name = "searchTextBox1";
+			this.searchTextBox1.SearchTimer = 600;
 			this.searchTextBox1.Size = new System.Drawing.Size(196, 20);
+			this.searchTextBox1.StartSearchOnEnter = true;
 			this.searchTextBox1.TabIndex = 28;
 			this.searchTextBox1.SearchCancelled += new System.EventHandler(this.Search_cancelled);
 			this.searchTextBox1.SearchStarted += new System.EventHandler(this.Search);
@@ -558,6 +559,15 @@ namespace VistaControlsApp
 			this.textBox1.Size = new System.Drawing.Size(196, 22);
 			this.textBox1.TabIndex = 0;
 			// 
+			// textBox2
+			// 
+			this.textBox2.CueBannerText = "Cue banner (w/focus)";
+			this.textBox2.Location = new System.Drawing.Point(3, 31);
+			this.textBox2.Name = "textBox2";
+			this.textBox2.ShowCueFocused = true;
+			this.textBox2.Size = new System.Drawing.Size(196, 22);
+			this.textBox2.TabIndex = 26;
+			// 
 			// comboBox1
 			// 
 			this.comboBox1.CueBannerText = "Cue banner";
@@ -581,7 +591,6 @@ namespace VistaControlsApp
 			this.searchTextBox2.BackColor = System.Drawing.SystemColors.InactiveBorder;
 			this.searchTextBox2.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.searchTextBox2.ForeColor = System.Drawing.SystemColors.GrayText;
-			this.searchTextBox2.InactiveFont = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Italic);
 			this.searchTextBox2.Location = new System.Drawing.Point(3, 86);
 			this.searchTextBox2.Name = "searchTextBox2";
 			this.searchTextBox2.Size = new System.Drawing.Size(196, 20);
@@ -733,6 +742,22 @@ namespace VistaControlsApp
 			this.listView1.TabIndex = 25;
 			this.listView1.UseCompatibleStateImageBehavior = false;
 			// 
+			// imageList2
+			// 
+			this.imageList2.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageList2.ImageStream")));
+			this.imageList2.TransparentColor = System.Drawing.Color.Transparent;
+			this.imageList2.Images.SetKeyName(0, "audiosrv.dll_I00cb_0409.png");
+			this.imageList2.Images.SetKeyName(1, "ActiveContentWizard.ico");
+			this.imageList2.Images.SetKeyName(2, "feedback.ico");
+			this.imageList2.Images.SetKeyName(3, "imageres.15.ico");
+			this.imageList2.Images.SetKeyName(4, "imageres.13.ico");
+			this.imageList2.Images.SetKeyName(5, "accessibilitycpl.dll_I0146_0409.png");
+			this.imageList2.Images.SetKeyName(6, "bthprops.cpl_I0097_0409.png");
+			this.imageList2.Images.SetKeyName(7, "accessibilitycpl.dll_I0144_0409.png");
+			this.imageList2.Images.SetKeyName(8, "digitalx.exe_I0065_0409.png");
+			this.imageList2.Images.SetKeyName(9, "hdwwiz.exe_I05dd_0409.png");
+			this.imageList2.Images.SetKeyName(10, "setup_wm.exe_I0046_0409.png");
+			// 
 			// tabPage5
 			// 
 			this.tabPage5.Controls.Add(this.label1);
@@ -753,31 +778,6 @@ namespace VistaControlsApp
 			this.label1.Size = new System.Drawing.Size(75, 13);
 			this.label1.TabIndex = 0;
 			this.label1.Text = "Coming soon...";
-			// 
-			// textBox2
-			// 
-			this.textBox2.CueBannerText = "Cue banner (w/focus)";
-			this.textBox2.Location = new System.Drawing.Point(3, 31);
-			this.textBox2.Name = "textBox2";
-			this.textBox2.ShowCueFocused = true;
-			this.textBox2.Size = new System.Drawing.Size(196, 22);
-			this.textBox2.TabIndex = 26;
-			// 
-			// imageList2
-			// 
-			this.imageList2.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageList2.ImageStream")));
-			this.imageList2.TransparentColor = System.Drawing.Color.Transparent;
-			this.imageList2.Images.SetKeyName(0, "audiosrv.dll_I00cb_0409.png");
-			this.imageList2.Images.SetKeyName(1, "ActiveContentWizard.ico");
-			this.imageList2.Images.SetKeyName(2, "feedback.ico");
-			this.imageList2.Images.SetKeyName(3, "imageres.15.ico");
-			this.imageList2.Images.SetKeyName(4, "imageres.13.ico");
-			this.imageList2.Images.SetKeyName(5, "accessibilitycpl.dll_I0146_0409.png");
-			this.imageList2.Images.SetKeyName(6, "bthprops.cpl_I0097_0409.png");
-			this.imageList2.Images.SetKeyName(7, "accessibilitycpl.dll_I0144_0409.png");
-			this.imageList2.Images.SetKeyName(8, "digitalx.exe_I0065_0409.png");
-			this.imageList2.Images.SetKeyName(9, "hdwwiz.exe_I05dd_0409.png");
-			this.imageList2.Images.SetKeyName(10, "setup_wm.exe_I0046_0409.png");
 			// 
 			// NewMain
 			// 

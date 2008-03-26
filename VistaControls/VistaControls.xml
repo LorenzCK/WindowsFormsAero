@@ -523,6 +523,13 @@
             As soon as the form is disposed, the handler will be disposed as well.
             </remarks>
         </member>
+        <member name="T:VistaControls.SearchTextBox">
+            <summary>A standard WinForms text box presenting the common Vista "search" interface.
+            Reacts on user input by raising "SearchStarted" events.</summary>
+        </member>
+        <member name="M:VistaControls.SearchTextBox.SetFocusWithoutSelection">
+            <summary>Puts the focus on the text box and moves the caret to the end of the text, without selecting it.</summary>
+        </member>
         <member name="M:VistaControls.SearchTextBox.Dispose(System.Boolean)">
             <summary> 
             Clean up any resources being used.

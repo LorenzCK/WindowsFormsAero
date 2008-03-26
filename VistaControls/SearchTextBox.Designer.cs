@@ -55,6 +55,7 @@ namespace VistaControls
 			this.searchText.TextChanged += new System.EventHandler(this.searchText_TextChanged);
 			this.searchText.GotFocus += new System.EventHandler(searchText_GotFocus);
 			this.searchText.LostFocus += new System.EventHandler(searchText_LostFocus);
+			this.searchText.KeyDown += new System.Windows.Forms.KeyEventHandler(searchText_KeyUp);
 			// 
 			// searchImage
 			// 
