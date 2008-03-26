@@ -18,13 +18,15 @@ using System.Windows.Forms;
 
 namespace VistaControls
 {
+	/// <summary>A standard WinForms text box presenting the common Vista "search" interface.
+	/// Reacts on user input by raising "SearchStarted" events.</summary>
 	[Designer(typeof(VistaControls.Design.SearchTextBoxDesigner))]
-	[DefaultEvent("TextChanged")]
+	[DefaultEvent("SearchStarted")]
 	[DefaultProperty("Text")]
 	public partial class SearchTextBox : Control
 	{
 		private const string DefaultInactiveText = "Search";
-		private const int DefaultTimerInterval = 400;
+		private const int DefaultTimerInterval = 500;
 
 		private bool _active;
 
@@ -81,6 +83,9 @@ namespace VistaControls
 			searchText.Font = Font;
 			searchText.ForeColor = ActiveForeColor;
 			searchText.BackColor = InactiveBackColor;
+
+			StartSearchAfterDelay = true;
+			StartSearchOnEnter = false;
 
 			_active = false;
 
@@ -224,7 +229,7 @@ namespace VistaControls
 		}
 
 		[Category("Appearance")]
-		[DefaultValue(typeof(Font), "Microsoft Sans Serif, 8.25pt, style=Bold, Italic")]
+		[DefaultValue(typeof(Font), "Microsoft Sans Serif, 8.25pt, style=Italic")]
 		public Font InactiveFont
 		{
 			get {
@@ -259,6 +264,18 @@ namespace VistaControls
 		public int SearchTimer {
 			get { return _timer.Interval; }
 			set { _timer.Interval = value; }
+		}
+
+		[Description("Gets or sets whether the control raises a SearchStarted event after user input."), Category("Behavior"), DefaultValue(true)]
+		public bool StartSearchAfterDelay {
+			get;
+			set;
+		}
+
+		[Description("Gets or sets whether the control raises a SearchStarted event when the user hits the Enter key on the text box."), Category("Behavior"), DefaultValue(false)]
+		public bool StartSearchOnEnter {
+			get;
+			set;
 		}
 
 		#endregion
@@ -302,6 +319,7 @@ namespace VistaControls
 			this.ResumeLayout(true);
 		}
 
+		/// <summary>Puts the focus on the text box and moves the caret to the end of the text, without selecting it.</summary>
 		public void SetFocusWithoutSelection() {
 			searchText.Select(searchText.Text.Length, 0);
 			searchText.Focus();
@@ -343,7 +361,7 @@ namespace VistaControls
 
 			//Start search timer
 			_timer.Stop();
-			if(TextEntered)
+			if(TextEntered && StartSearchAfterDelay)
 				_timer.Start();
 
 			base.OnTextChanged(e);
@@ -373,6 +391,14 @@ namespace VistaControls
 				OnLostFocus(EventArgs.Empty);
 
 				OnSearchCancelled(EventArgs.Empty);
+			}
+		}
+
+		private void searchText_KeyUp(object sender, KeyEventArgs e) {
+			if (e.KeyCode == Keys.Enter && StartSearchOnEnter) {
+				e.Handled = true;
+				e.SuppressKeyPress = true;
+				OnSearchStarted(EventArgs.Empty);
 			}
 		}
 
