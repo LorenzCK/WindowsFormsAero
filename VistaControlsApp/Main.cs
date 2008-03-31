@@ -182,7 +182,7 @@ namespace VistaControlsApp {
 		#region Split button
 
 		private void Split_click(object sender, EventArgs e) {
-			if (progressBar1.Value + 10 <= progressBar1.Maximum) ;
+			if (progressBar1.Value + 10 <= progressBar1.Maximum)
 				progressBar1.Value += 10;
 		}
 

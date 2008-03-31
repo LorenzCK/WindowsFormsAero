@@ -20,5 +20,8 @@ namespace VistaControls.Native {
 		[DllImport("user32.dll", CharSet = CharSet.Auto, ExactSpelling = true)]
 		public static extern IntPtr GetActiveWindow();
 
+		[DllImport("user32.dll", CharSet = CharSet.Auto)]
+		public static extern bool GetWindowRect(IntPtr hwnd, out RECT rect);
+
 	}
 }

@@ -4,6 +4,21 @@
         <name>VistaControls</name>
     </assembly>
     <members>
+        <member name="E:VistaControls.SplitButton.SplitClick">
+            <summary>Occurs when the split label is clicked.</summary>
+        </member>
+        <member name="E:VistaControls.SplitButton.SplitMenuOpening">
+            <summary>Occurs when the split label is clicked, but before the associated
+            context menu is displayed by the control.</summary>
+        </member>
+        <member name="P:VistaControls.SplitButton.SplitMenuStrip">
+            <summary>Gets or sets the associated context menu that is displayed when the split
+            glyph of the button is clicked.</summary>
+        </member>
+        <member name="P:VistaControls.SplitButton.SplitMenu">
+            <summary>Gets or sets the associated context menu that is displayed when the split
+            glyph of the button is clicked. Exposed for backward compatibility.</summary>
+        </member>
         <member name="T:VistaControls.SplitButton.SplitMenuEventArgs">
             <summary>Provides data for the clicking of split buttons and the opening
             of context menus.</summary>
@@ -15,6 +30,16 @@
         </member>
         <member name="P:VistaControls.SplitButton.SplitMenuEventArgs.PreventOpening">
             <summary>Set to true if you want to prevent the menu from opening.</summary>
+        </member>
+        <member name="M:VistaControls.DWM.ThumbnailViewer.SetThumbnail(System.Windows.Forms.Form,System.Boolean)">
+            <summary>Sets the origin of the thumbnail and shows the thumbnail on the control.</summary>
+            <param name="originForm">The Form instance that will be thumbnailed.</param>
+            <param name="trackFormUpdates">True if the control should automatically update itself in case the thumbnailed
+            form changes size or is closed.</param>
+        </member>
+        <member name="M:VistaControls.DWM.ThumbnailViewer.Update">
+            <summary>Forces and update of the thumbnail.</summary>
+            <remarks>Use this method if you know that the thumbnailed window has been resized and the thumbnail control should react to these changes.</remarks>
         </member>
         <member name="T:VistaControls.DWM.Margins">
             <summary>Margins structure for the Glass Sheet effect.</summary>
@@ -486,6 +511,9 @@
               Looks up a localized string similar to Failed to create TaskDialog..
             </summary>
         </member>
+        <member name="P:VistaControls.DWM.Helpers.GlassForm.GlassMargins">
+            <summary>Gets or sets the glass margins of the form.</summary>
+        </member>
         <member name="M:VistaControls.DWM.GlassHelper.HandleFormMovementOnGlass(System.Windows.Forms.Form,VistaControls.DWM.Margins)">
             <summary>
             Adds a handler on the Form that enables the user to move the window around
@@ -541,6 +569,43 @@
             Required method for Designer support - do not modify 
             the contents of this method with the code editor.
             </summary>
+        </member>
+        <member name="P:VistaControls.SearchTextBox.HoverButtonColor">
+            <summary>Gets or sets the background Color of the button when the mouse hovers on it.</summary>
+        </member>
+        <member name="P:VistaControls.SearchTextBox.ActiveForeColor">
+            <summary>Gets or sets the ForeColor of the control when the search box is active.</summary>
+        </member>
+        <member name="P:VistaControls.SearchTextBox.ActiveBackColor">
+            <summary>Gets or sets the BackColor of the control when the search box is active.</summary>
+        </member>
+        <member name="P:VistaControls.SearchTextBox.InactiveForeColor">
+            <summary>Gets or sets the ForeColor of the control when the search box is inactive.</summary>
+        </member>
+        <member name="P:VistaControls.SearchTextBox.InactiveBackColor">
+            <summary>Gets or sets the BackColor of the control when the search box is inactive.</summary>
+        </member>
+        <member name="P:VistaControls.SearchTextBox.ForeColor">
+            <summary>Temporary ForeColor property of the control. You should use InactiveForeColor and ActiveForeColor instead.</summary>
+        </member>
+        <member name="P:VistaControls.SearchTextBox.BackColor">
+            <summary>Temporary BackColor property of the control. You should use InactiveBackColor and ActiveBackColor instead.</summary>
+        </member>
+        <member name="P:VistaControls.SearchTextBox.InactiveText">
+            <summary>Gets or sets the text that is shown on top of the text box when the user hasn't entered any text.</summary>
+        </member>
+        <member name="P:VistaControls.SearchTextBox.ActiveFont">
+            <summary>Gets or sets the font used in the search text box.</summary>
+            <remarks>Equals to the Font property.</remarks>
+        </member>
+        <member name="P:VistaControls.SearchTextBox.InactiveFont">
+            <summary>Gets or sets the font used to write the "inactivity label" on top of the control when the user hasn't entered any text.</summary>
+        </member>
+        <member name="P:VistaControls.SearchTextBox.Font">
+            <summary>Overall Font property of the control. Property changes are forwarded to the ActiveFont property.</summary>
+        </member>
+        <member name="P:VistaControls.SearchTextBox.TextEntered">
+            <summary>Returns true if the user entered some text in the search textbox.</summary>
         </member>
         <member name="T:VistaControls.TaskDialog.TaskDialogIcon">
             <summary>Common Task Dialog icons. Determine the look of the main instruction.</summary>

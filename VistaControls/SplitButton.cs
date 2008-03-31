@@ -29,13 +29,13 @@ namespace VistaControls {
 
 		#region Split Context Menu
 
-		[Description("Occurs when the split button is clicked."), Category("Action")]
 		/// <summary>Occurs when the split label is clicked.</summary>
+		[Description("Occurs when the split button is clicked."), Category("Action")]
 		public event EventHandler<SplitMenuEventArgs> SplitClick;
 
-		[Description("Occurs when the split label is clicked, but before the associated context menu is displayed."), Category("Action")]
 		/// <summary>Occurs when the split label is clicked, but before the associated
 		/// context menu is displayed by the control.</summary>
+		[Description("Occurs when the split label is clicked, but before the associated context menu is displayed."), Category("Action")]
 		public event EventHandler<SplitMenuEventArgs> SplitMenuOpening;
 
 		/// <summary>Provides data for the clicking of split buttons and the opening
@@ -81,14 +81,14 @@ namespace VistaControls {
 				SplitClick(this, e);
 		}
 
-		[Description("Sets the context menu that is displayed by clicking on the split button."), Category("Behavior"), DefaultValue(null)]
 		/// <summary>Gets or sets the associated context menu that is displayed when the split
 		/// glyph of the button is clicked.</summary>
+		[Description("Sets the context menu that is displayed by clicking on the split button."), Category("Behavior"), DefaultValue(null)]
 		public ContextMenuStrip SplitMenuStrip { get; set; }
 
-		[Description("Sets the context menu that is displayed by clicking on the split button."), Category("Behavior"), DefaultValue(null)]
 		/// <summary>Gets or sets the associated context menu that is displayed when the split
 		/// glyph of the button is clicked. Exposed for backward compatibility.</summary>
+		[Description("Sets the context menu that is displayed by clicking on the split button."), Category("Behavior"), DefaultValue(null)]
 		public ContextMenu SplitMenu { get; set; }
 
 		#endregion

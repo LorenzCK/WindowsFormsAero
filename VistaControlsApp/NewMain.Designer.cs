@@ -154,7 +154,8 @@ namespace VistaControlsApp
 			this.listView1 = new VistaControls.ListView();
 			this.imageList2 = new System.Windows.Forms.ImageList(this.components);
 			this.tabPage5 = new System.Windows.Forms.TabPage();
-			this.label1 = new System.Windows.Forms.Label();
+			this.button12 = new System.Windows.Forms.Button();
+			this.thumbnailViewer1 = new VistaControls.DWM.ThumbnailViewer();
 			this.tabControl1.SuspendLayout();
 			this.tabPage1.SuspendLayout();
 			this.flowLayoutPanel1.SuspendLayout();
@@ -213,17 +214,19 @@ namespace VistaControlsApp
 			// 
 			// searchTextBox1
 			// 
-			this.searchTextBox1.ActiveFont = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.searchTextBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.searchTextBox1.BackColor = System.Drawing.SystemColors.InactiveBorder;
-			this.searchTextBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.searchTextBox1.Cursor = System.Windows.Forms.Cursors.IBeam;
+			this.searchTextBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
 			this.searchTextBox1.ForeColor = System.Drawing.SystemColors.GrayText;
+			this.searchTextBox1.InactiveFont = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.searchTextBox1.InactiveText = "Search tabs...";
 			this.searchTextBox1.Location = new System.Drawing.Point(389, 62);
 			this.searchTextBox1.Name = "searchTextBox1";
 			this.searchTextBox1.SearchTimer = 600;
 			this.searchTextBox1.Size = new System.Drawing.Size(196, 20);
 			this.searchTextBox1.StartSearchOnEnter = true;
-			this.searchTextBox1.TabIndex = 28;
+			this.searchTextBox1.TabIndex = 1;
 			this.searchTextBox1.SearchCancelled += new System.EventHandler(this.Search_cancelled);
 			this.searchTextBox1.SearchStarted += new System.EventHandler(this.Search);
 			// 
@@ -241,7 +244,7 @@ namespace VistaControlsApp
 			this.tabControl1.Name = "tabControl1";
 			this.tabControl1.SelectedIndex = 0;
 			this.tabControl1.Size = new System.Drawing.Size(575, 313);
-			this.tabControl1.TabIndex = 29;
+			this.tabControl1.TabIndex = 0;
 			// 
 			// tabPage1
 			// 
@@ -288,7 +291,7 @@ namespace VistaControlsApp
 			this.splitButton1.Name = "splitButton1";
 			this.splitButton1.Size = new System.Drawing.Size(122, 23);
 			this.splitButton1.SplitMenu = this.contextMenu1;
-			this.splitButton1.TabIndex = 3;
+			this.splitButton1.TabIndex = 1;
 			this.splitButton1.Text = "Split";
 			this.splitButton1.UseVisualStyleBackColor = true;
 			// 
@@ -321,7 +324,7 @@ namespace VistaControlsApp
 			this.commandLink1.Name = "commandLink1";
 			this.commandLink1.Note = "Note.";
 			this.commandLink1.Size = new System.Drawing.Size(207, 60);
-			this.commandLink1.TabIndex = 1;
+			this.commandLink1.TabIndex = 2;
 			this.commandLink1.Text = "Command Link";
 			this.commandLink1.UseVisualStyleBackColor = true;
 			// 
@@ -333,7 +336,7 @@ namespace VistaControlsApp
 			this.commandLink2.Note = "Note 2.";
 			this.commandLink2.ShowShield = true;
 			this.commandLink2.Size = new System.Drawing.Size(207, 60);
-			this.commandLink2.TabIndex = 2;
+			this.commandLink2.TabIndex = 3;
 			this.commandLink2.Text = "Shield";
 			this.commandLink2.UseVisualStyleBackColor = true;
 			// 
@@ -439,7 +442,7 @@ namespace VistaControlsApp
 			this.button11.Location = new System.Drawing.Point(3, 32);
 			this.button11.Name = "button11";
 			this.button11.Size = new System.Drawing.Size(112, 23);
-			this.button11.TabIndex = 10;
+			this.button11.TabIndex = 1;
 			this.button11.Text = "Warning";
 			this.button11.UseVisualStyleBackColor = true;
 			this.button11.Click += new System.EventHandler(this.ts_warning);
@@ -449,7 +452,7 @@ namespace VistaControlsApp
 			this.button3.Location = new System.Drawing.Point(3, 61);
 			this.button3.Name = "button3";
 			this.button3.Size = new System.Drawing.Size(112, 23);
-			this.button3.TabIndex = 1;
+			this.button3.TabIndex = 2;
 			this.button3.Text = "Error";
 			this.button3.UseVisualStyleBackColor = true;
 			this.button3.Click += new System.EventHandler(this.td_error);
@@ -459,7 +462,7 @@ namespace VistaControlsApp
 			this.button8.Location = new System.Drawing.Point(3, 90);
 			this.button8.Name = "button8";
 			this.button8.Size = new System.Drawing.Size(112, 23);
-			this.button8.TabIndex = 6;
+			this.button8.TabIndex = 3;
 			this.button8.Text = "Shield";
 			this.button8.UseVisualStyleBackColor = true;
 			this.button8.Click += new System.EventHandler(this.td_shield);
@@ -469,7 +472,7 @@ namespace VistaControlsApp
 			this.button4.Location = new System.Drawing.Point(3, 119);
 			this.button4.Name = "button4";
 			this.button4.Size = new System.Drawing.Size(112, 23);
-			this.button4.TabIndex = 2;
+			this.button4.TabIndex = 4;
 			this.button4.Text = "Security Error";
 			this.button4.UseVisualStyleBackColor = true;
 			this.button4.Click += new System.EventHandler(this.td_shielderror);
@@ -479,7 +482,7 @@ namespace VistaControlsApp
 			this.button5.Location = new System.Drawing.Point(3, 148);
 			this.button5.Name = "button5";
 			this.button5.Size = new System.Drawing.Size(112, 23);
-			this.button5.TabIndex = 3;
+			this.button5.TabIndex = 5;
 			this.button5.Text = "Security Success";
 			this.button5.UseVisualStyleBackColor = true;
 			this.button5.Click += new System.EventHandler(this.td_shieldsuccess);
@@ -489,7 +492,7 @@ namespace VistaControlsApp
 			this.button6.Location = new System.Drawing.Point(3, 177);
 			this.button6.Name = "button6";
 			this.button6.Size = new System.Drawing.Size(112, 23);
-			this.button6.TabIndex = 4;
+			this.button6.TabIndex = 6;
 			this.button6.Text = "Blue shield";
 			this.button6.UseVisualStyleBackColor = true;
 			this.button6.Click += new System.EventHandler(this.td_blueshield);
@@ -499,7 +502,7 @@ namespace VistaControlsApp
 			this.button7.Location = new System.Drawing.Point(3, 206);
 			this.button7.Name = "button7";
 			this.button7.Size = new System.Drawing.Size(112, 23);
-			this.button7.TabIndex = 5;
+			this.button7.TabIndex = 7;
 			this.button7.Text = "Gray shield";
 			this.button7.UseVisualStyleBackColor = true;
 			this.button7.Click += new System.EventHandler(this.td_grayshield);
@@ -566,7 +569,7 @@ namespace VistaControlsApp
 			this.textBox2.Name = "textBox2";
 			this.textBox2.ShowCueFocused = true;
 			this.textBox2.Size = new System.Drawing.Size(196, 22);
-			this.textBox2.TabIndex = 26;
+			this.textBox2.TabIndex = 1;
 			// 
 			// comboBox1
 			// 
@@ -583,18 +586,19 @@ namespace VistaControlsApp
 			this.comboBox1.Location = new System.Drawing.Point(3, 59);
 			this.comboBox1.Name = "comboBox1";
 			this.comboBox1.Size = new System.Drawing.Size(196, 21);
-			this.comboBox1.TabIndex = 1;
+			this.comboBox1.TabIndex = 2;
 			// 
 			// searchTextBox2
 			// 
 			this.searchTextBox2.ActiveFont = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.searchTextBox2.BackColor = System.Drawing.SystemColors.InactiveBorder;
+			this.searchTextBox2.Cursor = System.Windows.Forms.Cursors.IBeam;
 			this.searchTextBox2.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.searchTextBox2.ForeColor = System.Drawing.SystemColors.GrayText;
 			this.searchTextBox2.Location = new System.Drawing.Point(3, 86);
 			this.searchTextBox2.Name = "searchTextBox2";
 			this.searchTextBox2.Size = new System.Drawing.Size(196, 20);
-			this.searchTextBox2.TabIndex = 2;
+			this.searchTextBox2.TabIndex = 3;
 			// 
 			// treeView1
 			// 
@@ -724,7 +728,7 @@ namespace VistaControlsApp
 			this.treeView1.SelectedImageIndex = 0;
 			this.treeView1.ShowLines = false;
 			this.treeView1.Size = new System.Drawing.Size(122, 240);
-			this.treeView1.TabIndex = 24;
+			this.treeView1.TabIndex = 4;
 			// 
 			// listView1
 			// 
@@ -739,7 +743,7 @@ namespace VistaControlsApp
 			this.listView1.Name = "listView1";
 			this.listView1.Size = new System.Drawing.Size(255, 199);
 			this.listView1.SmallImageList = this.imageList1;
-			this.listView1.TabIndex = 25;
+			this.listView1.TabIndex = 5;
 			this.listView1.UseCompatibleStateImageBehavior = false;
 			// 
 			// imageList2
@@ -760,7 +764,8 @@ namespace VistaControlsApp
 			// 
 			// tabPage5
 			// 
-			this.tabPage5.Controls.Add(this.label1);
+			this.tabPage5.Controls.Add(this.button12);
+			this.tabPage5.Controls.Add(this.thumbnailViewer1);
 			this.tabPage5.Location = new System.Drawing.Point(4, 22);
 			this.tabPage5.Name = "tabPage5";
 			this.tabPage5.Padding = new System.Windows.Forms.Padding(3);
@@ -769,15 +774,25 @@ namespace VistaControlsApp
 			this.tabPage5.Text = "DWM";
 			this.tabPage5.UseVisualStyleBackColor = true;
 			// 
-			// label1
+			// button12
 			// 
-			this.label1.AutoSize = true;
-			this.label1.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.label1.Location = new System.Drawing.Point(21, 17);
-			this.label1.Name = "label1";
-			this.label1.Size = new System.Drawing.Size(75, 13);
-			this.label1.TabIndex = 0;
-			this.label1.Text = "Coming soon...";
+			this.button12.Location = new System.Drawing.Point(180, 6);
+			this.button12.Name = "button12";
+			this.button12.Size = new System.Drawing.Size(75, 23);
+			this.button12.TabIndex = 1;
+			this.button12.Text = "Refresh";
+			this.button12.UseVisualStyleBackColor = true;
+			this.button12.Click += new System.EventHandler(this.button12_Click);
+			// 
+			// thumbnailViewer1
+			// 
+			this.thumbnailViewer1.Location = new System.Drawing.Point(6, 6);
+			this.thumbnailViewer1.Name = "thumbnailViewer1";
+			this.thumbnailViewer1.ScaleSmallerThumbnails = false;
+			this.thumbnailViewer1.Size = new System.Drawing.Size(168, 168);
+			this.thumbnailViewer1.TabIndex = 0;
+			this.thumbnailViewer1.Text = "thumbnailViewer1";
+			this.thumbnailViewer1.ThumbnailAlignment = System.Drawing.ContentAlignment.MiddleCenter;
 			// 
 			// NewMain
 			// 
@@ -806,7 +821,6 @@ namespace VistaControlsApp
 			this.flowLayoutPanel3.ResumeLayout(false);
 			this.flowLayoutPanel3.PerformLayout();
 			this.tabPage5.ResumeLayout(false);
-			this.tabPage5.PerformLayout();
 			this.ResumeLayout(false);
 
         }
@@ -854,8 +868,9 @@ namespace VistaControlsApp
 		private System.Windows.Forms.Button button10;
 		private System.Windows.Forms.Button button9;
 		private System.Windows.Forms.TabPage tabPage5;
-		private System.Windows.Forms.Label label1;
 		private VistaControls.TextBox textBox2;
 		private System.Windows.Forms.ImageList imageList2;
+		private VistaControls.DWM.ThumbnailViewer thumbnailViewer1;
+		private System.Windows.Forms.Button button12;
     }
 }

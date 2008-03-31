@@ -14,12 +14,26 @@ namespace VistaControlsApp {
     public partial class NewMain : VistaControls.DWM.Helpers.GlassForm {
 
 		Timer _timer;
+		Form _thumbnailedWindow = null;
 
         public NewMain() {
             InitializeComponent();
 
+			_thumbnailedWindow = new ThumbnailedWindow();
+			_thumbnailedWindow.Show(this);
+			_thumbnailedWindow.Location = new Point(Location.X + Size.Width, Location.Y);
+
+			thumbnailViewer1.SetThumbnail(_thumbnailedWindow, true);
+
+			tabPage5.VisibleChanged += new EventHandler(NewMain_VisibleChanged);
+
 			this.ResizeRedraw = true;
         }
+
+		void NewMain_VisibleChanged(object sender, EventArgs e) {
+			foreach (Control c in tabPage5.Controls)
+				c.Visible = tabPage5.Visible;
+		}
 
 		protected override void OnShown(EventArgs e) {
 			base.OnShown(e);
@@ -32,6 +46,12 @@ namespace VistaControlsApp {
 			_timer.Interval = 4200;
 			_timer.Enabled = true;
 			_timer.Tick += new EventHandler(_timer_Tick);
+		}
+
+		protected override void OnClosing(CancelEventArgs e) {
+			_thumbnailedWindow.Close();
+
+			base.OnClosing(e);
 		}
 
 		int _count = 0;
@@ -177,6 +197,10 @@ namespace VistaControlsApp {
 			dlg.SetMarqueeProgressBar(true, 30);
 
 			dlg.Show(this);
+		}
+
+		private void button12_Click(object sender, EventArgs e) {
+			thumbnailViewer1.Update();
 		}
 
 	}
