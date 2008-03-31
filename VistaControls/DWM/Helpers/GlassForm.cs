@@ -26,8 +26,8 @@ namespace VistaControls.DWM.Helpers {
 
 		Margins _glassMargins = new Margins(0);
 
-		[Description("The glass margins which are extended inside the client area of the window."), Category("Appearance"), DefaultValue(null)]
 		/// <summary>Gets or sets the glass margins of the form.</summary>
+		[Description("The glass margins which are extended inside the client area of the window."), Category("Appearance"), DefaultValue(null)]
 		public Margins GlassMargins {
 			get {
 				return _glassMargins;

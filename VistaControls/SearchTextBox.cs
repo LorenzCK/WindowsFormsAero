@@ -60,18 +60,22 @@ namespace VistaControls
 
 
 		public SearchTextBox() {
+			//Load defaults
 			_hoverButtonColor = SystemColors.GradientInactiveCaption;
 			_activeBackColor = SystemColors.Window;
 			_activeForeColor = SystemColors.WindowText;
 			_inactiveBackColor = SystemColors.InactiveBorder;
 			_inactiveForeColor = SystemColors.GrayText;
 
-			_inactiveFont = new Font(this.Font, FontStyle.Italic /*| FontStyle.Bold*/);
+			_inactiveFont = new Font(this.Font, FontStyle.Italic);
 
 			_inactiveText = DefaultInactiveText;
 
+			this.Cursor = Cursors.IBeam;
+
 			InitializeComponent();
 
+			//Load properties
 			BackColor = InactiveBackColor;
 			ForeColor = InactiveForeColor;
 
@@ -129,6 +133,7 @@ namespace VistaControls
 
 		#region Properties
 
+		/// <summary>Gets or sets the background Color of the button when the mouse hovers on it.</summary>
 		[Category("Appearance")]
 		[DefaultValue(typeof(Color), "GradientInactiveCaption")]
 		public Color HoverButtonColor
@@ -140,6 +145,7 @@ namespace VistaControls
 			}
 		}
 
+		/// <summary>Gets or sets the ForeColor of the control when the search box is active.</summary>
 		[Category("Appearance")]
 		[DefaultValue(typeof(Color), "WindowText")]
 		public Color ActiveForeColor
@@ -151,6 +157,7 @@ namespace VistaControls
 			}
 		}
 
+		/// <summary>Gets or sets the BackColor of the control when the search box is active.</summary>
 		[Category("Appearance")]
 		[DefaultValue(typeof(Color), "Window")]
 		public Color ActiveBackColor
@@ -162,6 +169,7 @@ namespace VistaControls
 			}
 		}
 
+		/// <summary>Gets or sets the ForeColor of the control when the search box is inactive.</summary>
 		[Category("Appearance")]
 		[DefaultValue(typeof(Color), "GrayText")]
 		public Color InactiveForeColor
@@ -173,6 +181,7 @@ namespace VistaControls
 			}
 		}
 
+		/// <summary>Gets or sets the BackColor of the control when the search box is inactive.</summary>
 		[Category("Appearance")]
 		[DefaultValue(typeof(Color), "InactiveBorder")]
 		public Color InactiveBackColor
@@ -184,50 +193,59 @@ namespace VistaControls
 			}
 		}
 
+		/*   Removed 29/03/2008, put in costructor
 		[Category("Appearance")]
 		[DefaultValue(typeof(Cursor), "IBeam")]
 		public override Cursor Cursor
 		{
 			get { return base.Cursor; }
 			set { base.Cursor = value; }
-		}
+		}*/
 
+		/// <summary>Temporary ForeColor property of the control. You should use InactiveForeColor and ActiveForeColor instead.</summary>
 		[Browsable(false)]
 		public override Color ForeColor
 		{
 			get { return base.ForeColor; }
-			set {
-				base.ForeColor = value;
-				searchText.ForeColor = value;
-			}
+			set { base.ForeColor = value; }
 		}
 
+		/// <summary>Temporary BackColor property of the control. You should use InactiveBackColor and ActiveBackColor instead.</summary>
 		[Browsable(false)]
 		public override Color BackColor
 		{
 			get { return base.BackColor; }
-			set {
-				base.BackColor = value;
-				searchText.BackColor = value;
-			}
+			set { base.BackColor = value; }
 		}
 
+		/// <summary>Gets or sets the text that is shown on top of the text box when the user hasn't entered any text.</summary>
 		[Category("Appearance")]
 		[DefaultValue(DefaultInactiveText)]
 		public string InactiveText
 		{
 			get { return _inactiveText; }
-			set { _inactiveText = value; }
+			set {
+				_inactiveText = value;
+				
+				searchOverlayLabel.Text = value;
+			}
 		}
 
+		/// <summary>Gets or sets the font used in the search text box.</summary>
+		/// <remarks>Equals to the Font property.</remarks>
 		[Category("Appearance")]
 		[DefaultValue(typeof(Font), "Microsoft Sans Serif, 8.25pt")]
 		public Font ActiveFont
 		{
 			get { return base.Font; }
-			set { base.Font = value; }
+			set {
+				base.Font = value;
+
+				searchText.Font = value;
+			}
 		}
 
+		/// <summary>Gets or sets the font used to write the "inactivity label" on top of the control when the user hasn't entered any text.</summary>
 		[Category("Appearance")]
 		[DefaultValue(typeof(Font), "Microsoft Sans Serif, 8.25pt, style=Italic")]
 		public Font InactiveFont
@@ -238,25 +256,33 @@ namespace VistaControls
 				else
 					return _inactiveFont;
 			}
-			set { _inactiveFont = value; }
+			set {
+				_inactiveFont = value;
+
+				searchOverlayLabel.Font = value;
+			}
 		}
 
+		/// <summary>Overall Font property of the control. Property changes are forwarded to the ActiveFont property.</summary>
 		[Browsable(false)]
 		public override Font Font
 		{
 			get { return base.Font; }
-			set { base.Font = value; }
+			set {
+				base.Font = value;
+				ActiveFont = value;
+			}
 		}
 
-		[Category("Appearance")]
+		//[Category("Appearance")]
 		public override string Text
 		{
 			get { return searchText.Text; }
 			set { searchText.Text = value; }
 		}
 
-		protected bool TextEntered
-		{
+		/// <summary>Returns true if the user entered some text in the search textbox.</summary>
+		protected bool TextEntered {
 			get { return !String.IsNullOrEmpty(searchText.Text); }
 		}
 
@@ -282,19 +308,20 @@ namespace VistaControls
 
 		#region Methods
 
-		private void SetActive(bool value)
-		{
+		private void SetActive(bool value){
 			if (TextEntered)
 				value = true;
 
-			if (_active == value)
-				return;
+			//if (_active == value)
+			//	return;
 
 			_active = value;
+
+			RefreshColors();
 		}
 
-		private void SetTextActive(bool value)
-		{
+
+		private void SetTextActive(bool value){
 			bool active = value || TextEntered;
 
 			this.searchOverlayLabel.Visible = !active;
@@ -329,16 +356,14 @@ namespace VistaControls
 
 		#region Event Methods
 
-		protected override void OnGotFocus(EventArgs e)
-		{
+		protected override void OnGotFocus(EventArgs e) {
 			SetTextActive(true);
 			SetActive(true);
 
 			base.OnGotFocus(e);
 		}
 
-		protected override void OnLostFocus(EventArgs e)
-		{
+		protected override void OnLostFocus(EventArgs e) {
 			if (this.searchText.Focused)
 				return;
 
@@ -348,15 +373,25 @@ namespace VistaControls
 			base.OnLostFocus(e);
 		}
 
-		protected override void OnClick(EventArgs e)
-		{
+		protected override void OnMouseEnter(EventArgs e) {
+			SetActive(true);
+
+			base.OnMouseEnter(e);
+		}
+
+		protected override void OnMouseLeave(EventArgs e) {
+			SetActive(false);
+
+			base.OnMouseLeave(e);
+		}
+
+		protected override void OnClick(EventArgs e) {
 			this.Select();
 
 			base.OnClick(e);
 		}
 
-		protected override void OnTextChanged(EventArgs e)
-		{
+		protected override void OnTextChanged(EventArgs e) {
 			searchImage.Image = TextEntered ? Resources.Pictures.ActiveSearch : Resources.Pictures.InactiveSearch;
 
 			//Start search timer
@@ -367,30 +402,32 @@ namespace VistaControls
 			base.OnTextChanged(e);
 		}
 
-		private void searchImage_MouseMove(object sender, System.Windows.Forms.MouseEventArgs e)
-		{
-			if (e.X < 0 || e.X > searchImage.Width || e.Y < 0 || e.Y > searchImage.Height)
-			{
-				NativeMethods.StopMouseCapture();
-				searchImage.BackColor = Color.Empty;
-			}
-			else
-			{
-				NativeMethods.StartMouseCapture(searchImage.Handle);
+		#endregion
 
-				if (TextEntered)
-					searchImage.BackColor = HoverButtonColor;
-			}
+		#region Sub Controls event handling
+
+		private void searchImage_MouseEnter(object sender, EventArgs e) {
+			SetActive(true);
+
+			if (TextEntered)
+				searchImage.BackColor = HoverButtonColor;
+		}
+
+		private void searchImage_MouseLeave(object sender, EventArgs e) {
+			SetActive(false);
+
+			searchImage.BackColor = Color.Empty;
 		}
 
 		private void searchImage_Click(object sender, System.EventArgs e)
 		{
-			if (TextEntered)
-			{
+			if (TextEntered) {
 				this.searchText.ResetText();
 				OnLostFocus(EventArgs.Empty);
 
 				OnSearchCancelled(EventArgs.Empty);
+
+				searchImage.BackColor = Color.Empty;
 			}
 		}
 
@@ -402,19 +439,28 @@ namespace VistaControls
 			}
 		}
 
-		private void searchText_TextChanged(object sender, EventArgs e)
-		{
+		private void searchText_TextChanged(object sender, EventArgs e) {
 			OnTextChanged(e);
 		}
 
-		private void searchText_LostFocus(object sender, System.EventArgs e)
-		{
+		private void searchText_LostFocus(object sender, System.EventArgs e) {
 			OnLostFocus(e);
 		}
 
-		private void searchText_GotFocus(object sender, System.EventArgs e)
-		{
+		private void searchText_GotFocus(object sender, System.EventArgs e) {
 			OnGotFocus(e);
+		}
+
+		private void searchOverlayLabel_Click(object sender, EventArgs e) {
+			OnClick(EventArgs.Empty);
+		}
+
+		private void searchOverlayLabel_MouseEnter(object sender, EventArgs e) {
+			SetActive(true);
+		}
+
+		private void searchOverlayLabel_MouseLeave(object sender, EventArgs e) {
+			SetActive(false);
 		}
 
 		void SearchTimer_Tick(object sender, EventArgs e) {

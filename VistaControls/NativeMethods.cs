@@ -33,11 +33,11 @@ namespace VistaControls
         [DllImport("uxtheme.dll", CharSet = CharSet.Unicode)]
         public extern static int SetWindowTheme(IntPtr hWnd, string pszSubAppName, string pszSubIdList);
 
-		[DllImport("user32.dll", EntryPoint = "ReleaseCapture")]
+		/*[DllImport("user32.dll", EntryPoint = "ReleaseCapture")]
 		public static extern bool StopMouseCapture();
 
 		[DllImport("user32.dll", EntryPoint = "SetCapture")]
-		public static extern IntPtr StartMouseCapture(IntPtr hWnd);
+		public static extern IntPtr StartMouseCapture(IntPtr hWnd);*/
 
 		//Window styles
 		public const int WS_EX_CONTROLPARENT = 0x00010000;
