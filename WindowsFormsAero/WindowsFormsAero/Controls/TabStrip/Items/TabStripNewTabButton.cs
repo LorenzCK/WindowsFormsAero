@@ -11,6 +11,7 @@ using System.Windows.Forms;
 
 namespace WindowsFormsAero
 {
+    [System.ComponentModel.DesignerCategory("Code")]
     internal sealed class TabStripNewTabButton : TabStripButtonBase
     {
         public TabStripNewTabButton()

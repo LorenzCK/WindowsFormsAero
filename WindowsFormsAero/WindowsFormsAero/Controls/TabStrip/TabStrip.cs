@@ -14,8 +14,8 @@ using System.Windows.Forms.Layout;
 
 namespace WindowsFormsAero
 {
-    [DesignerCategory("code")]
-    [ToolboxItem(typeof(TabStripToolboxItem))]
+    [System.ComponentModel.DesignerCategory("code")]
+    [System.Drawing.ToolboxBitmap(typeof(Resources.Images), "TabStripToolboxBitmap.bmp")]
     public partial class TabStrip : ToolStrip
     {
         private const int DefaultMinTabWidth = 63;
