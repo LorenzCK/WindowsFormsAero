@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace WindowsFormsAero.Demo.Properties {
+namespace WindowsFormsAero.Design {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace WindowsFormsAero.Demo.Properties {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("WindowsFormsAero.Demo.Properties.Resources", typeof(Resources).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("WindowsFormsAero.Design.Resources", typeof(Resources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -60,10 +60,12 @@ namespace WindowsFormsAero.Demo.Properties {
             }
         }
         
-        internal static System.Drawing.Bitmap Untitled {
+        /// <summary>
+        ///   Looks up a localized string similar to Add Tab Page.
+        /// </summary>
+        internal static string AddTabPage {
             get {
-                object obj = ResourceManager.GetObject("Untitled", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
+                return ResourceManager.GetString("AddTabPage", resourceCulture);
             }
         }
     }

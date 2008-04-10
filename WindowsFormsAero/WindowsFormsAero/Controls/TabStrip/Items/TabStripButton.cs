@@ -13,11 +13,11 @@ using System.Windows.Forms.Design;
 
 namespace WindowsFormsAero
 {
-    [DesignerCategory("code")]
+    [System.ComponentModel.DesignerCategory("Code")]
     [ToolStripItemDesignerAvailability(ToolStripItemDesignerAvailability.None)]
-    public sealed class TabStripButton : TabStripButtonBase
+    public class TabStripButton : TabStripButtonBase
     {
-        private TabStripPage _tabStripPage;
+        private AeroTabPage _tabStripPage;
         
         private Boolean _isBusy;
         private Boolean _isClosable = true;
@@ -152,7 +152,7 @@ namespace WindowsFormsAero
         }
 
         [DefaultValue(null)]
-        public TabStripPage TabStripPage
+        public AeroTabPage TabStripPage
         {
             get { return _tabStripPage; }
             set { _tabStripPage = value; }

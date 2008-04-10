@@ -18,9 +18,9 @@ namespace WindowsFormsAero.Demo
         private static void Main()
         {
             Application.SetCompatibleTextRenderingDefault(false);
-            ToolStripManager.Renderer = new TabStripDebugRenderer();
+            ToolStripManager.Renderer = new TabStripSystemRenderer();
 
-            using (var form = new MainForm())
+            using (var form = new Form())
             {
                 Application.Run(form);
             }

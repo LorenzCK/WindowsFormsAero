@@ -11,6 +11,7 @@ using System.Windows.Forms;
 
 namespace WindowsFormsAero
 {
+    [System.ComponentModel.DesignerCategory("Code")]
     public abstract class TabStripButtonBase : ToolStripButton
     {
         private sealed class TabStripButtonLayout

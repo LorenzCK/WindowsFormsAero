@@ -68,5 +68,14 @@ namespace WindowsFormsAero.Resources {
                 return ResourceManager.GetString("AddTab", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The specified control is not an AeroTabPage..
+        /// </summary>
+        internal static string TabControlInvalidPageType {
+            get {
+                return ResourceManager.GetString("TabControlInvalidPageType", resourceCulture);
+            }
+        }
     }
 }

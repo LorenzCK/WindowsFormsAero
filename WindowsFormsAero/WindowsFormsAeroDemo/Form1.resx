@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -117,11 +117,4 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="AddTab" xml:space="preserve">
-    <value>Add TabStrip page</value>
-    <comment>used in TabPageSwitcherDesigner</comment>
-  </data>
-  <data name="TabControlInvalidPageType" xml:space="preserve">
-    <value>The specified control is not an AeroTabPage.</value>
-  </data>
 </root>
