@@ -99,14 +99,18 @@ namespace WindowsFormsAero.Demo
         {
             base.OnHandleCreated(e);
 
-            if (TabStripBackgroud)
+            try
             {
-                DwmExtendFrameIntoClientArea(new HandleRef(this, Handle), new MARGINS(0));
+                if (TabStripBackgroud)
+                {
+                    DwmExtendFrameIntoClientArea(new HandleRef(this, Handle), new MARGINS(0));
+                }
+                else
+                {
+                    DwmExtendFrameIntoClientArea(new HandleRef(this, Handle), new MARGINS(0, tabStrip1.Bottom - tabStrip1.Padding.Bottom + 1, 0, 0));
+                }
             }
-            else
-            {
-                DwmExtendFrameIntoClientArea(new HandleRef(this, Handle), new MARGINS(0, tabStrip1.Bottom - tabStrip1.Padding.Bottom + 1, 0, 0));
-            }
+            catch (COMException) { }
         }
 
         private void cbkTabStripBackground_CheckedChanged(object sender, EventArgs e)

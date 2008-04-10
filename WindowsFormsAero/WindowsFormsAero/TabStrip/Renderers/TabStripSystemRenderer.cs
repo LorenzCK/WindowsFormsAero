@@ -50,14 +50,22 @@ namespace WindowsFormsAero
 
         private Int32 _currentTickCount;
         private Image _currentBusyImage;
-
+        
         public TabStripSystemRenderer()
             : base(new ToolStripSystemRenderer())
         {
             BusyTabRefreshInterval = TimeSpan.FromMilliseconds(BusyTimerInterval);
+            RenderUsingVisualStyles = true;
+            RenderBackground = true;
         }
 
         public bool RenderBackground
+        {
+            get;
+            set;
+        }
+
+        public bool RenderUsingVisualStyles
         {
             get;
             set;
@@ -77,16 +85,20 @@ namespace WindowsFormsAero
         {
             if (e.ToolStrip is TabStrip)
             {
-                if (RenderBackground)
+                if (VisualStylesAvailable && RenderBackground)
                 {
                     FillGradient(e.Graphics,
                         GetTabStripUpperBorderPath(e),
                         NormalColors,
                         TabStripBackgroundRatio);
                 }
-                else
+                else if (VisualStylesAvailable)
                 {
                     e.Graphics.Clear(Color.FromArgb(0, Color.White));
+                }
+                else
+                {
+                    e.Graphics.Clear(SystemColors.Control);
                 }
             }
             else
@@ -101,55 +113,9 @@ namespace WindowsFormsAero
 
             if (tabStrip != null)
             {
-                //if (RenderBackground)
-                //{
-                //    using (var path = GetTabStripUpperBorderPath(e))
-                //    {
-                //        using (var pen = new Pen(TabStripBorderColor))
-                //        {
-                //            e.Graphics.DrawPath(pen, path);
-                //        }
-                //    }
-                //}
-
-                var left = e.AffectedBounds.Left;
-                var right = e.AffectedBounds.Right - 1;
-                var y = e.AffectedBounds.Bottom - tabStrip.Padding.Bottom;
-
-                var selectedTab = tabStrip.SelectedTab;
-
-                using (var paddingPen = new Pen(CheckedColors[3], 1))
+                if (VisualStylesAvailable)
                 {
-                    using (var borderPen = new Pen(TabBorderColor))
-                    {
-                        if (selectedTab != null)
-                        {
-                            e.Graphics.DrawLine(borderPen, left, y, selectedTab.Bounds.Left, y);
-                            e.Graphics.DrawLine(Pens.White, left, y + 1, selectedTab.Bounds.Left, y + 1);
-
-                            e.Graphics.DrawLine(paddingPen, selectedTab.Bounds.Left, y, selectedTab.Bounds.Right, y);
-                            e.Graphics.DrawLine(paddingPen, selectedTab.Bounds.Left, y + 1, selectedTab.Bounds.Right, y + 1);
-
-                            e.Graphics.DrawLine(borderPen, selectedTab.Bounds.Right, y, right, y);
-                            e.Graphics.DrawLine(Pens.White, selectedTab.Bounds.Right, y + 1, right, y + 1);
-                        }
-                        else
-                        {
-                            e.Graphics.DrawLine(borderPen, left, y, right, y);
-                            e.Graphics.DrawLine(Pens.White, left, y, right, y);
-                        }
-                    }
-
-                    using (var paddingBrush = new SolidBrush(paddingPen.Color))
-                    {
-                        var paddingRect = Rectangle.FromLTRB(
-                            e.AffectedBounds.Left, 
-                            y + 2,
-                            e.AffectedBounds.Right,
-                            e.AffectedBounds.Bottom);
-
-                        e.Graphics.FillRectangle(paddingBrush, paddingRect);
-                    }
+                    RenderToolStripBorderUsingVisualStyles(e, tabStrip);
                 }
             }
             else
@@ -168,49 +134,41 @@ namespace WindowsFormsAero
                 isChecked = true;
             }
 
-            e.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
-
-            using (GraphicsPath outer = GetTabBorderPath(e.Item.Width, e.Item.Height, isChecked, false))
+            if (VisualStylesAvailable)
             {
-                var colors = NormalColors;
-
-                if (e.Item.Enabled && isChecked)
-                {
-                    colors = CheckedColors;
-                }
-                else if (e.Item.Selected)
-                {
-                    colors = SelectedColors;
-                }
-
-                FillGradient(e.Graphics, outer, colors, TabBackgroundRatio);
-
-                using (Pen pen = new Pen(TabBorderColor, 1))
-                {
-                    e.Graphics.DrawPath(Pens.Gray, outer);
-                }
-
-                using (GraphicsPath inner = GetTabBorderPath(e.Item.Width, e.Item.Height, isChecked, true))
-                {
-                    e.Graphics.DrawPath(Pens.White, inner);
-                }
+                RenderTabItemBackgroundUsingVisualStyles(e, isChecked);
             }
-
-            if (!e.CloseButtonRectangle.IsEmpty)
+            else
             {
-                var element = VisualStyleElement.ToolTip.Close.Normal;
-
-                if (e.CloseButtonState == TabStripCloseButtonState.Selected)
+                var rect = new Rectangle(0, 0, e.Item.Width - 1, e.Item.Height - 1);
+                if (isChecked)
                 {
-                    element = VisualStyleElement.ToolTip.Close.Hot;
-                }
-                if (e.CloseButtonState == TabStripCloseButtonState.Pressed)
-                {
-                    element = VisualStyleElement.ToolTip.Close.Pressed;
+                    using (var brush = new LinearGradientBrush(rect,
+                        SystemColors.ControlLightLight,
+                        SystemColors.Control,
+                        LinearGradientMode.Vertical))
+                    {
+                        e.Graphics.FillRectangle(brush, rect);
+                    }
                 }
 
-                VisualStyleRenderer renderer = new VisualStyleRenderer(element);
-                renderer.DrawBackground(e.Graphics, e.CloseButtonRectangle);
+                ControlPaint.DrawBorder3D(e.Graphics, rect, Border3DStyle.Raised,
+                    Border3DSide.Left | Border3DSide.Top | Border3DSide.Right);
+
+                if (!e.CloseButtonRectangle.IsEmpty)
+                {
+                    var closeRect = e.CloseButtonRectangle;
+
+                    if (e.CloseButtonState != TabStripCloseButtonState.Pressed)
+                    {
+                        closeRect.Offset(-2, -2);
+                    }
+
+                    using (var marlett = new Font("Marlett", 8))
+                    {
+                        TextRenderer.DrawText(e.Graphics, "r", marlett, closeRect, SystemColors.ControlText);
+                    }
+                }
             }
         }
 
@@ -339,6 +297,102 @@ namespace WindowsFormsAero
             {
                 graphics.Clear(Color.Transparent);
                 graphics.DrawImage(BusyImage, destRect, srcRect, GraphicsUnit.Pixel);
+            }
+        }
+
+        private Boolean VisualStylesAvailable
+        {
+            get { return VisualStyleRenderer.IsSupported && RenderUsingVisualStyles; }
+        }
+
+        private static void RenderToolStripBorderUsingVisualStyles(ToolStripRenderEventArgs e, TabStrip tabStrip)
+        {
+            var left = e.AffectedBounds.Left;
+            var right = e.AffectedBounds.Right - 1;
+            var y = e.AffectedBounds.Bottom - tabStrip.Padding.Bottom;
+
+            var selectedTab = tabStrip.SelectedTab;
+
+            using (var paddingPen = new Pen(CheckedColors[3], 1))
+            {
+                using (var borderPen = new Pen(TabBorderColor))
+                {
+                    if (selectedTab != null)
+                    {
+                        e.Graphics.DrawLine(borderPen, left, y, selectedTab.Bounds.Left, y);
+                        e.Graphics.DrawLine(Pens.White, left, y + 1, selectedTab.Bounds.Left, y + 1);
+
+                        e.Graphics.DrawLine(paddingPen, selectedTab.Bounds.Left, y, selectedTab.Bounds.Right, y);
+                        e.Graphics.DrawLine(paddingPen, selectedTab.Bounds.Left, y + 1, selectedTab.Bounds.Right, y + 1);
+
+                        e.Graphics.DrawLine(borderPen, selectedTab.Bounds.Right, y, right, y);
+                        e.Graphics.DrawLine(Pens.White, selectedTab.Bounds.Right, y + 1, right, y + 1);
+                    }
+                    else
+                    {
+                        e.Graphics.DrawLine(borderPen, left, y, right, y);
+                        e.Graphics.DrawLine(Pens.White, left, y, right, y);
+                    }
+                }
+
+                using (var paddingBrush = new SolidBrush(paddingPen.Color))
+                {
+                    var paddingRect = Rectangle.FromLTRB(
+                        e.AffectedBounds.Left,
+                        y + 2,
+                        e.AffectedBounds.Right,
+                        e.AffectedBounds.Bottom);
+
+                    e.Graphics.FillRectangle(paddingBrush, paddingRect);
+                }
+            }
+        }
+
+        private static void RenderTabItemBackgroundUsingVisualStyles(TabStripItemRenderEventArgs e, bool isChecked)
+        {
+            e.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
+
+            using (GraphicsPath outer = GetTabBorderPath(e.Item.Width, e.Item.Height, isChecked, false))
+            {
+                var colors = NormalColors;
+
+                if (e.Item.Enabled && isChecked)
+                {
+                    colors = CheckedColors;
+                }
+                else if (e.Item.Selected)
+                {
+                    colors = SelectedColors;
+                }
+
+                FillGradient(e.Graphics, outer, colors, TabBackgroundRatio);
+
+                using (Pen pen = new Pen(TabBorderColor, 1))
+                {
+                    e.Graphics.DrawPath(Pens.Gray, outer);
+                }
+
+                using (GraphicsPath inner = GetTabBorderPath(e.Item.Width, e.Item.Height, isChecked, true))
+                {
+                    e.Graphics.DrawPath(Pens.White, inner);
+                }
+            }
+
+            if (!e.CloseButtonRectangle.IsEmpty)
+            {
+                var element = VisualStyleElement.ToolTip.Close.Normal;
+
+                if (e.CloseButtonState == TabStripCloseButtonState.Selected)
+                {
+                    element = VisualStyleElement.ToolTip.Close.Hot;
+                }
+                if (e.CloseButtonState == TabStripCloseButtonState.Pressed)
+                {
+                    element = VisualStyleElement.ToolTip.Close.Pressed;
+                }
+
+                VisualStyleRenderer renderer = new VisualStyleRenderer(element);
+                renderer.DrawBackground(e.Graphics, e.CloseButtonRectangle);
             }
         }
 
