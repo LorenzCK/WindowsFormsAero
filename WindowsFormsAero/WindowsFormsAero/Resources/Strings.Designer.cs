@@ -70,6 +70,15 @@ namespace WindowsFormsAero.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Desktop composition is not supported by this operating system..
+        /// </summary>
+        internal static string DwmNotSupported {
+            get {
+                return ResourceManager.GetString("DwmNotSupported", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The specified control is not an AeroTabPage..
         /// </summary>
         internal static string TabControlInvalidPageType {

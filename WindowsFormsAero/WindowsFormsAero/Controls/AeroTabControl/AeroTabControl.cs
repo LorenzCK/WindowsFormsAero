@@ -1,72 +1,36 @@
 using System;
-using System.Drawing;
-using System.Windows.Forms;
+using System.Collections.Generic;
 using System.ComponentModel;
+using System.Drawing;
+using System.Drawing.Design;
+using System.Windows.Forms;
 
 namespace WindowsFormsAero
 {
-    [Docking(DockingBehavior.AutoDock)]
     [System.ComponentModel.DesignerCategory("code")]
     [System.ComponentModel.Designer("WindowsFormsAero.Design.AeroTabControlDesigner, " + ThisAssembly.DesignAssemblyName)]
-    public class AeroTabControl : ContainerControl
+    [DefaultProperty("TabPages")]
+    [DefaultEvent("SelectedTabChanged")]
+    [Docking(DockingBehavior.AutoDock)]
+    public partial class AeroTabControl : ContainerControl
     {
-        public new class ControlCollection : Control.ControlCollection
-        {
-            public ControlCollection(AeroTabControl owner)
-                : base(owner)
-            {
-                base.Add(owner.TabStrip);
-            }
-
-            public new AeroTabControl Owner
-            {
-                get { return base.Owner as AeroTabControl; }
-            }
-
-            public override void Add(Control value)
-            {
-                var page = (value as AeroTabPage);
-                
-                if (page == null)
-                {
-                    throw new ArgumentException(Resources.Strings.TabControlInvalidPageType);
-                }
-
-                page.Visible = false;
-                page.Dock = DockStyle.Fill;
-
-                Owner.TabStrip.Items.Add(page.TabStripButton);
-
-                base.Add(page);
-
-            }
-
-            public override void Remove(Control value)
-            {
-                var page = (value as AeroTabPage);
-
-                if (page != null)
-                {
-                    Owner.TabStrip.Items.Remove(page.TabStripButton);
-                }
-
-                base.Remove(value);
-            }
-        }
-
         private static readonly object EventCloseButtonClick = new object();
         private static readonly object EventNewTabButtonClick = new object();
         private static readonly object EventSelectedTabChanged = new object();
 
-        private AeroTabPage _selectedPage;
-        private TabStrip _tabStrip = new TabStrip()
+        private readonly List<AeroTabPage> _pages = new List<AeroTabPage>();
+        private readonly TabStrip _tabStrip = new TabStrip()
         {
             Dock = DockStyle.Top,
             Renderer = new TabStripSystemRenderer(),
         };
 
+        private TabPageCollection _pageCollection;
+        private AeroTabPage _selectedPage;
+
         public AeroTabControl()
         {
+            _pageCollection = new TabPageCollection(this);
             _tabStrip.NewTabButtonClicked += new EventHandler(InvokeNewTabButtonClicked);
         }
 
@@ -88,12 +52,15 @@ namespace WindowsFormsAero
             remove { Events.RemoveHandler(EventSelectedTabChanged, value); }
         }
 
+        [MergableProperty(false)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public int SelectedTabIndex
         {
             get { return _tabStrip.SelectedTabIndex; }
             set { _tabStrip.SelectedTabIndex = value; }
         }
 
+        [MergableProperty(false)]
         public AeroTabPage SelectedTab
         {
             get { return _selectedPage; }
@@ -112,15 +79,34 @@ namespace WindowsFormsAero
                     {
                         _selectedPage.Visible = true;
                         _selectedPage.BringToFront();
-                        TabStrip.SelectedTab = _selectedPage.TabStripButton;
+                        
+                        _tabStrip.SelectedTab = _selectedPage.TabStripButton;
                     }
+
+                    OnSelectedTabChanged(EventArgs.Empty);
                 }
             }
         }
 
-        public TabStrip TabStrip
+        //public TabStrip TabStrip
+        //{
+        //    get { return _tabStrip; }
+        //}
+
+        [MergableProperty(false)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        //[Editor("WindowsFormsAero.Design.AeroTabPageCollectionEditor, " + ThisAssembly.DesignAssemblyName, typeof(UITypeEditor))]
+        public TabPageCollection TabPages
         {
-            get { return _tabStrip; }
+            get 
+            {
+                if (_pageCollection == null)
+                {
+                    _pageCollection = new TabPageCollection(this);
+                }
+
+                return _pageCollection;
+            }
         }
 
         protected internal virtual void OnCloseButtonClick(AeroTabPageEventArgs e)
@@ -166,6 +152,52 @@ namespace WindowsFormsAero
         protected override Padding DefaultPadding
         {
             get { return new Padding(2); }
+        }
+
+        private void AddTab(AeroTabPage page)
+        {
+            System.Diagnostics.Debug.WriteLine("AddTab " + page.Name);
+
+            SuspendLayout();
+
+            page.Visible = false;
+            page.Dock = DockStyle.Fill;
+
+            _pages.Add(page);
+            _tabStrip.Items.Add(page.TabStripButton);
+            
+            ResumeLayout();
+        }
+
+        private void RemoveTab(AeroTabPage page)
+        {
+            System.Diagnostics.Debug.WriteLine("RemoveTab " + page.Name);
+
+            SuspendLayout();
+
+            if (_tabStrip.Items.Contains(page.TabStripButton))
+            {
+                _tabStrip.Items.Remove(page.TabStripButton);
+            }
+
+            if (_pages.Contains(page))
+            {
+                _pages.Remove(page);
+            }
+
+            ResumeLayout();
+        }
+
+        private void RemoveAllTabs()
+        {
+            System.Diagnostics.Debug.WriteLine("RemoveAllTabs");
+
+            SuspendLayout();
+
+            _tabStrip.RemoveAllTabs();
+            _pages.Clear();
+
+            ResumeLayout();
         }
 
         private void InvokeNewTabButtonClicked(object sender, EventArgs e)

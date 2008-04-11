@@ -121,6 +121,9 @@
     <value>Add TabStrip page</value>
     <comment>used in TabPageSwitcherDesigner</comment>
   </data>
+  <data name="DwmNotSupported" xml:space="preserve">
+    <value>Desktop composition is not supported by this operating system.</value>
+  </data>
   <data name="TabControlInvalidPageType" xml:space="preserve">
     <value>The specified control is not an AeroTabPage.</value>
   </data>
