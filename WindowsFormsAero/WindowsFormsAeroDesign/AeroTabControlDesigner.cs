@@ -86,7 +86,8 @@ namespace WindowsFormsAero.Design
         {
             if (_tabControlSelected)
             {
-                return TabControl.TabStrip.Bounds.Contains(TabControl.PointToClient(point));
+                //return TabControl.TabStrip.Bounds.Contains(TabControl.PointToClient(point));
+                return true;
             }
 
             return false;
@@ -101,26 +102,26 @@ namespace WindowsFormsAero.Design
         {
             return _utils.ExecuteWithTransaction(Resources.AddTabPage + ' ' + TabControl.Site.Name, delegate
             {
-                var controls = _utils.GetProperty("Controls");
                 var page = _utils.CreateComponent<AeroTabPage>();
+                var pagesDescriptor = _utils.GetProperty("TabPages");
 
                 if (dontRaiseEvents)
                 {
-                    TabControl.Controls.Add(page);
+                    TabControl.TabPages.Add(page);
 
                     _utils.SetPropertyValue("SelectedTab", page);
                     _utils.SetPropertyValue(page, "Text", page.Name);
                 }
                 else
                 {
-                    RaiseComponentChanging(controls);
+                    RaiseComponentChanging(pagesDescriptor);
 
-                    TabControl.Controls.Add(page);
+                    TabControl.TabPages.Add(page);
 
                     _utils.SetPropertyValueWithNotification("SelectedTab", page);
                     _utils.SetPropertyValueWithNotification(page, "Text", page.Name);
 
-                    RaiseComponentChanged(controls, null, null);
+                    RaiseComponentChanged(pagesDescriptor, null, null);
                 }
 
                 return page;
@@ -131,11 +132,11 @@ namespace WindowsFormsAero.Design
         {
             _utils.ExecuteWithTransaction(Resources.RemoveTabPage, delegate
             {
-                var controls = _utils.GetProperty("Controls");
+                var pagesDescriptor = _utils.GetProperty("TabPages");
 
-                RaiseComponentChanging(controls);
-                TabControl.Controls.Remove(page);
-                RaiseComponentChanged(controls, null, null);
+                RaiseComponentChanging(pagesDescriptor);
+                TabControl.TabPages.Remove(page);
+                RaiseComponentChanged(pagesDescriptor, null, null);
 
                 _utils.DesignerHost.DestroyComponent(page);
             });

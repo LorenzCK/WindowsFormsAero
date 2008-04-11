@@ -40,9 +40,10 @@ namespace WindowsFormsAero
         private TabStripLayoutEngine _layout;
         private ToolTip _closeToolTip;
 
-        private Int32 _busyTabCount;
+        private Boolean _clearingTabs;
+        private UInt16 _busyTabCount;
+        private UInt16 _busyTabTicker;
         private Timer _busyTabTimer;
-        private Int32 _busyTabTicker;
 
         private int _minTabWidth = DefaultMinTabWidth;
         private int _maxTabWidth = DefaultMaxTabWidth;
@@ -237,9 +238,15 @@ namespace WindowsFormsAero
 
         protected override void OnItemAdded(ToolStripItemEventArgs e)
         {
+            if (_clearingTabs)
+            {
+                base.OnItemAdded(e);
+                return;
+            }
+
             if (e.Item is TabStripButton)
             {
-                ++_tabCount;
+                ++TabCount;
             }
 
             SuspendLayout();
@@ -283,18 +290,24 @@ namespace WindowsFormsAero
 
         protected override void OnItemRemoved(ToolStripItemEventArgs e)
         {
+            if (_clearingTabs)
+            {
+                base.OnItemAdded(e);
+                return;
+            }
+
             if (e.Item is TabStripButton)
             {
-                --_tabCount;
+                --TabCount;
             }
 
             if ((e.Item == SelectedTab))
             {
                 int newIndex = SelectedTabIndex;
 
-                if (newIndex >= _tabCount)
+                if (newIndex >= TabCount)
                 {
-                    newIndex = _tabCount - 1;
+                    newIndex = TabCount - 1;
                 }
 
                 SelectedTabIndex = newIndex;
@@ -334,14 +347,23 @@ namespace WindowsFormsAero
         internal int TabCount
         {
             get { return _tabCount; }
+            private set
+            {
+                if (value < 0)
+                {
+                    throw new InvalidOperationException();
+                }
+
+                _tabCount = value;
+            }
         }
 
-        internal int BusyTabCount
+        internal ushort BusyTabCount
         {
             get { return _busyTabCount; }
             set
             {
-                _busyTabCount = Math.Max(0, value);
+                _busyTabCount = Math.Max((ushort)(0), value);
 
                 UpdateBusyTabTimer();
             }
@@ -384,6 +406,26 @@ namespace WindowsFormsAero
         {
             SetItemLocation(item, location);
             item.Size = size;
+        }
+
+        internal void RemoveAllTabs()
+        {
+            SuspendLayout();
+
+            try
+            {
+                _clearingTabs = true;
+
+                Items.Clear();
+                Items.Add(_newTab);
+            }
+            finally
+            {
+                _clearingTabs = false;
+                _tabCount = 0;
+            }
+
+            ResumeLayout();
         }
 
         internal void ShowCloseButtonToolTip()

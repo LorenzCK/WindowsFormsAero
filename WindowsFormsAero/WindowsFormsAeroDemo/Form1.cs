@@ -14,5 +14,23 @@ namespace WindowsFormsAero.Demo
         {
             InitializeComponent();
         }
+
+        protected override void OnLoad(EventArgs e)
+        {
+            base.OnLoad(e);
+
+            button1.Enabled = DesktopComposition.IsSupportedByOS;
+
+            if (DesktopComposition.IsSupportedByOS)
+            {
+                label1.BackColor = DesktopComposition.ColorizationColor;
+                label1.Text = DesktopComposition.IsColorizationOpaque ? "Opaque" : "Transparent";
+            }
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            DesktopComposition.IsEnabled = !DesktopComposition.IsEnabled;
+        }
     }
 }
