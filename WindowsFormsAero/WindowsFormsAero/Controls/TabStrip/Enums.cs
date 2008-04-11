@@ -24,4 +24,12 @@ namespace WindowsFormsAero
         Selected,
         Pressed,
     }
+
+    [Serializable]
+    public enum CloseButtonVisibility
+    {
+        Never,
+        Always,
+        ExceptSingleTab,
+    }
 }

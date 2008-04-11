@@ -21,6 +21,33 @@ namespace WindowsFormsAero
             public readonly Rectangle TextRectangle;
             public readonly Rectangle CloseRectangle;
 
+            public TabStripButtonLayout(TabStripButtonBase btn)
+            {
+                DisplayRectangle = new Rectangle
+                (
+                    new Point(btn.Padding.Left, btn.Padding.Top),
+                    new Size(btn.Width - btn.Padding.Horizontal,
+                             btn.Height - btn.Padding.Vertical
+                    )
+                );
+
+                if (btn.Owner.RightToLeft == RightToLeft.Yes)
+                {
+                    CloseRectangle = CutRectangleFromLeft(ref DisplayRectangle, btn.CloseButtonSize, btn.Padding, ContentAlignment.MiddleCenter);
+                    ImageRectangle = CutRectangleFromRight(ref DisplayRectangle, btn.ImageSize, btn.Padding, btn.ImageAlign);
+                }
+                else
+                {
+                    ImageRectangle = CutRectangleFromLeft(ref DisplayRectangle, btn.ImageSize, btn.Padding, btn.ImageAlign);
+                    CloseRectangle = CutRectangleFromRight(ref DisplayRectangle, btn.CloseButtonSize, btn.Padding, ContentAlignment.MiddleCenter);
+                }
+
+                if (!string.IsNullOrEmpty(btn.Text) && ((btn.DisplayStyle & ToolStripItemDisplayStyle.Text) != 0))
+                {
+                    TextRectangle = DisplayRectangle;
+                }
+            }
+
             private static Rectangle CutRectangleFromLeft(ref Rectangle displayRect, Size subRectSize, Padding padding, ContentAlignment alignment)
             {
                 Rectangle result = new Rectangle();
@@ -42,7 +69,7 @@ namespace WindowsFormsAero
                 return result;
             }
 
-            private Rectangle CutRectangleFromRight(ref Rectangle displayRect, Size subRectSize, Padding padding, ContentAlignment alignment)
+            private static Rectangle CutRectangleFromRight(ref Rectangle displayRect, Size subRectSize, Padding padding, ContentAlignment alignment)
             {
                 Rectangle result = new Rectangle();
 
@@ -60,34 +87,6 @@ namespace WindowsFormsAero
                 }
 
                 return result;
-            }
-
-
-            public TabStripButtonLayout(TabStripButtonBase btn)
-            {
-                DisplayRectangle = new Rectangle
-                (
-                    new Point(btn.Padding.Left, btn.Padding.Top),
-                    new Size(btn.Width - btn.Padding.Horizontal, 
-                             btn.Height - btn.Padding.Vertical
-                    )
-                );
-
-                if (btn.Owner.RightToLeft == RightToLeft.Yes)
-                {
-                    CloseRectangle = CutRectangleFromLeft(ref DisplayRectangle, btn.CloseButtonSize, btn.Padding, ContentAlignment.MiddleCenter);
-                    ImageRectangle = CutRectangleFromRight(ref DisplayRectangle, btn.ImageSize, btn.Padding, btn.ImageAlign);
-                }
-                else
-                {
-                    ImageRectangle = CutRectangleFromLeft(ref DisplayRectangle, btn.ImageSize, btn.Padding, btn.ImageAlign);
-                    CloseRectangle = CutRectangleFromRight(ref DisplayRectangle, btn.CloseButtonSize, btn.Padding, ContentAlignment.MiddleCenter);
-                }
-
-                if (!string.IsNullOrEmpty(btn.Text) && ((btn.DisplayStyle & ToolStripItemDisplayStyle.Text) != 0))
-                {
-                    TextRectangle = DisplayRectangle;
-                }
             }
 
             private static Rectangle GetAlignedRectagle(Size size, Rectangle container, ContentAlignment alignment)
@@ -181,8 +180,16 @@ namespace WindowsFormsAero
             }
         }
 
+        private static readonly object EventCloseButtonClick = new object();
+
         private TabStripButtonLayout _layout;
         private TabStripCloseButtonState _closeButtonState;
+
+        public event EventHandler CloseButtonClick
+        {
+            add { Events.AddHandler(EventCloseButtonClick, value); }
+            remove { Events.RemoveHandler(EventCloseButtonClick, value); }
+        }
 
         protected TabStripButtonBase()
         {
@@ -221,7 +228,7 @@ namespace WindowsFormsAero
 
         protected override void OnMouseDown(MouseEventArgs e)
         {
-            if (InternalLayout.CloseRectangle.Contains(e.Location))
+            if (CloseButtonState == TabStripCloseButtonState.Selected)
             {
                 CloseButtonState = TabStripCloseButtonState.Pressed;
             }
@@ -235,17 +242,23 @@ namespace WindowsFormsAero
                 (InternalLayout.CloseRectangle.Contains(e.Location)))
             {
                 CloseButtonState = TabStripCloseButtonState.Normal;
-                MessageBox.Show("huuu!");
+
+                OnCloseButtonClick(EventArgs.Empty);
+
+                if (Owner != null)
+                {
+                    Owner.OnCloseButtonClicked(new ToolStripItemEventArgs(this));
+                }
             }
 
             base.OnMouseUp(e);
         }
 
-        protected override void OnMouseMove(MouseEventArgs mea)
+        protected override void OnMouseMove(MouseEventArgs e)
         {
             if (CloseButtonState != TabStripCloseButtonState.Pressed)
             {
-                if (InternalLayout.CloseRectangle.Contains(mea.Location))
+                if (InternalLayout.CloseRectangle.Contains(e.Location))
                 {
                     CloseButtonState = TabStripCloseButtonState.Selected;
                 }
@@ -255,14 +268,24 @@ namespace WindowsFormsAero
                 }
             }
 
-            base.OnMouseMove(mea);
+            base.OnMouseMove(e);
+        }
+
+        protected override void OnMouseHover(EventArgs e)
+        {
+            if (CloseButtonState == TabStripCloseButtonState.Selected)
+            {
+                Owner.ShowCloseButtonToolTip();
+            }
+
+            base.OnMouseHover(e);
         }
 
         protected override void OnMouseLeave(EventArgs e)
         {
-            base.OnMouseLeave(e);
-
             CloseButtonState = TabStripCloseButtonState.Normal;
+            
+            base.OnMouseLeave(e);
         }
 
         protected override void OnPaint(PaintEventArgs e)
@@ -282,6 +305,16 @@ namespace WindowsFormsAero
             else
             {
                 base.OnPaint(e);
+            }
+        }
+
+        protected virtual void OnCloseButtonClick(EventArgs e)
+        {
+            var handler = Events[EventCloseButtonClick] as EventHandler;
+
+            if (handler != null)
+            {
+                handler(this, e);
             }
         }
 
@@ -380,6 +413,11 @@ namespace WindowsFormsAero
         internal void InvalidateInternalLayout()
         {
             _layout = null;
+        }
+
+        internal new TabStrip Owner
+        {
+            get { return base.Owner as TabStrip; }
         }
 
         private TabStripButtonLayout InternalLayout

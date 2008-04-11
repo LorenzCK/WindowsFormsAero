@@ -54,6 +54,8 @@ namespace WindowsFormsAero
             }
         }
 
+        private static readonly object EventCloseButtonClick = new object();
+        private static readonly object EventNewTabButtonClick = new object();
         private static readonly object EventSelectedTabChanged = new object();
 
         private AeroTabPage _selectedPage;
@@ -62,12 +64,34 @@ namespace WindowsFormsAero
             Dock = DockStyle.Top,
             Renderer = new TabStripSystemRenderer(),
         };
-        
+
+        public AeroTabControl()
+        {
+            _tabStrip.NewTabButtonClicked += new EventHandler(InvokeNewTabButtonClicked);
+        }
+
+        public event EventHandler<AeroTabPageEventArgs> CloseButtonClick
+        {
+            add { Events.AddHandler(EventCloseButtonClick, value); }
+            remove { Events.RemoveHandler(EventCloseButtonClick, value); }
+        }
+
+        public event EventHandler NewTabButtonClick
+        {
+            add { Events.AddHandler(EventNewTabButtonClick, value); }
+            remove { Events.RemoveHandler(EventNewTabButtonClick, value); }
+        }
 
         public event EventHandler SelectedTabChanged
         {
             add { Events.AddHandler(EventSelectedTabChanged, value); }
             remove { Events.RemoveHandler(EventSelectedTabChanged, value); }
+        }
+
+        public int SelectedTabIndex
+        {
+            get { return _tabStrip.SelectedTabIndex; }
+            set { _tabStrip.SelectedTabIndex = value; }
         }
 
         public AeroTabPage SelectedTab
@@ -99,6 +123,26 @@ namespace WindowsFormsAero
             get { return _tabStrip; }
         }
 
+        protected internal virtual void OnCloseButtonClick(AeroTabPageEventArgs e)
+        {
+            var handler = Events[EventCloseButtonClick] as EventHandler<AeroTabPageEventArgs>;
+
+            if (handler != null)
+            {
+                handler(this, e);
+            }
+        }
+
+        protected virtual void OnNewTabButtonClick(EventArgs e)
+        {
+            var handler = Events[EventNewTabButtonClick] as EventHandler;
+
+            if (handler != null)
+            {
+                handler(this, e);
+            }
+        }
+
         protected virtual void OnSelectedTabChanged(EventArgs e)
         {
             var handler = Events[EventSelectedTabChanged] as EventHandler;
@@ -122,6 +166,11 @@ namespace WindowsFormsAero
         protected override Padding DefaultPadding
         {
             get { return new Padding(2); }
+        }
+
+        private void InvokeNewTabButtonClicked(object sender, EventArgs e)
+        {
+            OnNewTabButtonClick(e);
         }
     }
 }

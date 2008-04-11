@@ -21,6 +21,9 @@ namespace WindowsFormsAero
         private const int DefaultMinTabWidth = 63;
         private const int DefaultMaxTabWidth = 180;
 
+        private static readonly object EventNewTabButtonClicked = new object();
+        private static readonly object EventCloseButtonClicked = new object();
+
         private readonly TabStripNewTabButton _newTab =
             new TabStripNewTabButton();
 
@@ -30,8 +33,12 @@ namespace WindowsFormsAero
         private readonly TabStripScrollButton _scrollRight =
             new TabStripScrollButton(TabStripScrollDirection.Right);
 
+        private Int32 _tabCount;
+        private Int32 _selectedIndex = -1;
         private TabStripButton _selectedTab;
+
         private TabStripLayoutEngine _layout;
+        private ToolTip _closeToolTip;
 
         private Int32 _busyTabCount;
         private Timer _busyTabTimer;
@@ -40,11 +47,26 @@ namespace WindowsFormsAero
         private int _minTabWidth = DefaultMinTabWidth;
         private int _maxTabWidth = DefaultMaxTabWidth;
 
+        private CloseButtonVisibility _closeButtonVisibility = CloseButtonVisibility.ExceptSingleTab;
+
         public TabStrip()
         {
             Items.Add(_newTab);
         }
 
+        public event EventHandler NewTabButtonClicked
+        {
+            add { Events.AddHandler(EventNewTabButtonClicked, value); }
+            remove { Events.RemoveHandler(EventNewTabButtonClicked, value); }
+        }
+
+        public event EventHandler CloseButtonClicked
+        {
+            add { Events.AddHandler(EventCloseButtonClicked, value); }
+            remove { Events.RemoveHandler(EventCloseButtonClicked, value); }
+        }
+
+        [DefaultValue(null)]
         public TabStripButton SelectedTab
         {
             get { return _selectedTab; }
@@ -54,21 +76,57 @@ namespace WindowsFormsAero
                 {
                     _selectedTab = value;
 
+                    int index = 0;
+
                     foreach(var tab in ItemsOfType<TabStripButton>())
                     {
-                        tab.Checked = (tab == _selectedTab);
-                    }
-                    
-                    if (_selectedTab != null)
-                    {
-                        if (_selectedTab.TabStripPage != null)
+                        if (tab == _selectedTab)
                         {
-                            _selectedTab.TabStripPage.Activate();
+                            _selectedIndex = index;
                         }
 
-                        PerformLayout();
+                        tab.Checked = (tab == _selectedTab);
+                        ++index;
+                    }
+
+                    PerformLayout();
+                }
+            }
+        }
+
+        [Browsable(false)]
+        [DefaultValue(-1)]
+        public int SelectedTabIndex
+        {
+            get { return _selectedIndex; }
+            set 
+            {
+                if (value == -1)
+                {
+                    _selectedIndex = value;
+                    SelectedTab = null;
+                    return;
+                }
+                else
+                {
+                    int index = 0;
+
+                    foreach (var item in ItemsOfType<TabStripButton>())
+                    {
+                        if (index == value)
+                        {
+                            _selectedIndex = value;
+                            SelectedTab = item;
+                            return;
+                        }
+
+                        ++index;
                     }
                 }
+
+                throw new IndexOutOfRangeException(
+                    string.Format(System.Globalization.CultureInfo.CurrentCulture,
+                    Resources.Strings.TabStripInvalidTabIndex, value));
             }
         }
 
@@ -95,6 +153,27 @@ namespace WindowsFormsAero
                 if (_minTabWidth != value)
                 {
                     _minTabWidth = value;
+                    PerformLayout();
+                }
+            }
+        }
+
+        [DefaultValue(true)]
+        public bool NewTabButtonVisible
+        {
+            get { return _newTab.Visible; }
+            set { _newTab.Visible = value; }
+        }
+
+        [DefaultValue(CloseButtonVisibility.ExceptSingleTab)]
+        public CloseButtonVisibility CloseButtonVisibility
+        {
+            get { return _closeButtonVisibility; }
+            set
+            {
+                if (_closeButtonVisibility != value)
+                {
+                    _closeButtonVisibility = value;
                     PerformLayout();
                 }
             }
@@ -131,9 +210,39 @@ namespace WindowsFormsAero
             return preferredSize + Padding.Size;
         }
 
+        protected virtual void OnNewTabButtonClicked(EventArgs e)
+        {
+            var handler = Events[EventNewTabButtonClicked] as EventHandler;
+
+            if (handler != null)
+            {
+                handler(this, e);
+            }
+        }
+
+        protected internal virtual void OnCloseButtonClicked(ToolStripItemEventArgs e)
+        {
+            var handler = Events[EventCloseButtonClicked] as ToolStripItemEventHandler;
+
+            if (handler != null)
+            {
+                handler(this, e);
+            }
+        }
+
         protected override ToolStripItem CreateDefaultItem(string text, Image image, EventHandler onClick)
         {
             return new TabStripButton(text, image, onClick);
+        }
+
+        protected override void OnItemAdded(ToolStripItemEventArgs e)
+        {
+            if (e.Item is TabStripButton)
+            {
+                ++_tabCount;
+            }
+
+            base.OnItemAdded(e);
         }
 
         protected override void OnItemClicked(ToolStripItemClickedEventArgs e)
@@ -154,8 +263,7 @@ namespace WindowsFormsAero
 
             if (e.ClickedItem == _newTab)
             {
-                MessageBox.Show("New TAAAAB!");
-                return;
+                OnNewTabButtonClicked(e);
             }
 
             var button = (e.ClickedItem as TabStripButton);
@@ -166,6 +274,28 @@ namespace WindowsFormsAero
             }
 
             base.OnItemClicked(e);
+        }
+
+        protected override void OnItemRemoved(ToolStripItemEventArgs e)
+        {
+            if (e.Item is TabStripButton)
+            {
+                --_tabCount;
+            }
+
+            if ((e.Item == SelectedTab))
+            {
+                int newIndex = SelectedTabIndex;
+
+                if (newIndex >= _tabCount)
+                {
+                    newIndex = _tabCount - 1;
+                }
+
+                SelectedTabIndex = newIndex;
+            }
+
+            base.OnItemRemoved(e);
         }
 
         protected override void OnRendererChanged(EventArgs e)
@@ -182,10 +312,16 @@ namespace WindowsFormsAero
                 {
                     _busyTabTimer.Dispose();
                 }
+
+                if (_closeToolTip != null)
+                {
+                    _closeToolTip.Dispose();
+                }
             }
 
             _busyTabCount = 0;
             _busyTabTimer = null;
+            _closeToolTip = null;
 
             base.Dispose(disposing);
         }
@@ -238,6 +374,34 @@ namespace WindowsFormsAero
         {
             SetItemLocation(item, location);
             item.Size = size;
+        }
+
+        internal void ShowCloseButtonToolTip()
+        {
+            if (ShowItemToolTips)
+            {
+                ShowItemToolTips = false;
+
+                try
+                {
+                    if (_closeToolTip == null)
+                    {
+                        _closeToolTip = new ToolTip();
+                    }
+
+                    var cur = Cursor.Current;
+                    var pos = Cursor.Position;
+
+                    pos.Y += (cur.Size.Height - cur.HotSpot.Y);
+
+                    
+                    _closeToolTip.Show("Close (Ctrl+W)", this, PointToClient(pos), _closeToolTip.AutoPopDelay);
+                }
+                finally
+                {
+                    ShowItemToolTips = true;
+                }
+            }
         }
 
         private TabStripRenderer TabStripRenderer

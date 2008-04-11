@@ -51,6 +51,7 @@
     <Compile Include="..\AssemblyInfo.Shared.cs">
       <Link>Properties\AssemblyInfo.Shared.cs</Link>
     </Compile>
+    <Compile Include="Controls\AeroTabControl\AeroTabPageEventArgs.cs" />
     <Compile Include="Extensions\GraphicsExtensions.cs" />
     <Compile Include="LayoutUtils.cs" />
     <Compile Include="NativeMethods.cs" />
@@ -81,7 +82,7 @@
     </Compile>
     <Compile Include="Controls\TabStrip\Items\TabStripScrollButton.cs">
     </Compile>
-    <Compile Include="Controls\TabStrip\Items\Enums.cs" />
+    <Compile Include="Controls\TabStrip\Enums.cs" />
     <Compile Include="Controls\TabStrip\Renderers\TabStripSystemRenderer.cs" />
     <Service Include="{94E38DFF-614B-4cbd-B67C-F211BB35CE8B}" />
   </ItemGroup>
@@ -118,6 +119,6 @@
   </Target>
   -->
   <PropertyGroup>
-    <PostBuildEvent>"%25ProgramFiles%25\Microsoft SDKs\Windows\v6.0A\bin\gacutil.exe" /nologo /i "$(TargetPath)" /f</PostBuildEvent>
+    <PostBuildEvent>@"%25ProgramFiles%25\Microsoft SDKs\Windows\v6.0A\bin\gacutil.exe" /nologo /i "$(TargetPath)" /f</PostBuildEvent>
   </PropertyGroup>
 </Project>

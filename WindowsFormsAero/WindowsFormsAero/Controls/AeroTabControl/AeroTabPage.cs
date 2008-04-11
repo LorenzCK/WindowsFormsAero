@@ -15,14 +15,6 @@ namespace WindowsFormsAero
     {
         private TabStripButton _button;
 
-        public void Activate()
-        {
-            if (TabControl != null)
-            {
-                TabControl.SelectedTab = this;
-            }
-        }
-
         [Browsable(false)]
         public AeroTabControl TabControl
         {
@@ -62,7 +54,22 @@ namespace WindowsFormsAero
                 if (_button == null)
                 {
                     _button = new TabStripButton(Text);
-                    _button.Click += delegate { Activate(); };
+                    
+                    _button.Click += delegate 
+                    {
+                        if (TabControl != null)
+                        {
+                            TabControl.SelectedTab = this;
+                        }
+                    };
+
+                    _button.CloseButtonClick += delegate 
+                    {
+                        if (TabControl != null)
+                        {
+                            TabControl.OnCloseButtonClick(new AeroTabPageEventArgs(this));
+                        }
+                    };
                 }
 
                 return _button;
