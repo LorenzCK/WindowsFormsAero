@@ -154,8 +154,7 @@ namespace VistaControlsApp
 			this.listView1 = new VistaControls.ListView();
 			this.imageList2 = new System.Windows.Forms.ImageList(this.components);
 			this.tabPage5 = new System.Windows.Forms.TabPage();
-			this.button12 = new System.Windows.Forms.Button();
-			this.thumbnailViewer1 = new VistaControls.DWM.ThumbnailViewer();
+			this.thumbnailViewer1 = new VistaControls.Dwm.ThumbnailViewer();
 			this.tabControl1.SuspendLayout();
 			this.tabPage1.SuspendLayout();
 			this.flowLayoutPanel1.SuspendLayout();
@@ -764,7 +763,6 @@ namespace VistaControlsApp
 			// 
 			// tabPage5
 			// 
-			this.tabPage5.Controls.Add(this.button12);
 			this.tabPage5.Controls.Add(this.thumbnailViewer1);
 			this.tabPage5.Location = new System.Drawing.Point(4, 22);
 			this.tabPage5.Name = "tabPage5";
@@ -773,16 +771,6 @@ namespace VistaControlsApp
 			this.tabPage5.TabIndex = 4;
 			this.tabPage5.Text = "DWM";
 			this.tabPage5.UseVisualStyleBackColor = true;
-			// 
-			// button12
-			// 
-			this.button12.Location = new System.Drawing.Point(180, 6);
-			this.button12.Name = "button12";
-			this.button12.Size = new System.Drawing.Size(75, 23);
-			this.button12.TabIndex = 1;
-			this.button12.Text = "Refresh";
-			this.button12.UseVisualStyleBackColor = true;
-			this.button12.Click += new System.EventHandler(this.button12_Click);
 			// 
 			// thumbnailViewer1
 			// 
@@ -870,7 +858,6 @@ namespace VistaControlsApp
 		private System.Windows.Forms.TabPage tabPage5;
 		private VistaControls.TextBox textBox2;
 		private System.Windows.Forms.ImageList imageList2;
-		private VistaControls.DWM.ThumbnailViewer thumbnailViewer1;
-		private System.Windows.Forms.Button button12;
+		private VistaControls.Dwm.ThumbnailViewer thumbnailViewer1;
     }
 }

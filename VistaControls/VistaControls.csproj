@@ -81,16 +81,16 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Design\SearchTextBoxDesigner.cs" />
-    <Compile Include="DWM\DWMCompositionException.cs" />
-    <Compile Include="DWM\DWMManager.cs" />
-    <Compile Include="DWM\GlassHelper.cs" />
-    <Compile Include="DWM\Helpers\GlassForm.cs">
+    <Compile Include="Dwm\DwmCompositionException.cs" />
+    <Compile Include="Dwm\DwmManager.cs" />
+    <Compile Include="Dwm\GlassHelper.cs" />
+    <Compile Include="Dwm\Helpers\GlassForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="DWM\Margins.cs" />
-    <Compile Include="DWM\NativeMethods.cs" />
-    <Compile Include="DWM\Thumbnail.cs" />
-    <Compile Include="DWM\ThumbnailViewer.cs">
+    <Compile Include="Dwm\Margins.cs" />
+    <Compile Include="Dwm\NativeMethods.cs" />
+    <Compile Include="Dwm\Thumbnail.cs" />
+    <Compile Include="Dwm\ThumbnailViewer.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="ListView.cs">
@@ -103,7 +103,7 @@
     <Compile Include="Native\RECT.cs" />
     <Compile Include="Native\Windows.cs" />
     <Compile Include="Native\WindowStyle.cs" />
-    <Compile Include="OSSupport.cs" />
+    <Compile Include="OsSupport.cs" />
     <Compile Include="Progressbar.cs">
       <SubType>Component</SubType>
     </Compile>

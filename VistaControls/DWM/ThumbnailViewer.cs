@@ -5,7 +5,7 @@ using System.Windows.Forms;
 using System.Drawing;
 using System.ComponentModel;
 
-namespace VistaControls.DWM {
+namespace VistaControls.Dwm {
 	public class ThumbnailViewer : Control {
 
 		Thumbnail _thumbnail = null;
@@ -40,7 +40,7 @@ namespace VistaControls.DWM {
 			RecomputeParentForm();
 
 			if (_topLevelForm != null) {
-				_thumbnail = DWMManager.Register(_topLevelForm, originHandle);
+				_thumbnail = DwmManager.Register(_topLevelForm, originHandle);
 				UpdateThumbnail(Visible);
 			}
 			else

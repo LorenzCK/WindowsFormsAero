@@ -13,20 +13,20 @@ using System.Collections.Generic;
 using System.Text;
 using System.Runtime.Serialization;
 
-namespace VistaControls.DWM
+namespace VistaControls.Dwm
 {
     [Serializable]
-    class DWMCompositionException : Exception
+    class DwmCompositionException : Exception
     {
-        public DWMCompositionException(string m)
+        public DwmCompositionException(string m)
             : base(m) {
         }
 
-        public DWMCompositionException(string m, Exception innerException)
+        public DwmCompositionException(string m, Exception innerException)
             : base(m, innerException) {
         }
 
-        public DWMCompositionException(SerializationInfo info, StreamingContext context)
+        public DwmCompositionException(SerializationInfo info, StreamingContext context)
             : base(info, context) {
         }
     }

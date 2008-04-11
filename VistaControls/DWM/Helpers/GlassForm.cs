@@ -15,7 +15,7 @@ using System.Windows.Forms;
 using System.ComponentModel;
 using System.Drawing;
 
-namespace VistaControls.DWM.Helpers {
+namespace VistaControls.Dwm.Helpers {
 	public class GlassForm : Form {
 
 		public GlassForm() {
@@ -34,6 +34,36 @@ namespace VistaControls.DWM.Helpers {
 			}
 			set {
 				_glassMargins = value;
+
+				SetGlass();
+			}
+		}
+
+		bool _handleMouseMove = true;
+
+		/// <summary>Gets or sets whether mouse dragging should be handled automatically.</summary>
+		[Description("True if mouse dragging of the window should be handled automatically."), Category("Behavior"), DefaultValue(true)]
+		public bool HandleMouseMove {
+			get { return _handleMouseMove; }
+			set {
+				_handleMouseMove = value;
+
+				//Stop tracking if disabled
+				if(!value)
+					_tracking = false;
+			}
+		}
+
+		bool _glassEnabled = true;
+
+		/// <summary>Gets or sets whether the extended glass margin is enabled or not.</summary>
+		[Description("Enables or disables the glass margin."), Category("Appearance"), DefaultValue(true)]
+		public bool GlassEnabled {
+			get {
+				return _glassEnabled;
+			}
+			set {
+				_glassEnabled = value;
 
 				SetGlass();
 			}
@@ -70,7 +100,7 @@ namespace VistaControls.DWM.Helpers {
 		}
 
 		protected override void OnMouseDown(MouseEventArgs e) {
-			if (e.Button == MouseButtons.Left) {
+			if (e.Button == MouseButtons.Left && HandleMouseMove) {
 				if (_glassMargins.IsMarginless || (
 						e.X <= _glassMargins.Left ||
 						e.X >= this.ClientSize.Width - _glassMargins.Right ||
@@ -89,7 +119,7 @@ namespace VistaControls.DWM.Helpers {
 			base.OnPaint(e);
 
 			//Paint glass regions in black
-			if (!_glassMargins.IsNull) {
+			if (!_glassMargins.IsNull && _glassEnabled) {
 				if (_glassMargins.IsMarginless)
 					e.Graphics.Clear(Color.Black);
 				else {
@@ -106,10 +136,10 @@ namespace VistaControls.DWM.Helpers {
 		#endregion
 
 		private void SetGlass() {
-			if (!_glassMargins.IsNull)
-				DWMManager.EnableGlassFrame(this, _glassMargins);
+			if (!_glassMargins.IsNull && _glassEnabled)
+				DwmManager.EnableGlassFrame(this, _glassMargins);
 			else
-				DWMManager.DisableGlassFrame(this);
+				DwmManager.DisableGlassFrame(this);
 
 			this.Invalidate();
 		}

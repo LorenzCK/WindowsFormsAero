@@ -15,11 +15,11 @@ using System.Drawing;
 using System.Windows.Forms;
 using System.Runtime.InteropServices;
 
-namespace VistaControls.DWM
+namespace VistaControls.Dwm
 {
 
 	/// <summary>Main DWM class, provides Thumbnail registration, glass sheet effect and blur behind.</summary>
-    public static class DWMManager
+    public static class DwmManager
     {
 
         #region Thumbnail registration and unregistration
@@ -39,14 +39,14 @@ namespace VistaControls.DWM
         /// <param name="source">The handle (HWND) of the window that has to be drawn.</param>
         /// <returns>A Thumbnail instance, needed to unregister and to update properties.</returns>
         public static Thumbnail Register(IntPtr destination, IntPtr source) {
-            if (!OSSupport.IsVistaOrBetter)
-                throw new DWMCompositionException(Resources.ExceptionMessages.DWMOsNotSupported);
+            if (!OsSupport.IsVistaOrBetter)
+                throw new DwmCompositionException(Resources.ExceptionMessages.DWMOsNotSupported);
 
-            if (!OSSupport.IsCompositionEnabled)
-                throw new DWMCompositionException(Resources.ExceptionMessages.DWMNotEnabled);
+            if (!OsSupport.IsCompositionEnabled)
+                throw new DwmCompositionException(Resources.ExceptionMessages.DWMNotEnabled);
 
             if (destination == source)
-                throw new DWMCompositionException(Resources.ExceptionMessages.DWMWindowMatch);
+                throw new DwmCompositionException(Resources.ExceptionMessages.DWMWindowMatch);
 
             Thumbnail ret = new Thumbnail();
 
@@ -54,7 +54,7 @@ namespace VistaControls.DWM
 				return ret;
 			}
 			else {
-				throw new DWMCompositionException(String.Format(Resources.ExceptionMessages.NativeCallFailure, "DwmRegisterThumbnail"));
+				throw new DwmCompositionException(String.Format(Resources.ExceptionMessages.NativeCallFailure, "DwmRegisterThumbnail"));
 			}
         }
 
@@ -143,7 +143,7 @@ namespace VistaControls.DWM
 
         private static void InternalGlassFrame(IntPtr hWnd, Margins margins) {
             if (NativeMethods.DwmExtendFrameIntoClientArea(hWnd, ref margins) != 0)
-                throw new DWMCompositionException(String.Format(Resources.ExceptionMessages.NativeCallFailure, "DwmExtendFrameIntoClientArea"));
+                throw new DwmCompositionException(String.Format(Resources.ExceptionMessages.NativeCallFailure, "DwmExtendFrameIntoClientArea"));
         }
 
         #endregion
