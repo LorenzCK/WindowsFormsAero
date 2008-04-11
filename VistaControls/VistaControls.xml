@@ -31,17 +31,17 @@
         <member name="P:VistaControls.SplitButton.SplitMenuEventArgs.PreventOpening">
             <summary>Set to true if you want to prevent the menu from opening.</summary>
         </member>
-        <member name="M:VistaControls.DWM.ThumbnailViewer.SetThumbnail(System.Windows.Forms.Form,System.Boolean)">
+        <member name="M:VistaControls.Dwm.ThumbnailViewer.SetThumbnail(System.Windows.Forms.Form,System.Boolean)">
             <summary>Sets the origin of the thumbnail and shows the thumbnail on the control.</summary>
             <param name="originForm">The Form instance that will be thumbnailed.</param>
             <param name="trackFormUpdates">True if the control should automatically update itself in case the thumbnailed
             form changes size or is closed.</param>
         </member>
-        <member name="M:VistaControls.DWM.ThumbnailViewer.Update">
+        <member name="M:VistaControls.Dwm.ThumbnailViewer.Update">
             <summary>Forces and update of the thumbnail.</summary>
             <remarks>Use this method if you know that the thumbnailed window has been resized and the thumbnail control should react to these changes.</remarks>
         </member>
-        <member name="T:VistaControls.DWM.Margins">
+        <member name="T:VistaControls.Dwm.Margins">
             <summary>Margins structure for the Glass Sheet effect.</summary>
         </member>
         <member name="T:VistaControls.TaskDialog.TaskDialog">
@@ -325,15 +325,15 @@
         <member name="E:VistaControls.TaskDialog.TaskDialog.Expanding">
             <summary>Occurs when the user clicks on the expand button of the dialog, before the dialog is expanded.</summary>
         </member>
-        <member name="T:VistaControls.OSSupport">
+        <member name="T:VistaControls.OsSupport">
             <summary>
             Static class providing information about the current support for Vista-only features.
             </summary>
         </member>
-        <member name="P:VistaControls.OSSupport.IsVistaOrBetter">
+        <member name="P:VistaControls.OsSupport.IsVistaOrBetter">
             <summary>Is true if the running operating system is Windows Vista or a more recent version.</summary>
         </member>
-        <member name="P:VistaControls.OSSupport.IsCompositionEnabled">
+        <member name="P:VistaControls.OsSupport.IsCompositionEnabled">
             <summary>Is true if the DWM composition engine is currently enabled.</summary>
         </member>
         <member name="P:VistaControls.TextBox.CueBannerText">
@@ -511,10 +511,16 @@
               Looks up a localized string similar to Failed to create TaskDialog..
             </summary>
         </member>
-        <member name="P:VistaControls.DWM.Helpers.GlassForm.GlassMargins">
+        <member name="P:VistaControls.Dwm.Helpers.GlassForm.GlassMargins">
             <summary>Gets or sets the glass margins of the form.</summary>
         </member>
-        <member name="M:VistaControls.DWM.GlassHelper.HandleFormMovementOnGlass(System.Windows.Forms.Form,VistaControls.DWM.Margins)">
+        <member name="P:VistaControls.Dwm.Helpers.GlassForm.HandleMouseMove">
+            <summary>Gets or sets whether mouse dragging should be handled automatically.</summary>
+        </member>
+        <member name="P:VistaControls.Dwm.Helpers.GlassForm.GlassEnabled">
+            <summary>Gets or sets whether the extended glass margin is enabled or not.</summary>
+        </member>
+        <member name="M:VistaControls.Dwm.GlassHelper.HandleFormMovementOnGlass(System.Windows.Forms.Form,VistaControls.Dwm.Margins)">
             <summary>
             Adds a handler on the Form that enables the user to move the window around
             by clicking on a glass margin (or the title bar, as usual).
@@ -526,14 +532,14 @@
             (except the ThemeText control, which manually redirects mouse events to the form)
             </remarks>
         </member>
-        <member name="M:VistaControls.DWM.GlassHelper.HandleBackgroundPainting(System.Windows.Forms.Form,VistaControls.DWM.Margins)">
+        <member name="M:VistaControls.Dwm.GlassHelper.HandleBackgroundPainting(System.Windows.Forms.Form,VistaControls.Dwm.Margins)">
             <summary>
             Adds a handler on the Form that automatically paints the glass background black
             </summary>
             <param name="form">The form that will be controlled.</param>
             <param name="margins">Margins of the glass sheet.</param>
         </member>
-        <member name="T:VistaControls.DWM.GlassHelper.HandleFormMovement">
+        <member name="T:VistaControls.Dwm.GlassHelper.HandleFormMovement">
             <summary>
             
             </summary>
@@ -542,7 +548,7 @@
             As soon as the form is disposed, the handler will be disposed as well.
             </remarks>
         </member>
-        <member name="T:VistaControls.DWM.GlassHelper.HandleBackground">
+        <member name="T:VistaControls.Dwm.GlassHelper.HandleBackground">
             <summary>
             
             </summary>
@@ -610,57 +616,57 @@
         <member name="T:VistaControls.TaskDialog.TaskDialogIcon">
             <summary>Common Task Dialog icons. Determine the look of the main instruction.</summary>
         </member>
-        <member name="T:VistaControls.DWM.DWMManager">
+        <member name="T:VistaControls.Dwm.DwmManager">
             <summary>Main DWM class, provides Thumbnail registration, glass sheet effect and blur behind.</summary>
         </member>
-        <member name="M:VistaControls.DWM.DWMManager.Register(System.Windows.Forms.Form,System.IntPtr)">
+        <member name="M:VistaControls.Dwm.DwmManager.Register(System.Windows.Forms.Form,System.IntPtr)">
             <summary>Registers a thumbnail to be drawn on a Windows Form.</summary>
             <remarks>The thumbnail will not be drawn until you update the thumbnail's properties calling Update().</remarks>
             <param name="destination">The Windows Form instance on which to draw the thumbnail.</param>
             <param name="source">The handle (HWND) of the window that has to be drawn.</param>
             <returns>A Thumbnail instance, needed to unregister and to update properties.</returns>
         </member>
-        <member name="M:VistaControls.DWM.DWMManager.Register(System.IntPtr,System.IntPtr)">
+        <member name="M:VistaControls.Dwm.DwmManager.Register(System.IntPtr,System.IntPtr)">
             <summary>Registers a thumbnail to be drawn on a window.</summary>
             <remarks>The thumbnail will not be drawn until you update the thumbnail's properties calling Update().</remarks>
             <param name="destination">The handle (HWND) of the window on which the thumbnail will be drawn.</param>
             <param name="source">The handle (HWND) of the window that has to be drawn.</param>
             <returns>A Thumbnail instance, needed to unregister and to update properties.</returns>
         </member>
-        <member name="M:VistaControls.DWM.DWMManager.Unregister(VistaControls.DWM.Thumbnail)">
+        <member name="M:VistaControls.Dwm.DwmManager.Unregister(VistaControls.Dwm.Thumbnail)">
             <summary>Unregisters the thumbnail handle.</summary>
             <remarks>The handle is unvalid after the call and should not be used again.</remarks>
             <param name="handle">A handle to a registered thumbnail.</param>
         </member>
-        <member name="M:VistaControls.DWM.DWMManager.EnableBlurBehind(System.IntPtr)">
+        <member name="M:VistaControls.Dwm.DwmManager.EnableBlurBehind(System.IntPtr)">
             <summary>Enable the Aero "Blur Behind" effect on the whole client area. Background must be black.</summary>
         </member>
-        <member name="M:VistaControls.DWM.DWMManager.EnableBlurBehind(System.Windows.Forms.Form)">
+        <member name="M:VistaControls.Dwm.DwmManager.EnableBlurBehind(System.Windows.Forms.Form)">
             <summary>Enable the Aero "Blur Behind" effect on the whole client area. Background must be black.</summary>
             <param name="form"></param>
         </member>
-        <member name="M:VistaControls.DWM.DWMManager.EnableBlurBehind(System.IntPtr,System.IntPtr)">
+        <member name="M:VistaControls.Dwm.DwmManager.EnableBlurBehind(System.IntPtr,System.IntPtr)">
             <summary>Enable the Aero "Blur Behind" effect on a specific region. Background of the region must be black.</summary>
         </member>
-        <member name="M:VistaControls.DWM.DWMManager.DisableBlurBehind(System.IntPtr)">
+        <member name="M:VistaControls.Dwm.DwmManager.DisableBlurBehind(System.IntPtr)">
             <summary>Disables the Aero "Blur Behind" effect.</summary>
         </member>
-        <member name="M:VistaControls.DWM.DWMManager.EnableGlassFrame(System.Windows.Forms.Form,VistaControls.DWM.Margins)">
+        <member name="M:VistaControls.Dwm.DwmManager.EnableGlassFrame(System.Windows.Forms.Form,VistaControls.Dwm.Margins)">
             <summary>Extends the Aero "Glass Frame" into the client area. Background must be black.</summary>
         </member>
-        <member name="M:VistaControls.DWM.DWMManager.EnableGlassFrame(System.IntPtr,VistaControls.DWM.Margins)">
+        <member name="M:VistaControls.Dwm.DwmManager.EnableGlassFrame(System.IntPtr,VistaControls.Dwm.Margins)">
             <summary>Extends the Aero "Glass Frame" into the client area. Background must be black.</summary>
         </member>
-        <member name="M:VistaControls.DWM.DWMManager.EnableGlassSheet(System.Windows.Forms.Form)">
+        <member name="M:VistaControls.Dwm.DwmManager.EnableGlassSheet(System.Windows.Forms.Form)">
             <summary>Extends the Aero "Glass Frame" to the whole client area ("Glass Sheet" effect). Background must be black.</summary>
         </member>
-        <member name="M:VistaControls.DWM.DWMManager.EnableGlassSheet(System.IntPtr)">
+        <member name="M:VistaControls.Dwm.DwmManager.EnableGlassSheet(System.IntPtr)">
             <summary>Extends the Aero "Glass Frame" to the whole client area ("Glass Sheet" effect). Background must be black.</summary>
         </member>
-        <member name="M:VistaControls.DWM.DWMManager.DisableGlassFrame(System.Windows.Forms.Form)">
+        <member name="M:VistaControls.Dwm.DwmManager.DisableGlassFrame(System.Windows.Forms.Form)">
             <summary>Disables the Aero "Glass Frame".</summary>
         </member>
-        <member name="M:VistaControls.DWM.DWMManager.DisableGlassFrame(System.IntPtr)">
+        <member name="M:VistaControls.Dwm.DwmManager.DisableGlassFrame(System.IntPtr)">
             <summary>Disables the Aero "Glass Frame".</summary>
         </member>
         <member name="M:VistaControls.Native.Windows.GetActiveWindow">
@@ -689,10 +695,10 @@
             <summary>Text label shown on the button. If you enable Command Links, a newline here
             separates the upper from the lower string on the button.</summary>
         </member>
-        <member name="T:VistaControls.DWM.Thumbnail">
+        <member name="T:VistaControls.Dwm.Thumbnail">
             <summary>Handle to a DWM Thumbnail.</summary>
         </member>
-        <member name="M:VistaControls.DWM.Thumbnail.Update(System.Drawing.Rectangle,System.Drawing.Rectangle,System.Byte,System.Boolean,System.Boolean)">
+        <member name="M:VistaControls.Dwm.Thumbnail.Update(System.Drawing.Rectangle,System.Drawing.Rectangle,System.Byte,System.Boolean,System.Boolean)">
             <summary>Updates the thumbnail's display settings.</summary>
             <param name="destination">Drawing region on destination window.</param>
             <param name="source">Origin region from source window.</param>
@@ -700,33 +706,33 @@
             <param name="visible">Visibility flag.</param>
             <param name="onlyClientArea">If true, only the client area of the window will be rendered. Otherwise, the borders will be be rendered as well.</param>
         </member>
-        <member name="M:VistaControls.DWM.Thumbnail.Update(System.Drawing.Rectangle,System.Byte,System.Boolean,System.Boolean)">
+        <member name="M:VistaControls.Dwm.Thumbnail.Update(System.Drawing.Rectangle,System.Byte,System.Boolean,System.Boolean)">
             <summary>Updates the thumbnail's display settings.</summary>
             <param name="destination">Drawing region on destination window.</param>
             <param name="opacity">Opacity. 0 is transparent, 255 opaque.</param>
             <param name="visible">Visibility flag.</param>
             <param name="onlyClientArea">If true, only the client area of the window will be rendered. Otherwise, the borders will be be rendered as well.</param>
         </member>
-        <member name="P:VistaControls.DWM.Thumbnail.IsInvalid">
+        <member name="P:VistaControls.Dwm.Thumbnail.IsInvalid">
             <summary>Returns true if the handle is valid, false if the handle has been closed or hasn't been initialized.</summary>
         </member>
-        <member name="P:VistaControls.DWM.Thumbnail.Opacity">
+        <member name="P:VistaControls.Dwm.Thumbnail.Opacity">
             <summary>Sets the thumbnail opacity value, from 0 to 255 (opaque).</summary>
         </member>
-        <member name="P:VistaControls.DWM.Thumbnail.ShowOnlyClientArea">
+        <member name="P:VistaControls.Dwm.Thumbnail.ShowOnlyClientArea">
             <summary>Sets whether only the client area of the thumbnailed window should be shown or
             the entire window area.</summary>
         </member>
-        <member name="P:VistaControls.DWM.Thumbnail.DestinationRectangle">
+        <member name="P:VistaControls.Dwm.Thumbnail.DestinationRectangle">
             <summary>Area in the destination window on which the thumbnail should be drawn.</summary>
         </member>
-        <member name="P:VistaControls.DWM.Thumbnail.SourceRectangle">
+        <member name="P:VistaControls.Dwm.Thumbnail.SourceRectangle">
             <summary>Region of the source window that should be drawn.</summary>
         </member>
-        <member name="P:VistaControls.DWM.Thumbnail.Visible">
+        <member name="P:VistaControls.Dwm.Thumbnail.Visible">
             <summary>Sets whether the thumbnail should be drawn or not.</summary>
         </member>
-        <member name="P:VistaControls.DWM.Thumbnail.SourceSize">
+        <member name="P:VistaControls.Dwm.Thumbnail.SourceSize">
             <summary>Gets the thumbnail's original size.</summary>
         </member>
     </members>

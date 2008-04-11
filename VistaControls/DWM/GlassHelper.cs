@@ -14,7 +14,7 @@ using System.Text;
 using System.Windows.Forms;
 using System.Drawing;
 
-namespace VistaControls.DWM {
+namespace VistaControls.Dwm {
 	public static class GlassHelper {
 
 		/// <summary>

@@ -15,7 +15,7 @@ namespace VistaControls {
 	/// <summary>
 	/// Static class providing information about the current support for Vista-only features.
 	/// </summary>
-	public static class OSSupport {
+	public static class OsSupport {
 
 		const int VistaMajorVersion = 6;
 
@@ -32,7 +32,7 @@ namespace VistaControls {
 			get {
 				try {
 					bool enabled;
-					DWM.NativeMethods.DwmIsCompositionEnabled(out enabled);
+					Dwm.NativeMethods.DwmIsCompositionEnabled(out enabled);
 
 					return enabled;
 				}

@@ -11,7 +11,7 @@ using System.Drawing.Drawing2D;
 using System.Diagnostics;
 
 namespace VistaControlsApp {
-    public partial class NewMain : VistaControls.DWM.Helpers.GlassForm {
+    public partial class NewMain : VistaControls.Dwm.Helpers.GlassForm {
 
 		Timer _timer;
 		Form _thumbnailedWindow = null;
@@ -39,7 +39,7 @@ namespace VistaControlsApp {
 			base.OnShown(e);
 
 			//Initialize glass sheet
-			GlassMargins = new VistaControls.DWM.Margins(0, 0, 58, 28);
+			GlassMargins = new VistaControls.Dwm.Margins(0, 0, 58, 28);
 
 			//Init timer for animated footer
 			_timer = new Timer();
