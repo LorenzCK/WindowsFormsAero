@@ -242,7 +242,12 @@ namespace WindowsFormsAero
                 ++_tabCount;
             }
 
+            SuspendLayout();
+
             base.OnItemAdded(e);
+            _layout.ScrollDirection = TabStripScrollDirection.Right;
+            
+            ResumeLayout();
         }
 
         protected override void OnItemClicked(ToolStripItemClickedEventArgs e)
@@ -324,6 +329,11 @@ namespace WindowsFormsAero
             _closeToolTip = null;
 
             base.Dispose(disposing);
+        }
+
+        internal int TabCount
+        {
+            get { return _tabCount; }
         }
 
         internal int BusyTabCount
