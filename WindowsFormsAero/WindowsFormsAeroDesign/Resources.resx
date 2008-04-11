@@ -120,4 +120,7 @@
   <data name="AddTabPage" xml:space="preserve">
     <value>Add Tab Page</value>
   </data>
+  <data name="RemoveTabPage" xml:space="preserve">
+    <value>Remove Tab Page</value>
+  </data>
 </root>

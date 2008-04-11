@@ -118,7 +118,6 @@ namespace WindowsFormsAero
             }
         }
         
-
         private TabStripButton SelectedTab
         {
             get { return _strip.SelectedTab; }

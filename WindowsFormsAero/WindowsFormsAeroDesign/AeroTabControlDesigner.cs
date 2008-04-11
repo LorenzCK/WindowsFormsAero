@@ -11,12 +11,17 @@ using System.Drawing;
 
 namespace WindowsFormsAero.Design
 {
-    internal sealed class AeroTabControlDesigner : ParentControlDesigner
+    internal sealed class AeroTabControlDesigner : ParentControlDesigner, IDesignerUtilsClient
     {
         private DesignerVerbCollection _verbs;
-        private ISelectionService _selection;
+        private DesignerUtils _utils;
 
         private bool _tabControlSelected;
+
+        public AeroTabControlDesigner()
+        {
+            _utils = new DesignerUtils(this);
+        }
 
         public override bool CanParent(Control control)
         {
@@ -31,7 +36,8 @@ namespace WindowsFormsAero.Design
                 {
                     _verbs = new DesignerVerbCollection()
                     {
-                        new DesignerVerb(Resources.AddTabPage, OnAdd)
+                        new DesignerVerb(Resources.AddTabPage, OnAddTab),
+                        new DesignerVerb(Resources.RemoveTabPage, OnRemoveTab),
                     };
                 }
                 return _verbs; 
@@ -46,22 +52,31 @@ namespace WindowsFormsAero.Design
         public override void Initialize(IComponent component)
         {
             base.Initialize(component);
-            SelectionService.SelectionChanged += OnSelectionChanged;
+
+            _utils.SelectionService.SelectionChanged += OnSelectionChanged;
+
+            TabControl.NewTabButtonClick += OnAddTab;
+            TabControl.CloseButtonClick += OnRemoveTab;
         }
 
         public override void InitializeNewComponent(IDictionary defaultValues)
         {
+            base.InitializeNewComponent(defaultValues);
+
             AddTabPage();
             AddTabPage();
 
-            base.InitializeNewComponent(defaultValues);
+            _utils.SetPropertyValueWithNotification("SelectedTabIndex", 0);
         }
 
         protected override void Dispose(bool disposing)
         {
             if (disposing)
             {
-                SelectionService.SelectionChanged -= OnSelectionChanged;
+                TabControl.NewTabButtonClick -= OnAddTab;
+                TabControl.CloseButtonClick -= OnRemoveTab;
+
+                _utils.SelectionService.SelectionChanged -= OnSelectionChanged;
             }
 
             base.Dispose(disposing);
@@ -79,72 +94,73 @@ namespace WindowsFormsAero.Design
 
         private AeroTabPage AddTabPage()
         {
-            var host = GetService<IDesignerHost>();
-
-            if (host != null)
-            {
-                return AddTabPage(host);
-            }
-
-            return null;
+            return AddTabPage(false);
         }
 
-        private AeroTabPage AddTabPage(IDesignerHost host)
+        private AeroTabPage AddTabPage(bool dontRaiseEvents)
         {
-            return AddTabPage(host, true);
-        }
-
-        private AeroTabPage AddTabPage(IDesignerHost host, bool raiseEvents)
-        {
-            var controls = GetProperty(TabControl, "Controls");
-            var page = CreateComponent<AeroTabPage>(host);
-
-            if (raiseEvents)
+            return _utils.ExecuteWithTransaction(Resources.AddTabPage + ' ' + TabControl.Site.Name, delegate
             {
-                RaiseComponentChanging(controls);
-            }
+                var controls = _utils.GetProperty("Controls");
+                var page = _utils.CreateComponent<AeroTabPage>();
 
-            TabControl.Controls.Add(page);
-
-            SetProperty("SelectedTab", page);
-            SetProperty(page, "Text", page.Name);
-
-            if (raiseEvents)
-            {
-                RaiseComponentChanged(controls, null, null);
-            }
-
-            return page;
-        }
-
-        private void OnAdd(object sender, EventArgs e)
-        {
-            var host = GetService<IDesignerHost>();
-
-            if (host != null)
-            {
-                using (var tx = CreateDesignerTransaction(host, Resources.AddTabPage + ' ' + Component.Site.Name))
+                if (dontRaiseEvents)
                 {
-                    if (tx != null)
-                    {
-                        try
-                        {
-                            AddTabPage(host, true);
-                        }
-                        finally
-                        {
-                            tx.Commit();
-                        }
-                    }
+                    TabControl.Controls.Add(page);
+
+                    _utils.SetPropertyValue("SelectedTab", page);
+                    _utils.SetPropertyValue(page, "Text", page.Name);
                 }
-            }
+                else
+                {
+                    RaiseComponentChanging(controls);
+
+                    TabControl.Controls.Add(page);
+
+                    _utils.SetPropertyValueWithNotification("SelectedTab", page);
+                    _utils.SetPropertyValueWithNotification(page, "Text", page.Name);
+
+                    RaiseComponentChanged(controls, null, null);
+                }
+
+                return page;
+            });
+        }
+
+        private void RemoveTabPage(AeroTabPage page)
+        {
+            _utils.ExecuteWithTransaction(Resources.RemoveTabPage, delegate
+            {
+                var controls = _utils.GetProperty("Controls");
+
+                RaiseComponentChanging(controls);
+                TabControl.Controls.Remove(page);
+                RaiseComponentChanged(controls, null, null);
+
+                _utils.DesignerHost.DestroyComponent(page);
+            });
+        }
+
+        private void OnAddTab(object sender, EventArgs e)
+        {
+            AddTabPage();
+        }
+
+        private void OnRemoveTab(object sender, EventArgs e)
+        {
+            RemoveTabPage(TabControl.SelectedTab);
+        }
+
+        private void OnRemoveTab(object sender, AeroTabPageEventArgs e)
+        {
+            RemoveTabPage(e.Page);
         }
 
         private void OnSelectionChanged(object sender, EventArgs e)
         {
             _tabControlSelected = false;
 
-            foreach (var item in SelectionService.GetSelectedComponents())
+            foreach (var item in _utils.SelectionService.GetSelectedComponents())
             {
                 if (item == TabControl)
                 {
@@ -156,92 +172,11 @@ namespace WindowsFormsAero.Design
                 if ((page != null) && (page.Parent == TabControl))
                 {
                     _tabControlSelected = false;
-                    TabControl.SelectedTab = page;
+                    _utils.SetPropertyValueWithNotification("SelectedTab", page);
 
                     break;
                 }
             }
-        }
-
-        private ISelectionService SelectionService
-        {
-            get
-            {
-                if (_selection == null)
-                {
-                    _selection = GetService<ISelectionService>();
-
-                    if (_selection == null)
-                    {
-                        throw new InvalidOperationException("GetService ISelectionService failed");
-                    }
-                }
-
-                return _selection;
-            }
-        }
-
-        private TService GetService<TService>()
-        {
-            return (TService)GetService(typeof(TService));
-        }
-
-        private void SetProperty(string name, object value)
-        {
-            SetProperty(TabControl, name, value);
-        }
-
-        private static void SetProperty(object target, string name, object value)
-        {
-            PropertyDescriptor propDescriptor = TypeDescriptor.GetProperties(target)[name];
-            if (propDescriptor != null)
-            {
-                propDescriptor.SetValue(target, value);
-            }
-        }
-
-        private static T GetPropertyValue<T>(object target, string name)
-        {
-            var descriptor = GetProperty(target, name);
-
-            if (descriptor != null)
-            {
-                var value = descriptor.GetValue(target);
-                
-                if (value is T)
-                {
-                    return (T)(value);
-                }
-            }
-
-            return default(T);
-        }
-
-        private static PropertyDescriptor GetProperty(object target, string name)
-        {
-            return TypeDescriptor.GetProperties(target)[name];
-        }
-
-        private static DesignerTransaction CreateDesignerTransaction(IDesignerHost host, String description)
-        {
-            try
-            {
-                return host.CreateTransaction(description);
-            }
-            catch (CheckoutException exc)
-            {
-                if (exc != CheckoutException.Canceled)
-                {
-                    throw;
-                }
-            }
-
-            return null;
-        }
-
-        private static TComponent CreateComponent<TComponent>(IDesignerHost host) where TComponent : IComponent
-        {
-            return (TComponent)host.CreateComponent(typeof(TComponent));
         }
 
         private static AeroTabPage GetTabPageOfComponent(object component)
@@ -251,7 +186,7 @@ namespace WindowsFormsAero.Design
             while (ctl != null)
             {
                 var page = (ctl as AeroTabPage);
-                
+
                 if (page != null)
                 {
                     return page;
@@ -259,8 +194,22 @@ namespace WindowsFormsAero.Design
 
                 ctl = ctl.Parent;
             }
-
+            
             return null;
         }
+
+        #region IDesignerUtilsClient Members
+
+        IComponent IDesignerUtilsClient.Component
+        {
+            get { return Component; }
+        }
+
+        object IDesignerUtilsClient.GetService(Type type)
+        {
+            return GetService(type);
+        }
+
+        #endregion
     }
 }

@@ -20,7 +20,7 @@ namespace WindowsFormsAero.Demo
             Application.SetCompatibleTextRenderingDefault(false);
             ToolStripManager.Renderer = new TabStripSystemRenderer();
 
-            using (var form = new Form())
+            using (var form = new Form1())
             {
                 Application.Run(form);
             }

@@ -68,5 +68,14 @@ namespace WindowsFormsAero.Design {
                 return ResourceManager.GetString("AddTabPage", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Remove Tab Page.
+        /// </summary>
+        internal static string RemoveTabPage {
+            get {
+                return ResourceManager.GetString("RemoveTabPage", resourceCulture);
+            }
+        }
     }
 }

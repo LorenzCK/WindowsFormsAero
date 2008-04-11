@@ -17,8 +17,6 @@ namespace WindowsFormsAero
     [ToolStripItemDesignerAvailability(ToolStripItemDesignerAvailability.None)]
     public class TabStripButton : TabStripButtonBase
     {
-        private AeroTabPage _tabStripPage;
-        
         private Boolean _isBusy;
         private Boolean _isClosable = true;
         
@@ -82,8 +80,8 @@ namespace WindowsFormsAero
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public new bool CheckOnClick
         {
-            get { return base.CheckOnClick; }
-            set { base.CheckOnClick = value; }
+            get { return false; }
+            set { }
         }
 
         [Browsable(false)]
@@ -151,13 +149,6 @@ namespace WindowsFormsAero
             }
         }
 
-        [DefaultValue(null)]
-        public AeroTabPage TabStripPage
-        {
-            get { return _tabStripPage; }
-            set { _tabStripPage = value; }
-        }
-
         [DefaultValue(ContentAlignment.MiddleLeft)]
         public override ContentAlignment TextAlign
         {
@@ -205,7 +196,30 @@ namespace WindowsFormsAero
 
         internal override bool IsClosableInternal
         {
-            get { return Checked && IsClosable; }
+            get 
+            {
+                if (Owner.CloseButtonVisibility == CloseButtonVisibility.Never)
+                {
+                    return false;
+                }
+
+                if (Owner.CloseButtonVisibility == CloseButtonVisibility.ExceptSingleTab)
+                {
+                    int count = 0;
+
+                    foreach (var item in Owner.ItemsOfType<TabStripButton>())
+                    {
+                        ++count;
+                    }
+
+                    if (count < 2)
+                    {
+                        return false;
+                    }
+                }
+
+                return Checked && IsClosable;
+            }
         }
     }
 }

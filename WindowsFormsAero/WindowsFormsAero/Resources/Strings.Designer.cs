@@ -77,5 +77,15 @@ namespace WindowsFormsAero.Resources {
                 return ResourceManager.GetString("TabControlInvalidPageType", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Value of &apos;{0}&apos; is not valid for &apos;SelectedTabIndex&apos;.
+        ///&apos;SelectedTabIndex&apos; must be greater than or equal to -1..
+        /// </summary>
+        internal static string TabStripInvalidTabIndex {
+            get {
+                return ResourceManager.GetString("TabStripInvalidTabIndex", resourceCulture);
+            }
+        }
     }
 }
