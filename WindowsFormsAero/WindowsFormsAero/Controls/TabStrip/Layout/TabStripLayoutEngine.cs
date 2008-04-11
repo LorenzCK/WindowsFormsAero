@@ -85,37 +85,15 @@ namespace WindowsFormsAero
             get { return _strip.MinimumTabWidth; }
         }
 
-        private int GetSelectedTabIndex()
+        private int TabCount
         {
-            int tabIndex = 0;
-
-            foreach (var tab in GetTabItems())
-            {
-                if (tab == SelectedTab)
-                {
-                    break;
-                }
-
-                ++tabIndex;
-            }
-
-            return tabIndex;
+            get { return _strip.TabCount; }
         }
 
-        private void SetSelectedTabIndex(int value)
+        private int SelectedTabIndex
         {
-            int tabIndex = 0;
-
-            foreach (var tab in GetTabItems())
-            {
-                if (tabIndex == value)
-                {
-                    SelectedTab = tab;
-                    break;
-                }
-
-                ++tabIndex;
-            }
+            get { return _strip.SelectedTabIndex; }
+            set { _strip.SelectedTabIndex = value; }
         }
         
         private TabStripButton SelectedTab
@@ -165,18 +143,6 @@ namespace WindowsFormsAero
         private void LayoutItem(ToolStripItem item, Point location, Size size)
         {
             _strip.LayoutItem(item, location, size);
-        }
-
-        private int GetTabItemCount()
-        {
-            int count = 0;
-
-            foreach (var item in GetTabItems())
-            {
-                ++count;
-            }
-
-            return count;
         }
 
         private IEnumerable<TabStripButton> GetTabItems()

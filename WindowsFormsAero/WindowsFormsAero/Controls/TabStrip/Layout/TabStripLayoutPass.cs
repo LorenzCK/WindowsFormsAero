@@ -21,11 +21,7 @@ namespace WindowsFormsAero
             private Rectangle _displayRectangle;
             private Point _currentPosition;
 
-            private int? _selectedTab;
-
-            private int _tabCount;
             private int _tabWidth;
-
             private int _tabsToShow;
 
             public TabStripLayoutPass(TabStripLayoutEngine engine)
@@ -35,8 +31,7 @@ namespace WindowsFormsAero
 
                 engine._direction = TabStripScrollDirection.None;
 
-                _tabCount = engine.GetTabItemCount();
-                _tabsToShow = engine.AvailableWidth / GetTabWidth(_tabCount);
+                _tabsToShow = engine.AvailableWidth / GetTabWidth(TabCount);
                 _tabWidth = GetTabWidth(_tabsToShow);
 
                 _displayRectangle = engine.DisplayRectangle;
@@ -88,7 +83,7 @@ namespace WindowsFormsAero
                 get { return _engine._farTab; }
                 set
                 {
-                    if (value >= _tabCount)
+                    if (value >= TabCount)
                         throw new InvalidOperationException();
 
                     _engine._farTab = value;
@@ -97,16 +92,8 @@ namespace WindowsFormsAero
 
             private int SelectedTabIndex
             {
-                get 
-                {
-                    if (_selectedTab == null)
-                    {
-                        _selectedTab = _engine.GetSelectedTabIndex();
-                    }
-
-                    return _selectedTab.Value;
-                }
-                set { _engine.SetSelectedTabIndex(value); }
+                get { return _engine.SelectedTabIndex; }
+                set { _engine.SelectedTabIndex = value; }
             }
 
             private int VisibleTabCount
@@ -117,6 +104,11 @@ namespace WindowsFormsAero
             private Size TabSize
             {
                 get { return new Size(_tabWidth, _displayRectangle.Height); }
+            }
+
+            private int TabCount
+            {
+                get { return _engine.TabCount; }
             }
 
             private int GetTabWidth(int count)
@@ -138,10 +130,10 @@ namespace WindowsFormsAero
 
             private bool TryFitAllTabs()
             {
-                if (_tabsToShow >= _tabCount)
+                if (_tabsToShow >= TabCount)
                 {
                     NearTabIndex = 0;
-                    FarTabIndex = _tabCount - 1;
+                    FarTabIndex = TabCount - 1;
 
                     return true;
                 }
@@ -163,7 +155,7 @@ namespace WindowsFormsAero
             {
                 if (!TryFitAllTabs())
                 {
-                    FarTabIndex = Math.Min(_tabCount - 1, SelectedTabIndex + _tabsToShow);
+                    FarTabIndex = Math.Min(TabCount - 1, SelectedTabIndex + _tabsToShow);
 
                     if (NearTabIndex == 0)
                     {
@@ -186,7 +178,7 @@ namespace WindowsFormsAero
                 {
                     int freeTabs = _tabsToShow - VisibleTabCount;
                     int freeTabsLeft = Math.Min(NearTabIndex, freeTabs);
-                    int freeTabsRight = Math.Min((_tabCount - 1) - FarTabIndex, freeTabs);
+                    int freeTabsRight = Math.Min((TabCount - 1) - FarTabIndex, freeTabs);
 
                     int distLeft = (SelectedTabIndex - NearTabIndex);
                     int distRight = (FarTabIndex - SelectedTabIndex);
@@ -196,7 +188,7 @@ namespace WindowsFormsAero
 
                     if (freeTabs > 0)
                     {
-                        FarTabIndex = Math.Min(_tabCount - 1, FarTabIndex + freeTabs);
+                        FarTabIndex = Math.Min(TabCount - 1, FarTabIndex + freeTabs);
                     }
                 }
                 else
@@ -218,7 +210,7 @@ namespace WindowsFormsAero
             private void UpdateScrollButtons()
             {
                 bool near = (NearTabIndex > 0);
-                bool far = (_tabCount - FarTabIndex > 1);
+                bool far = (TabCount - FarTabIndex > 1);
 
                 _engine.ScrollNearButtonVisible = near;
                 _engine.ScrollFarButtonVisible = near || far;
