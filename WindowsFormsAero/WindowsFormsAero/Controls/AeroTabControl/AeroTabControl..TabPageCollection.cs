@@ -52,6 +52,11 @@ namespace WindowsFormsAero
                 _owner.Controls.Add(item);
             }
 
+            public void AddRange(AeroTabPage[] items)
+            {
+                _owner.Controls.AddRange(items);
+            }
+
             public void Clear()
             {
                 _owner.Controls.Clear();

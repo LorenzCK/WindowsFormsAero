@@ -17,6 +17,7 @@ namespace WindowsFormsAero.Design
         private DesignerUtils _utils;
 
         private bool _tabControlSelected;
+        private bool _settingSelection;
 
         public AeroTabControlDesigner()
         {
@@ -57,6 +58,7 @@ namespace WindowsFormsAero.Design
 
             TabControl.NewTabButtonClick += OnAddTab;
             TabControl.CloseButtonClick += OnRemoveTab;
+            TabControl.SelectedTabChanged += OnSelectedTabChanged;
         }
 
         public override void InitializeNewComponent(IDictionary defaultValues)
@@ -75,6 +77,7 @@ namespace WindowsFormsAero.Design
             {
                 TabControl.NewTabButtonClick -= OnAddTab;
                 TabControl.CloseButtonClick -= OnRemoveTab;
+                TabControl.SelectedTabChanged -= OnSelectedTabChanged;
 
                 _utils.SelectionService.SelectionChanged -= OnSelectionChanged;
             }
@@ -84,15 +87,11 @@ namespace WindowsFormsAero.Design
 
         protected override bool GetHitTest(Point point)
         {
-            if (_tabControlSelected)
-            {
-                //return TabControl.TabStrip.Bounds.Contains(TabControl.PointToClient(point));
-                return true;
-            }
+            var strip = TabControl.TabStrip;
 
-            return false;
+            return strip.GetItemAt(strip.PointToClient(point)) != null;
         }
-
+        
         private AeroTabPage AddTabPage()
         {
             return AddTabPage(false);
@@ -103,7 +102,7 @@ namespace WindowsFormsAero.Design
             return _utils.ExecuteWithTransaction(Resources.AddTabPage + ' ' + TabControl.Site.Name, delegate
             {
                 var page = _utils.CreateComponent<AeroTabPage>();
-                var pagesDescriptor = _utils.GetProperty("TabPages");
+                var pagesDescriptor = _utils.GetProperty("Controls");
 
                 if (dontRaiseEvents)
                 {
@@ -116,10 +115,12 @@ namespace WindowsFormsAero.Design
                 {
                     RaiseComponentChanging(pagesDescriptor);
 
+                    page.Text = page.Name;
                     TabControl.TabPages.Add(page);
 
+                    
                     _utils.SetPropertyValueWithNotification("SelectedTab", page);
-                    _utils.SetPropertyValueWithNotification(page, "Text", page.Name);
+                    //_utils.SetPropertyValueWithNotification(page, "Text", page.Name);
 
                     RaiseComponentChanged(pagesDescriptor, null, null);
                 }
@@ -157,6 +158,30 @@ namespace WindowsFormsAero.Design
             RemoveTabPage(e.Page);
         }
 
+        private void OnSelectedTabChanged(object sender, EventArgs e)
+        {
+            if (TabControl.SelectedTab != null)
+            {
+                try
+                {
+                    _settingSelection = true;
+                    _utils.SelectionService.SetSelectedComponents(new IComponent[] 
+                    {
+                        TabControl.SelectedTab 
+                    }, SelectionTypes.Replace);
+                }
+                finally
+                {
+                    _settingSelection = false;
+                }
+            }
+
+            var descriptor = _utils.GetProperty("SelectedTab");
+            
+            RaiseComponentChanging(descriptor);
+            RaiseComponentChanged(descriptor, null, null);
+        }
+
         private void OnSelectionChanged(object sender, EventArgs e)
         {
             _tabControlSelected = false;
@@ -168,14 +193,17 @@ namespace WindowsFormsAero.Design
                     _tabControlSelected = true;
                 }
 
-                var page = GetTabPageOfComponent(item);
-
-                if ((page != null) && (page.Parent == TabControl))
+                if (!_settingSelection)
                 {
-                    _tabControlSelected = false;
-                    _utils.SetPropertyValueWithNotification("SelectedTab", page);
+                    var page = GetTabPageOfComponent(item);
 
-                    break;
+                    if ((page != null) && (page.Parent == TabControl))
+                    {
+                        _tabControlSelected = false;
+                        _utils.SetPropertyValueWithNotification("SelectedTab", page);
+
+                        break;
+                    }
                 }
             }
         }

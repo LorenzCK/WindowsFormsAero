@@ -30,11 +30,6 @@ namespace WindowsFormsAero
             }
         }
 
-        public static bool IsSupportedByOS
-        {
-            get { return VistaOSFeature.Feature.IsPresent(VistaOSFeature.DesktopComposition); }
-        }
-
         public static bool IsEnabled
         {
             get { return IsSupportedByOS && NativeMethods.DwmIsCompositionEnabled(); }
@@ -43,6 +38,11 @@ namespace WindowsFormsAero
                 EnsureIsSupported();
                 NativeMethods.DwmEnableComposition(value ? (uint)(1) : (uint)(0));
             }
+        }
+
+        public static bool IsSupportedByOS
+        {
+            get { return VistaOSFeature.Feature.IsPresent(VistaOSFeature.DesktopComposition); }
         }
 
         private static void EnsureIsSupported()

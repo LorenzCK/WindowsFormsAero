@@ -38,7 +38,7 @@ namespace WindowsFormsAero
         private TabStripButton _selectedTab;
 
         private TabStripLayoutEngine _layout;
-        private ToolTip _closeToolTip;
+        //private ToolTip _closeToolTip;
 
         private Boolean _clearingTabs;
         private UInt16 _busyTabCount;
@@ -75,6 +75,7 @@ namespace WindowsFormsAero
             {
                 if (_selectedTab != value)
                 {
+                    _selectedIndex = -1;
                     _selectedTab = value;
 
                     int index = 0;
@@ -104,9 +105,7 @@ namespace WindowsFormsAero
             {
                 if (value == -1)
                 {
-                    _selectedIndex = value;
                     SelectedTab = null;
-                    return;
                 }
                 else
                 {
@@ -116,18 +115,17 @@ namespace WindowsFormsAero
                     {
                         if (index == value)
                         {
-                            _selectedIndex = value;
                             SelectedTab = item;
                             return;
                         }
 
                         ++index;
                     }
-                }
 
-                throw new IndexOutOfRangeException(
-                    string.Format(System.Globalization.CultureInfo.CurrentCulture,
-                    Resources.Strings.TabStripInvalidTabIndex, value));
+                    throw new IndexOutOfRangeException(
+                        string.Format(System.Globalization.CultureInfo.CurrentCulture,
+                        Resources.Strings.TabStripInvalidTabIndex, value));
+                }
             }
         }
 
@@ -331,15 +329,15 @@ namespace WindowsFormsAero
                     _busyTabTimer.Dispose();
                 }
 
-                if (_closeToolTip != null)
-                {
-                    _closeToolTip.Dispose();
-                }
+                //if (_closeToolTip != null)
+                //{
+                //    _closeToolTip.Dispose();
+                //}
             }
 
             _busyTabCount = 0;
             _busyTabTimer = null;
-            _closeToolTip = null;
+            //_closeToolTip = null;
 
             base.Dispose(disposing);
         }
@@ -428,33 +426,33 @@ namespace WindowsFormsAero
             ResumeLayout();
         }
 
-        internal void ShowCloseButtonToolTip()
-        {
-            if (ShowItemToolTips)
-            {
-                ShowItemToolTips = false;
+        //internal void ShowCloseButtonToolTip()
+        //{
+        //    if (ShowItemToolTips)
+        //    {
+        //        ShowItemToolTips = false;
 
-                try
-                {
-                    if (_closeToolTip == null)
-                    {
-                        _closeToolTip = new ToolTip();
-                    }
+        //        try
+        //        {
+        //            if (_closeToolTip == null)
+        //            {
+        //                _closeToolTip = new ToolTip();
+        //            }
 
-                    var cur = Cursor.Current;
-                    var pos = Cursor.Position;
+        //            var cur = Cursor.Current;
+        //            var pos = Cursor.Position;
 
-                    pos.Y += (cur.Size.Height - cur.HotSpot.Y);
+        //            pos.Y += (cur.Size.Height - cur.HotSpot.Y);
 
                     
-                    _closeToolTip.Show("Close (Ctrl+W)", this, PointToClient(pos), _closeToolTip.AutoPopDelay);
-                }
-                finally
-                {
-                    ShowItemToolTips = true;
-                }
-            }
-        }
+        //            _closeToolTip.Show("Close (Ctrl+W)", this, PointToClient(pos), _closeToolTip.AutoPopDelay);
+        //        }
+        //        finally
+        //        {
+        //            ShowItemToolTips = true;
+        //        }
+        //    }
+        //}
 
         private TabStripRenderer TabStripRenderer
         {
