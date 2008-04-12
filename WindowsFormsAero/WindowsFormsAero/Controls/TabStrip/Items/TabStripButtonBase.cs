@@ -271,15 +271,15 @@ namespace WindowsFormsAero
             base.OnMouseMove(e);
         }
 
-        protected override void OnMouseHover(EventArgs e)
-        {
-            if (CloseButtonState == TabStripCloseButtonState.Selected)
-            {
-                Owner.ShowCloseButtonToolTip();
-            }
+        //protected override void OnMouseHover(EventArgs e)
+        //{
+        //    if (CloseButtonState == TabStripCloseButtonState.Selected)
+        //    {
+        //        Owner.ShowCloseButtonToolTip();
+        //    }
 
-            base.OnMouseHover(e);
-        }
+        //    base.OnMouseHover(e);
+        //}
 
         protected override void OnMouseLeave(EventArgs e)
         {

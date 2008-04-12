@@ -35,7 +35,7 @@ namespace WindowsFormsAero
             return base.GetVersionPresent(feature);
         }
 
-        internal static bool OnVista
+        private static bool OnVista
         {
             get
             {
@@ -48,5 +48,4 @@ namespace WindowsFormsAero
             }
         }
     }
-
 }

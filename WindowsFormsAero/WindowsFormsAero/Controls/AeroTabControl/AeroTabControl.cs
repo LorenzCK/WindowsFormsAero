@@ -8,7 +8,7 @@ using System.Windows.Forms;
 namespace WindowsFormsAero
 {
     [System.ComponentModel.DesignerCategory("code")]
-    [System.ComponentModel.Designer("WindowsFormsAero.Design.AeroTabControlDesigner, " + ThisAssembly.DesignAssemblyName)]
+    [System.ComponentModel.Designer("WindowsFormsAero.Design.AeroTabControlDesigner, " + ThisAssembly.DesignAssemblyFullName)]
     [DefaultProperty("TabPages")]
     [DefaultEvent("SelectedTabChanged")]
     [Docking(DockingBehavior.AutoDock)]
@@ -52,7 +52,9 @@ namespace WindowsFormsAero
             remove { Events.RemoveHandler(EventSelectedTabChanged, value); }
         }
 
+        [Browsable(false)]
         [MergableProperty(false)]
+        [EditorBrowsable(EditorBrowsableState.Always)]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public int SelectedTabIndex
         {
@@ -60,7 +62,10 @@ namespace WindowsFormsAero
             set { _tabStrip.SelectedTabIndex = value; }
         }
 
+        [Browsable(true)]
         [MergableProperty(false)]
+        [EditorBrowsable(EditorBrowsableState.Always)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
         public AeroTabPage SelectedTab
         {
             get { return _selectedPage; }
@@ -78,8 +83,8 @@ namespace WindowsFormsAero
                     if (_selectedPage != null)
                     {
                         _selectedPage.Visible = true;
-                        _selectedPage.BringToFront();
-                        
+
+                        _tabStrip.SendToBack();                        
                         _tabStrip.SelectedTab = _selectedPage.TabStripButton;
                     }
 
@@ -88,14 +93,8 @@ namespace WindowsFormsAero
             }
         }
 
-        //public TabStrip TabStrip
-        //{
-        //    get { return _tabStrip; }
-        //}
-
         [MergableProperty(false)]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-        //[Editor("WindowsFormsAero.Design.AeroTabPageCollectionEditor, " + ThisAssembly.DesignAssemblyName, typeof(UITypeEditor))]
         public TabPageCollection TabPages
         {
             get 
@@ -107,6 +106,15 @@ namespace WindowsFormsAero
 
                 return _pageCollection;
             }
+        }
+
+        [Browsable(false)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public override string Text
+        {
+            get { return base.Text; }
+            set { base.Text = value; }
         }
 
         protected internal virtual void OnCloseButtonClick(AeroTabPageEventArgs e)
@@ -154,38 +162,54 @@ namespace WindowsFormsAero
             get { return new Padding(2); }
         }
 
-        private void AddTab(AeroTabPage page)
+        internal TabStrip TabStrip
         {
-            System.Diagnostics.Debug.WriteLine("AddTab " + page.Name);
+            get { return _tabStrip; }
+        }
 
-            SuspendLayout();
-
+        private void Add(AeroTabPage page)
+        {
             page.Visible = false;
             page.Dock = DockStyle.Fill;
 
             _pages.Add(page);
+
+            _tabStrip.SuspendLayout();
             _tabStrip.Items.Add(page.TabStripButton);
-            
-            ResumeLayout();
+            _tabStrip.ResumeLayout();
         }
 
-        private void RemoveTab(AeroTabPage page)
+        private void AddRange(IList<AeroTabPage> pages)
         {
-            System.Diagnostics.Debug.WriteLine("RemoveTab " + page.Name);
+            var buttons = new TabStripButton[pages.Count];
 
-            SuspendLayout();
+            for (int i = 0; i < pages.Count; ++i)
+            {
+                pages[i].Visible = false;
+                pages[i].Dock = DockStyle.Fill;
+                buttons[i] = pages[i].TabStripButton;
+            }
 
+            _pages.AddRange(pages);
+
+            _tabStrip.SuspendLayout();
+            _tabStrip.Items.AddRange(buttons);
+            _tabStrip.ResumeLayout();
+        }
+
+        private void Remove(AeroTabPage page)
+        {
             if (_tabStrip.Items.Contains(page.TabStripButton))
             {
+                _tabStrip.SuspendLayout();
                 _tabStrip.Items.Remove(page.TabStripButton);
+                _tabStrip.ResumeLayout();
             }
 
             if (_pages.Contains(page))
             {
                 _pages.Remove(page);
             }
-
-            ResumeLayout();
         }
 
         private void RemoveAllTabs()
@@ -193,10 +217,13 @@ namespace WindowsFormsAero
             System.Diagnostics.Debug.WriteLine("RemoveAllTabs");
 
             SuspendLayout();
+            _tabStrip.SuspendLayout();
 
+            SelectedTab = null;
             _tabStrip.RemoveAllTabs();
             _pages.Clear();
 
+            _tabStrip.ResumeLayout();
             ResumeLayout();
         }
 
