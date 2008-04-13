@@ -52,6 +52,9 @@
     </Compile>
     <Compile Include="Controls\AeroButton.cs">
     </Compile>
+    <Compile Include="Controls\AeroButtonBase.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Controls\AeroTabControl\AeroTabControl..TabPageCollection.cs" />
     <Compile Include="Controls\AeroTabControl\AeroTabControl..ControlCollection.cs" />
     <Compile Include="Controls\AeroTabControl\AeroTabPageEventArgs.cs" />

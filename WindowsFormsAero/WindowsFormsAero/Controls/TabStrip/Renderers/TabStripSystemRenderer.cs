@@ -71,6 +71,11 @@ namespace WindowsFormsAero
             set;
         }
 
+        public override Color SelectedTabBottomColor
+        {
+            get { return CheckedColors[3]; }
+        }
+
         public override Size GetBusyImageSize(ToolStripItem item)
         {
             return BusyImageSize;

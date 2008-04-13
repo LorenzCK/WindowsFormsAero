@@ -1,6 +1,7 @@
 using System;
 using System.ComponentModel;
 using System.Windows.Forms;
+using System.Drawing;
 
 namespace WindowsFormsAero
 {
@@ -10,6 +11,7 @@ namespace WindowsFormsAero
     public class AeroTabPage : Panel
     {
         private TabStripButton _button;
+        private Boolean _backColorAssigned;
 
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
@@ -29,10 +31,50 @@ namespace WindowsFormsAero
             set { base.Dock = value; }
         }
 
+        [Browsable(true)]
+        [EditorBrowsable(EditorBrowsableState.Always)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
+        public override Color BackColor
+        {
+            get { return base.BackColor; }
+            set 
+            {
+                if (value == Color.Empty)
+                {
+                    ResetBackColor();
+                }
+                else
+                {
+                    this._backColorAssigned = true;
+                    base.BackColor = value;
+                }
+            }
+        }
+
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override void ResetBackColor()
+        {
+            var tabControl = Parent as AeroTabControl;
+
+            if (tabControl != null)
+            {
+                base.BackColor = tabControl.TabPageBackColor;
+            }
+
+            _backColorAssigned = false;
+        }
+
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public bool ShouldSerializeBackColor()
+        {
+            return _backColorAssigned;
+        }
+
+
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-        public override System.Drawing.Size MaximumSize
+        public override Size MaximumSize
         {
             get { return base.MaximumSize; }
             set { base.MaximumSize = value; }
@@ -41,7 +83,7 @@ namespace WindowsFormsAero
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-        public override System.Drawing.Size MinimumSize
+        public override Size MinimumSize
         {
             get { return base.MinimumSize; }
             set { base.MinimumSize = value; }
@@ -79,6 +121,16 @@ namespace WindowsFormsAero
         {
             add { base.TextChanged += value; }
             remove { base.TextChanged -= value; }
+        }
+
+        protected override void OnParentChanged(EventArgs e)
+        {
+            if(!_backColorAssigned)
+            {
+                ResetBackColor();
+            }
+
+            base.OnParentChanged(e);
         }
 
         protected override void OnTextChanged(EventArgs e)

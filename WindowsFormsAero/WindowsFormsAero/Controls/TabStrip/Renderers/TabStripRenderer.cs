@@ -140,6 +140,11 @@ namespace WindowsFormsAero
             set;
         }
 
+        public virtual Color SelectedTabBottomColor
+        {
+            get { return SystemColors.Control; }
+        }
+
         public event TabStripItemRenderEventHandler RenderTabItemBackground
         {
             add { Events.AddHandler(EventRenderTabItemBackground, value); }
