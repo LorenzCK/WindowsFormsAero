@@ -25,6 +25,7 @@ namespace WindowsFormsAero
                         {
                             if (dwmapi.ContainsProcedure("DwmIsCompositionEnabled"))
                             {
+
                                 return new Version(0, 0, 0, 0);
                             }
                         }
