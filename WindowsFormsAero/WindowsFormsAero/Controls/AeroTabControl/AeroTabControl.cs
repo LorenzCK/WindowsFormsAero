@@ -167,6 +167,11 @@ namespace WindowsFormsAero
             get { return _tabStrip; }
         }
 
+        internal Color TabPageBackColor
+        {
+            get { return TabStrip.SelectedTabBottomColor; }
+        }
+
         private void Add(AeroTabPage page)
         {
             page.Visible = false;

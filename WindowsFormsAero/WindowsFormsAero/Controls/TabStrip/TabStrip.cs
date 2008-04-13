@@ -387,6 +387,19 @@ namespace WindowsFormsAero
             get { return _newTab; }
         }
 
+        internal Color SelectedTabBottomColor
+        {
+            get
+            {
+                if (TabStripRenderer != null)
+                {
+                    return TabStripRenderer.SelectedTabBottomColor;
+                }
+
+                return SystemColors.Control;
+            }
+        }
+
         internal IEnumerable<T> ItemsOfType<T>() where T : ToolStripItem
         {
             foreach (ToolStripItem item in Items)
