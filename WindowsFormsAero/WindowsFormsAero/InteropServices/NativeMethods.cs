@@ -92,5 +92,29 @@ namespace WindowsFormsAero.InteropServices
 
         #endregion
 
+        #region user32!DestroyIcon
+
+        [DllImport(Dll.User32, BestFitMapping = false, SetLastError = true)]
+        [ReliabilityContract(Consistency.WillNotCorruptState, Cer.MayFail)]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        public static extern bool DestroyIcon(IntPtr hIcon);
+
+        #endregion
+
+        #region user32!SendMessage(IntPtr, UInt32, IntPtr, IntPtr)
+
+        [DllImport(
+            Dll.User32,
+            BestFitMapping = false,
+            SetLastError = true
+        )]
+        [ReliabilityContract(Consistency.WillNotCorruptState, Cer.MayFail)]
+        public static extern IntPtr SendMessage(
+            [In] HandleRef hWnd,
+            [In] UInt32 Msg,
+            [In] IntPtr wParam,
+            [In] IntPtr lParam);
+
+        #endregion
     }
 }

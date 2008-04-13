@@ -30,9 +30,9 @@
         {
             this.aeroTabControl1 = new WindowsFormsAero.AeroTabControl();
             this.aeroTabPage1 = new WindowsFormsAero.AeroTabPage();
+            this.label1 = new System.Windows.Forms.Label();
             this.button1 = new System.Windows.Forms.Button();
             this.aeroTabPage2 = new WindowsFormsAero.AeroTabPage();
-            this.label1 = new System.Windows.Forms.Label();
             this.aeroTabControl1.SuspendLayout();
             this.aeroTabPage1.SuspendLayout();
             this.SuspendLayout();
@@ -60,6 +60,15 @@
             this.aeroTabPage1.TabIndex = 1;
             this.aeroTabPage1.Text = "aeroTabPage1";
             // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(107, 178);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(46, 17);
+            this.label1.TabIndex = 1;
+            this.label1.Text = "label1";
+            // 
             // button1
             // 
             this.button1.Location = new System.Drawing.Point(337, 178);
@@ -78,15 +87,6 @@
             this.aeroTabPage2.Size = new System.Drawing.Size(600, 311);
             this.aeroTabPage2.TabIndex = 2;
             this.aeroTabPage2.Text = "aeroTabPage2";
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(107, 178);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(46, 17);
-            this.label1.TabIndex = 1;
-            this.label1.Text = "label1";
             // 
             // Form1
             // 
