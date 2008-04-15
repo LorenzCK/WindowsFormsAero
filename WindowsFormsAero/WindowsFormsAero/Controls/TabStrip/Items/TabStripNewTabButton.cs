@@ -22,7 +22,7 @@ namespace WindowsFormsAero
             DisplayStyle = ToolStripItemDisplayStyle.Image;
         }
 
-        internal override void OnPaintImage(ToolStripItemImageRenderEventArgs e)
+        protected override void OnPaintImage(ToolStripItemImageRenderEventArgs e)
         {
             if (Selected)
             {

@@ -17,9 +17,12 @@ namespace WindowsFormsAero
     [ToolStripItemDesignerAvailability(ToolStripItemDesignerAvailability.None)]
     public class TabStripButton : TabStripButtonBase
     {
+        private static readonly object EventCloseButtonClick = new object();
+
         private Boolean _isBusy;
         private Boolean _isClosable = true;
-        
+        private TabStripCloseButtonState _closeButtonState;
+
         public TabStripButton()
         {
             Initialize();
@@ -55,13 +58,10 @@ namespace WindowsFormsAero
             Initialize();
         }
 
-        private void Initialize()
+        public event EventHandler CloseButtonClick
         {
-            DisplayStyle = ToolStripItemDisplayStyle.ImageAndText;
-            TextImageRelation = TextImageRelation.ImageBeforeText;
-            ImageAlign = ContentAlignment.MiddleLeft;
-            TextAlign = ContentAlignment.MiddleLeft;
-            CheckOnClick = false;
+            add { Events.AddHandler(EventCloseButtonClick, value); }
+            remove { Events.RemoveHandler(EventCloseButtonClick, value); }
         }
 
         [Browsable(false)]
@@ -168,6 +168,117 @@ namespace WindowsFormsAero
             get { return ToolStripItemDisplayStyle.ImageAndText; }
         }
 
+        protected virtual void OnCloseButtonClick(EventArgs e)
+        {
+            var handler = Events[EventCloseButtonClick] as EventHandler;
+
+            if (handler != null)
+            {
+                handler(this, e);
+            }
+        }
+
+        protected override void OnLayout(LayoutEventArgs e)
+        {
+            base.OnLayout(e);
+            InvalidateInternalLayout();
+        }
+
+        protected override void OnMouseDown(MouseEventArgs e)
+        {
+            if (CloseButtonState == TabStripCloseButtonState.Selected)
+            {
+                CloseButtonState = TabStripCloseButtonState.Pressed;
+            }
+
+            base.OnMouseDown(e);
+        }
+
+        protected override void OnMouseUp(MouseEventArgs e)
+        {
+            if ((CloseButtonState == TabStripCloseButtonState.Pressed) &&
+                (InternalLayout.CloseRectangle.Contains(e.Location)))
+            {
+                CloseButtonState = TabStripCloseButtonState.Normal;
+
+                OnCloseButtonClick(EventArgs.Empty);
+
+                if (Owner != null)
+                {
+                    Owner.OnCloseButtonClicked(new ToolStripItemEventArgs(this));
+                }
+            }
+
+            base.OnMouseUp(e);
+        }
+
+        protected override void OnMouseMove(MouseEventArgs e)
+        {
+            if (CloseButtonState != TabStripCloseButtonState.Pressed)
+            {
+                if (InternalLayout.CloseRectangle.Contains(e.Location))
+                {
+                    CloseButtonState = TabStripCloseButtonState.Selected;
+                }
+                else
+                {
+                    CloseButtonState = TabStripCloseButtonState.Normal;
+                }
+            }
+
+            base.OnMouseMove(e);
+        }
+
+        protected override void OnMouseLeave(EventArgs e)
+        {
+            CloseButtonState = TabStripCloseButtonState.Normal;
+
+            base.OnMouseLeave(e);
+        }
+
+        protected override void OnPaint(PaintEventArgs e)
+        {
+            if (Renderer != null)
+            {
+                OnPaintBackground(new TabStripItemRenderEventArgs(
+                    e.Graphics, this, InternalLayout.CloseRectangle, _closeButtonState));
+
+                OnPaintImage(new ToolStripItemImageRenderEventArgs(
+                    e.Graphics, this, InternalLayout.ImageRectangle));
+
+                OnPaintText(new ToolStripItemTextRenderEventArgs(
+                    e.Graphics, this, Text, InternalLayout.TextRectangle,
+                    ForeColor, Font, TextAlign));
+            }
+            else
+            {
+                base.OnPaint(e);
+            }
+        }
+
+        protected override void OnPaintImage(ToolStripItemImageRenderEventArgs e)
+        {
+            if (!InternalLayout.ImageRectangle.IsEmpty)
+            {
+                if (IsBusy)
+                {
+                    Renderer.DrawTabItemBusyImage(new TabStripItemBusyImageRenderEventArgs(e));
+                }
+                else
+                {
+                    Renderer.DrawItemImage(e);
+                }
+            }
+        }
+
+        protected override void OnPaintText(ToolStripItemTextRenderEventArgs e)
+        {
+            if (!InternalLayout.TextRectangle.IsEmpty)
+            {
+                Renderer.DrawItemText(e);
+            }
+        }
+
         protected override void OnParentChanged(ToolStrip oldParent, ToolStrip newParent)
         {
             var oldTabStrip = (oldParent as TabStrip);
@@ -189,14 +300,40 @@ namespace WindowsFormsAero
             base.OnParentChanged(oldParent, newParent);
         }
 
-        internal override sealed bool IsBusyInternal
+        internal override Size CloseButtonSize
         {
-            get { return IsBusy; }
+            get
+            {
+                if (IsClosableInternal && Renderer != null)
+                {
+                    return Renderer.GetCloseButtonSize(this);
+                }
+
+                return Size.Empty;
+            }
+        }
+
+        internal override Size ImageSize
+        {
+            get
+            {
+                if (IsBusy && Renderer != null)
+                {
+                    return Renderer.GetBusyImageSize(this);
+                }
+
+                if ((Image != null) && ((DisplayStyle & ToolStripItemDisplayStyle.Image) != 0))
+                {
+                    return Image.Size;
+                }
+
+                return Size.Empty;
+            }
         }
 
         internal override bool IsClosableInternal
         {
-            get 
+            get
             {
                 if (Owner.CloseButtonVisibility == CloseButtonVisibility.Never)
                 {
@@ -220,6 +357,28 @@ namespace WindowsFormsAero
 
                 return Checked && IsClosable;
             }
+        }
+
+        private TabStripCloseButtonState CloseButtonState
+        {
+            get { return _closeButtonState; }
+            set
+            {
+                if (_closeButtonState != value)
+                {
+                    _closeButtonState = value;
+                    Invalidate();
+                }
+            }
+        }
+
+        private void Initialize()
+        {
+            DisplayStyle = ToolStripItemDisplayStyle.ImageAndText;
+            TextImageRelation = TextImageRelation.ImageBeforeText;
+            ImageAlign = ContentAlignment.MiddleLeft;
+            TextAlign = ContentAlignment.MiddleLeft;
+            CheckOnClick = false;
         }
     }
 }
