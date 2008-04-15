@@ -121,13 +121,14 @@ namespace WindowsFormsAero.InteropServices
 
         [DllImport(Dll.UxTheme, ExactSpelling = true, PreserveSig = false)]
         [ReliabilityContract(Consistency.WillNotCorruptState, Cer.MayFail)]
-        public extern static Margins GetThemeMargins(
+        public extern static void GetThemeMargins(
             IntPtr hTheme,
             IntPtr hdc,
             Int32 iPartId,
             Int32 iStateId,
             MarginType iPropId,
-            IntPtr rect);
+            IntPtr rect,
+            out Margins margins);
 
         #endregion
 

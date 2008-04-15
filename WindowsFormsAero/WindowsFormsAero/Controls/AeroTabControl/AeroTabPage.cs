@@ -70,6 +70,16 @@ namespace WindowsFormsAero
             return _backColorAssigned;
         }
 
+        [Browsable(true)]
+        [DefaultValue(null)]
+        [EditorBrowsable(EditorBrowsableState.Always)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
+        public Image Image
+        {
+            get { return TabStripButton.Image; }
+            set { TabStripButton.Image = value; }
+        }
+
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]

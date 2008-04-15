@@ -117,6 +117,7 @@ namespace WindowsFormsAero
 
     public abstract class TabStripRenderer : ToolStripRenderer
     {
+        private readonly static object EventRenderTabListItemBackground = new object();
         private readonly static object EventRenderTabItemBackground = new object();
         private readonly static object EventRenderTabItemBusyImage = new object();
         private readonly static object EventRenderTabScrollChevron = new object();
