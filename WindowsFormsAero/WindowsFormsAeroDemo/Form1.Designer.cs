@@ -43,7 +43,6 @@
             this.aeroTabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.aeroTabControl1.Location = new System.Drawing.Point(0, 0);
             this.aeroTabControl1.Name = "aeroTabControl1";
-            this.aeroTabControl1.SelectedTab = this.aeroTabPage2;
             this.aeroTabControl1.Size = new System.Drawing.Size(604, 353);
             this.aeroTabControl1.TabIndex = 0;
             // 
@@ -69,7 +68,7 @@
             // 
             this.aeroTabPage1.Location = new System.Drawing.Point(2, 40);
             this.aeroTabPage1.Name = "aeroTabPage1";
-            this.aeroTabPage1.Size = new System.Drawing.Size(146, 108);
+            this.aeroTabPage1.Size = new System.Drawing.Size(600, 311);
             this.aeroTabPage1.TabIndex = 1;
             this.aeroTabPage1.Text = "aeroTabPage1";
             // 
