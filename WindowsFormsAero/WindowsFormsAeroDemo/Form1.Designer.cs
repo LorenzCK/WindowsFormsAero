@@ -45,13 +45,14 @@
             this.aeroTabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.aeroTabControl1.Location = new System.Drawing.Point(0, 0);
             this.aeroTabControl1.Name = "aeroTabControl1";
-            this.aeroTabControl1.SelectedTab = this.aeroTabPage3;
+            this.aeroTabControl1.SelectedTab = this.aeroTabPage2;
             this.aeroTabControl1.Size = new System.Drawing.Size(604, 353);
             this.aeroTabControl1.TabIndex = 0;
             // 
             // aeroTabPage2
             // 
             this.aeroTabPage2.Controls.Add(this.textBox1);
+            this.aeroTabPage2.Image = global::WindowsFormsAero.Demo.Properties.Resources.Untitled;
             this.aeroTabPage2.Location = new System.Drawing.Point(2, 40);
             this.aeroTabPage2.Name = "aeroTabPage2";
             this.aeroTabPage2.Size = new System.Drawing.Size(600, 311);
@@ -69,6 +70,7 @@
             // 
             // aeroTabPage1
             // 
+            this.aeroTabPage1.Image = global::WindowsFormsAero.Demo.Properties.Resources.Untitled;
             this.aeroTabPage1.Location = new System.Drawing.Point(2, 40);
             this.aeroTabPage1.Name = "aeroTabPage1";
             this.aeroTabPage1.Size = new System.Drawing.Size(600, 311);
@@ -77,6 +79,7 @@
             // 
             // aeroTabPage3
             // 
+            this.aeroTabPage3.Image = global::WindowsFormsAero.Demo.Properties.Resources.Untitled;
             this.aeroTabPage3.Location = new System.Drawing.Point(2, 40);
             this.aeroTabPage3.Name = "aeroTabPage3";
             this.aeroTabPage3.Size = new System.Drawing.Size(600, 311);

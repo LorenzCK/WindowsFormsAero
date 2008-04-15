@@ -26,19 +26,21 @@ namespace WindowsFormsAero
         //This is broken for RTL
         protected override void OnRenderArrow(ToolStripArrowRenderEventArgs e)
         {
-            if (IsSupported)
-            {
-                int stateId = e.Item.Enabled ?
-                    MenuPopupSubMenuState.Normal :
-                    MenuPopupSubMenuState.Disabled;
+            //if (IsSupported)
+            //{
+            //    int stateId = e.Item.Enabled ?
+            //        MenuPopupSubMenuState.Normal :
+            //        MenuPopupSubMenuState.Disabled;
 
-                SetParameters(MenuPart.PopupSubmenu, stateId);
-                _renderer.DrawBackground(e.Graphics, e.ArrowRectangle);
-            }
-            else
-            {
-                base.OnRenderArrow(e);
-            }
+            //    SetParameters(MenuPart.PopupSubmenu, stateId);
+            //    _renderer.DrawBackground(e.Graphics, e.ArrowRectangle);
+            //}
+            //else
+            //{
+            //    base.OnRenderArrow(e);
+            //}
+
+            base.OnRenderArrow(e);
         }
 
         protected override void OnRenderToolStripBackground(ToolStripRenderEventArgs e)
@@ -148,12 +150,6 @@ namespace WindowsFormsAero
             {
                 if (item.Checked)
                 {
-                    Rectangle rect = e.Item.ContentRectangle;
-                    rect.Width = rect.Height;
-
-                    //Center the checkmark horizontally in the gutter (looks ugly, though)
-                    //rect.X = (e.ToolStrip.DisplayRectangle.Left - rect.Width) / 2;
-
                     int checkBackground = MenuPopupCheckBackgroundState.Normal;
                     int checkType = MenuPopupCheckState.CheckMarkNormal;
 
@@ -164,17 +160,10 @@ namespace WindowsFormsAero
                     }
 
                     SetParameters(MenuPart.PopupCheckBackground, checkBackground);
-                    _renderer.DrawBackground(e.Graphics, rect);
+                    _renderer.DrawBackground(e.Graphics, e.ImageRectangle);
 
-                    Padding margins = GetThemeMargins(e.Graphics, MarginType.Sizing);
-
-                    rect = new Rectangle(rect.X + margins.Left, rect.Y + margins.Top,
-                        rect.Width - margins.Horizontal,
-                        rect.Height - margins.Vertical);
-
-                    //I don't think ToolStrip even supports radio box items. So no need to render them.
                     SetParameters(MenuPart.PopupCheck, checkType);
-                    _renderer.DrawBackground(e.Graphics, rect);
+                    _renderer.DrawBackground(e.Graphics, e.ImageRectangle);
                 }
             }
             else
@@ -349,15 +338,18 @@ namespace WindowsFormsAero
             {
                 var hDC = dc.GetHdc();
 
-                var margins = NativeMethods.GetThemeMargins(
+                var margins = new Margins();
+                
+                NativeMethods.GetThemeMargins(
                     _renderer.Handle,
                     hDC,
                     _renderer.Part,
                     _renderer.State,
                     marginType,
-                    IntPtr.Zero);
+                    IntPtr.Zero,
+                    out margins);
 
-                if (margins != null)
+                if (!margins.IsEmpty)
                 {
                     return margins.ToPadding();
                 }
