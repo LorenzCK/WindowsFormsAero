@@ -13,7 +13,7 @@ using System.Windows.Forms.VisualStyles;
 
 namespace WindowsFormsAero
 {
-    public class TabStripSystemRenderer : TabStripRenderer
+    public class TabStripAeroRenderer : TabStripRenderer
     {
         private const float TabBackgroundRatio = 0.25f;
         private const float TabStripBackgroundRatio = 0.4f;
@@ -51,8 +51,8 @@ namespace WindowsFormsAero
         private Int32 _currentTickCount;
         private Image _currentBusyImage;
         
-        public TabStripSystemRenderer()
-            : base(new ToolStripSystemRenderer())
+        public TabStripAeroRenderer()
+            : base(new ToolStripAeroRenderer())
         {
             BusyTabRefreshInterval = TimeSpan.FromMilliseconds(BusyTimerInterval);
             RenderUsingVisualStyles = true;

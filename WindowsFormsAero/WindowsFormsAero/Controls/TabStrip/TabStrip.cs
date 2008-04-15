@@ -23,6 +23,10 @@ namespace WindowsFormsAero
 
         private static readonly object EventNewTabButtonClicked = new object();
         private static readonly object EventCloseButtonClicked = new object();
+        private static readonly object EventSelectedTabChanged = new object();
+
+        private readonly TabStripTabListButton _list =
+            new TabStripTabListButton();
 
         private readonly TabStripNewTabButton _newTab =
             new TabStripNewTabButton();
@@ -52,6 +56,7 @@ namespace WindowsFormsAero
 
         public TabStrip()
         {
+            Items.Add(_list);
             Items.Add(_newTab);
         }
 
@@ -65,6 +70,12 @@ namespace WindowsFormsAero
         {
             add { Events.AddHandler(EventCloseButtonClicked, value); }
             remove { Events.RemoveHandler(EventCloseButtonClicked, value); }
+        }
+
+        public event EventHandler SelectedTabChanged
+        {
+            add { Events.AddHandler(EventSelectedTabChanged, value); }
+            remove { Events.RemoveHandler(EventSelectedTabChanged, value); }
         }
 
         [DefaultValue(null)]
@@ -92,6 +103,7 @@ namespace WindowsFormsAero
                     }
 
                     PerformLayout();
+                    OnSelectedTabChanged(EventArgs.Empty);
                 }
             }
         }
@@ -222,6 +234,16 @@ namespace WindowsFormsAero
         protected internal virtual void OnCloseButtonClicked(ToolStripItemEventArgs e)
         {
             var handler = Events[EventCloseButtonClicked] as ToolStripItemEventHandler;
+
+            if (handler != null)
+            {
+                handler(this, e);
+            }
+        }
+
+        protected virtual void OnSelectedTabChanged(EventArgs e)
+        {
+            var handler = Events[EventSelectedTabChanged] as EventHandler;
 
             if (handler != null)
             {
@@ -438,34 +460,6 @@ namespace WindowsFormsAero
 
             ResumeLayout();
         }
-
-        //internal void ShowCloseButtonToolTip()
-        //{
-        //    if (ShowItemToolTips)
-        //    {
-        //        ShowItemToolTips = false;
-
-        //        try
-        //        {
-        //            if (_closeToolTip == null)
-        //            {
-        //                _closeToolTip = new ToolTip();
-        //            }
-
-        //            var cur = Cursor.Current;
-        //            var pos = Cursor.Position;
-
-        //            pos.Y += (cur.Size.Height - cur.HotSpot.Y);
-
-                    
-        //            _closeToolTip.Show("Close (Ctrl+W)", this, PointToClient(pos), _closeToolTip.AutoPopDelay);
-        //        }
-        //        finally
-        //        {
-        //            ShowItemToolTips = true;
-        //        }
-        //    }
-        //}
 
         private TabStripRenderer TabStripRenderer
         {

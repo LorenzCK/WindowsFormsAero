@@ -22,7 +22,7 @@ namespace WindowsFormsAero
         private readonly TabStrip _tabStrip = new TabStrip()
         {
             Dock = DockStyle.Top,
-            Renderer = new TabStripSystemRenderer(),
+            Renderer = new TabStripAeroRenderer(),
         };
 
         private TabPageCollection _pageCollection;
@@ -31,7 +31,8 @@ namespace WindowsFormsAero
         public AeroTabControl()
         {
             _pageCollection = new TabPageCollection(this);
-            _tabStrip.NewTabButtonClicked += new EventHandler(InvokeNewTabButtonClicked);
+            _tabStrip.NewTabButtonClicked +=InvokeNewTabButtonClicked;
+            _tabStrip.SelectedTabChanged += InvokeSelectedTabChanged;
         }
 
         public event EventHandler<AeroTabPageEventArgs> CloseButtonClick
@@ -73,22 +74,14 @@ namespace WindowsFormsAero
             {
                 if (_selectedPage != value)
                 {
-                    if (_selectedPage != null)
+                    if (value != null)
                     {
-                        _selectedPage.Visible = false;
+                        _tabStrip.SelectedTab = value.TabStripButton;
                     }
-
-                    _selectedPage = value;
-
-                    if (_selectedPage != null)
+                    else
                     {
-                        _selectedPage.Visible = true;
-
-                        _tabStrip.SendToBack();                        
-                        _tabStrip.SelectedTab = _selectedPage.TabStripButton;
+                        _tabStrip.SelectedTab = null;
                     }
-
-                    OnSelectedTabChanged(EventArgs.Empty);
                 }
             }
         }
@@ -125,6 +118,39 @@ namespace WindowsFormsAero
             {
                 handler(this, e);
             }
+        }
+
+        protected override bool ProcessDialogKey(Keys keyData)
+        {
+            const Keys ControlTab = Keys.Control | Keys.Tab;
+
+            if (TabPages.Count > 1)
+            {
+                if ((keyData & ControlTab) == ControlTab)
+                {
+                    int newIndex = SelectedTabIndex + 1;
+
+                    if ((keyData & Keys.Shift) == Keys.Shift)
+                    {
+                        newIndex = SelectedTabIndex - 1;
+                    }
+
+                    if (newIndex < 0)
+                    {
+                        newIndex = TabPages.Count - 1;
+                    }
+                    else if (newIndex >= TabPages.Count)
+                    {
+                        newIndex = 0;
+                    }
+
+                    SelectedTabIndex = newIndex;
+                    return true;
+                }
+            }
+
+
+            return base.ProcessDialogKey(keyData);
         }
 
         protected virtual void OnNewTabButtonClick(EventArgs e)
@@ -236,5 +262,26 @@ namespace WindowsFormsAero
         {
             OnNewTabButtonClick(e);
         }
+
+        private void InvokeSelectedTabChanged(object sender, EventArgs e)
+        {
+            if (_selectedPage != null)
+            {
+                _selectedPage.Visible = false;
+            }
+
+            _selectedPage = AeroTabPage.GetButtonPage(_tabStrip.SelectedTab);
+
+            if (_selectedPage != null)
+            {
+                _selectedPage.Visible = true;
+
+                _tabStrip.SendToBack();
+                _tabStrip.SelectedTab = _selectedPage.TabStripButton;
+            }
+
+            OnSelectedTabChanged(e);
+        }
+
     }
 }
