@@ -211,6 +211,7 @@ namespace WindowsFormsAero
 
         public TabStripScrollDirection ScrollDirection
         {
+            get { return _direction; }
             set { _direction = value; }
         }
     }

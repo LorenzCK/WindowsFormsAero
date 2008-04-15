@@ -231,7 +231,7 @@ namespace WindowsFormsAero
             }
         }
 
-        protected internal virtual void OnCloseButtonClicked(ToolStripItemEventArgs e)
+        protected virtual void OnCloseButtonClicked(ToolStripItemEventArgs e)
         {
             var handler = Events[EventCloseButtonClicked] as ToolStripItemEventHandler;
 
@@ -266,13 +266,13 @@ namespace WindowsFormsAero
 
             if (e.Item is TabStripButton)
             {
+                _layout.ScrollDirection = TabStripScrollDirection.Right;
                 ++TabCount;
             }
 
             SuspendLayout();
 
             base.OnItemAdded(e);
-            _layout.ScrollDirection = TabStripScrollDirection.Right;
             
             ResumeLayout();
         }
@@ -296,13 +296,7 @@ namespace WindowsFormsAero
             if (e.ClickedItem == _newTab)
             {
                 OnNewTabButtonClicked(e);
-            }
-
-            var button = (e.ClickedItem as TabStripButton);
-
-            if (button != null)
-            {
-                SelectedTab = button;
+                return;
             }
 
             base.OnItemClicked(e);
@@ -459,6 +453,11 @@ namespace WindowsFormsAero
             }
 
             ResumeLayout();
+        }
+
+        internal void PerformClickOnCloseButton(TabStripButton button)
+        {
+            OnCloseButtonClicked(new ToolStripItemEventArgs(button));
         }
 
         private TabStripRenderer TabStripRenderer
