@@ -16,7 +16,6 @@ namespace WindowsFormsAero.Design
         private DesignerVerbCollection _verbs;
         private DesignerUtils _utils;
 
-        private bool _tabControlSelected;
         private bool _settingSelection;
 
         public AeroTabControlDesigner()
@@ -184,22 +183,14 @@ namespace WindowsFormsAero.Design
 
         private void OnSelectionChanged(object sender, EventArgs e)
         {
-            _tabControlSelected = false;
-
             foreach (var item in _utils.SelectionService.GetSelectedComponents())
             {
-                if (item == TabControl)
-                {
-                    _tabControlSelected = true;
-                }
-
                 if (!_settingSelection)
                 {
                     var page = GetTabPageOfComponent(item);
 
                     if ((page != null) && (page.Parent == TabControl))
                     {
-                        _tabControlSelected = false;
                         _utils.SetPropertyValueWithNotification("SelectedTab", page);
 
                         break;

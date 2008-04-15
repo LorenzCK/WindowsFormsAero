@@ -15,3 +15,8 @@
 // TabStrip resizing algorithm was inspired by MdiTabStrip by crcites
 // http://www.codeproject.com/KB/cpp/MDITabStrip.aspx
 
+//
+// TOOL STRIP AERO RENDERER
+//
+// Based on code by Lee Houghton 
+// http://wp.asztal.net/2007/12/vista-style-menus-in-dotnet/

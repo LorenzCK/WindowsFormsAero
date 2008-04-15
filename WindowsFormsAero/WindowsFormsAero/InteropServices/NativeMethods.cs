@@ -116,5 +116,20 @@ namespace WindowsFormsAero.InteropServices
             [In] IntPtr lParam);
 
         #endregion
+
+        #region uxtheme!GetThemeMargins
+
+        [DllImport(Dll.UxTheme, ExactSpelling = true, PreserveSig = false)]
+        [ReliabilityContract(Consistency.WillNotCorruptState, Cer.MayFail)]
+        public extern static Margins GetThemeMargins(
+            IntPtr hTheme,
+            IntPtr hdc,
+            Int32 iPartId,
+            Int32 iStateId,
+            MarginType iPropId,
+            IntPtr rect);
+
+        #endregion
+
     }
 }

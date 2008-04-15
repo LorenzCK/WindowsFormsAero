@@ -70,7 +70,6 @@ namespace WindowsFormsAero
             return _backColorAssigned;
         }
 
-
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
@@ -149,26 +148,55 @@ namespace WindowsFormsAero
             {
                 if (_button == null)
                 {
-                    _button = new TabStripButton(Text);
-                    
-                    _button.Click += delegate 
-                    {
-                        if (TabControl != null)
-                        {
-                            TabControl.SelectedTab = this;
-                        }
-                    };
-
-                    _button.CloseButtonClick += delegate 
-                    {
-                        if (TabControl != null)
-                        {
-                            TabControl.OnCloseButtonClick(new AeroTabPageEventArgs(this));
-                        }
-                    };
+                    _button = new TabPageButton(this);
                 }
 
                 return _button;
+            }
+        }
+
+        internal static AeroTabPage GetButtonPage(TabStripButton button)
+        {
+            var pageButton = button as TabPageButton;
+
+            if (pageButton != null)
+            {
+                return pageButton.TabPage;
+            }
+
+            return null;
+        }
+
+        private sealed class TabPageButton : TabStripButton
+        {
+            private readonly AeroTabPage _page;
+
+            public TabPageButton(AeroTabPage page) 
+                : base(page.Text)
+            {
+                _page = page;
+            }
+
+            public AeroTabPage TabPage
+            {
+                get { return _page; }
+            }
+
+            public AeroTabControl TabControl
+            {
+                get { return _page.TabControl; }
+            }
+
+            protected override void OnClick(EventArgs e)
+            {
+                base.OnClick(e);
+                TabControl.SelectedTab = TabPage;
+            }
+
+            protected override void OnCloseButtonClick(EventArgs e)
+            {
+                base.OnCloseButtonClick(e);
+                TabControl.OnCloseButtonClick(new AeroTabPageEventArgs(TabPage));
             }
         }
     }
