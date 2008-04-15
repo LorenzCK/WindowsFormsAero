@@ -36,11 +36,6 @@ namespace WindowsFormsAero
             {
                 TextRectangle = DisplayRectangle;
             }
-            else if (btn.DisplayStyle == ToolStripItemDisplayStyle.Image)
-            {
-                TextRectangle = Rectangle.Empty;
-                ImageRectangle = DisplayRectangle;
-            }
         }
 
         private static Rectangle CutRectangleFromLeft(ref Rectangle displayRect, Size subRectSize, Padding padding, ContentAlignment alignment)

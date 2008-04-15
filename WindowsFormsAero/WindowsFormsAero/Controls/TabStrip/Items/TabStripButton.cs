@@ -268,24 +268,13 @@ namespace WindowsFormsAero
 
         protected override void OnPaintImage(ToolStripItemImageRenderEventArgs e)
         {
-            if (!InternalLayout.ImageRectangle.IsEmpty)
+            if (IsBusy)
             {
-                if (IsBusy)
-                {
-                    Renderer.DrawTabItemBusyImage(new TabStripItemBusyImageRenderEventArgs(e));
-                }
-                else
-                {
-                    Renderer.DrawItemImage(e);
-                }
+                Renderer.DrawTabItemBusyImage(new TabStripItemBusyImageRenderEventArgs(e));
             }
-        }
-
-        protected override void OnPaintText(ToolStripItemTextRenderEventArgs e)
-        {
-            if (!InternalLayout.TextRectangle.IsEmpty)
+            else
             {
-                Renderer.DrawItemText(e);
+                base.OnPaintImage(e);
             }
         }
 
