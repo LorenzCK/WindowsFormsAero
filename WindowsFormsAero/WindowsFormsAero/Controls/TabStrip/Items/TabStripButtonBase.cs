@@ -11,8 +11,12 @@ using System.Windows.Forms;
 
 namespace WindowsFormsAero
 {
+    public interface ITabStripButton
+    {
+    }
+
     [System.ComponentModel.DesignerCategory("Code")]
-    public abstract class TabStripButtonBase : ToolStripButton
+    public abstract class TabStripButtonBase : ToolStripButton, ITabStripButton
     {
         private TabStripButtonLayout _layout;
 
@@ -73,13 +77,13 @@ namespace WindowsFormsAero
             if (Renderer != null)
             {
                 OnPaintBackground(new TabStripItemRenderEventArgs(
-                    e.Graphics, this, Rectangle.Empty, TabStripCloseButtonState.Normal));
+                    e.Graphics, this, InternalLayout.CloseRectangle, TabStripCloseButtonState.Normal));
 
                 OnPaintImage(new ToolStripItemImageRenderEventArgs(
-                    e.Graphics, this, Rectangle.Empty));
+                    e.Graphics, this, InternalLayout.ImageRectangle));
 
                 OnPaintText(new ToolStripItemTextRenderEventArgs(
-                    e.Graphics, this, Text, Rectangle.Empty,
+                    e.Graphics, this, Text, InternalLayout.TextRectangle,
                     ForeColor, Font, TextAlign));
             }
             else
@@ -95,10 +99,18 @@ namespace WindowsFormsAero
 
         protected virtual void OnPaintImage(ToolStripItemImageRenderEventArgs e)
         {
+            if (!e.ImageRectangle.IsEmpty && e.Image != null)
+            {
+                Renderer.DrawItemImage(e);
+            }
         }
 
         protected virtual void OnPaintText(ToolStripItemTextRenderEventArgs e)
         {
+            if (!e.TextRectangle.IsEmpty && !string.IsNullOrEmpty(e.Text))
+            {
+                Renderer.DrawItemText(e);
+            }
         }
 
         internal new TabStrip Owner
@@ -113,7 +125,15 @@ namespace WindowsFormsAero
 
         internal virtual Size ImageSize
         {
-            get { return Size.Empty; }
+            get 
+            {
+                if (Image != null)
+                {
+                    return Image.Size;
+                }
+
+                return Size.Empty; 
+            }
         }
 
         internal virtual bool IsClosableInternal
