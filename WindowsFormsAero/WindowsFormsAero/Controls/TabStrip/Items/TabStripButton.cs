@@ -178,6 +178,16 @@ namespace WindowsFormsAero
             }
         }
 
+        protected override void OnClick(EventArgs e)
+        {
+            if (Owner != null)
+            {
+                Owner.SelectedTab = this;
+            }
+
+            base.OnClick(e);
+        }
+
         protected override void OnLayout(LayoutEventArgs e)
         {
             base.OnLayout(e);
@@ -205,7 +215,7 @@ namespace WindowsFormsAero
 
                 if (Owner != null)
                 {
-                    Owner.OnCloseButtonClicked(new ToolStripItemEventArgs(this));
+                    Owner.PerformClickOnCloseButton(this);
                 }
             }
 

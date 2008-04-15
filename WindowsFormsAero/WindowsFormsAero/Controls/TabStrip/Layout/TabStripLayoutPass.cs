@@ -27,9 +27,9 @@ namespace WindowsFormsAero
             public TabStripLayoutPass(TabStripLayoutEngine engine)
             {
                 _engine = engine;
-                _direction = engine._direction;
+                _direction = engine.ScrollDirection;
 
-                engine._direction = TabStripScrollDirection.None;
+                engine.ScrollDirection = TabStripScrollDirection.None;
 
                 _tabsToShow = engine.AvailableWidth / GetTabWidth(TabCount);
                 _tabWidth = GetTabWidth(_tabsToShow);
@@ -189,6 +189,21 @@ namespace WindowsFormsAero
                     if (freeTabs > 0)
                     {
                         FarTabIndex = Math.Min(TabCount - 1, FarTabIndex + freeTabs);
+                    }
+
+                    if (SelectedTabIndex < NearTabIndex)
+                    {
+                        NearTabIndex = SelectedTabIndex;
+                        FarTabIndex = SelectedTabIndex + _tabsToShow - 1;
+                    }
+                    else if (SelectedTabIndex >= FarTabIndex)
+                    {
+                        while ((FarTabIndex < SelectedTabIndex))
+                        {
+                            ++FarTabIndex;
+                        }
+
+                        NearTabIndex = FarTabIndex - (_tabsToShow - 1);
                     }
                 }
                 else
