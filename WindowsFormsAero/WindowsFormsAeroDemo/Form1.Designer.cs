@@ -340,7 +340,7 @@
             this.aeroTabPage1.Image = global::WindowsFormsAero.Demo.Properties.Resources.Untitled;
             this.aeroTabPage1.Location = new System.Drawing.Point(2, 40);
             this.aeroTabPage1.Name = "aeroTabPage1";
-            this.aeroTabPage1.Size = new System.Drawing.Size(600, 311);
+            this.aeroTabPage1.Size = new System.Drawing.Size(600, 283);
             this.aeroTabPage1.TabIndex = 1;
             this.aeroTabPage1.Text = "aeroTabPage1";
             // 
@@ -349,7 +349,7 @@
             this.aeroTabPage3.Image = global::WindowsFormsAero.Demo.Properties.Resources.Untitled;
             this.aeroTabPage3.Location = new System.Drawing.Point(2, 40);
             this.aeroTabPage3.Name = "aeroTabPage3";
-            this.aeroTabPage3.Size = new System.Drawing.Size(600, 311);
+            this.aeroTabPage3.Size = new System.Drawing.Size(600, 283);
             this.aeroTabPage3.TabIndex = 3;
             this.aeroTabPage3.Text = "aeroTabPage3";
             // 
