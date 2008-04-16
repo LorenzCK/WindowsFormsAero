@@ -89,6 +89,8 @@ namespace WindowsFormsAero
         [MergableProperty(false)]
         [EditorBrowsable(EditorBrowsableState.Always)]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
+        [TypeConverter("WindowsFormsAero.Design.AeroTabControlSelectedPageConverter, " + ThisAssembly.DesignAssemblyFullName)]
+        [Editor("WindowsFormsAero.Design.AeroTabControlSelectedPageEditor, " + ThisAssembly.DesignAssemblyFullName, typeof(UITypeEditor))]
         public AeroTabPage SelectedTab
         {
             get { return _selectedPage; }
