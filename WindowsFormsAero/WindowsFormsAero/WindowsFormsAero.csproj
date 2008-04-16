@@ -50,6 +50,9 @@
     <Compile Include="..\AssemblyInfo.Shared.cs">
       <Link>Properties\AssemblyInfo.Shared.cs</Link>
     </Compile>
+    <Compile Include="Components\HiddenMenuStrip.cs">
+    </Compile>
+    <Compile Include="Components\MessageFilter.cs" />
     <Compile Include="Components\ToolStripAeroRenderer.cs" />
     <Compile Include="Controls\AeroButton.cs">
     </Compile>
@@ -64,6 +67,7 @@
     <Compile Include="DesktopComposition.cs" />
     <Compile Include="Extensions\ControlExtensions.cs" />
     <Compile Include="Extensions\GraphicsExtensions.cs" />
+    <Compile Include="InteropServices\AncestorType.cs" />
     <Compile Include="InteropServices\DwmBlurBehind.cs" />
     <Compile Include="InteropServices\Margins.cs" />
     <Compile Include="InteropServices\ThemeEnums.cs" />

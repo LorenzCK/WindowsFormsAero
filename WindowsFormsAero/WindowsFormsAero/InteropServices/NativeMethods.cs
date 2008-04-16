@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 using System.Runtime.ConstrainedExecution;
+using System.Windows.Forms;
 
 namespace WindowsFormsAero.InteropServices
 {
@@ -98,6 +99,36 @@ namespace WindowsFormsAero.InteropServices
         [ReliabilityContract(Consistency.WillNotCorruptState, Cer.MayFail)]
         [return: MarshalAs(UnmanagedType.Bool)]
         public static extern bool DestroyIcon(IntPtr hIcon);
+
+        #endregion
+
+        #region user32!GetAncestor
+
+        [DllImport(Dll.User32, CharSet = CharSet.Auto, ExactSpelling = true)]
+        [ReliabilityContract(Consistency.WillNotCorruptState, Cer.MayFail)]
+        public static extern IntPtr GetAncestor(IntPtr hWnd, AncestorType gaFlags);
+
+        #endregion
+
+        #region user32!GetKeyState
+
+        [DllImport(Dll.User32, CharSet = CharSet.Auto, ExactSpelling = true)]
+        [ReliabilityContract(Consistency.WillNotCorruptState, Cer.MayFail)]
+        public static extern short GetKeyState(Keys keyCode);
+
+        #endregion
+
+        #region user32!IsChild
+
+        [DllImport(
+            Dll.User32,
+            SetLastError = false,
+            ExactSpelling = true,
+            CallingConvention = CallingConvention.Winapi
+        )]
+        [ReliabilityContract(Consistency.WillNotCorruptState, Cer.MayFail)]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        public static extern bool IsChild(HandleRef hWndParent, IntPtr hWnd);
 
         #endregion
 
