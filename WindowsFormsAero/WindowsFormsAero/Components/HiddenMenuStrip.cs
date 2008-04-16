@@ -9,6 +9,7 @@ namespace WindowsFormsAero
 {
     [ProvideProperty("HideWhenInactive", typeof(MenuStrip))]
     [System.ComponentModel.DesignerCategory("code")]
+    [System.ComponentModel.Designer("WindowsFormsAero.Design.HiddenMenuStripDesigner, " + ThisAssembly.DesignAssemblyFullName)]
     public class HiddenMenuStrip : Component, IExtenderProvider
     {
         private readonly List<MenuStrip> _strips = new List<MenuStrip>();
