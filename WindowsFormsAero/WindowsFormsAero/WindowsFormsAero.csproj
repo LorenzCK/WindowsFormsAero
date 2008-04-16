@@ -64,6 +64,7 @@
     <Compile Include="Controls\AeroTabControl\AeroTabPageEventArgs.cs" />
     <Compile Include="Controls\TabStrip\Layout\TabStripButtonLayout.cs" />
     <Compile Include="Controls\TabStrip\Items\TabStripTabListButton.cs" />
+    <Compile Include="Controls\AeroTabControl\AeroTabControl..KeyboardNavigation.cs" />
     <Compile Include="DesktopComposition.cs" />
     <Compile Include="Extensions\ControlExtensions.cs" />
     <Compile Include="Extensions\GraphicsExtensions.cs" />
