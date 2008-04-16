@@ -211,11 +211,14 @@ namespace WindowsFormsAero
             {
                 CloseButtonState = TabStripCloseButtonState.Normal;
 
-                OnCloseButtonClick(EventArgs.Empty);
+                if (IsClosableInternal)
+                {
+                    OnCloseButtonClick(EventArgs.Empty);
+                }
 
                 if (Owner != null)
                 {
-                    Owner.PerformClickOnCloseButton(this);
+                    Owner.PerformCloseButtonClick(this);
                 }
             }
 

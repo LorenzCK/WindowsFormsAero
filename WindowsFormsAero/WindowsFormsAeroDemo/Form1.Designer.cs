@@ -64,9 +64,11 @@
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.aeroTabPage1 = new WindowsFormsAero.AeroTabPage();
             this.aeroTabPage3 = new WindowsFormsAero.AeroTabPage();
+            this.propertyGrid1 = new System.Windows.Forms.PropertyGrid();
             this.menuStrip1.SuspendLayout();
             this.aeroTabControl1.SuspendLayout();
             this.aeroTabPage2.SuspendLayout();
+            this.aeroTabPage1.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -312,9 +314,11 @@
             this.aeroTabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.aeroTabControl1.Location = new System.Drawing.Point(0, 28);
             this.aeroTabControl1.Name = "aeroTabControl1";
-            this.aeroTabControl1.SelectedTab = this.aeroTabPage2;
+            this.aeroTabControl1.SelectedTab = this.aeroTabPage1;
             this.aeroTabControl1.Size = new System.Drawing.Size(604, 325);
             this.aeroTabControl1.TabIndex = 0;
+            this.aeroTabControl1.NewTabButtonClick += new System.EventHandler(this.aeroTabControl1_NewTabButtonClick);
+            this.aeroTabControl1.CloseButtonClick += new System.EventHandler<WindowsFormsAero.AeroTabPageEventArgs>(this.aeroTabControl1_CloseButtonClick);
             // 
             // aeroTabPage2
             // 
@@ -337,6 +341,7 @@
             // 
             // aeroTabPage1
             // 
+            this.aeroTabPage1.Controls.Add(this.propertyGrid1);
             this.aeroTabPage1.Image = global::WindowsFormsAero.Demo.Properties.Resources.Untitled;
             this.aeroTabPage1.Location = new System.Drawing.Point(2, 40);
             this.aeroTabPage1.Name = "aeroTabPage1";
@@ -352,6 +357,16 @@
             this.aeroTabPage3.Size = new System.Drawing.Size(600, 283);
             this.aeroTabPage3.TabIndex = 3;
             this.aeroTabPage3.Text = "aeroTabPage3";
+            // 
+            // propertyGrid1
+            // 
+            this.propertyGrid1.Dock = System.Windows.Forms.DockStyle.Left;
+            this.propertyGrid1.Location = new System.Drawing.Point(0, 0);
+            this.propertyGrid1.Name = "propertyGrid1";
+            this.propertyGrid1.SelectedObject = this.aeroTabControl1;
+            this.propertyGrid1.Size = new System.Drawing.Size(264, 283);
+            this.propertyGrid1.TabIndex = 2;
+            this.propertyGrid1.ToolbarVisible = false;
             // 
             // Form1
             // 
@@ -369,6 +384,7 @@
             this.aeroTabControl1.PerformLayout();
             this.aeroTabPage2.ResumeLayout(false);
             this.aeroTabPage2.PerformLayout();
+            this.aeroTabPage1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -411,6 +427,7 @@
         private System.Windows.Forms.ToolStripMenuItem searchToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator5;
         private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
+        private System.Windows.Forms.PropertyGrid propertyGrid1;
 
 
 

@@ -66,7 +66,7 @@ namespace WindowsFormsAero
             remove { Events.RemoveHandler(EventNewTabButtonClicked, value); }
         }
 
-        public event EventHandler CloseButtonClicked
+        public event ToolStripItemEventHandler CloseButtonClicked
         {
             add { Events.AddHandler(EventCloseButtonClicked, value); }
             remove { Events.RemoveHandler(EventCloseButtonClicked, value); }
@@ -176,6 +176,13 @@ namespace WindowsFormsAero
             set { _newTab.Visible = value; }
         }
 
+        [DefaultValue(true)]
+        public bool TabListButtonVisible
+        {
+            get { return _list.Visible; }
+            set { _list.Visible = value; }
+        }
+
         [DefaultValue(CloseButtonVisibility.ExceptSingleTab)]
         public CloseButtonVisibility CloseButtonVisibility
         {
@@ -206,6 +213,19 @@ namespace WindowsFormsAero
         protected override Padding DefaultPadding
         {
             get { return new Padding(0, 2, 2, 4); }
+        }
+
+        public void PerformCloseButtonClick(TabStripButton button)
+        {
+            if (button.IsClosableInternal)
+            {
+                OnCloseButtonClicked(new ToolStripItemEventArgs(button));
+            }
+        }
+
+        public void PerformNewTabButtonClick()
+        {
+            OnNewTabButtonClicked(EventArgs.Empty);
         }
 
         public override Size GetPreferredSize(Size proposedSize)
@@ -295,7 +315,7 @@ namespace WindowsFormsAero
 
             if (e.ClickedItem == _newTab)
             {
-                OnNewTabButtonClicked(e);
+                PerformNewTabButtonClick();
                 return;
             }
 
@@ -369,6 +389,7 @@ namespace WindowsFormsAero
                 }
 
                 _tabCount = value;
+                _list.Visible = value > 1;
             }
         }
 
@@ -453,11 +474,6 @@ namespace WindowsFormsAero
             }
 
             ResumeLayout();
-        }
-
-        internal void PerformClickOnCloseButton(TabStripButton button)
-        {
-            OnCloseButtonClicked(new ToolStripItemEventArgs(button));
         }
 
         private TabStripRenderer TabStripRenderer

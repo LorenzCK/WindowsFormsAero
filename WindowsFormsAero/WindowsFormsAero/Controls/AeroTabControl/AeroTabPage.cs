@@ -165,7 +165,7 @@ namespace WindowsFormsAero
             }
         }
 
-        internal static AeroTabPage GetButtonPage(TabStripButton button)
+        internal static AeroTabPage GetButtonPage(ToolStripItem button)
         {
             var pageButton = button as TabPageButton;
 
@@ -206,7 +206,7 @@ namespace WindowsFormsAero
             protected override void OnCloseButtonClick(EventArgs e)
             {
                 base.OnCloseButtonClick(e);
-                TabControl.OnCloseButtonClick(new AeroTabPageEventArgs(TabPage));
+                TabControl.PerformCloseButtonClick(_page);
             }
         }
     }

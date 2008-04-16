@@ -18,6 +18,7 @@ namespace WindowsFormsAero
         private static readonly object EventNewTabButtonClick = new object();
         private static readonly object EventSelectedTabChanged = new object();
 
+        private readonly KeyboardNavigationSettings _keyboard = new KeyboardNavigationSettings();
         private readonly List<AeroTabPage> _pages = new List<AeroTabPage>();
         private readonly TabStrip _tabStrip = new TabStrip()
         {
@@ -31,7 +32,8 @@ namespace WindowsFormsAero
         public AeroTabControl()
         {
             _pageCollection = new TabPageCollection(this);
-            _tabStrip.NewTabButtonClicked +=InvokeNewTabButtonClicked;
+            _tabStrip.NewTabButtonClicked += InvokeNewTabButtonClicked;
+            _tabStrip.CloseButtonClicked += InvokeCloseButtonClicked;
             _tabStrip.SelectedTabChanged += InvokeSelectedTabChanged;
         }
 
@@ -51,6 +53,26 @@ namespace WindowsFormsAero
         {
             add { Events.AddHandler(EventSelectedTabChanged, value); }
             remove { Events.RemoveHandler(EventSelectedTabChanged, value); }
+        }
+
+        [Browsable(true)]
+        [MergableProperty(true)]
+        [EditorBrowsable(EditorBrowsableState.Always)]
+        [DefaultValue(CloseButtonVisibility.ExceptSingleTab)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
+        public CloseButtonVisibility CloseButtonVisibility
+        {
+            get { return _tabStrip.CloseButtonVisibility; }
+            set { _tabStrip.CloseButtonVisibility = value; }
+        }
+
+        [Browsable(true)]
+        [MergableProperty(false)]
+        [EditorBrowsable(EditorBrowsableState.Always)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
+        public KeyboardNavigationSettings KeyboardNavigation
+        {
+            get { return _keyboard; }
         }
 
         [Browsable(false)]
@@ -110,7 +132,22 @@ namespace WindowsFormsAero
             set { base.Text = value; }
         }
 
-        protected internal virtual void OnCloseButtonClick(AeroTabPageEventArgs e)
+        public void PerformNewTabButtonClick()
+        {
+            OnNewTabButtonClick(EventArgs.Empty);
+        }
+
+        public void PerformCloseButtonClick(AeroTabPage page)
+        {
+            OnCloseButtonClick(new AeroTabPageEventArgs(page));
+        }
+
+        protected override Control.ControlCollection CreateControlsInstance()
+        {
+            return new ControlCollection(this);
+        }
+
+        protected virtual void OnCloseButtonClick(AeroTabPageEventArgs e)
         {
             var handler = Events[EventCloseButtonClick] as EventHandler<AeroTabPageEventArgs>;
 
@@ -120,11 +157,59 @@ namespace WindowsFormsAero
             }
         }
 
+        protected virtual void OnNewTabButtonClick(EventArgs e)
+        {
+            var handler = Events[EventNewTabButtonClick] as EventHandler;
+
+            if (handler != null)
+            {
+                handler(this, e);
+            }
+        }
+
+        protected virtual void OnSelectedTabChanged(EventArgs e)
+        {
+            var handler = Events[EventSelectedTabChanged] as EventHandler;
+
+            if (handler != null)
+            {
+                handler(this, e);
+            }
+        }
+
+        protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
+        {
+            if (_pages.Count > 1)
+            {
+                if ((KeyboardNavigation.EnableCtrlNumbers) && ((keyData & Keys.Control) == Keys.Control))
+                {
+                    if (ProcessCtrlNumber(ref msg, keyData))
+                    {
+                        return true;
+                    }
+                }
+            }
+
+            if (keyData == KeyboardNavigation.NewTabShortcutKeys)
+            {
+                _tabStrip.PerformNewTabButtonClick();
+                return true;
+            }
+
+            if ((keyData == KeyboardNavigation.CloseTabShortutKeys) && (SelectedTab != null))
+            {
+                _tabStrip.PerformCloseButtonClick(SelectedTab.TabStripButton);
+                return true;
+            }
+
+            return base.ProcessCmdKey(ref msg, keyData);
+        }
+
         protected override bool ProcessDialogKey(Keys keyData)
         {
             const Keys ControlTab = Keys.Control | Keys.Tab;
 
-            if (TabPages.Count > 1)
+            if (KeyboardNavigation.EnableCtrlTab && TabPages.Count > 1)
             {
                 if ((keyData & ControlTab) == ControlTab)
                 {
@@ -151,31 +236,6 @@ namespace WindowsFormsAero
 
 
             return base.ProcessDialogKey(keyData);
-        }
-
-        protected virtual void OnNewTabButtonClick(EventArgs e)
-        {
-            var handler = Events[EventNewTabButtonClick] as EventHandler;
-
-            if (handler != null)
-            {
-                handler(this, e);
-            }
-        }
-
-        protected virtual void OnSelectedTabChanged(EventArgs e)
-        {
-            var handler = Events[EventSelectedTabChanged] as EventHandler;
-
-            if (handler != null)
-            {
-                handler(this, e);
-            }
-        }
-
-        protected override Control.ControlCollection CreateControlsInstance()
-        {
-            return new ControlCollection(this);
         }
 
         protected override Size DefaultSize
@@ -263,6 +323,16 @@ namespace WindowsFormsAero
             OnNewTabButtonClick(e);
         }
 
+        private void InvokeCloseButtonClicked(object sender, ToolStripItemEventArgs e)
+        {
+            var page = AeroTabPage.GetButtonPage(e.Item);
+
+            if (page != null)
+            {
+                PerformCloseButtonClick(page);
+            }
+        }
+
         private void InvokeSelectedTabChanged(object sender, EventArgs e)
         {
             if (_selectedPage != null)
@@ -283,5 +353,36 @@ namespace WindowsFormsAero
             OnSelectedTabChanged(e);
         }
 
+        private bool ProcessCtrlNumber(ref Message msg, Keys keyData)
+        {
+            int? newTab = null;
+            var keyCode = keyData & Keys.KeyCode;
+
+            if (keyCode >= Keys.D0 && keyCode <= Keys.D9)
+            {
+                newTab = (keyCode - Keys.D0);
+            }
+
+            if (keyCode >= Keys.NumPad0 && keyCode <= Keys.NumPad9)
+            {
+                newTab = (keyCode - Keys.NumPad0);
+            }
+
+            if (newTab.HasValue)
+            {
+                if (newTab.Value == 9)
+                {
+                    SelectedTabIndex = _pages.Count - 1;
+                    return true;
+                }
+                else if (newTab.Value - 1 < _pages.Count)
+                {
+                    SelectedTabIndex = newTab.Value - 1;
+                    return true;
+                }
+            }
+
+            return false;
+        }
     }
 }
