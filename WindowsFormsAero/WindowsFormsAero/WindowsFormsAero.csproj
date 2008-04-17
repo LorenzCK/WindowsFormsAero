@@ -60,14 +60,16 @@
     <Compile Include="Controls\AeroButtonBase.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Controls\AeroProgressBar.cs">
+    <Compile Include="Controls\AeroProgressBar\AeroProgressBar.cs">
     </Compile>
-    <Compile Include="Controls\AeroProgressBarStatus.cs" />
+    <Compile Include="Controls\AeroProgressBar\AeroProgressBarStatus.cs" />
     <Compile Include="Controls\AeroTabControl\AeroTabControl..TabPageCollection.cs" />
     <Compile Include="Controls\AeroTabControl\AeroTabControl..ControlCollection.cs" />
     <Compile Include="Controls\AeroTabControl\AeroTabControlCloseButton.cs" />
     <Compile Include="Controls\AeroTabControl\AeroTabPageEventArgs.cs" />
     <Compile Include="Controls\AeroTabControl\AeroTabControlTabListButton.cs" />
+    <Compile Include="Controls\AeroTextBox\AeroTextBox.cs">
+    </Compile>
     <Compile Include="Controls\TabStrip\Items\TabStripButtonAccessibleObject.cs" />
     <Compile Include="Controls\TabStrip\Layout\TabStripButtonLayout.cs" />
     <Compile Include="Controls\TabStrip\Items\TabStripTabListButton.cs" />

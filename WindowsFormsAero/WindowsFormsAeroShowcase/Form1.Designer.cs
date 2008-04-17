@@ -66,6 +66,7 @@
             this.chkDebugRender = new System.Windows.Forms.CheckBox();
             this.propertyGrid1 = new System.Windows.Forms.PropertyGrid();
             this.aeroTabPage3 = new WindowsFormsAero.AeroTabPage();
+            this.aeroTextBox1 = new WindowsFormsAero.AeroTextBox();
             this.progressBarShowcase1 = new WindowsFormsAero.Demo.Controls.ProgressBarShowcase();
             this.menuStrip1.SuspendLayout();
             this.aeroTabControl1.SuspendLayout();
@@ -376,6 +377,7 @@
             // 
             // aeroTabPage3
             // 
+            this.aeroTabPage3.Controls.Add(this.aeroTextBox1);
             this.aeroTabPage3.Controls.Add(this.progressBarShowcase1);
             this.aeroTabPage3.Image = global::WindowsFormsAero.Demo.Properties.Resources.Untitled;
             this.aeroTabPage3.Location = new System.Drawing.Point(2, 40);
@@ -383,6 +385,15 @@
             this.aeroTabPage3.Size = new System.Drawing.Size(600, 283);
             this.aeroTabPage3.TabIndex = 3;
             this.aeroTabPage3.Text = "Simple Controls";
+            // 
+            // aeroTextBox1
+            // 
+            this.aeroTextBox1.CueBannerFocused = true;
+            this.aeroTextBox1.CueBannerText = "fdsfdsfasf";
+            this.aeroTextBox1.Location = new System.Drawing.Point(10, 153);
+            this.aeroTextBox1.Name = "aeroTextBox1";
+            this.aeroTextBox1.Size = new System.Drawing.Size(100, 22);
+            this.aeroTextBox1.TabIndex = 1;
             // 
             // progressBarShowcase1
             // 
@@ -410,6 +421,7 @@
             this.aeroTabPage1.ResumeLayout(false);
             this.aeroTabPage1.PerformLayout();
             this.aeroTabPage3.ResumeLayout(false);
+            this.aeroTabPage3.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -455,6 +467,7 @@
         private System.Windows.Forms.PropertyGrid propertyGrid1;
         private System.Windows.Forms.CheckBox chkDebugRender;
         private WindowsFormsAero.Demo.Controls.ProgressBarShowcase progressBarShowcase1;
+        private AeroTextBox aeroTextBox1;
 
 
 
