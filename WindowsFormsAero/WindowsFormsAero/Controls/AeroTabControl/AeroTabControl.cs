@@ -74,6 +74,17 @@ namespace WindowsFormsAero
             get { return _keyboard; }
         }
 
+        [Browsable(true)]
+        [DefaultValue(true)]
+        [MergableProperty(true)]
+        [EditorBrowsable(EditorBrowsableState.Always)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
+        public bool NewTabButtonVisible
+        {
+            get { return _tabStrip.NewTabButtonVisible; }
+            set { _tabStrip.NewTabButtonVisible = value; }
+        }
+
         [Browsable(false)]
         [MergableProperty(false)]
         [EditorBrowsable(EditorBrowsableState.Always)]
