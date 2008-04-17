@@ -66,10 +66,12 @@
             this.chkDebugRender = new System.Windows.Forms.CheckBox();
             this.propertyGrid1 = new System.Windows.Forms.PropertyGrid();
             this.aeroTabPage3 = new WindowsFormsAero.AeroTabPage();
+            this.progressBarShowcase1 = new WindowsFormsAero.Demo.Controls.ProgressBarShowcase();
             this.menuStrip1.SuspendLayout();
             this.aeroTabControl1.SuspendLayout();
             this.aeroTabPage2.SuspendLayout();
             this.aeroTabPage1.SuspendLayout();
+            this.aeroTabPage3.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -315,7 +317,7 @@
             this.aeroTabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.aeroTabControl1.Location = new System.Drawing.Point(0, 28);
             this.aeroTabControl1.Name = "aeroTabControl1";
-            this.aeroTabControl1.SelectedTab = this.aeroTabPage1;
+            this.aeroTabControl1.SelectedTab = this.aeroTabPage3;
             this.aeroTabControl1.Size = new System.Drawing.Size(604, 325);
             this.aeroTabControl1.TabIndex = 0;
             this.aeroTabControl1.NewTabButtonClick += new System.EventHandler(this.aeroTabControl1_NewTabButtonClick);
@@ -349,7 +351,7 @@
             this.aeroTabPage1.Name = "aeroTabPage1";
             this.aeroTabPage1.Size = new System.Drawing.Size(600, 283);
             this.aeroTabPage1.TabIndex = 1;
-            this.aeroTabPage1.Text = "aeroTabPage1";
+            this.aeroTabPage1.Text = "AeroTabControl";
             // 
             // chkDebugRender
             // 
@@ -374,12 +376,20 @@
             // 
             // aeroTabPage3
             // 
+            this.aeroTabPage3.Controls.Add(this.progressBarShowcase1);
             this.aeroTabPage3.Image = global::WindowsFormsAero.Demo.Properties.Resources.Untitled;
             this.aeroTabPage3.Location = new System.Drawing.Point(2, 40);
             this.aeroTabPage3.Name = "aeroTabPage3";
             this.aeroTabPage3.Size = new System.Drawing.Size(600, 283);
             this.aeroTabPage3.TabIndex = 3;
-            this.aeroTabPage3.Text = "aeroTabPage3";
+            this.aeroTabPage3.Text = "Simple Controls";
+            // 
+            // progressBarShowcase1
+            // 
+            this.progressBarShowcase1.Location = new System.Drawing.Point(10, 3);
+            this.progressBarShowcase1.Name = "progressBarShowcase1";
+            this.progressBarShowcase1.Size = new System.Drawing.Size(446, 144);
+            this.progressBarShowcase1.TabIndex = 0;
             // 
             // Form1
             // 
@@ -399,6 +409,7 @@
             this.aeroTabPage2.PerformLayout();
             this.aeroTabPage1.ResumeLayout(false);
             this.aeroTabPage1.PerformLayout();
+            this.aeroTabPage3.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -443,6 +454,7 @@
         private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
         private System.Windows.Forms.PropertyGrid propertyGrid1;
         private System.Windows.Forms.CheckBox chkDebugRender;
+        private WindowsFormsAero.Demo.Controls.ProgressBarShowcase progressBarShowcase1;
 
 
 
