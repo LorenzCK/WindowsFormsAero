@@ -197,6 +197,7 @@ namespace WindowsFormsAero
             }
         }
 
+        [Browsable(false)]
         public override LayoutEngine LayoutEngine
         {
             get 
@@ -225,7 +226,10 @@ namespace WindowsFormsAero
 
         public void PerformNewTabButtonClick()
         {
-            OnNewTabButtonClicked(EventArgs.Empty);
+            if (NewTabButtonVisible)
+            {
+                OnNewTabButtonClicked(EventArgs.Empty);
+            }
         }
 
         public override Size GetPreferredSize(Size proposedSize)
