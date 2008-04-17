@@ -15,7 +15,7 @@ namespace WindowsFormsAero
 {
     [System.ComponentModel.DesignerCategory("Code")]
     [ToolStripItemDesignerAvailability(ToolStripItemDesignerAvailability.None)]
-    public class TabStripButton : TabStripButtonBase
+    public partial class TabStripButton : TabStripButtonBase
     {
         private static readonly object EventCloseButtonClick = new object();
 
@@ -163,9 +163,22 @@ namespace WindowsFormsAero
             set { base.TextImageRelation = value; }
         }
 
+        public void PerformCloseButtonClick()
+        {
+            if (IsClosableInternal)
+            {
+                OnCloseButtonClick(EventArgs.Empty);
+            }
+        }
+
         protected override ToolStripItemDisplayStyle DefaultDisplayStyle
         {
             get { return ToolStripItemDisplayStyle.ImageAndText; }
+        }
+
+        protected override AccessibleObject CreateAccessibilityInstance()
+        {
+            return new TabStripButtonAccessibleObject(this);
         }
 
         protected virtual void OnCloseButtonClick(EventArgs e)
@@ -213,12 +226,12 @@ namespace WindowsFormsAero
 
                 if (IsClosableInternal)
                 {
-                    OnCloseButtonClick(EventArgs.Empty);
-                }
+                    PerformCloseButtonClick();
 
-                if (Owner != null)
-                {
-                    Owner.PerformCloseButtonClick(this);
+                    if (Owner != null)
+                    {
+                        Owner.PerformCloseButtonClick(this);
+                    }
                 }
             }
 

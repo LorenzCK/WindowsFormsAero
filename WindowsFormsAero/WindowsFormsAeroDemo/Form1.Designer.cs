@@ -63,9 +63,9 @@
             this.aeroTabPage2 = new WindowsFormsAero.AeroTabPage();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.aeroTabPage1 = new WindowsFormsAero.AeroTabPage();
+            this.chkDebugRender = new System.Windows.Forms.CheckBox();
             this.propertyGrid1 = new System.Windows.Forms.PropertyGrid();
             this.aeroTabPage3 = new WindowsFormsAero.AeroTabPage();
-            this.chkDebugRender = new System.Windows.Forms.CheckBox();
             this.menuStrip1.SuspendLayout();
             this.aeroTabControl1.SuspendLayout();
             this.aeroTabPage2.SuspendLayout();
@@ -351,6 +351,17 @@
             this.aeroTabPage1.TabIndex = 1;
             this.aeroTabPage1.Text = "aeroTabPage1";
             // 
+            // chkDebugRender
+            // 
+            this.chkDebugRender.AutoSize = true;
+            this.chkDebugRender.Location = new System.Drawing.Point(360, 4);
+            this.chkDebugRender.Name = "chkDebugRender";
+            this.chkDebugRender.Size = new System.Drawing.Size(131, 21);
+            this.chkDebugRender.TabIndex = 3;
+            this.chkDebugRender.Text = "Debug renderer";
+            this.chkDebugRender.UseVisualStyleBackColor = true;
+            this.chkDebugRender.CheckedChanged += new System.EventHandler(this.chkDebugRender_CheckedChanged);
+            // 
             // propertyGrid1
             // 
             this.propertyGrid1.Dock = System.Windows.Forms.DockStyle.Left;
@@ -369,17 +380,6 @@
             this.aeroTabPage3.Size = new System.Drawing.Size(600, 283);
             this.aeroTabPage3.TabIndex = 3;
             this.aeroTabPage3.Text = "aeroTabPage3";
-            // 
-            // chkDebugRender
-            // 
-            this.chkDebugRender.AutoSize = true;
-            this.chkDebugRender.Location = new System.Drawing.Point(360, 4);
-            this.chkDebugRender.Name = "chkDebugRender";
-            this.chkDebugRender.Size = new System.Drawing.Size(131, 21);
-            this.chkDebugRender.TabIndex = 3;
-            this.chkDebugRender.Text = "Debug renderer";
-            this.chkDebugRender.UseVisualStyleBackColor = true;
-            this.chkDebugRender.CheckedChanged += new System.EventHandler(this.chkDebugRender_CheckedChanged);
             // 
             // Form1
             // 

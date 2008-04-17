@@ -18,7 +18,10 @@ namespace WindowsFormsAero
         private static readonly object EventNewTabButtonClick = new object();
         private static readonly object EventSelectedTabChanged = new object();
 
-        private readonly KeyboardNavigationSettings _keyboard = new KeyboardNavigationSettings();
+        private readonly AeroTabControlCloseButton _closeButton;
+        private readonly AeroTabControlNewTabButton _newTabButton;
+        private readonly AeroTabControlTabListButton _tabListButton;
+
         private readonly List<AeroTabPage> _pages = new List<AeroTabPage>();
         private readonly TabStrip _tabStrip = new TabStrip()
         {
@@ -30,7 +33,15 @@ namespace WindowsFormsAero
 
         public AeroTabControl()
         {
+            EnableCtrlNumbers = true;
+            EnableCtrlTab = true;
+
             _pageCollection = new TabPageCollection(this);
+            
+            _closeButton = new AeroTabControlCloseButton(_tabStrip);
+            _newTabButton = new AeroTabControlNewTabButton(_tabStrip);
+            _tabListButton = new AeroTabControlTabListButton(_tabStrip);
+
             _tabStrip.NewTabButtonClicked += InvokeNewTabButtonClicked;
             _tabStrip.CloseButtonClicked += InvokeCloseButtonClicked;
             _tabStrip.SelectedTabChanged += InvokeSelectedTabChanged;
@@ -55,36 +66,53 @@ namespace WindowsFormsAero
         }
 
         [Browsable(true)]
-        [MergableProperty(true)]
+        [DefaultValue(true)]
         [EditorBrowsable(EditorBrowsableState.Always)]
-        [DefaultValue(CloseButtonVisibility.ExceptSingleTab)]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
-        public CloseButtonVisibility CloseButtonVisibility
+        public bool EnableCtrlNumbers
         {
-            get { return _tabStrip.CloseButtonVisibility; }
-            set { _tabStrip.CloseButtonVisibility = value; }
+            get;
+            set;
+        }
+
+        [Browsable(true)]
+        [DefaultValue(true)]
+        [EditorBrowsable(EditorBrowsableState.Always)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
+        public bool EnableCtrlTab
+        {
+            get;
+            set;
+        }
+
+
+        [Browsable(true)]
+        [MergableProperty(false)]
+        [EditorBrowsable(EditorBrowsableState.Always)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
+        public AeroTabControlCloseButton CloseButton
+        {
+            get { return _closeButton; }
         }
 
         [Browsable(true)]
         [MergableProperty(false)]
         [EditorBrowsable(EditorBrowsableState.Always)]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
-        public KeyboardNavigationSettings KeyboardNavigation
+        public AeroTabControlNewTabButton NewTabButton
         {
-            get { return _keyboard; }
+            get { return _newTabButton; }
         }
 
         [Browsable(true)]
-        [DefaultValue(true)]
-        [MergableProperty(true)]
+        [MergableProperty(false)]
         [EditorBrowsable(EditorBrowsableState.Always)]
-        [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
-        public bool NewTabButtonVisible
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
+        public AeroTabControlTabListButton TabListButton
         {
-            get { return _tabStrip.NewTabButtonVisible; }
-            set { _tabStrip.NewTabButtonVisible = value; }
+            get { return _tabListButton; }
         }
-
+        
         [Browsable(false)]
         [MergableProperty(false)]
         [EditorBrowsable(EditorBrowsableState.Always)]
@@ -193,7 +221,7 @@ namespace WindowsFormsAero
         {
             if (_pages.Count > 1)
             {
-                if ((KeyboardNavigation.EnableCtrlNumbers) && ((keyData & Keys.Control) == Keys.Control))
+                if ((EnableCtrlNumbers) && ((keyData & Keys.Control) == Keys.Control))
                 {
                     if (ProcessCtrlNumber(ref msg, keyData))
                     {
@@ -202,13 +230,13 @@ namespace WindowsFormsAero
                 }
             }
 
-            if (keyData == KeyboardNavigation.NewTabShortcutKeys)
+            if (keyData == NewTabButton.ShortcutKeys)
             {
                 _tabStrip.PerformNewTabButtonClick();
                 return true;
             }
 
-            if ((keyData == KeyboardNavigation.CloseTabShortutKeys) && (SelectedTab != null))
+            if ((keyData == CloseButton.ShortcutKeys) && (SelectedTab != null))
             {
                 _tabStrip.PerformCloseButtonClick(SelectedTab.TabStripButton);
                 return true;
@@ -221,7 +249,7 @@ namespace WindowsFormsAero
         {
             const Keys ControlTab = Keys.Control | Keys.Tab;
 
-            if (KeyboardNavigation.EnableCtrlTab && TabPages.Count > 1)
+            if (EnableCtrlTab && TabPages.Count > 1)
             {
                 if ((keyData & ControlTab) == ControlTab)
                 {
@@ -245,7 +273,6 @@ namespace WindowsFormsAero
                     return true;
                 }
             }
-
 
             return base.ProcessDialogKey(keyData);
         }

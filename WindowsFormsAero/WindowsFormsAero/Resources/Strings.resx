@@ -121,11 +121,20 @@
     <value>Add TabStrip page</value>
     <comment>used in TabPageSwitcherDesigner</comment>
   </data>
+  <data name="CloseTab" xml:space="preserve">
+    <value>Close Tab</value>
+  </data>
   <data name="DwmNotSupported" xml:space="preserve">
     <value>Desktop composition is not supported by this operating system.</value>
   </data>
+  <data name="NewTab" xml:space="preserve">
+    <value>New Tab</value>
+  </data>
   <data name="TabControlInvalidPageType" xml:space="preserve">
     <value>The specified control is not an AeroTabPage.</value>
+  </data>
+  <data name="TabList" xml:space="preserve">
+    <value>Tab List</value>
   </data>
   <data name="TabStripInvalidTabIndex" xml:space="preserve">
     <value>Value of '{0}' is not valid for 'SelectedTabIndex'.

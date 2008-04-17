@@ -16,7 +16,6 @@ namespace WindowsFormsAero
     {
         public TabStripNewTabButton()
         {
-            ToolTipText = "New Tab (Ctrl+T)";
             Image = Resources.Images.NewTab;
             ImageAlign = ContentAlignment.MiddleCenter;
             DisplayStyle = ToolStripItemDisplayStyle.Image;

@@ -45,19 +45,24 @@ namespace WindowsFormsAero
                 {
                     _availableWidth = _strip.DisplayRectangle.Width;
 
-                    if (ScrollNearButtonVisible)
+                    if (ContainsScrollNearButton)
                     {
                         _availableWidth -= ScrollNearButton.Width;
                     }
 
-                    if (ScrollFarButtonVisible)
+                    if (ContainsScrollFarButton)
                     {
                         _availableWidth -= ScrollFarButton.Width;
                     }
 
-                    if (NewTabButtonVisible)
+                    if (ContainsNewTabButton)
                     {
                         _availableWidth -= NewTabButton.Width;
+                    }
+
+                    if (ContainsTabListButton)
+                    {
+                        _availableWidth -= TabListButton.Width;
                     }
 
                     foreach (var item in GetAvailableUnknownItems())
@@ -102,6 +107,11 @@ namespace WindowsFormsAero
             set { _strip.SelectedTab = value; }
         }
 
+        private TabStripButtonBase TabListButton
+        {
+            get { return _strip.TabListButton; }
+        }
+
         private TabStripButtonBase NewTabButton
         {
             get { return _strip.NewTabButton; }
@@ -117,22 +127,28 @@ namespace WindowsFormsAero
             get { return _strip.ScrollFarButton; }
         }
 
-        private bool NewTabButtonVisible
+        private bool ContainsNewTabButton
         {
             get { return GetButtonVisibility(NewTabButton); }
             set { SetButtonVisibility(NewTabButton, value); }
         }
 
-        private bool ScrollNearButtonVisible
+        private bool ContainsScrollNearButton
         {
             get { return GetButtonVisibility(ScrollNearButton); }
             set { SetButtonVisibility(ScrollNearButton, value); }
         }
 
-        private bool ScrollFarButtonVisible
+        private bool ContainsScrollFarButton
         {
             get { return GetButtonVisibility(ScrollFarButton); }
             set { SetButtonVisibility(ScrollFarButton, value); }
+        }
+
+        private bool ContainsTabListButton
+        {
+            get { return GetButtonVisibility(TabListButton); }
+            set { SetButtonVisibility(TabListButton, value); }
         }
 
         private int TabOverlap
@@ -157,6 +173,7 @@ namespace WindowsFormsAero
                 if (!(item is TabStripButton) &&
                       item != ScrollNearButton &&
                       item != ScrollFarButton &&
+                      item != TabListButton &&
                       item != NewTabButton &&
                       item.Available)
                 {

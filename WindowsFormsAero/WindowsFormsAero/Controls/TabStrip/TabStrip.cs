@@ -45,6 +45,8 @@ namespace WindowsFormsAero
         //private ToolTip _closeToolTip;
 
         private Boolean _clearingTabs;
+        private Boolean _tabListVisible = true;
+
         private UInt16 _busyTabCount;
         private UInt16 _busyTabTicker;
         private Timer _busyTabTimer;
@@ -52,12 +54,17 @@ namespace WindowsFormsAero
         private int _minTabWidth = DefaultMinTabWidth;
         private int _maxTabWidth = DefaultMaxTabWidth;
 
+        private String _closeButtonText;
         private CloseButtonVisibility _closeButtonVisibility = CloseButtonVisibility.ExceptSingleTab;
 
         public TabStrip()
         {
             Items.Add(_list);
             Items.Add(_newTab);
+
+            ResetCloseButtonText();
+            ResetNewTabButtonText();
+            ResetTabListButtonText();
         }
 
         public event EventHandler NewTabButtonClicked
@@ -108,7 +115,7 @@ namespace WindowsFormsAero
             }
         }
 
-        [Browsable(false)]
+        [Browsable(false)] 
         [DefaultValue(-1)]
         public int SelectedTabIndex
         {
@@ -141,6 +148,7 @@ namespace WindowsFormsAero
             }
         }
 
+        [Browsable(true)]
         [DefaultValue(DefaultMaxTabWidth)]
         public int MaximumTabWidth
         {
@@ -155,6 +163,7 @@ namespace WindowsFormsAero
             }
         }
 
+        [Browsable(true)]
         [DefaultValue(DefaultMinTabWidth)]
         public int MinimumTabWidth
         {
@@ -169,6 +178,7 @@ namespace WindowsFormsAero
             }
         }
 
+        [Browsable(true)]
         [DefaultValue(true)]
         public bool NewTabButtonVisible
         {
@@ -176,13 +186,51 @@ namespace WindowsFormsAero
             set { _newTab.Visible = value; }
         }
 
+        [Browsable(true)]
+        public string NewTabButtonText
+        {
+            get { return _newTab.Text; }
+            set
+            {
+                _newTab.Text = value;
+                _newTab.ToolTipText = value;
+            }
+        }
+
+        [Browsable(true)]
         [DefaultValue(true)]
         public bool TabListButtonVisible
         {
-            get { return _list.Visible; }
-            set { _list.Visible = value; }
+            get { return _tabListVisible; }
+            set
+            {
+                if (_tabListVisible != value)
+                {
+                    _tabListVisible = value;
+                    PerformLayout();
+                }
+            }
         }
 
+        [Browsable(true)]
+        public string TabListButtonText
+        {
+            get { return _list.Text; }
+            set
+            {
+                _list.Text = value;
+                _list.ToolTipText = value;
+            }
+        }
+
+        [Browsable(true)]
+        public string CloseButtonText
+        {
+            get { return _closeButtonText; }
+            set { _closeButtonText = value; }
+        }
+
+        [Browsable(true)]
         [DefaultValue(CloseButtonVisibility.ExceptSingleTab)]
         public CloseButtonVisibility CloseButtonVisibility
         {
@@ -216,6 +264,21 @@ namespace WindowsFormsAero
             get { return new Padding(0, 2, 2, 4); }
         }
 
+        protected internal virtual string DefaultCloseButtonText
+        {
+            get { return Resources.Strings.CloseTab; }
+        }
+
+        protected internal virtual string DefaultNewTabButtonText
+        {
+            get { return Resources.Strings.NewTab; }
+        }
+
+        protected internal virtual string DefaultTabListButtonText
+        {
+            get { return Resources.Strings.TabList; }
+        }
+
         public void PerformCloseButtonClick(TabStripButton button)
         {
             if (button.IsClosableInternal)
@@ -243,6 +306,11 @@ namespace WindowsFormsAero
             }
 
             return preferredSize + Padding.Size;
+        }
+
+        protected override AccessibleObject CreateAccessibilityInstance()
+        {
+            return new TabStripAccessibleObject(this);
         }
 
         protected virtual void OnNewTabButtonClicked(EventArgs e)
@@ -288,13 +356,14 @@ namespace WindowsFormsAero
                 return;
             }
 
+            SuspendLayout();
+
             if (e.Item is TabStripButton)
             {
-                _layout.ScrollDirection = TabStripScrollDirection.Right;
                 ++TabCount;
-            }
 
-            SuspendLayout();
+                _layout.ScrollDirection = TabStripScrollDirection.Right;
+            }
 
             base.OnItemAdded(e);
             
@@ -393,7 +462,6 @@ namespace WindowsFormsAero
                 }
 
                 _tabCount = value;
-                _list.Visible = value > 1;
             }
         }
 
@@ -426,6 +494,11 @@ namespace WindowsFormsAero
         internal TabStripButtonBase NewTabButton
         {
             get { return _newTab; }
+        }
+
+        internal TabStripButtonBase TabListButton
+        {
+            get { return _list; }
         }
 
         internal Color SelectedTabBottomColor
@@ -516,6 +589,36 @@ namespace WindowsFormsAero
             {
                 _busyTabTimer.Enabled = (_busyTabCount > 0);
             }
+        }
+
+        private void ResetCloseButtonText()
+        {
+            CloseButtonText = DefaultCloseButtonText;
+        }
+
+        private bool ShouldSerializeCloseButtonText()
+        {
+            return CloseButtonText != DefaultCloseButtonText;
+        }
+
+        private void ResetNewTabButtonText()
+        {
+            NewTabButtonText = DefaultNewTabButtonText;
+        }
+
+        private bool ShouldSerializeNewTabButtonText()
+        {
+            return NewTabButtonText != DefaultNewTabButtonText;
+        }
+
+        private void ResetTabListButtonText()
+        {
+            TabListButtonText = DefaultTabListButtonText;
+        }
+
+        private bool ShouldSerializeTabListButtonText()
+        {
+            return TabListButtonText != DefaultTabListButtonText;
         }
     }
 }
