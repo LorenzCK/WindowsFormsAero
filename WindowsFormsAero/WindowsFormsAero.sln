@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 10.00
 # Visual Studio 2008
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WindowsFormsAero", "WindowsFormsAero\WindowsFormsAero.csproj", "{F63A0939-5ADD-4931-8066-6901B5FBEF67}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WindowsFormsAeroShowcase", "WindowsFormsAeroDemo\WindowsFormsAeroShowcase.csproj", "{1F8DBC70-EB89-4D7B-A5C0-085ACDA74DA9}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WindowsFormsAero.Design", "WindowsFormsAeroDesign\WindowsFormsAero.Design.csproj", "{E55411BE-D60D-4975-817B-D9447CE551EB}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{4A25F61D-1C39-4150-A052-FA7142F9A567}"
@@ -16,19 +14,16 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Global
 	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 4
+		SccNumberOfProjects = 3
 		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
 		SccTeamFoundationServer = https://tfs02.codeplex.com/
 		SccLocalPath0 = .
 		SccProjectUniqueName1 = WindowsFormsAero\\WindowsFormsAero.csproj
 		SccProjectName1 = WindowsFormsAero
 		SccLocalPath1 = WindowsFormsAero
-		SccProjectUniqueName2 = WindowsFormsAeroDemo\\WindowsFormsAeroShowcase.csproj
-		SccProjectName2 = WindowsFormsAeroDemo
-		SccLocalPath2 = WindowsFormsAeroDemo
-		SccProjectUniqueName3 = WindowsFormsAeroDesign\\WindowsFormsAero.Design.csproj
-		SccProjectName3 = WindowsFormsAeroDesign
-		SccLocalPath3 = WindowsFormsAeroDesign
+		SccProjectUniqueName2 = WindowsFormsAeroDesign\\WindowsFormsAero.Design.csproj
+		SccProjectName2 = WindowsFormsAeroDesign
+		SccLocalPath2 = WindowsFormsAeroDesign
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,10 +34,6 @@ Global
 		{F63A0939-5ADD-4931-8066-6901B5FBEF67}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F63A0939-5ADD-4931-8066-6901B5FBEF67}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F63A0939-5ADD-4931-8066-6901B5FBEF67}.Release|Any CPU.Build.0 = Release|Any CPU
-		{1F8DBC70-EB89-4D7B-A5C0-085ACDA74DA9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{1F8DBC70-EB89-4D7B-A5C0-085ACDA74DA9}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{1F8DBC70-EB89-4D7B-A5C0-085ACDA74DA9}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{1F8DBC70-EB89-4D7B-A5C0-085ACDA74DA9}.Release|Any CPU.Build.0 = Release|Any CPU
 		{E55411BE-D60D-4975-817B-D9447CE551EB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{E55411BE-D60D-4975-817B-D9447CE551EB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E55411BE-D60D-4975-817B-D9447CE551EB}.Release|Any CPU.ActiveCfg = Release|Any CPU
