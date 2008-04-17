@@ -57,7 +57,7 @@ namespace WindowsFormsAero
 
         private void UpdateStatus()
         {
-            NativeMethods.SendMessage(new HandleRef(this, Handle), WindowMessages.PBM_SETSTATE, new IntPtr((int)(_status)), IntPtr.Zero);
+            ControlExtensions.SendMessage(this, WindowMessages.PBM_SETSTATE, (int)(_status));
         }
     }
 }

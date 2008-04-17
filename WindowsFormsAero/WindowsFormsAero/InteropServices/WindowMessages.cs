@@ -11,6 +11,9 @@ namespace WindowsFormsAero.InteropServices
 
         public const int PBM_SETSTATE = WM_USER + 16;
 
+        public const int ECM_FIRST = 0x1500;
+        public const int EM_SETCUEBANNER = ECM_FIRST + 1;
+
         public const int WM_KEYDOWN = 0x0100;
         public const int WM_KEYUP = 0x0101;
         public const int WM_SYSKEYDOWN = 0x0104;
