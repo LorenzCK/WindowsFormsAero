@@ -65,6 +65,34 @@ namespace WindowsFormsAero
             e.Graphics.DrawRectangle(Pens.Red, rect);
 
             DrawDottedRectangle(e.Graphics, Color.Black, e.CloseButtonRectangle);
+
+            var tab = e.Item as TabStripButton;
+
+            if (tab != null)
+            {
+                using (var font = new Font("Segoe UI", 10, FontStyle.Bold))
+                {
+                    int tabIndex = 0;
+
+                    foreach (var item in e.ToolStrip.Items)
+                    {
+                        if (item == tab)
+                        {
+                            goto Render;
+                        }
+
+                        if (item is TabStripButton)
+                        {
+                            ++tabIndex;
+                        }
+                    }
+
+                    tabIndex = -1;
+
+                Render:
+                    TextRenderer.DrawText(e.Graphics, tabIndex.ToString(), font, rect, Color.Red, TextFormatFlags.Left);
+                }
+            }
         }
 
         protected override void OnRenderItemImage(ToolStripItemImageRenderEventArgs e)

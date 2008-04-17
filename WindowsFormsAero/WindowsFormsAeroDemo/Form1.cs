@@ -13,6 +13,13 @@ namespace WindowsFormsAero.Demo
         public Form1()
         {
             InitializeComponent();
+
+            ToolStripManager.RendererChanged += new EventHandler(ToolStripManager_RendererChanged);
+        }
+
+        void ToolStripManager_RendererChanged(object sender, EventArgs e)
+        {
+            chkDebugRender.Checked = ToolStripManager.Renderer is TabStripDebugRenderer;
         }
 
         private void aeroTabControl1_NewTabButtonClick(object sender, EventArgs e)
@@ -23,6 +30,18 @@ namespace WindowsFormsAero.Demo
         private void aeroTabControl1_CloseButtonClick(object sender, AeroTabPageEventArgs e)
         {
             aeroTabControl1.TabPages.Remove(e.Page);
+        }
+
+        private void chkDebugRender_CheckedChanged(object sender, EventArgs e)
+        {
+            if (chkDebugRender.Checked)
+            {
+                ToolStripManager.Renderer = new TabStripDebugRenderer();
+            }
+            else
+            {
+                ToolStripManager.Renderer = new TabStripAeroRenderer();
+            }
         }
 
         //protected override void OnLoad(EventArgs e)
