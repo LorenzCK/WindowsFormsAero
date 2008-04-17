@@ -31,6 +31,11 @@ namespace WindowsFormsAero
 
                 engine.ScrollDirection = TabStripScrollDirection.None;
 
+                if (_engine._farTab >= TabCount)
+                {
+                    _engine._farTab = TabCount - 1;
+                }
+
                 _tabsToShow = engine.AvailableWidth / GetTabWidth(TabCount);
                 _tabWidth = GetTabWidth(_tabsToShow);
 

@@ -23,7 +23,6 @@ namespace WindowsFormsAero
         private readonly TabStrip _tabStrip = new TabStrip()
         {
             Dock = DockStyle.Top,
-            Renderer = new TabStripAeroRenderer(),
         };
 
         private TabPageCollection _pageCollection;
