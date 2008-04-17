@@ -70,6 +70,15 @@ namespace WindowsFormsAero.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Close Tab.
+        /// </summary>
+        internal static string CloseTab {
+            get {
+                return ResourceManager.GetString("CloseTab", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Desktop composition is not supported by this operating system..
         /// </summary>
         internal static string DwmNotSupported {
@@ -79,11 +88,29 @@ namespace WindowsFormsAero.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to New Tab.
+        /// </summary>
+        internal static string NewTab {
+            get {
+                return ResourceManager.GetString("NewTab", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The specified control is not an AeroTabPage..
         /// </summary>
         internal static string TabControlInvalidPageType {
             get {
                 return ResourceManager.GetString("TabControlInvalidPageType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tab List.
+        /// </summary>
+        internal static string TabList {
+            get {
+                return ResourceManager.GetString("TabList", resourceCulture);
             }
         }
         

@@ -90,20 +90,20 @@ namespace WindowsFormsAero.Design
 
             return strip.GetItemAt(strip.PointToClient(point)) != null;
         }
-        
+
         private AeroTabPage AddTabPage()
         {
             return AddTabPage(false);
         }
 
-        private AeroTabPage AddTabPage(bool dontRaiseEvents)
+        private AeroTabPage AddTabPage(bool suppressEvents)
         {
             return _utils.ExecuteWithTransaction(Resources.AddTabPage + ' ' + TabControl.Site.Name, delegate
             {
                 var page = _utils.CreateComponent<AeroTabPage>();
                 var pagesDescriptor = _utils.GetProperty("Controls");
 
-                if (dontRaiseEvents)
+                if (suppressEvents)
                 {
                     TabControl.TabPages.Add(page);
 

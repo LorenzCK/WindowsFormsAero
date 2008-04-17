@@ -40,6 +40,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Accessibility" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -61,10 +62,16 @@
     </Compile>
     <Compile Include="Controls\AeroTabControl\AeroTabControl..TabPageCollection.cs" />
     <Compile Include="Controls\AeroTabControl\AeroTabControl..ControlCollection.cs" />
+    <Compile Include="Controls\AeroTabControl\AeroTabControlCloseButton.cs" />
     <Compile Include="Controls\AeroTabControl\AeroTabPageEventArgs.cs" />
+    <Compile Include="Controls\AeroTabControl\AeroTabControlTabListButton.cs" />
+    <Compile Include="Controls\TabStrip\Items\TabStripButtonAccessibleObject.cs" />
     <Compile Include="Controls\TabStrip\Layout\TabStripButtonLayout.cs" />
     <Compile Include="Controls\TabStrip\Items\TabStripTabListButton.cs" />
-    <Compile Include="Controls\AeroTabControl\AeroTabControl..KeyboardNavigation.cs" />
+    <Compile Include="Controls\AeroTabControl\AeroTabControlButtonConverter.cs" />
+    <Compile Include="Controls\AeroTabControl\AeroTabControlButton.cs" />
+    <Compile Include="Controls\AeroTabControl\AeroTabControlNewTabButton.cs" />
+    <Compile Include="Controls\TabStrip\TabStripAccessibleObject.cs" />
     <Compile Include="DesktopComposition.cs" />
     <Compile Include="Extensions\ControlExtensions.cs" />
     <Compile Include="Extensions\GraphicsExtensions.cs" />

@@ -174,6 +174,8 @@ namespace WindowsFormsAero
 
             private void UpdateLayout()
             {
+                _engine.ContainsTabListButton = (TabCount > 1);
+
                 if (TryFitAllTabs())
                 {
                     return;
@@ -232,8 +234,8 @@ namespace WindowsFormsAero
                 bool near = (NearTabIndex > 0);
                 bool far = (TabCount - FarTabIndex > 1);
 
-                _engine.ScrollNearButtonVisible = near;
-                _engine.ScrollFarButtonVisible = near || far;
+                _engine.ContainsScrollNearButton = near;
+                _engine.ContainsScrollFarButton = near || far;
                 _engine.ScrollFarButton.Enabled = far;
 
                 _tabWidth = GetTabWidth(_tabsToShow);
@@ -245,7 +247,12 @@ namespace WindowsFormsAero
                 UpdateScrollButtons();
                 LayoutUnknownItems(ToolStripItemAlignment.Left);
 
-                if (_engine.ScrollNearButtonVisible)
+                if (_engine.ContainsTabListButton && _engine.TabListButton.Visible)
+                {
+                    LayoutButton(_engine.TabListButton);
+                }
+
+                if (_engine.ContainsScrollNearButton)
                 {
                     LayoutButton(_engine.ScrollNearButton);
                 }
@@ -265,12 +272,12 @@ namespace WindowsFormsAero
                     ++tabIndex;
                 }
 
-                if (_engine.ScrollFarButtonVisible)
+                if (_engine.ContainsScrollFarButton)
                 {
                     LayoutButton(_engine.ScrollFarButton);
                 }
 
-                if (_engine.NewTabButtonVisible)
+                if (_engine.ContainsNewTabButton)
                 {
                     LayoutButton(_engine.NewTabButton);
                 }
