@@ -332,36 +332,6 @@ namespace WindowsFormsAero
             _renderer.DrawBackground(e.Graphics, e.ToolStrip.ClientRectangle, e.AffectedBounds);
         }
 
-        private Padding GetThemeMargins(IDeviceContext dc, MarginType marginType)
-        {
-            try
-            {
-                var hDC = dc.GetHdc();
-
-                var margins = new Margins();
-                
-                NativeMethods.GetThemeMargins(
-                    _renderer.Handle,
-                    hDC,
-                    _renderer.Part,
-                    _renderer.State,
-                    marginType,
-                    IntPtr.Zero,
-                    out margins);
-
-                if (!margins.IsEmpty)
-                {
-                    return margins.ToPadding();
-                }
-
-                return new Padding(-1);
-            }
-            finally
-            {
-                dc.ReleaseHdc();
-            }
-        }
-
         public static bool IsSupported
         {
             get
