@@ -16,6 +16,21 @@ namespace WindowsFormsAero.InteropServices
             public const string UxTheme = "uxtheme";
         }
 
+        #region dwmapi!DwmDefWindowProc
+
+        [return: MarshalAs(UnmanagedType.Bool)]
+        [DllImport(Dll.DwmApi, CharSet = CharSet.Auto, ExactSpelling = true, SetLastError = true)]
+        [ReliabilityContract(Consistency.WillNotCorruptState, Cer.MayFail)]
+        public static extern bool DwmDefWindowProc(
+            [In] HandleRef hwnd,
+            [In] Int32 msg,
+            [In] IntPtr wParam,
+            [In] IntPtr lParam,
+            [Out] out IntPtr plResult
+        );
+
+        #endregion
+
         #region dwmapi!DwmGetColorizationColor
 
         [DllImport(Dll.DwmApi, ExactSpelling = true, PreserveSig = false, SetLastError = false)]
@@ -61,7 +76,7 @@ namespace WindowsFormsAero.InteropServices
         [ReliabilityContract(Consistency.WillNotCorruptState, Cer.MayFail)]
         public static extern void DwmExtendFrameIntoClientArea(
             [In] HandleRef hWnd,
-            [In] Margins pMargins);
+            [In] MARGINS pMargins);
 
         #endregion
 
@@ -93,11 +108,24 @@ namespace WindowsFormsAero.InteropServices
 
         #endregion
 
+        #region user32!AdjustWindowRectEx
+
+        [return: MarshalAs(UnmanagedType.Bool)]
+        [DllImport(Dll.User32, SetLastError = true)]
+        [ReliabilityContract(Consistency.WillNotCorruptState, Cer.MayFail)]
+        public static extern bool AdjustWindowRectEx(
+            [In, Out] RECT    lpRect,
+            [In]      UInt32  dwStyle,
+            [In, MarshalAs(UnmanagedType.Bool)] Boolean bMenu,
+            [In]      Int32   dwExStyle);
+
+        #endregion
+
         #region user32!DestroyIcon
 
+        [return: MarshalAs(UnmanagedType.Bool)]
         [DllImport(Dll.User32, BestFitMapping = false, SetLastError = true)]
         [ReliabilityContract(Consistency.WillNotCorruptState, Cer.MayFail)]
-        [return: MarshalAs(UnmanagedType.Bool)]
         public static extern bool DestroyIcon(IntPtr hIcon);
 
         #endregion
@@ -148,20 +176,37 @@ namespace WindowsFormsAero.InteropServices
 
         #endregion
 
-        #region uxtheme!GetThemeMargins
+        #region user32!SetWindowPos
 
-        [DllImport(Dll.UxTheme, ExactSpelling = true, PreserveSig = false)]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        [DllImport(Dll.User32, CharSet = CharSet.Auto, SetLastError = true)]
         [ReliabilityContract(Consistency.WillNotCorruptState, Cer.MayFail)]
-        public extern static void GetThemeMargins(
-            IntPtr hTheme,
-            IntPtr hdc,
-            Int32 iPartId,
-            Int32 iStateId,
-            MarginType iPropId,
-            IntPtr rect,
-            out Margins margins);
+        public static extern bool SetWindowPos(
+            [In] HandleRef hWnd,
+            [In] IntPtr hWndInsertAfter,
+            [In] Int32 x,
+            [In] Int32 y,
+            [In] Int32 cx,
+            [In] Int32 cy,
+            [In] SetWindowPosFlags uFlags);
 
         #endregion
 
+        #region uxtheme!DrawThemeTextEx
+
+        [DllImport(Dll.UxTheme, CharSet = CharSet.Unicode, SetLastError = false, PreserveSig = false)]
+        [ReliabilityContract(Consistency.WillNotCorruptState, Cer.MayFail)]
+        public static extern void DrawThemeTextEx(
+            [In] IntPtr hTheme,
+            [In] IntPtr hdc,
+            [In] Int32 iPartId,
+            [In] Int32 iStateId,
+            [In] String text, 
+            [In] Int32 iCharCount, 
+            [In] TextFormatFlags dwFlags,
+            [In, Out] RECT pRect,
+            [In] DTTOPTS pOptions);
+
+        #endregion
     }
 }

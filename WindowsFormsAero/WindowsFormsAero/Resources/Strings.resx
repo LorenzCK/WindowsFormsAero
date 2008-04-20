@@ -124,6 +124,9 @@
   <data name="CloseTab" xml:space="preserve">
     <value>Close Tab</value>
   </data>
+  <data name="DwmEffectProviderOnlyOneForm" xml:space="preserve">
+    <value>A DwmEffectProvider can support only one Form.</value>
+  </data>
   <data name="DwmNotSupported" xml:space="preserve">
     <value>Desktop composition is not supported by this operating system.</value>
   </data>

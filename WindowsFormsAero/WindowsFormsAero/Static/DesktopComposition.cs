@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Drawing;
 using WindowsFormsAero.InteropServices;
+using Microsoft.Win32;
 
 namespace WindowsFormsAero
 {

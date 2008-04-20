@@ -1,0 +1,34 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+using System.Runtime.InteropServices;
+using System.Drawing;
+
+namespace WindowsFormsAero.InteropServices
+{
+    [StructLayout(LayoutKind.Sequential)]
+    public sealed class RECT
+    {
+        public readonly int Left;
+        public readonly int Top;
+        public readonly int Right;
+        public readonly int Bottom;
+
+        public RECT()
+        {
+        }
+
+        public RECT(int left, int  top, int right, int bottom)
+        {
+            Left = left;
+            Top = top;
+            Right = right;
+            Bottom = bottom;
+        }
+
+        public static RECT FromRectangle(Rectangle rect)
+        {
+            return new RECT(rect.Left, rect.Top, rect.Right, rect.Bottom);
+        }
+    }
+}

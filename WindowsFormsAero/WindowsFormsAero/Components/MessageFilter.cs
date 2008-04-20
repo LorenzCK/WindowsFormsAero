@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows.Forms;
+using System.Runtime.InteropServices;
 
 namespace WindowsFormsAero
 {
@@ -16,14 +17,24 @@ namespace WindowsFormsAero
             AssignControl(owner);
         }
 
+        public void Dispose()
+        {
+            AssignControl(null);
+        }
+
+        protected HandleRef GetHandleRef()
+        {
+            return new HandleRef(_owner, _owner.Handle);
+        }
+
         protected void AssignControl(Control owner)
         {
             if (_owner != owner)
             {
                 if (_owner != null)
                 {
-                    _owner.HandleDestroyed -= OnHandleDestroyed;
-                    _owner.HandleCreated -= OnHandleCreated;
+                    _owner.HandleDestroyed -= OnOwnerHandleDestroyed;
+                    _owner.HandleCreated -= OnOwnerHandleCreated;
                     _owner = null;
 
                     ReleaseHandle();
@@ -33,12 +44,12 @@ namespace WindowsFormsAero
 
                 if (_owner != null)
                 {
-                    _owner.HandleCreated += OnHandleCreated;
-                    _owner.HandleDestroyed += OnHandleDestroyed;
+                    _owner.HandleCreated += OnOwnerHandleCreated;
+                    _owner.HandleDestroyed += OnOwnerHandleDestroyed;
 
                     if (_owner.IsHandleCreated)
                     {
-                        OnHandleCreated(_owner, EventArgs.Empty);
+                        OnOwnerHandleCreated(_owner, EventArgs.Empty);
                     }
                 }
 
@@ -50,22 +61,28 @@ namespace WindowsFormsAero
         {
         }
 
-        public void Dispose()
+        protected virtual void OnHandleCreated()
         {
-            AssignControl(null);
         }
 
-        private void OnHandleCreated(object sender, EventArgs e)
+        protected virtual void OnHandleDestroyed()
+        {
+        }
+        
+        private void OnOwnerHandleCreated(object sender, EventArgs e)
         {
             if (_owner != null)
             {
                 AssignHandle(_owner.Handle);
             }
+
+            OnHandleCreated();
         }
 
-        private void OnHandleDestroyed(object sender, EventArgs e)
+        private void OnOwnerHandleDestroyed(object sender, EventArgs e)
         {
             ReleaseHandle();
+            OnHandleDestroyed();
         }
     }
 }

@@ -79,6 +79,15 @@ namespace WindowsFormsAero.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to A DwmEffectProvider can support only one Form..
+        /// </summary>
+        internal static string DwmEffectProviderOnlyOneForm {
+            get {
+                return ResourceManager.GetString("DwmEffectProviderOnlyOneForm", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Desktop composition is not supported by this operating system..
         /// </summary>
         internal static string DwmNotSupported {
