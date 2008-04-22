@@ -4,15 +4,16 @@ using System.Runtime.InteropServices;
 
 namespace WindowsFormsAero
 {
-    internal abstract class MessageFilter : NativeWindow, IDisposable
+    internal abstract class MessageFilter<TControl> : NativeWindow, IDisposable
+        where TControl : Control
     {
-        private Control _owner;
+        private TControl _owner;
 
         protected MessageFilter()
         {
         }
 
-        protected MessageFilter(Control owner)
+        protected MessageFilter(TControl owner)
         {
             AssignControl(owner);
         }
@@ -27,7 +28,7 @@ namespace WindowsFormsAero
             return new HandleRef(_owner, _owner.Handle);
         }
 
-        protected void AssignControl(Control owner)
+        protected void AssignControl(TControl owner)
         {
             if (_owner != owner)
             {
@@ -83,6 +84,19 @@ namespace WindowsFormsAero
         {
             ReleaseHandle();
             OnHandleDestroyed();
+        }
+    }
+
+    internal abstract class MessageFilter : MessageFilter<Control>
+    {
+        protected MessageFilter()
+        {
+        }
+
+        protected MessageFilter(Control owner)
+            : base(owner)
+        {
+
         }
     }
 }

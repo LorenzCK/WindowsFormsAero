@@ -11,6 +11,7 @@ using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
 using System.Windows.Forms.Layout;
+using WindowsFormsAero.InteropServices;
 
 namespace WindowsFormsAero
 {
@@ -45,7 +46,6 @@ namespace WindowsFormsAero
         //private ToolTip _closeToolTip;
 
         private Boolean _clearingTabs;
-        private Boolean _tabListVisible = true;
 
         private UInt16 _busyTabCount;
         private UInt16 _busyTabTicker;
@@ -54,11 +54,20 @@ namespace WindowsFormsAero
         private int _minTabWidth = DefaultMinTabWidth;
         private int _maxTabWidth = DefaultMaxTabWidth;
 
+        private TabStripTabDragger _tabDragger;
+        private Int32 _tabInsertionMark = -1;
+
         private String _closeButtonText;
+        private Boolean _tabListVisible = true;
         private CloseButtonVisibility _closeButtonVisibility = CloseButtonVisibility.ExceptSingleTab;
 
         public TabStrip()
         {
+            AllowDrop = true;
+            AllowItemReorder = false;
+            AllowMerge = false;
+            AllowTabReorder = true;
+
             Items.Add(_list);
             Items.Add(_newTab);
 
@@ -85,34 +94,63 @@ namespace WindowsFormsAero
             remove { Events.RemoveHandler(EventSelectedTabChanged, value); }
         }
 
+        [Browsable(false)]
+        [DefaultValue(true)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public new bool AllowDrop
+        {
+            get { return base.AllowDrop; }
+            set { base.AllowDrop = value; }
+        }
+
+        [Browsable(false)]
+        [DefaultValue(false)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public new bool AllowItemReorder
+        {
+            get { return base.AllowItemReorder; }
+            set { base.AllowItemReorder = value; }
+        }
+
+        [Browsable(false)]
+        [DefaultValue(false)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public new bool AllowMerge
+        {
+            get { return base.AllowMerge; }
+            set { base.AllowMerge = value; }
+        }
+
+        [Browsable(true)]
+        [DefaultValue(true)]
+        public bool AllowTabReorder
+        {
+            get { return _tabDragger != null; }
+            set
+            {
+                if (value != AllowTabReorder)
+                {
+                    if (value)
+                    {
+                        AllowItemReorder = false;
+                        _tabDragger = new TabStripTabDragger(this);
+                    }
+                    else
+                    {
+                        _tabDragger = null;
+                    }
+                }
+            }
+        }
+
         [DefaultValue(null)]
         public TabStripButton SelectedTab
         {
             get { return _selectedTab; }
-            set
-            {
-                if (_selectedTab != value)
-                {
-                    _selectedIndex = -1;
-                    _selectedTab = value;
-
-                    int index = 0;
-
-                    foreach(var tab in ItemsOfType<TabStripButton>())
-                    {
-                        if (tab == _selectedTab)
-                        {
-                            _selectedIndex = index;
-                        }
-
-                        tab.Checked = (tab == _selectedTab);
-                        ++index;
-                    }
-
-                    PerformLayout();
-                    OnSelectedTabChanged(EventArgs.Empty);
-                }
-            }
+            set { SetSelectedTab(value, false); }
         }
 
         [Browsable(false)] 
@@ -313,6 +351,33 @@ namespace WindowsFormsAero
             return new TabStripAccessibleObject(this);
         }
 
+        protected override ToolStripItem CreateDefaultItem(string text, Image image, EventHandler onClick)
+        {
+            return new TabStripButton(text, image, onClick);
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                if (_busyTabTimer != null)
+                {
+                    _busyTabTimer.Dispose();
+                }
+
+                //if (_closeToolTip != null)
+                //{
+                //    _closeToolTip.Dispose();
+                //}
+            }
+
+            _busyTabCount = 0;
+            _busyTabTimer = null;
+            //_closeToolTip = null;
+
+            base.Dispose(disposing);
+        }
+
         protected virtual void OnNewTabButtonClicked(EventArgs e)
         {
             var handler = Events[EventNewTabButtonClicked] as EventHandler;
@@ -333,21 +398,6 @@ namespace WindowsFormsAero
             }
         }
 
-        protected virtual void OnSelectedTabChanged(EventArgs e)
-        {
-            var handler = Events[EventSelectedTabChanged] as EventHandler;
-
-            if (handler != null)
-            {
-                handler(this, e);
-            }
-        }
-
-        protected override ToolStripItem CreateDefaultItem(string text, Image image, EventHandler onClick)
-        {
-            return new TabStripButton(text, image, onClick);
-        }
-
         protected override void OnItemAdded(ToolStripItemEventArgs e)
         {
             if (_clearingTabs)
@@ -366,7 +416,7 @@ namespace WindowsFormsAero
             }
 
             base.OnItemAdded(e);
-            
+
             ResumeLayout();
         }
 
@@ -379,7 +429,7 @@ namespace WindowsFormsAero
                 return;
             }
 
-            if(e.ClickedItem == _scrollRight)
+            if (e.ClickedItem == _scrollRight)
             {
                 _layout.ScrollDirection = TabStripScrollDirection.Right;
                 PerformLayout();
@@ -423,46 +473,71 @@ namespace WindowsFormsAero
             base.OnItemRemoved(e);
         }
 
+        protected override void OnMouseCaptureChanged(EventArgs e)
+        {
+            if (!Capture)
+            {
+                TabInsertionPoint = -1;
+            }
+
+            base.OnMouseCaptureChanged(e);
+        }
+
+        protected override void OnPaint(PaintEventArgs e)
+        {
+            base.OnPaint(e);
+
+            if (_tabInsertionMark > -1)
+            {
+                var r = (Renderer as TabStripRenderer);
+                if (r != null)
+                {
+                    r.DrawTabInsertionMark(new TabStripInsertionMarkRenderEventArgs(e.Graphics, this, _tabInsertionMark));
+                }
+            }
+        }
+
+        protected virtual void OnSelectedTabChanged(EventArgs e)
+        {
+            var handler = Events[EventSelectedTabChanged] as EventHandler;
+
+            if (handler != null)
+            {
+                handler(this, e);
+            }
+        }
+
         protected override void OnRendererChanged(EventArgs e)
         {
             base.OnRendererChanged(e);
             UpdateBusyTabTimer();
         }
 
-        protected override void Dispose(bool disposing)
+        protected override void WndProc(ref Message m)
         {
-            if (disposing)
+            if (_tabDragger != null)
             {
-                if (_busyTabTimer != null)
+                switch (m.Msg)
                 {
-                    _busyTabTimer.Dispose();
-                }
+                    case WindowMessages.WM_CAPTURECHANGED:
+                        _tabDragger.WmCaptureChanged();
+                        break;
 
-                //if (_closeToolTip != null)
-                //{
-                //    _closeToolTip.Dispose();
-                //}
+                    case WindowMessages.WM_MOUSEMOVE:
+                        _tabDragger.WmMouseMove(m.WParam, new Point(m.LParam.ToInt32()));
+                        break;
+
+                    case WindowMessages.WM_LBUTTONDOWN:
+                        _tabDragger.WmLButtonDown(new Point(m.LParam.ToInt32()));
+                        break;
+
+                    case WindowMessages.WM_LBUTTONUP:
+                        _tabDragger.WmLButtonUp(new Point(m.LParam.ToInt32()));
+                        break;
+                }
             }
 
-            _busyTabCount = 0;
-            _busyTabTimer = null;
-            //_closeToolTip = null;
-
-            base.Dispose(disposing);
-        }
-
-        internal int TabCount
-        {
-            get { return _tabCount; }
-            private set
-            {
-                if (value < 0)
-                {
-                    throw new InvalidOperationException();
-                }
-
-                _tabCount = value;
-            }
+            base.WndProc(ref m);
         }
 
         internal ushort BusyTabCount
@@ -481,6 +556,30 @@ namespace WindowsFormsAero
             get { return _busyTabTicker; }
         }
 
+        internal int TabCount
+        {
+            get { return _tabCount; }
+            private set
+            {
+                if (value < 0)
+                {
+                    throw new InvalidOperationException();
+                }
+
+                _tabCount = value;
+            }
+        }
+
+        internal TabStripTabDragger TabDragger
+        {
+            get { return _tabDragger; }
+        }
+
+        internal TabStripButtonBase NewTabButton
+        {
+            get { return _newTab; }
+        }
+
         internal TabStripScrollButton ScrollNearButton
         {
             get { return _scrollLeft; }
@@ -489,11 +588,6 @@ namespace WindowsFormsAero
         internal TabStripScrollButton ScrollFarButton
         {
             get { return _scrollRight; }
-        }
-
-        internal TabStripButtonBase NewTabButton
-        {
-            get { return _newTab; }
         }
 
         internal TabStripButtonBase TabListButton
@@ -553,6 +647,19 @@ namespace WindowsFormsAero
             ResumeLayout();
         }
 
+        private Int32 TabInsertionPoint
+        {
+            get { return _tabInsertionMark; }
+            set
+            {
+                if (_tabInsertionMark != value)
+                {
+                    _tabInsertionMark = value;
+                    Invalidate();
+                }
+            }
+        }
+
         private TabStripRenderer TabStripRenderer
         {
             get { return Renderer as TabStripRenderer; }
@@ -588,6 +695,31 @@ namespace WindowsFormsAero
             if (_busyTabTimer != null)
             {
                 _busyTabTimer.Enabled = (_busyTabCount > 0);
+            }
+        }
+
+        private void SetSelectedTab(TabStripButton value, bool force)
+        {
+            if (force || (_selectedTab != value))
+            {
+                _selectedIndex = -1;
+                _selectedTab = value;
+
+                int index = 0;
+
+                foreach (var tab in ItemsOfType<TabStripButton>())
+                {
+                    if (tab == _selectedTab)
+                    {
+                        _selectedIndex = index;
+                    }
+
+                    tab.Checked = (tab == _selectedTab);
+                    ++index;
+                }
+
+                PerformLayout();
+                OnSelectedTabChanged(EventArgs.Empty);
             }
         }
 

@@ -11,12 +11,8 @@ using System.Windows.Forms;
 
 namespace WindowsFormsAero
 {
-    public interface ITabStripButton
-    {
-    }
-
     [System.ComponentModel.DesignerCategory("Code")]
-    public abstract class TabStripButtonBase : ToolStripButton, ITabStripButton
+    public abstract class TabStripButtonBase : ToolStripButton
     {
         private TabStripButtonLayout _layout;
 

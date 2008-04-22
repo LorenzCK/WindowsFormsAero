@@ -26,6 +26,11 @@ namespace WindowsFormsAero
         {
             _strip = strip;
         }
+        
+        internal int TabOverlap
+        {
+            get { return 1; }
+        }
 
         private bool RTL
         {
@@ -149,11 +154,6 @@ namespace WindowsFormsAero
         {
             get { return GetButtonVisibility(TabListButton); }
             set { SetButtonVisibility(TabListButton, value); }
-        }
-
-        private int TabOverlap
-        {
-            get { return 1; }
         }
 
         private void LayoutItem(ToolStripItem item, Point location, Size size)

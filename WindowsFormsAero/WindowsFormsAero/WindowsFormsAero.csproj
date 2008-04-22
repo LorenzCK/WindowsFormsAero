@@ -81,6 +81,7 @@
     <Compile Include="Controls\AeroTabControl\AeroTabControlButton.cs" />
     <Compile Include="Controls\AeroTabControl\AeroTabControlNewTabButton.cs" />
     <Compile Include="Controls\TabStrip\TabStripAccessibleObject.cs" />
+    <Compile Include="Controls\TabStrip\TabStripTabDragger.cs" />
     <Compile Include="InteropServices\DTTOPTS.cs" />
     <Compile Include="InteropServices\POINT.cs" />
     <Compile Include="InteropServices\RECT.cs" />
@@ -153,6 +154,9 @@
     <None Include="..\PrivateKey.snk">
       <Link>Properties\PrivateKey.snk</Link>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\TabDragNotAllowed.cur" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Attributes\" />
