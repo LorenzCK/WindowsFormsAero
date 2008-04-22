@@ -209,9 +209,16 @@ namespace WindowsFormsAero
 
         protected override void OnMouseDown(MouseEventArgs e)
         {
-            if (CloseButtonState == TabStripCloseButtonState.Selected)
+            if (e.Button == MouseButtons.Left)
             {
-                CloseButtonState = TabStripCloseButtonState.Pressed;
+                if (CloseButtonState == TabStripCloseButtonState.Selected)
+                {
+                    CloseButtonState = TabStripCloseButtonState.Pressed;
+                }
+                else
+                {
+                    Owner.SelectedTab = this;
+                }
             }
 
             base.OnMouseDown(e);

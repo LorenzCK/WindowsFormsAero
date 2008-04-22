@@ -322,7 +322,7 @@ namespace WindowsFormsAero
                 {
                     if (item.Alignment == alignment)
                     {
-                        LayoutItem(item, item.GetPreferredSize(_displayRectangle.Size), item is ITabStripButton);
+                        LayoutItem(item, item.GetPreferredSize(_displayRectangle.Size), item is TabStripButtonBase);
                     }
                 }
             }

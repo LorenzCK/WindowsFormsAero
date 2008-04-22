@@ -129,6 +129,11 @@ namespace WindowsFormsAero
             }
         }
 
+        protected override void OnRenderTabInsertionMark(TabStripInsertionMarkRenderEventArgs e)
+        {
+            e.Graphics.DrawLine(Pens.Black, e.Location, 0, e.Location, e.TabStrip.Height);
+        }
+        
         protected override void OnRenderTabItemBackground(TabStripItemRenderEventArgs e)
         {
             var isChecked = false;
@@ -201,7 +206,7 @@ namespace WindowsFormsAero
                     Trimming = StringTrimming.EllipsisCharacter
                 };
 
-                if (e.ToolStrip.RightToLeft == RightToLeft.Yes)
+                if ((e.ToolStrip != null) && (e.ToolStrip.RightToLeft == RightToLeft.Yes))
                 {
                     sf.FormatFlags |= StringFormatFlags.DirectionRightToLeft;
                 }
