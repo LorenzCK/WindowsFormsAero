@@ -18,6 +18,8 @@ namespace WindowsFormsAero
             //private readonly Cursor _cursorTabDragNA = new Cursor(typeof(Resources.Images), "TabDragNotAllowed.cur");
 
             private Point? _lastMouseDown;
+
+            private Int32 _draggedTabIndex;
             private TabStripButton _draggedTab;
 
             public TabStripTabDragger(TabStrip owner) 
@@ -45,30 +47,22 @@ namespace WindowsFormsAero
 
             public void WmLButtonUp(Point pt)
             {
-                bool farSide;
-                var dropTab = GetDropTab(pt, out farSide);
+                var dropTabIndex = GetDropTabIndex(pt);
 
-                if ((_draggedTab != dropTab) && (_draggedTab != null) && (dropTab != null))
+                if ((_draggedTab != null) && (_draggedTabIndex != dropTabIndex) && (dropTabIndex != -1))
                 {
-                    var dropTabIndex = _owner.Items.IndexOf(dropTab);
+                    _owner.SuspendLayout();
 
-                    if (!farSide || ((dropTabIndex + 1) != _owner.Items.IndexOf(_draggedTab)))
+                    if (dropTabIndex > _draggedTabIndex)
                     {
-                        _owner.SuspendLayout();
-                        _owner.Items.Remove(_draggedTab);
-
-                        if (dropTabIndex > _owner.Items.Count)
-                        {
-                            _owner.Items.Add(_draggedTab);
-                        }
-                        else
-                        {
-                            _owner.Items.Insert(dropTabIndex, _draggedTab);
-                        }
-
-                        _owner.SetSelectedTab(_draggedTab, true);
-                        _owner.ResumeLayout();
+                        --dropTabIndex;
                     }
+
+                    _owner.Items.Remove(_draggedTab);
+                    _owner.Items.Insert(dropTabIndex, _draggedTab);
+
+                    _owner.SetSelectedTab(_draggedTab, true);
+                    _owner.ResumeLayout();
                 }
 
                 EndDrag();
@@ -97,28 +91,45 @@ namespace WindowsFormsAero
                             (dy > SystemInformation.DragSize.Height))
                         {
                             _draggedTab = mouseOverTab;
-                            _lastMouseDown = null;
+                            _draggedTabIndex = _owner.Items.IndexOf(mouseOverTab);
 
-                            if (_draggedTab != null)
-                            {
-                                _owner.Capture = true;
-                            }
+                            _lastMouseDown = null;
                         }
                     }
                 }
 
                 if (_draggedTab != null)
                 {
+                    _owner.Capture = true;
+
                     if (mouseOverTab != null)
                     {
                         Cursor.Current = _cursorTabDrag;
 
-                        bool farSide;
-                        var dropTab = GetDropTab(mouseOverTab, pt, out farSide);
+                        var dropTabIndex = GetDropTabIndex(mouseOverTab, pt);
 
-                        _owner.TabInsertionPoint = farSide ?
-                            dropTab.Bounds.Right - _owner._layout.TabOverlap :
-                            dropTab.Bounds.Left;
+                        if (dropTabIndex == _owner.Items.Count)
+                        {
+                            if (_owner.RightToLeft == RightToLeft.Yes)
+                            {
+                                _owner.TabInsertionPoint = _owner.Items[dropTabIndex - 1].Bounds.Left;
+                            }
+                            else
+                            {
+                                _owner.TabInsertionPoint = _owner.Items[dropTabIndex - 1].Bounds.Right - _owner._layout.TabOverlap;
+                            }
+                        }
+                        else
+                        {
+                            if (_owner.RightToLeft == RightToLeft.Yes)
+                            {
+                                _owner.TabInsertionPoint = _owner.Items[dropTabIndex].Bounds.Right - _owner._layout.TabOverlap;
+                            }
+                            else
+                            {
+                                _owner.TabInsertionPoint = _owner.Items[dropTabIndex].Bounds.Left;
+                            }
+                        }
                     }
                     else
                     {
@@ -128,36 +139,44 @@ namespace WindowsFormsAero
                 }
             }
 
-            private TabStripButton GetDropTab(Point pt, out bool farSide)
+            private int GetDropTabIndex(Point pt)
             {
-                return GetDropTab(GetTabAt(pt), pt, out farSide);
+                return GetDropTabIndex(GetTabAt(pt), pt);
             }
 
-            private TabStripButton GetDropTab(TabStripButton tabOver, Point pt, out bool farSide)
+            private int GetDropTabIndex(TabStripButton tabOver, Point pt)
             {
                 if (tabOver == null)
                 {
-                    farSide = false;
-                    return null;
+                    return -1;
                 }
 
                 var tabPt = GetPointRelativeTo(tabOver, pt);
+                
+                var tabOverIndex = _owner.Items.IndexOf(tabOver);
+                var draggedTabIndex = _owner.Items.IndexOf(_draggedTab);
 
-                if ((tabPt.X > (tabOver.Width * LeftRightRatio)) && (_draggedTab != tabOver))
+                bool isOnFarSide = false;
+
+                if (_owner.RightToLeft == RightToLeft.Yes)
                 {
-                    farSide = true;
+                    isOnFarSide = (tabPt.X <= (tabOver.Width * (1 - LeftRightRatio)));
                 }
                 else
                 {
-                    farSide = false;
-
-                    if (_owner.Items.IndexOf(tabOver) == _owner.Items.IndexOf(_draggedTab) + 1)
-                    {
-                        return _draggedTab;
-                    }
+                    isOnFarSide = (tabPt.X > (tabOver.Width * LeftRightRatio));
                 }
 
-                return tabOver;
+                if (isOnFarSide && (_draggedTab != tabOver))
+                {
+                    return tabOverIndex + 1;
+                }
+                else if (tabOverIndex == draggedTabIndex + 1)
+                {
+                    return draggedTabIndex;
+                }
+
+                return tabOverIndex;
             }
 
             private Point GetPointRelativeTo(ToolStripItem item, Point pt)
@@ -170,6 +189,7 @@ namespace WindowsFormsAero
                 if (_draggedTab != null)
                 {
                     _draggedTab = null;
+                    _draggedTabIndex = -1;
 
                     _owner.TabInsertionPoint = -1;
                     _owner.Capture = false;
