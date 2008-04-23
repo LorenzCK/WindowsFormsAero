@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 using WindowsFormsAero.InteropServices;
+using System.Windows.Forms.VisualStyles;
 
 namespace WindowsFormsAero
 {
@@ -34,6 +35,17 @@ namespace WindowsFormsAero
             }
 
             return base.GetVersionPresent(feature);
+        }
+
+        internal static bool IsRunningAeroTheme
+        {
+            get
+            {
+                return 
+                    OnVista &&
+                    VisualStyleInformation.IsEnabledByUser &&
+                    VisualStyleInformation.DisplayName.IndexOf("Aero", StringComparison.OrdinalIgnoreCase) != -1;
+            }
         }
 
         private static bool OnVista
