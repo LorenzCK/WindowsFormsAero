@@ -131,7 +131,21 @@ namespace WindowsFormsAero
 
         protected override void OnRenderTabInsertionMark(TabStripInsertionMarkRenderEventArgs e)
         {
-            e.Graphics.DrawLine(Pens.Black, e.Location, 0, e.Location, e.TabStrip.Height);
+            var padding = e.TabStrip.Padding;
+            var height = e.TabStrip.Height;
+
+            var boundsDown = new Rectangle(e.Location - 3, padding.Top + 1, 7, 4);
+            var boundsUp = new Rectangle(e.Location - 4, height - padding.Bottom - 5, 8, 5);
+            
+            using (var path = GetTriangleDownPath(boundsDown))
+            {
+                e.Graphics.FillPath(Brushes.Black, path);
+            }
+
+            using (var path = GetTriangleUpPath(boundsUp))
+            {
+                e.Graphics.FillPath(Brushes.Black, path);
+            }
         }
         
         protected override void OnRenderTabItemBackground(TabStripItemRenderEventArgs e)
@@ -502,6 +516,44 @@ namespace WindowsFormsAero
                     }
                 }
             }
+        }
+
+        private static GraphicsPath GetTriangleDownPath(Rectangle bounds)
+        {
+            return new GraphicsPath
+            (
+                new Point[]
+                {
+                    new Point(bounds.Left,                    bounds.Top),
+                    new Point(bounds.Left + bounds.Width / 2, bounds.Bottom),
+                    new Point(bounds.Right,                   bounds.Top),
+                },
+                new Byte[]
+                {
+                    (Byte)PathPointType.Start,
+                    (Byte)PathPointType.Line,
+                    (Byte)PathPointType.Line,
+                }
+            );
+        }
+
+        private static GraphicsPath GetTriangleUpPath(Rectangle bounds)
+        {
+            return new GraphicsPath
+            (
+                new Point[]
+                {
+                    new Point(bounds.Left,                    bounds.Bottom),
+                    new Point(bounds.Left + bounds.Width / 2, bounds.Top),
+                    new Point(bounds.Right,                   bounds.Bottom),
+                },
+                new Byte[]
+                {
+                    (Byte)PathPointType.Start,
+                    (Byte)PathPointType.Line,
+                    (Byte)PathPointType.Line,
+                }
+            );
         }
 
         private static Bitmap CreateDesktopCompatibleBitmap(Size size)
