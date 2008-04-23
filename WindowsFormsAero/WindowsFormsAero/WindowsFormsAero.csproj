@@ -21,6 +21,7 @@
     <SccProvider>SAK</SccProvider>
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>..\PrivateKey.snk</AssemblyOriginatorKeyFile>
+    <Win32Resource>D:\c#\AeroForms\WindowsFormsAero\Resources\Native.res</Win32Resource>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -30,6 +31,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <RunCodeAnalysis>false</RunCodeAnalysis>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -83,6 +85,8 @@
     <Compile Include="Controls\TabStrip\TabStripAccessibleObject.cs" />
     <Compile Include="Controls\TabStrip\TabStripTabDragger.cs" />
     <Compile Include="InteropServices\DTTOPTS.cs" />
+    <Compile Include="InteropServices\ImageType.cs" />
+    <Compile Include="InteropServices\LoadImageFlags.cs" />
     <Compile Include="InteropServices\POINT.cs" />
     <Compile Include="InteropServices\RECT.cs" />
     <Compile Include="InteropServices\SetWindowPosFlags.cs" />
@@ -139,9 +143,6 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Resources\TabDrag.cur" />
-  </ItemGroup>
-  <ItemGroup>
     <EmbeddedResource Include="Resources\NewTab.ico" />
   </ItemGroup>
   <ItemGroup>
@@ -154,9 +155,7 @@
     <None Include="..\PrivateKey.snk">
       <Link>Properties\PrivateKey.snk</Link>
     </None>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Resources\TabDragNotAllowed.cur" />
+    <None Include="Resources\Native.res" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Attributes\" />

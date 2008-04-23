@@ -4,6 +4,7 @@ using System.Text;
 using System.Windows.Forms;
 using System.Drawing;
 using WindowsFormsAero.InteropServices;
+using System.Windows.Forms.VisualStyles;
 
 namespace WindowsFormsAero
 {
@@ -14,11 +15,8 @@ namespace WindowsFormsAero
             private const double LeftRightRatio = 0.66;
 
             private readonly TabStrip _owner;
-            private readonly Cursor _cursorTabDrag = new Cursor(typeof(Resources.Images), "TabDrag.cur");
-            //private readonly Cursor _cursorTabDragNA = new Cursor(typeof(Resources.Images), "TabDragNotAllowed.cur");
-
+            
             private Point? _lastMouseDown;
-
             private Int32 _draggedTabIndex;
             private TabStripButton _draggedTab;
 
@@ -104,7 +102,7 @@ namespace WindowsFormsAero
 
                     if (mouseOverTab != null)
                     {
-                        Cursor.Current = _cursorTabDrag;
+                        Cursor.Current = TabDragCursor;
 
                         var dropTabIndex = GetDropTabIndex(mouseOverTab, pt);
 
@@ -133,7 +131,7 @@ namespace WindowsFormsAero
                     }
                     else
                     {
-                        Cursor.Current = Cursors.No;
+                        Cursor.Current = Resources.Images.TabDropNA;
                         _owner.TabInsertionPoint = -1;
                     }
                 }
@@ -195,6 +193,19 @@ namespace WindowsFormsAero
                     _owner.Capture = false;
 
                     Cursor.Current = Cursors.Default;
+                }
+            }
+
+            private Cursor TabDragCursor
+            {
+                get
+                {
+                    if (VistaOSFeature.IsRunningAeroTheme)
+                    {
+                        return Resources.Images.TabDragAero;
+                    }
+
+                    return Resources.Images.TabDragClassic;
                 }
             }
         }

@@ -146,6 +146,21 @@ namespace WindowsFormsAero.InteropServices
 
         #endregion
 
+        #region user32!LoadImage
+
+        [DllImport(Dll.User32, CharSet = CharSet.Auto, SetLastError = true, ThrowOnUnmappableChar = true, BestFitMapping = false)]
+        [ReliabilityContract(Consistency.WillNotCorruptState, Cer.MayFail)]
+        public static extern IntPtr LoadImage(
+            [In] IntPtr hinst,
+            [In] IntPtr lpszName,
+            [In] ImageType uType,
+            [In] Int32 cxDesired,
+            [In] Int32 cyDesired,
+            [In] LoadImageFlags fuLoad
+        );
+
+        #endregion
+
         #region user32!IsChild
 
         [DllImport(
