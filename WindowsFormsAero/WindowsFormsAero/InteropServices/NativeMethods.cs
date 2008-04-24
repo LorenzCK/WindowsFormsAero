@@ -1,6 +1,7 @@
 ﻿using System;
-using System.Runtime.InteropServices;
 using System.Runtime.ConstrainedExecution;
+using System.Runtime.InteropServices;
+using System.Text;
 using System.Windows.Forms;
 
 namespace WindowsFormsAero.InteropServices
@@ -121,6 +122,23 @@ namespace WindowsFormsAero.InteropServices
 
         #endregion
 
+        #region user32!CallNextHookEx
+
+        [DllImport(
+            Dll.User32,
+            CharSet = CharSet.Auto,
+            SetLastError = true,
+            BestFitMapping = false,
+            CallingConvention = CallingConvention.Winapi)]
+        [ReliabilityContract(Consistency.WillNotCorruptState, Cer.MayFail)]
+        public static extern IntPtr CallNextHookEx(
+            [In] IntPtr hhk,
+            [In] Int32 nCode,
+            [In] IntPtr wParam,
+            [In] KeyboardLowLevelHookInfo lParam);
+
+        #endregion
+
         #region user32!DestroyIcon
 
         [return: MarshalAs(UnmanagedType.Bool)]
@@ -138,11 +156,30 @@ namespace WindowsFormsAero.InteropServices
 
         #endregion
 
-        #region user32!GetKeyState
+        #region user32!GetKeyboardState
 
-        [DllImport(Dll.User32, CharSet = CharSet.Auto, ExactSpelling = true)]
+        [DllImport(
+            Dll.User32,
+            SetLastError = true,
+            CallingConvention = CallingConvention.Winapi
+        )]
+        [return: MarshalAs(UnmanagedType.Bool)]
         [ReliabilityContract(Consistency.WillNotCorruptState, Cer.MayFail)]
-        public static extern short GetKeyState(Keys keyCode);
+        public static extern bool GetKeyboardState(byte[] lpKeyState);
+
+        #endregion
+
+        #region user32!IsChild
+
+        [DllImport(
+            Dll.User32,
+            SetLastError = false,
+            ExactSpelling = true,
+            CallingConvention = CallingConvention.Winapi
+        )]
+        [ReliabilityContract(Consistency.WillNotCorruptState, Cer.MayFail)]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        public static extern bool IsChild(HandleRef hWndParent, IntPtr hWnd);
 
         #endregion
 
@@ -161,17 +198,21 @@ namespace WindowsFormsAero.InteropServices
 
         #endregion
 
-        #region user32!IsChild
+        #region user32!MapVirtualKey
 
         [DllImport(
             Dll.User32,
-            SetLastError = false,
-            ExactSpelling = true,
+            SetLastError = true,
+            CharSet = CharSet.Auto,
+            BestFitMapping = false,
+            ThrowOnUnmappableChar = true,
             CallingConvention = CallingConvention.Winapi
         )]
         [ReliabilityContract(Consistency.WillNotCorruptState, Cer.MayFail)]
-        [return: MarshalAs(UnmanagedType.Bool)]
-        public static extern bool IsChild(HandleRef hWndParent, IntPtr hWnd);
+        public static extern uint MapVirtualKey(
+            [In] UInt32 uCode,
+            [In] VirtualKeyMapType uMapType
+        );
 
         #endregion
 
@@ -204,6 +245,61 @@ namespace WindowsFormsAero.InteropServices
             [In] Int32 cx,
             [In] Int32 cy,
             [In] SetWindowPosFlags uFlags);
+
+        #endregion
+
+        #region user32!SetWindowsHookEx
+
+        [DllImport(
+            Dll.User32,
+            CharSet = CharSet.Auto,
+            SetLastError = true,
+            BestFitMapping = false,
+            CallingConvention = CallingConvention.Winapi)]
+        [ReliabilityContract(Consistency.WillNotCorruptState, Cer.MayFail)]
+        public static extern SafeWindowsHookHandle SetWindowsHookEx(
+            [In] WindowsHookType idHook,
+            [In] Delegate lpfn,
+            [In] IntPtr hMod,
+            [In] UInt32 dwThreadId);
+
+        public static SafeWindowsHookHandle SetWindowsHookEx(KeyboardLowLevelHookProc proc)
+        {
+            return SetWindowsHookEx(WindowsHookType.KeyboardLowLevel, proc, IntPtr.Zero, 0);
+        }
+
+        #endregion
+
+        #region user32!ToUnicode
+
+        [DllImport(
+            Dll.User32,
+            CharSet = CharSet.Auto,
+            SetLastError = true,
+            BestFitMapping = false,
+            CallingConvention = CallingConvention.Winapi)]
+        [ReliabilityContract(Consistency.WillNotCorruptState, Cer.MayFail)]
+        public static extern Int32 ToUnicode(
+            [In] Keys wVirtKey,
+            [In] UInt32 wScanCode,
+            [In] Byte[] lpKeyState,
+            [Out, MarshalAs(UnmanagedType.LPWStr)] StringBuilder pwszBuff,
+            [In] Int32 cchBuff,
+            [In] UInt32 wFlags);
+
+        #endregion
+
+        #region user32!UnhookWindowsHookEx
+
+        [DllImport(
+            Dll.User32,
+            CharSet = CharSet.Auto,
+            SetLastError = true,
+            BestFitMapping = false,
+            CallingConvention = CallingConvention.Winapi)]
+        [ReliabilityContract(Consistency.WillNotCorruptState, Cer.MayFail)]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        public static extern bool UnhookWindowsHookEx(IntPtr hhk);
 
         #endregion
 

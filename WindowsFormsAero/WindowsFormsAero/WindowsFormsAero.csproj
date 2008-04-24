@@ -53,14 +53,16 @@
     <Compile Include="..\AssemblyInfo.Shared.cs">
       <Link>Properties\AssemblyInfo.Shared.cs</Link>
     </Compile>
-    <Compile Include="Components\DwmEffectProvider.cs">
+    <Compile Include="Components\Dwm\DwmEffectProvider.cs">
     </Compile>
-    <Compile Include="Components\FrameHitTestEventArgs.cs" />
-    <Compile Include="Components\FrameHitTestResult.cs" />
-    <Compile Include="Components\HiddenMenuStrip.cs">
+    <Compile Include="Components\Dwm\FrameHitTestEventArgs.cs" />
+    <Compile Include="Components\Dwm\FrameHitTestResult.cs" />
+    <Compile Include="Components\Hooks\KeyboardHook.cs">
+    </Compile>
+    <Compile Include="Components\ToolStrip\HiddenMenuStrip.cs">
     </Compile>
     <Compile Include="Components\MessageFilter.cs" />
-    <Compile Include="Components\ToolStripAeroRenderer.cs" />
+    <Compile Include="Components\ToolStrip\ToolStripAeroRenderer.cs" />
     <Compile Include="Controls\AeroButton.cs">
     </Compile>
     <Compile Include="Controls\AeroButtonBase.cs">
@@ -86,10 +88,14 @@
     <Compile Include="Controls\TabStrip\TabStripTabDragger.cs" />
     <Compile Include="InteropServices\DTTOPTS.cs" />
     <Compile Include="InteropServices\ImageType.cs" />
+    <Compile Include="InteropServices\KeyboardLowLevelHookInfo.cs" />
     <Compile Include="InteropServices\LoadImageFlags.cs" />
     <Compile Include="InteropServices\POINT.cs" />
     <Compile Include="InteropServices\RECT.cs" />
+    <Compile Include="InteropServices\SafeWindowsHookHandle.cs" />
     <Compile Include="InteropServices\SetWindowPosFlags.cs" />
+    <Compile Include="InteropServices\VirtualKeyMapType.cs" />
+    <Compile Include="InteropServices\WindowsHookType.cs" />
     <Compile Include="Static\DesktopComposition.cs" />
     <Compile Include="Extensions\ControlExtensions.cs" />
     <Compile Include="Extensions\GraphicsExtensions.cs" />
