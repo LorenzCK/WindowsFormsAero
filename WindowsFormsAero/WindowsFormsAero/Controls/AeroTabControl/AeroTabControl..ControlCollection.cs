@@ -10,7 +10,6 @@ namespace WindowsFormsAero
             public ControlCollection(AeroTabControl owner)
                 : base(owner)
             {
-                base.Add(owner._tabStrip);
             }
 
             public new AeroTabControl Owner
@@ -20,21 +19,26 @@ namespace WindowsFormsAero
 
             public override void Add(Control value)
             {
-                System.Diagnostics.Debug.WriteLine("ControlCollection.Add: " + value.Name);
-
-                var page = (value as AeroTabPage);
-
-                if (page == null)
+                if (value == Owner._tabStrip)
                 {
-                    throw new ArgumentException(Resources.Strings.TabControlInvalidPageType);
+                    base.Add(value);
                 }
+                else
+                {
+                    var page = (value as AeroTabPage);
 
-                Owner.SuspendLayout();
-                
-                base.Add(page);
-                Owner.Add(page);
-                
-                Owner.ResumeLayout();
+                    if (page == null)
+                    {
+                        throw new ArgumentException(Resources.Strings.TabControlInvalidPageType);
+                    }
+
+                    Owner.SuspendLayout();
+
+                    base.Add(page);
+                    Owner.Add(page);
+
+                    Owner.ResumeLayout();
+                }
             }
 
             public override void AddRange(Control[] controls)
@@ -60,13 +64,11 @@ namespace WindowsFormsAero
 
             public override void Clear()
             {
-                System.Diagnostics.Debug.WriteLine("ControlCollection.Clear");
                 Owner.RemoveAllTabs();
             }
 
             public override void Remove(Control value)
             {
-                System.Diagnostics.Debug.WriteLine("ControlCollection.Remove: " + value.Name);
                 var page = (value as AeroTabPage);
 
                 Owner.SuspendLayout();

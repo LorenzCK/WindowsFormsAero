@@ -187,6 +187,12 @@ namespace WindowsFormsAero
             return new ControlCollection(this);
         }
 
+        protected override void OnCreateControl()
+        {
+            base.OnCreateControl();
+            Controls.Add(_tabStrip);
+        }
+
         protected virtual void OnCloseButtonClick(AeroTabPageEventArgs e)
         {
             var handler = Events[EventCloseButtonClick] as EventHandler<AeroTabPageEventArgs>;
