@@ -30,6 +30,7 @@ namespace WindowsFormsAero
 
         private TabPageCollection _pageCollection;
         private AeroTabPage _selectedPage;
+        private Boolean _hideSingleTab;
 
         public AeroTabControl()
         {
@@ -85,6 +86,22 @@ namespace WindowsFormsAero
             set;
         }
 
+        [Browsable(true)]
+        [DefaultValue(false)]
+        [EditorBrowsable(EditorBrowsableState.Always)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
+        public bool HideSingleTab
+        {
+            get { return _hideSingleTab; }
+            set
+            {
+                if (_hideSingleTab != value)
+                {
+                    _hideSingleTab = value;
+                    UpdateTabStripVisibility();
+                }
+            }
+        }
 
         [Browsable(true)]
         [MergableProperty(false)]
@@ -313,6 +330,8 @@ namespace WindowsFormsAero
             _tabStrip.SuspendLayout();
             _tabStrip.Items.Add(page.TabStripButton);
             _tabStrip.ResumeLayout();
+
+            UpdateTabStripVisibility();
         }
 
         private void AddRange(IList<AeroTabPage> pages)
@@ -331,6 +350,8 @@ namespace WindowsFormsAero
             _tabStrip.SuspendLayout();
             _tabStrip.Items.AddRange(buttons);
             _tabStrip.ResumeLayout();
+
+            UpdateTabStripVisibility();
         }
 
         private void Remove(AeroTabPage page)
@@ -346,20 +367,22 @@ namespace WindowsFormsAero
             {
                 _pages.Remove(page);
             }
+
+            UpdateTabStripVisibility();
         }
 
         private void RemoveAllTabs()
         {
-            System.Diagnostics.Debug.WriteLine("RemoveAllTabs");
-
             SuspendLayout();
             _tabStrip.SuspendLayout();
 
             SelectedTab = null;
+            
             _tabStrip.RemoveAllTabs();
             _pages.Clear();
 
             _tabStrip.ResumeLayout();
+            UpdateTabStripVisibility();
             ResumeLayout();
         }
 
@@ -428,6 +451,18 @@ namespace WindowsFormsAero
             }
 
             return false;
+        }
+
+        private void UpdateTabStripVisibility()
+        {
+            if (_hideSingleTab)
+            {
+                _tabStrip.Visible = _pages.Count > 1;
+            }
+            else
+            {
+                _tabStrip.Visible = true;
+            }
         }
     }
 }
