@@ -70,6 +70,8 @@
     <Compile Include="Components\ToolStrip\HiddenMenuStrip.cs">
     </Compile>
     <Compile Include="Components\MessageFilter.cs" />
+    <Compile Include="Components\ToolStrip\MenuStripTabletFix.cs">
+    </Compile>
     <Compile Include="Components\ToolStrip\ToolStripAeroRenderer.cs" />
     <Compile Include="Controls\AeroButton.cs">
     </Compile>
