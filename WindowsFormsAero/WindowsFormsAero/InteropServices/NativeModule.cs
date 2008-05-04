@@ -4,49 +4,16 @@ using System.Runtime.InteropServices;
 
 namespace WindowsFormsAero.InteropServices
 {
-    internal sealed class SafeNativeModuleHandle : SafeHandleZeroOrMinusOneIsInvalid
+    internal sealed class NativeModule : SafeHandle
     {
-        public SafeNativeModuleHandle() 
-            : this(true)
+        private NativeModule()
+            : base(IntPtr.Zero, true)
         {
-        }
-
-        public SafeNativeModuleHandle(bool ownsHandle)
-            : base(ownsHandle)
-        {
-        }
-
-        protected override bool ReleaseHandle()
-        {
-            return NativeMethods.FreeLibrary(handle);
-        }
-    }
-
-    internal sealed class NativeModule : IDisposable
-    {
-        private readonly SafeNativeModuleHandle _handle;
-
-        private NativeModule(SafeNativeModuleHandle handle)
-	    {
-            if (handle.IsInvalid)
-            {
-                Marshal.ThrowExceptionForHR(Marshal.GetHRForLastWin32Error());
-            }
-
-            _handle = handle;
-	    }
-
-        public void Dispose()
-        {
-            if (_handle != null)
-            {
-                _handle.Dispose();
-            }
         }
 
         public IntPtr GetProcedureAddress(string name)
         {
-            IntPtr result = NativeMethods.GetProcAddress(_handle, name);
+            IntPtr result = NativeMethods.GetProcAddress(this, name);
 
             if (result == IntPtr.Zero)
             {
@@ -58,7 +25,22 @@ namespace WindowsFormsAero.InteropServices
 
         public bool ContainsProcedure(string name)
         {
-            return NativeMethods.GetProcAddress(_handle, name) != IntPtr.Zero;
+            return NativeMethods.GetProcAddress(this, name) != IntPtr.Zero;
+        }
+
+        public override bool IsInvalid
+        {
+            get { return handle == IntPtr.Zero; }
+        }
+
+        protected override bool ReleaseHandle()
+        {
+            return NativeMethods.FreeLibrary(handle);
+        }
+
+        public static NativeModule Invalid
+        {
+            get { return new NativeModule(); }
         }
 
         public static NativeModule TryLoad(string path)
@@ -67,15 +49,25 @@ namespace WindowsFormsAero.InteropServices
 
             if (handle.IsInvalid)
             {
+                handle.Dispose();
                 return null;
             }
 
-            return new NativeModule(handle);
+            return handle;
         }
 
         public static NativeModule Load(string path)
         {
-            return new NativeModule(NativeMethods.LoadLibrary(path));
+            var handle = NativeMethods.LoadLibrary(path);
+
+            if (handle.IsInvalid)
+            {
+                handle.Dispose();
+                throw Marshal.GetExceptionForHR(Marshal.GetHRForLastWin32Error());
+            }
+
+            return handle;
         }
+
     }
 }

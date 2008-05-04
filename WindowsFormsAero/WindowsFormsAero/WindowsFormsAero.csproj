@@ -57,7 +57,15 @@
     </Compile>
     <Compile Include="Components\Dwm\FrameHitTestEventArgs.cs" />
     <Compile Include="Components\Dwm\FrameHitTestResult.cs" />
+    <Compile Include="Components\EnableableComponent.cs">
+    </Compile>
+    <Compile Include="Components\Hooks\HookComponent.cs" />
+    <Compile Include="Components\Hooks\HookLibrary.cs" />
+    <Compile Include="Components\Hooks\HookWindow.cs" />
+    <Compile Include="Components\Hooks\HookWindowSingleton.cs" />
     <Compile Include="Components\Hooks\KeyboardHook.cs">
+    </Compile>
+    <Compile Include="Components\Hooks\LowLevelKeyboardHook.cs">
     </Compile>
     <Compile Include="Components\ToolStrip\HiddenMenuStrip.cs">
     </Compile>
@@ -162,6 +170,11 @@
       <Link>Properties\PrivateKey.snk</Link>
     </None>
     <None Include="Resources\Native.res" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="..\WindowsFormsAero.HookLibrary\bin\HookLib.dll">
+      <Link>Resources\HookLib.dll</Link>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Attributes\" />

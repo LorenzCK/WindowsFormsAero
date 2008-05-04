@@ -95,7 +95,7 @@ namespace WindowsFormsAero.InteropServices
         [DllImport(Dll.Kernel32, BestFitMapping = false, CharSet = CharSet.Auto, SetLastError = true)]
         [ReliabilityContract(Consistency.WillNotCorruptState, Cer.MayFail)]
         public static extern IntPtr GetProcAddress(
-            [In] SafeNativeModuleHandle handle, 
+            [In] NativeModule handle, 
             [In, MarshalAs(UnmanagedType.LPStr)]
                  String lpProcName);
 
@@ -105,7 +105,7 @@ namespace WindowsFormsAero.InteropServices
 
         [DllImport(Dll.Kernel32, BestFitMapping = false, CharSet = CharSet.Auto, SetLastError = true)]
         [ReliabilityContract(Consistency.WillNotCorruptState, Cer.MayFail)]
-        public static extern SafeNativeModuleHandle LoadLibrary(string lpFileName);
+        public static extern NativeModule LoadLibrary(string lpFileName);
 
         #endregion
 
@@ -216,6 +216,21 @@ namespace WindowsFormsAero.InteropServices
 
         #endregion
 
+        #region user32!RegisterWindowMessage
+
+        [DllImport(
+            Dll.User32,
+            CharSet = CharSet.Auto,
+            SetLastError = true,
+            BestFitMapping = false,
+            CallingConvention = CallingConvention.Winapi)]
+        [ReliabilityContract(Consistency.WillNotCorruptState, Cer.MayFail)]
+        public static extern Int32 RegisterWindowMessage(
+            [In, MarshalAs(UnmanagedType.LPTStr)] String lpString
+        );
+
+        #endregion
+
         #region user32!SendMessage(IntPtr, UInt32, IntPtr, IntPtr)
 
         [DllImport(
@@ -259,13 +274,18 @@ namespace WindowsFormsAero.InteropServices
         [ReliabilityContract(Consistency.WillNotCorruptState, Cer.MayFail)]
         public static extern SafeWindowsHookHandle SetWindowsHookEx(
             [In] WindowsHookType idHook,
-            [In] Delegate lpfn,
-            [In] IntPtr hMod,
+            [In] IntPtr lpfn,
+            [In] NativeModule hMod,
             [In] UInt32 dwThreadId);
+
+        public static SafeWindowsHookHandle SetWindowsHookEx(WindowsHookType hookType, Delegate procedure)
+        {
+            return SetWindowsHookEx(hookType, Marshal.GetFunctionPointerForDelegate(procedure), NativeModule.Invalid, 0);
+        }
 
         public static SafeWindowsHookHandle SetWindowsHookEx(KeyboardLowLevelHookProc proc)
         {
-            return SetWindowsHookEx(WindowsHookType.KeyboardLowLevel, proc, IntPtr.Zero, 0);
+            return SetWindowsHookEx(WindowsHookType.KeyboardLowLevel, proc);
         }
 
         #endregion
