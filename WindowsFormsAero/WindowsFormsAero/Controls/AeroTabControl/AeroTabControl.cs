@@ -270,30 +270,31 @@ namespace WindowsFormsAero
 
         protected override bool ProcessDialogKey(Keys keyData)
         {
-            const Keys ControlTab = Keys.Control | Keys.Tab;
-
             if (EnableCtrlTab && TabPages.Count > 1)
             {
-                if ((keyData & ControlTab) == ControlTab)
+                if ((keyData & Keys.Control) == Keys.Control)
                 {
-                    int newIndex = SelectedTabIndex + 1;
-
-                    if ((keyData & Keys.Shift) == Keys.Shift)
+                    if ((keyData & Keys.KeyCode) == Keys.Tab)
                     {
-                        newIndex = SelectedTabIndex - 1;
-                    }
+                        int newIndex = SelectedTabIndex + 1;
 
-                    if (newIndex < 0)
-                    {
-                        newIndex = TabPages.Count - 1;
-                    }
-                    else if (newIndex >= TabPages.Count)
-                    {
-                        newIndex = 0;
-                    }
+                        if ((keyData & Keys.Shift) == Keys.Shift)
+                        {
+                            newIndex = SelectedTabIndex - 1;
+                        }
 
-                    SelectedTabIndex = newIndex;
-                    return true;
+                        if (newIndex < 0)
+                        {
+                            newIndex = TabPages.Count - 1;
+                        }
+                        else if (newIndex >= TabPages.Count)
+                        {
+                            newIndex = 0;
+                        }
+
+                        SelectedTabIndex = newIndex;
+                        return true;
+                    }
                 }
             }
 

@@ -319,7 +319,7 @@ namespace WindowsFormsAero
 
         public void PerformCloseButtonClick(TabStripButton button)
         {
-            if (button.IsClosableInternal)
+            if (button.CanClose)
             {
                 OnCloseButtonClicked(new ToolStripItemEventArgs(button));
             }
