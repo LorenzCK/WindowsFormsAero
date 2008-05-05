@@ -24,7 +24,7 @@ namespace WindowsFormsAero
 
             public override int GetChildCount()
             {
-                if (_owner.IsClosableInternal)
+                if (_owner.IsCloseButtonVisible)
                 {
                     return 1;
                 }
@@ -34,7 +34,7 @@ namespace WindowsFormsAero
 
             public override AccessibleObject GetChild(int index)
             {
-                if (_owner.IsClosableInternal && index == 0)
+                if (_owner.IsCloseButtonVisible && index == 0)
                 {
                     return new CloseButtonAccessibleObject(_owner);
                 }

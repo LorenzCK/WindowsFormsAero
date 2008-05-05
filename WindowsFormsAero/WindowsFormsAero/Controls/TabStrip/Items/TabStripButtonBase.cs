@@ -132,7 +132,7 @@ namespace WindowsFormsAero
             }
         }
 
-        internal virtual bool IsClosableInternal
+        internal virtual bool IsCloseButtonVisible
         {
             get { return false; }
         }

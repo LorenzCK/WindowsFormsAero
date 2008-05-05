@@ -165,9 +165,14 @@ namespace WindowsFormsAero
 
         public void PerformCloseButtonClick()
         {
-            if (IsClosableInternal)
+            if (CanClose)
             {
                 OnCloseButtonClick(EventArgs.Empty);
+
+                if (Owner != null)
+                {
+                    Owner.PerformCloseButtonClick(this);
+                }
             }
         }
 
@@ -220,6 +225,10 @@ namespace WindowsFormsAero
                     Owner.SelectedTab = this;
                 }
             }
+            else if (e.Button == MouseButtons.Middle)
+            {
+                PerformCloseButtonClick();
+            }
 
             base.OnMouseDown(e);
         }
@@ -230,16 +239,7 @@ namespace WindowsFormsAero
                 (InternalLayout.CloseRectangle.Contains(e.Location)))
             {
                 CloseButtonState = TabStripCloseButtonState.Normal;
-
-                if (IsClosableInternal)
-                {
-                    PerformCloseButtonClick();
-
-                    if (Owner != null)
-                    {
-                        Owner.PerformCloseButtonClick(this);
-                    }
-                }
+                PerformCloseButtonClick();
             }
 
             base.OnMouseUp(e);
@@ -326,7 +326,7 @@ namespace WindowsFormsAero
         {
             get
             {
-                if (IsClosableInternal && Renderer != null)
+                if (IsCloseButtonVisible && Renderer != null)
                 {
                     return Renderer.GetCloseButtonSize(this);
                 }
@@ -353,7 +353,12 @@ namespace WindowsFormsAero
             }
         }
 
-        internal override bool IsClosableInternal
+        internal override Boolean IsCloseButtonVisible
+        {
+            get { return Checked && CanClose; }
+        }
+
+        internal Boolean CanClose
         {
             get
             {
@@ -364,20 +369,13 @@ namespace WindowsFormsAero
 
                 if (Owner.CloseButtonVisibility == CloseButtonVisibility.ExceptSingleTab)
                 {
-                    int count = 0;
-
-                    foreach (var item in Owner.ItemsOfType<TabStripButton>())
-                    {
-                        ++count;
-                    }
-
-                    if (count < 2)
+                    if (IsSingleTab)
                     {
                         return false;
                     }
                 }
 
-                return Checked && IsClosable;
+                return IsClosable;
             }
         }
 
@@ -391,6 +389,26 @@ namespace WindowsFormsAero
                     _closeButtonState = value;
                     Invalidate();
                 }
+            }
+        }
+
+        private Boolean IsSingleTab
+        {
+            get
+            {
+                int count = 0;
+
+                foreach (var item in Owner.ItemsOfType<TabStripButton>())
+                {
+                    ++count;
+
+                    if (count > 1)
+                    {
+                        return false;
+                    }
+                }
+
+                return true;
             }
         }
 
