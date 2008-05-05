@@ -220,8 +220,8 @@ namespace WindowsFormsAero
         [DefaultValue(true)]
         public bool NewTabButtonVisible
         {
-            get { return _newTab.Visible; }
-            set { _newTab.Visible = value; }
+            get { return _newTab.Available; }
+            set { _newTab.Available = value; }
         }
 
         [Browsable(true)]
