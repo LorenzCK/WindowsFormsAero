@@ -12,7 +12,8 @@ namespace WindowsFormsAero
     [System.ComponentModel.Designer("WindowsFormsAero.Design.HiddenMenuStripDesigner, " + ThisAssembly.DesignAssemblyFullName)]
     public class HiddenMenuStrip : Component, IExtenderProvider
     {
-        private readonly List<MenuStrip> _strips = new List<MenuStrip>();
+        private List<MenuStrip> _strips;
+        private Boolean _keepHidden;
 
         public HiddenMenuStrip()
         {
@@ -31,20 +32,33 @@ namespace WindowsFormsAero
                 {
                     foreach (var item in _strips)
                     {
-                        MenuStripMessageFilter.Current.RemoveMenu(item);
+                        MenuStripMessageFilter.Current.RemoveMenu(item, _keepHidden);
                     }
                 }
-
-                _strips.Clear();
             }
 
+            _strips = null;
+
             base.Dispose(disposing);
+        }
+
+        [Browsable(false)]
+        [EditorBrowsable(EditorBrowsableState.Advanced)]
+        public bool KeepHiddenAfterDispose
+        {
+            get { return _keepHidden; }
+            set { _keepHidden = value; } 
         }
 
         [DisplayName("HideWhenInactive")]
         public bool GetHideWhenInactive(MenuStrip menu)
         {
-            return _strips.Contains(menu);
+            if (_strips != null)
+            {
+                return _strips.Contains(menu);
+            }
+
+            return false;
         }
 
         [DisplayName("HideWhenInactive")]
@@ -54,6 +68,11 @@ namespace WindowsFormsAero
             {
                 if (value)
                 {
+                    if (_strips == null)
+                    {
+                        _strips = new List<MenuStrip>();
+                    }
+
                     _strips.Add(menu);
 
                     if (!DesignMode)
@@ -162,12 +181,21 @@ namespace WindowsFormsAero
 
             public void RemoveMenu(MenuStrip menu)
             {
+                RemoveMenu(menu, false);
+            }
+
+            public void RemoveMenu(MenuStrip menu, bool keepHidden)
+            {
                 if (_menus.ContainsKey(menu))
                 {
                     RemoveForm(_menus[menu].Form);
 
                     menu.MenuDeactivate -= OnMenuDeactivate;
-                    menu.Visible = true;
+
+                    if (!keepHidden)
+                    {
+                        menu.Visible = true;
+                    }
 
                     _menus.Remove(menu);
 
@@ -251,10 +279,10 @@ namespace WindowsFormsAero
 
                 if (entry != null)
                 {
+                    const Int32 MenuKeys = (Int32)(Keys.Menu | Keys.LMenu | Keys.RMenu);
+                    
                     if (m.Msg == WindowMessages.WM_SYSKEYUP)
                     {
-                        const Int32 MenuKeys = (Int32)(Keys.Menu | Keys.LMenu | Keys.RMenu);
-
                         if (m.WParam.ToInt32() == (Int32)Keys.F10)
                         {
                             entry.Show();
@@ -270,10 +298,14 @@ namespace WindowsFormsAero
                     {
                         const int AltDownBit = 0x20000000;
 
-                        if ((m.LParam.ToInt32() & AltDownBit) != 0)
+                        if (((m.LParam.ToInt32() & AltDownBit) != 0) 
+                            //&& ((m.LParam.ToInt32() & MenuKeys) == 0)
+                            )
                         {
                             entry.OpenedOnKeyDown = true;
                             entry.Show();
+
+                            return false;
                         }
 
                         if (entry.Visible && m.WParam.ToInt32() == (Int32)(Keys.F10))

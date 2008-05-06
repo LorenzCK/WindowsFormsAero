@@ -417,6 +417,8 @@ namespace WindowsFormsAero
 
                 _tabStrip.SendToBack();
                 _tabStrip.SelectedTab = _selectedPage.TabStripButton;
+
+                _selectedPage.Focus();
             }
 
             OnSelectedTabChanged(e);
