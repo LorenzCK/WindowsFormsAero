@@ -53,6 +53,8 @@
     <Compile Include="..\AssemblyInfo.Shared.cs">
       <Link>Properties\AssemblyInfo.Shared.cs</Link>
     </Compile>
+    <Compile Include="Components\AeroToolTip.cs">
+    </Compile>
     <Compile Include="Components\Dwm\DwmEffectProvider.cs">
     </Compile>
     <Compile Include="Components\Dwm\FrameHitTestEventArgs.cs" />
@@ -104,6 +106,8 @@
     <Compile Include="InteropServices\RECT.cs" />
     <Compile Include="InteropServices\SafeWindowsHookHandle.cs" />
     <Compile Include="InteropServices\SetWindowPosFlags.cs" />
+    <Compile Include="InteropServices\TOOLINFO.cs" />
+    <Compile Include="InteropServices\ToolTipFlags.cs" />
     <Compile Include="InteropServices\VirtualKeyMapType.cs" />
     <Compile Include="InteropServices\WindowsHookType.cs" />
     <Compile Include="Static\DesktopComposition.cs" />
