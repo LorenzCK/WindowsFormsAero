@@ -339,5 +339,16 @@ namespace WindowsFormsAero.InteropServices
             [In] DTTOPTS pOptions);
 
         #endregion
+
+        #region uxtheme!SetWindowTheme
+
+        [DllImport(Dll.UxTheme, CharSet= CharSet.Unicode, PreserveSig =false, SetLastError=false)]
+        [ReliabilityContract(Consistency.WillNotCorruptState, Cer.MayFail)]
+        public static extern void SetWindowTheme(
+            [In] HandleRef hWnd,
+            [In] String pszSubAppName,
+            [In] String pszSubIdList);
+
+        #endregion
     }
 }

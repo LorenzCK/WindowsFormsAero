@@ -80,6 +80,8 @@
     <Compile Include="Controls\AeroButtonBase.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Controls\AeroListView.cs">
+    </Compile>
     <Compile Include="Controls\AeroProgressBar\AeroProgressBar.cs">
     </Compile>
     <Compile Include="Controls\AeroProgressBar\AeroProgressBarStatus.cs" />
