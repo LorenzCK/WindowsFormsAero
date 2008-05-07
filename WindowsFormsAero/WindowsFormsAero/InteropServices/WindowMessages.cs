@@ -5,6 +5,7 @@ namespace WindowsFormsAero.InteropServices
     internal static class WindowMessages
     {
         public const int WM_ACTIVATE = 0x0006;
+        public const int WM_SETREDRAW = 0x000B;
         public const int WM_NCCALCSIZE = 0x0083;
         public const int WM_NCHITTEST = 0x0084;
 

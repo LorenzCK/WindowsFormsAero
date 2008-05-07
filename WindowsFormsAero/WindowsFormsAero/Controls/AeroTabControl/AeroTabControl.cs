@@ -4,6 +4,8 @@ using System.ComponentModel;
 using System.Drawing;
 using System.Drawing.Design;
 using System.Windows.Forms;
+using WindowsFormsAero.InteropServices;
+using System.Runtime.InteropServices;
 
 namespace WindowsFormsAero
 {
@@ -404,24 +406,54 @@ namespace WindowsFormsAero
 
         private void InvokeSelectedTabChanged(object sender, EventArgs e)
         {
-            if (_selectedPage != null)
+            BeginUpdate();
+
+            try
             {
-                _selectedPage.Visible = false;
+                if (_selectedPage != null)
+                {
+                    _selectedPage.Visible = false;
+                }
+
+                _selectedPage = AeroTabPage.GetButtonPage(_tabStrip.SelectedTab);
+
+                if (_selectedPage != null)
+                {
+                    _selectedPage.Visible = true;
+
+                    _tabStrip.SendToBack();
+                    _tabStrip.SelectedTab = _selectedPage.TabStripButton;
+
+                    _selectedPage.Focus();
+                    _selectedPage.SelectNextControl(_selectedPage, true, true, true, false);
+                }
             }
-
-            _selectedPage = AeroTabPage.GetButtonPage(_tabStrip.SelectedTab);
-
-            if (_selectedPage != null)
+            finally
             {
-                _selectedPage.Visible = true;
-
-                _tabStrip.SendToBack();
-                _tabStrip.SelectedTab = _selectedPage.TabStripButton;
-
-                _selectedPage.Focus();
+                EndUpdate();
             }
 
             OnSelectedTabChanged(e);
+        }
+
+        private void BeginUpdate()
+        {
+            NativeMethods.SendMessage(
+                new HandleRef(this, Handle),
+                WindowMessages.WM_SETREDRAW,
+                IntPtr.Zero,
+                IntPtr.Zero);
+        }
+
+        private void EndUpdate()
+        {
+            NativeMethods.SendMessage(
+                new HandleRef(this, Handle),
+                WindowMessages.WM_SETREDRAW,
+                new IntPtr(1),
+                IntPtr.Zero);
+
+            Invalidate(true);
         }
 
         private bool ProcessCtrlNumber(ref Message msg, Keys keyData)
