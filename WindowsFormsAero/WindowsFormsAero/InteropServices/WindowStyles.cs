@@ -4,6 +4,9 @@ namespace WindowsFormsAero.InteropServices
 {
     internal sealed class WindowStyles
     {
+        public const int LVS_EX_FULLROWSELECT = 0x00000020;
+        public const int LVS_EX_DOUBLEBUFFER = 0x00010000;
+
         public const int TTS_ALWAYSTIP = 0x01;
         public const int TTS_NOPREFIX = 0x02;
         public const int TTS_NOANIMATE = 0x10;

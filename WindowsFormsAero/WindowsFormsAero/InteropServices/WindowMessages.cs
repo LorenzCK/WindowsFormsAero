@@ -61,6 +61,13 @@ namespace WindowsFormsAero.InteropServices
         public const int EM_SETCUEBANNER = ECM_FIRST + 1;
 
         //
+        // List View Messages
+        //
+
+        public const int LVM_FIRST = 0x1000;
+        public const int LVM_SETEXTENDEDLISTVIEWSTYLE = LVM_FIRST + 54;
+
+        //
         // Tool Tip Control Messages
         //
 
