@@ -100,6 +100,7 @@
     <Compile Include="Controls\AeroTabControl\AeroTabControlNewTabButton.cs" />
     <Compile Include="Controls\TabStrip\TabStripAccessibleObject.cs" />
     <Compile Include="Controls\TabStrip\TabStripTabDragger.cs" />
+    <Compile Include="Forms\DropShadowForm.cs" />
     <Compile Include="InteropServices\DTTOPTS.cs" />
     <Compile Include="InteropServices\ImageType.cs" />
     <Compile Include="InteropServices\KeyboardLowLevelHookInfo.cs" />
