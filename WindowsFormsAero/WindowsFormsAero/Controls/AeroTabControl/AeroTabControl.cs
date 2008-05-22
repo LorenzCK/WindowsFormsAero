@@ -19,6 +19,7 @@ namespace WindowsFormsAero
         private static readonly object EventCloseButtonClick = new object();
         private static readonly object EventNewTabButtonClick = new object();
         private static readonly object EventSelectedTabChanged = new object();
+        private static readonly object EventSelectedTabChanging = new object();
 
         private readonly AeroTabControlCloseButton _closeButton;
         private readonly AeroTabControlNewTabButton _newTabButton;
@@ -48,6 +49,7 @@ namespace WindowsFormsAero
             _tabStrip.NewTabButtonClicked += InvokeNewTabButtonClicked;
             _tabStrip.CloseButtonClicked += InvokeCloseButtonClicked;
             _tabStrip.SelectedTabChanged += InvokeSelectedTabChanged;
+            _tabStrip.SelectedTabChanging += InvokeSelectedTabChanging;
         }
 
         public event EventHandler<AeroTabPageEventArgs> CloseButtonClick
@@ -66,6 +68,12 @@ namespace WindowsFormsAero
         {
             add { Events.AddHandler(EventSelectedTabChanged, value); }
             remove { Events.RemoveHandler(EventSelectedTabChanged, value); }
+        }
+
+        public event CancelEventHandler SelectedTabChanging
+        {
+            add { Events.AddHandler(EventSelectedTabChanging, value); }
+            remove { Events.RemoveHandler(EventSelectedTabChanging, value); }
         }
 
         [Browsable(true)]
@@ -235,6 +243,16 @@ namespace WindowsFormsAero
         protected virtual void OnSelectedTabChanged(EventArgs e)
         {
             var handler = Events[EventSelectedTabChanged] as EventHandler;
+
+            if (handler != null)
+            {
+                handler(this, e);
+            }
+        }
+
+        protected virtual void OnSelectedTabChanging(CancelEventArgs e)
+        {
+            var handler = Events[EventSelectedTabChanging] as CancelEventHandler;
 
             if (handler != null)
             {
@@ -434,6 +452,11 @@ namespace WindowsFormsAero
             }
 
             OnSelectedTabChanged(e);
+        }
+
+        private void InvokeSelectedTabChanging(object sender, CancelEventArgs e)
+        {
+            OnSelectedTabChanging(e);
         }
 
         private void BeginUpdate()
