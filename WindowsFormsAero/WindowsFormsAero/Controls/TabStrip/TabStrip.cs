@@ -25,6 +25,7 @@ namespace WindowsFormsAero
         private static readonly object EventNewTabButtonClicked = new object();
         private static readonly object EventCloseButtonClicked = new object();
         private static readonly object EventSelectedTabChanged = new object();
+        private static readonly object EventSelectedTabChanging = new object();
 
         private readonly TabStripTabListButton _list =
             new TabStripTabListButton();
@@ -92,6 +93,12 @@ namespace WindowsFormsAero
         {
             add { Events.AddHandler(EventSelectedTabChanged, value); }
             remove { Events.RemoveHandler(EventSelectedTabChanged, value); }
+        }
+
+        public event CancelEventHandler SelectedTabChanging
+        {
+            add { Events.AddHandler(EventSelectedTabChanging, value); }
+            remove { Events.RemoveHandler(EventSelectedTabChanging, value); }
         }
 
         [Browsable(false)]
@@ -507,6 +514,16 @@ namespace WindowsFormsAero
             }
         }
 
+        protected virtual void OnSelectedTabChanging(CancelEventArgs e)
+        {
+            var handler = Events[EventSelectedTabChanging] as CancelEventHandler;
+
+            if (handler != null)
+            {
+                handler(this, e);
+            }
+        }
+
         protected override void OnRendererChanged(EventArgs e)
         {
             base.OnRendererChanged(e);
@@ -702,6 +719,17 @@ namespace WindowsFormsAero
         {
             if (force || (_selectedTab != value))
             {
+                if (!force)
+                {
+                    var e = new CancelEventArgs();
+                    OnSelectedTabChanging(e);
+
+                    if (e.Cancel)
+                    {
+                        return;
+                    }
+                }
+
                 _selectedIndex = -1;
                 _selectedTab = value;
 
