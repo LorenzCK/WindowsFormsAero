@@ -11,8 +11,7 @@ namespace WindowsFormsAero
     {
         private const string MenuClassName = "MENU";
 
-        private readonly VisualStyleRenderer _renderer =
-            new VisualStyleRenderer(VisualStyleElement.Button.PushButton.Normal);
+        private VisualStyleRenderer _renderer;
 
         private readonly Dictionary<ToolStrip, Padding> _paddings =
             new Dictionary<ToolStrip, Padding>();
@@ -87,7 +86,7 @@ namespace WindowsFormsAero
                 insideRect.Inflate(-1, -1);
                 e.Graphics.ExcludeClip(insideRect);
 
-                _renderer.DrawBackground(e.Graphics, e.ToolStrip.ClientRectangle, e.AffectedBounds);
+                Renderer.DrawBackground(e.Graphics, e.ToolStrip.ClientRectangle, e.AffectedBounds);
 
                 //Restore the old clip in case the Graphics is used again (does that ever happen?)
                 e.Graphics.Clip = oldClip;
@@ -102,23 +101,23 @@ namespace WindowsFormsAero
                 return;
             }
 
-            _renderer.SetParameters(VisualStyleElement.Rebar.Band.Normal.ClassName, 0, 0);
+            Renderer.SetParameters(VisualStyleElement.Rebar.Band.Normal.ClassName, 0, 0);
 
-            if (_renderer.IsBackgroundPartiallyTransparent())
+            if (Renderer.IsBackgroundPartiallyTransparent())
             {
-                _renderer.DrawParentBackground(e.Graphics, e.ToolStripPanel.ClientRectangle, e.ToolStripPanel);
+                Renderer.DrawParentBackground(e.Graphics, e.ToolStripPanel.ClientRectangle, e.ToolStripPanel);
             }
 
-            _renderer.DrawBackground(e.Graphics, e.ToolStripPanel.ClientRectangle);
+            Renderer.DrawBackground(e.Graphics, e.ToolStripPanel.ClientRectangle);
 
-            _renderer.SetParameters(VisualStyleElement.Rebar.Band.Normal);
+            Renderer.SetParameters(VisualStyleElement.Rebar.Band.Normal);
 
             foreach (ToolStripPanelRow row in e.ToolStripPanel.Rows)
             {
                 Rectangle rowBounds = row.Bounds;
                 rowBounds.Offset(0, -1);
 
-                _renderer.DrawEdge(e.Graphics, rowBounds, Edges.Top, EdgeStyle.Etched, EdgeEffects.None);
+                Renderer.DrawEdge(e.Graphics, rowBounds, Edges.Top, EdgeStyle.Etched, EdgeEffects.None);
             }
 
             e.Handled = true;
@@ -138,7 +137,7 @@ namespace WindowsFormsAero
                 Rectangle marginRect = new Rectangle(0, displayRect.Top, displayRect.Left, displayRect.Height);
 
                 SetParameters(MenuPart.PopupGutter, 0);
-                _renderer.DrawBackground(e.Graphics, marginRect, marginRect);
+                Renderer.DrawBackground(e.Graphics, marginRect, marginRect);
             }
         }
 
@@ -160,10 +159,10 @@ namespace WindowsFormsAero
                     }
 
                     SetParameters(MenuPart.PopupCheckBackground, checkBackground);
-                    _renderer.DrawBackground(e.Graphics, e.ImageRectangle);
+                    Renderer.DrawBackground(e.Graphics, e.ImageRectangle);
 
                     SetParameters(MenuPart.PopupCheck, checkType);
-                    _renderer.DrawBackground(e.Graphics, e.ImageRectangle);
+                    Renderer.DrawBackground(e.Graphics, e.ImageRectangle);
                 }
             }
             else
@@ -182,7 +181,7 @@ namespace WindowsFormsAero
 
             if (e.Item.Owner.IsDropDown || e.Item.Owner is MenuStrip)
             {
-                e.TextColor = _renderer.GetColor(ColorProperty.TextColor);
+                e.TextColor = Renderer.GetColor(ColorProperty.TextColor);
             }
 
             base.OnRenderItemText(e);
@@ -208,7 +207,7 @@ namespace WindowsFormsAero
                 rect.Height = e.ToolStrip.Height - 2;
             }
 
-            _renderer.DrawBackground(e.Graphics, rect, rect);
+            Renderer.DrawBackground(e.Graphics, rect, rect);
         }
 
         protected override void OnRenderSeparator(ToolStripSeparatorRenderEventArgs e)
@@ -220,11 +219,24 @@ namespace WindowsFormsAero
                                                displayRect.Width, e.Item.Height);
 
                 SetParameters(MenuPart.PopupSeparator, 0);
-                _renderer.DrawBackground(e.Graphics, rect, rect);
+                Renderer.DrawBackground(e.Graphics, rect, rect);
             }
             else
             {
                 base.OnRenderSeparator(e);
+            }
+        }
+
+        private VisualStyleRenderer Renderer
+        {
+            get
+            {
+                if ((_renderer == null) && IsSupported)
+                {
+                    _renderer = new VisualStyleRenderer(VisualStyleElement.Button.PushButton.Normal);
+                }
+
+                return _renderer;
             }
         }
 
@@ -314,7 +326,7 @@ namespace WindowsFormsAero
 
         private void SetParameters(MenuPart part, int state)
         {
-            _renderer.SetParameters(MenuClassName, (int)(part), state);
+            Renderer.SetParameters(MenuClassName, (int)(part), state);
         }
 
         private void SetItemParameters(ToolStripItem item)
@@ -324,12 +336,12 @@ namespace WindowsFormsAero
 
         private void DrawBackground(ToolStripRenderEventArgs e)
         {
-            if (_renderer.IsBackgroundPartiallyTransparent())
+            if (Renderer.IsBackgroundPartiallyTransparent())
             {
-                _renderer.DrawParentBackground(e.Graphics, e.ToolStrip.ClientRectangle, e.ToolStrip);
+                Renderer.DrawParentBackground(e.Graphics, e.ToolStrip.ClientRectangle, e.ToolStrip);
             }
 
-            _renderer.DrawBackground(e.Graphics, e.ToolStrip.ClientRectangle, e.AffectedBounds);
+            Renderer.DrawBackground(e.Graphics, e.ToolStrip.ClientRectangle, e.AffectedBounds);
         }
 
         public static bool IsSupported
