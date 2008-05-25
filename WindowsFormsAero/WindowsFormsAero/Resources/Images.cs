@@ -19,6 +19,8 @@ namespace WindowsFormsAero.Resources
     {
         public static readonly Image NewTab = ReadIcon("NewTab.ico", 16, 16);
         public static readonly Image TabBusy = ReadBitmap("TabBusy.png");
+        public static readonly Image SearchStart = ReadBitmap("SearchStart.png");
+        public static readonly Image SearchStop = ReadBitmap("SearchStop.png");
 
         public static readonly Cursor TabDragAero = ReadCursor(typeof(Images).Assembly, 100);
         public static readonly Cursor TabDragClassic = ReadCursor(typeof(Images).Assembly, 101);

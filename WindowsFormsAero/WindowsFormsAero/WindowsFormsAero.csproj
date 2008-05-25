@@ -92,6 +92,12 @@
     <Compile Include="Controls\AeroTabControl\AeroTabControlTabListButton.cs" />
     <Compile Include="Controls\AeroTextBox\AeroTextBox.cs">
     </Compile>
+    <Compile Include="Controls\SearchTextBox\SearchTextBox.cs">
+    </Compile>
+    <Compile Include="Controls\SearchTextBox\SearchTextBoxRenderer.cs" />
+    <Compile Include="Controls\SearchTextBox\SearchTextBoxTextBox.cs" />
+    <Compile Include="Controls\SearchTextBox\SearchTextBoxStrip.cs">
+    </Compile>
     <Compile Include="Controls\TabStrip\Items\TabStripButtonAccessibleObject.cs" />
     <Compile Include="Controls\TabStrip\Layout\TabStripButtonLayout.cs" />
     <Compile Include="Controls\TabStrip\Items\TabStripTabListButton.cs" />
@@ -100,6 +106,7 @@
     <Compile Include="Controls\AeroTabControl\AeroTabControlNewTabButton.cs" />
     <Compile Include="Controls\TabStrip\TabStripAccessibleObject.cs" />
     <Compile Include="Controls\TabStrip\TabStripTabDragger.cs" />
+    <Compile Include="Forms\AeroForm.cs" />
     <Compile Include="Forms\DropShadowForm.cs" />
     <Compile Include="InteropServices\DTTOPTS.cs" />
     <Compile Include="InteropServices\ImageType.cs" />
@@ -184,6 +191,10 @@
     <EmbeddedResource Include="..\WindowsFormsAero.HookLibrary\bin\HookLib.dll">
       <Link>Resources\HookLib.dll</Link>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\SearchStop.png" />
+    <EmbeddedResource Include="Resources\SearchStart.png" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Attributes\" />
