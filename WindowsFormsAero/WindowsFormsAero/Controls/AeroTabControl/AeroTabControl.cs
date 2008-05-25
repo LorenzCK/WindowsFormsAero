@@ -191,6 +191,15 @@ namespace WindowsFormsAero
         }
 
         [Browsable(false)]
+        [MergableProperty(false)]
+        [EditorBrowsable(EditorBrowsableState.Advanced)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public TabStrip TabStrip
+        {
+            get { return _tabStrip; }
+        }
+
+        [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public override string Text
@@ -329,11 +338,6 @@ namespace WindowsFormsAero
         protected override Padding DefaultPadding
         {
             get { return new Padding(2); }
-        }
-
-        internal TabStrip TabStrip
-        {
-            get { return _tabStrip; }
         }
 
         internal Color TabPageBackColor

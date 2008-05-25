@@ -5,7 +5,7 @@ using System.Windows.Forms;
 namespace WindowsFormsAero
 {
     [System.ComponentModel.DesignerCategory("Code")]
-    public class DropShadowForm : Form
+    public class DropShadowForm : AeroForm
     {
         private const int CS_DROPSHADOW = 0x00020000;
 
