@@ -11,7 +11,7 @@ namespace WindowsFormsAero
 
         public AeroForm()
         {
-            _defaultFont = SystemFonts.DefaultFont;
+            _defaultFont = SystemFonts.MenuFont;
         }
 
         public override Font Font
