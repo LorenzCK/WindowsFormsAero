@@ -4,7 +4,6 @@ using System.Drawing;
 
 namespace WindowsFormsAero
 {
-    [System.ComponentModel.DesignerCategory("Code")]
     public class AeroForm : Form
     {
         private Font _defaultFont;
