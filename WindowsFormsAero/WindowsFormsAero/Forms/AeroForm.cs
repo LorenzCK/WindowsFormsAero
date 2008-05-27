@@ -10,7 +10,7 @@ namespace WindowsFormsAero
 
         public AeroForm()
         {
-            _defaultFont = SystemFonts.MenuFont;
+            ResetFont();
         }
 
         public override Font Font
@@ -18,19 +18,27 @@ namespace WindowsFormsAero
             get { return base.Font; }
             set
             {
-                if (base.Font == _defaultFont)
+                if (base.Font != value)
                 {
-                    _defaultFont.Dispose();
-                    _defaultFont = null;
-                }
+                    if (base.Font == _defaultFont)
+                    {
+                        _defaultFont.Dispose();
+                        _defaultFont = null;
+                    }
 
-                base.Font = value;
+                    base.Font = value;
+                }
             }
         }
 
         public override void ResetFont()
         {
-            Font = _defaultFont;
+            if (_defaultFont == null)
+            {
+                _defaultFont = SystemFonts.MenuFont;
+            }
+
+            base.Font = _defaultFont;
         }
 
         protected override void Dispose(bool disposing)
@@ -50,7 +58,7 @@ namespace WindowsFormsAero
 
         private bool ShouldSerializeFont()
         {
-            return Font != _defaultFont;
+            return base.Font != _defaultFont;
         }
     }
 }
