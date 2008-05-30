@@ -61,14 +61,12 @@
     <Compile Include="Components\Dwm\FrameHitTestResult.cs" />
     <Compile Include="Components\EnableableComponent.cs">
     </Compile>
-    <Compile Include="Components\Hooks\HookComponent.cs" />
-    <Compile Include="Components\Hooks\HookLibrary.cs" />
-    <Compile Include="Components\Hooks\HookWindow.cs" />
-    <Compile Include="Components\Hooks\HookWindowSingleton.cs" />
-    <Compile Include="Components\Hooks\KeyboardHook.cs">
-    </Compile>
-    <Compile Include="Components\Hooks\LowLevelKeyboardHook.cs">
-    </Compile>
+    <None Include="Components\Hooks\HookComponent.cs" />
+    <None Include="Components\Hooks\HookLibrary.cs" />
+    <None Include="Components\Hooks\HookWindow.cs" />
+    <None Include="Components\Hooks\HookWindowSingleton.cs" />
+    <None Include="Components\Hooks\KeyboardHook.cs" />
+    <None Include="Components\Hooks\LowLevelKeyboardHook.cs" />
     <Compile Include="Components\ToolStrip\HiddenMenuStrip.cs">
     </Compile>
     <Compile Include="Components\MessageFilter.cs" />
@@ -77,9 +75,9 @@
     <Compile Include="Components\ToolStrip\ToolStripAeroRenderer.cs" />
     <Compile Include="Controls\AeroButton.cs">
     </Compile>
-    <Compile Include="Controls\AeroButtonBase.cs">
+    <None Include="Controls\AeroButtonBase.cs">
       <SubType>Component</SubType>
-    </Compile>
+    </None>
     <Compile Include="Controls\AeroListView.cs">
     </Compile>
     <Compile Include="Controls\AeroProgressBar\AeroProgressBar.cs">
@@ -106,7 +104,9 @@
     <Compile Include="Controls\AeroTabControl\AeroTabControlNewTabButton.cs" />
     <Compile Include="Controls\TabStrip\TabStripAccessibleObject.cs" />
     <Compile Include="Controls\TabStrip\TabStripTabDragger.cs" />
-    <Compile Include="Forms\AeroForm.cs" />
+    <Compile Include="Forms\AeroForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Forms\DropShadowForm.cs" />
     <Compile Include="InteropServices\DTTOPTS.cs" />
     <Compile Include="InteropServices\ImageType.cs" />
@@ -188,9 +188,9 @@
     <None Include="Resources\Native.res" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="..\WindowsFormsAero.HookLibrary\bin\HookLib.dll">
+    <None Include="..\WindowsFormsAero.HookLibrary\bin\HookLib.dll">
       <Link>Resources\HookLib.dll</Link>
-    </EmbeddedResource>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\SearchStop.png" />

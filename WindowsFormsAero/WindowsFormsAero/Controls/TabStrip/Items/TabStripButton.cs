@@ -7,6 +7,7 @@
 //--
 using System;
 using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 using System.Drawing;
 using System.Windows.Forms;
 using System.Windows.Forms.Design;
@@ -23,35 +24,41 @@ namespace WindowsFormsAero
         private Boolean _isClosable = true;
         private TabStripCloseButtonState _closeButtonState;
 
+        [SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public TabStripButton()
         {
             Initialize();
         }
 
+        [SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public TabStripButton(string text)
             : base(text)
         {
             Initialize();
         }
-        
+
+        [SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public TabStripButton(Image image)
             : base(image)
         {
             Initialize();
         }
-        
+
+        [SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public TabStripButton(string text, Image image)
             : base(text, image)
         {
             Initialize();
         }
-        
+
+        [SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public TabStripButton(string text, Image image, EventHandler onClick)
             : base(text, image, onClick)
         {
             Initialize();
         }
 
+        [SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public TabStripButton(string text, Image image, EventHandler onClick, string name)
             : base(text, image, onClick, name)
         {
@@ -72,16 +79,6 @@ namespace WindowsFormsAero
         {
             get { return base.Checked; }
             set { base.Checked = value; }
-        }
-
-        [Browsable(false)]
-        [DefaultValue(false)]
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-        public new bool CheckOnClick
-        {
-            get { return false; }
-            set { }
         }
 
         [Browsable(false)]
@@ -245,11 +242,11 @@ namespace WindowsFormsAero
             base.OnMouseUp(e);
         }
 
-        protected override void OnMouseMove(MouseEventArgs e)
+        protected override void OnMouseMove(MouseEventArgs mea)
         {
             if (CloseButtonState != TabStripCloseButtonState.Pressed)
             {
-                if (InternalLayout.CloseRectangle.Contains(e.Location))
+                if (InternalLayout.CloseRectangle.Contains(mea.Location))
                 {
                     CloseButtonState = TabStripCloseButtonState.Selected;
                 }
@@ -259,7 +256,7 @@ namespace WindowsFormsAero
                 }
             }
 
-            base.OnMouseMove(e);
+            base.OnMouseMove(mea);
         }
 
         protected override void OnMouseLeave(EventArgs e)
@@ -398,13 +395,16 @@ namespace WindowsFormsAero
             {
                 int count = 0;
 
-                foreach (var item in Owner.ItemsOfType<TabStripButton>())
+                using (var enumerator = Owner.ItemsOfType<TabStripButton>().GetEnumerator())
                 {
-                    ++count;
-
-                    if (count > 1)
+                    while (enumerator.MoveNext())
                     {
-                        return false;
+                        ++count;
+
+                        if (count > 1)
+                        {
+                            return false;
+                        }
                     }
                 }
 

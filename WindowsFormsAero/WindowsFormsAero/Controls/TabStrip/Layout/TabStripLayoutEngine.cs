@@ -15,6 +15,8 @@ namespace WindowsFormsAero
 {
     internal sealed partial class TabStripLayoutEngine : LayoutEngine
     {
+        internal const int TabOverlap = 1;
+
         private TabStrip _strip;
         private TabStripScrollDirection _direction;
 
@@ -27,11 +29,6 @@ namespace WindowsFormsAero
             _strip = strip;
         }
         
-        internal int TabOverlap
-        {
-            get { return 1; }
-        }
-
         private bool RTL
         {
             get { return _strip.RightToLeft == RightToLeft.Yes; }
@@ -106,12 +103,6 @@ namespace WindowsFormsAero
             set { _strip.SelectedTabIndex = value; }
         }
         
-        private TabStripButton SelectedTab
-        {
-            get { return _strip.SelectedTab; }
-            set { _strip.SelectedTab = value; }
-        }
-
         private TabStripButtonBase TabListButton
         {
             get { return _strip.TabListButton; }
@@ -135,7 +126,6 @@ namespace WindowsFormsAero
         private bool ContainsNewTabButton
         {
             get { return GetButtonVisibility(NewTabButton); }
-            set { SetButtonVisibility(NewTabButton, value); }
         }
 
         private bool ContainsScrollNearButton

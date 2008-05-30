@@ -14,6 +14,7 @@ namespace WindowsFormsAero.Demo
         {
             InitializeComponent();
 
+            Font = SystemFonts.MenuFont;
             ToolStripManager.RendererChanged += new EventHandler(ToolStripManager_RendererChanged);
         }
 
@@ -41,6 +42,14 @@ namespace WindowsFormsAero.Demo
             else
             {
                 ToolStripManager.Renderer = new TabStripAeroRenderer();
+            }
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            using (var form = new GlassForm())
+            {
+                form.ShowDialog();
             }
         }
 

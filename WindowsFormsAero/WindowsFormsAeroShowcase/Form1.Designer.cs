@@ -66,6 +66,8 @@
             this.chkDebugRender = new System.Windows.Forms.CheckBox();
             this.propertyGrid1 = new System.Windows.Forms.PropertyGrid();
             this.aeroTabPage3 = new WindowsFormsAero.AeroTabPage();
+            this.searchTextBox1 = new WindowsFormsAero.SearchTextBox();
+            this.button1 = new System.Windows.Forms.Button();
             this.aeroTextBox1 = new WindowsFormsAero.AeroTextBox();
             this.progressBarShowcase1 = new WindowsFormsAero.Demo.Controls.ProgressBarShowcase();
             this.menuStrip1.SuspendLayout();
@@ -377,6 +379,8 @@
             // 
             // aeroTabPage3
             // 
+            this.aeroTabPage3.Controls.Add(this.searchTextBox1);
+            this.aeroTabPage3.Controls.Add(this.button1);
             this.aeroTabPage3.Controls.Add(this.aeroTextBox1);
             this.aeroTabPage3.Controls.Add(this.progressBarShowcase1);
             this.aeroTabPage3.Image = global::WindowsFormsAero.Demo.Properties.Resources.Untitled;
@@ -385,6 +389,24 @@
             this.aeroTabPage3.Size = new System.Drawing.Size(600, 283);
             this.aeroTabPage3.TabIndex = 3;
             this.aeroTabPage3.Text = "Simple Controls";
+            // 
+            // searchTextBox1
+            // 
+            this.searchTextBox1.Location = new System.Drawing.Point(116, 152);
+            this.searchTextBox1.Name = "searchTextBox1";
+            this.searchTextBox1.Size = new System.Drawing.Size(171, 23);
+            this.searchTextBox1.TabIndex = 3;
+            this.searchTextBox1.Text = "searchTextBox1";
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(443, 219);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(117, 29);
+            this.button1.TabIndex = 2;
+            this.button1.Text = "button1";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // aeroTextBox1
             // 
@@ -468,6 +490,8 @@
         private System.Windows.Forms.CheckBox chkDebugRender;
         private WindowsFormsAero.Demo.Controls.ProgressBarShowcase progressBarShowcase1;
         private AeroTextBox aeroTextBox1;
+        private System.Windows.Forms.Button button1;
+        private SearchTextBox searchTextBox1;
 
 
 

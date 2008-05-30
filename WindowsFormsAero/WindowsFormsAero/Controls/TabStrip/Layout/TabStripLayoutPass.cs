@@ -185,10 +185,6 @@ namespace WindowsFormsAero
                 {
                     int freeTabs = _tabsToShow - VisibleTabCount;
                     int freeTabsLeft = Math.Min(NearTabIndex, freeTabs);
-                    int freeTabsRight = Math.Min((TabCount - 1) - FarTabIndex, freeTabs);
-
-                    int distLeft = (SelectedTabIndex - NearTabIndex);
-                    int distRight = (FarTabIndex - SelectedTabIndex);
 
                     NearTabIndex -= freeTabsLeft;
                     freeTabs -= freeTabsLeft;
@@ -301,7 +297,7 @@ namespace WindowsFormsAero
 
                 if (overlap)
                 {
-                    w -= _engine.TabOverlap;
+                    w -= TabStripLayoutEngine.TabOverlap;
                 }
 
                 if (_engine.RTL)

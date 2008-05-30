@@ -45,6 +45,11 @@ namespace WindowsFormsAero
         {
         }
 
+        public new TabStrip Owner
+        {
+            get { return base.Owner as TabStrip; }
+        }
+
         protected override Padding DefaultPadding
         {
             get { return new Padding(4, 4, 4, 0); }
@@ -107,11 +112,6 @@ namespace WindowsFormsAero
             {
                 Renderer.DrawItemText(e);
             }
-        }
-
-        internal new TabStrip Owner
-        {
-            get { return base.Owner as TabStrip; }
         }
 
         internal virtual Size CloseButtonSize

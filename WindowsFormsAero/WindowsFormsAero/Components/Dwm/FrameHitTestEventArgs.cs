@@ -4,7 +4,6 @@ using System.Windows.Forms;
 
 namespace WindowsFormsAero
 {
-    [Serializable]
     public sealed class FrameHitTestEventArgs : EventArgs
     {
         private readonly Point _point;

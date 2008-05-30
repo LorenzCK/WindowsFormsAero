@@ -2,7 +2,6 @@
 
 namespace WindowsFormsAero
 {
-    [Serializable]
     public class AeroTabPageEventArgs : EventArgs
     {
         private readonly AeroTabPage _page;

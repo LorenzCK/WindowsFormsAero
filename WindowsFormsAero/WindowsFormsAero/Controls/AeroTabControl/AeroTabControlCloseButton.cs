@@ -9,6 +9,7 @@ namespace WindowsFormsAero
         internal AeroTabControlCloseButton(TabStrip tabStrip) 
             : base(tabStrip)
         {
+            EnableCtrlF4 = true;
         }
 
         public override string Text
@@ -46,6 +47,15 @@ namespace WindowsFormsAero
         {
             get { return TabStrip.CloseButtonVisibility; }
             set { TabStrip.CloseButtonVisibility = value; }
+        }
+
+        [Browsable(true)]
+        [DefaultValue(true)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
+        public Boolean EnableCtrlF4
+        {
+            get;
+            set;
         }
 
         protected override Keys DefaultShortcutKeys

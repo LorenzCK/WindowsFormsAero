@@ -6,6 +6,7 @@ using System.Drawing.Design;
 using System.Windows.Forms;
 using WindowsFormsAero.InteropServices;
 using System.Runtime.InteropServices;
+using System.Security.Permissions;
 
 namespace WindowsFormsAero
 {
@@ -269,13 +270,14 @@ namespace WindowsFormsAero
             }
         }
 
+        [SecurityPermission(SecurityAction.LinkDemand, Flags = SecurityPermissionFlag.UnmanagedCode)]
         protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
         {
             if (_pages.Count > 1)
             {
                 if ((EnableCtrlNumbers) && ((keyData & Keys.Control) == Keys.Control))
                 {
-                    if (ProcessCtrlNumber(ref msg, keyData))
+                    if (ProcessCtrlNumber(keyData))
                     {
                         return true;
                     }
@@ -288,15 +290,22 @@ namespace WindowsFormsAero
                 return true;
             }
 
-            if ((keyData == CloseButton.ShortcutKeys) && (SelectedTab != null))
+            if (SelectedTab != null)
             {
-                _tabStrip.PerformCloseButtonClick(SelectedTab.TabStripButton);
-                return true;
+                const Keys ControlF4 = Keys.Control | Keys.F4;
+
+                if ((keyData == CloseButton.ShortcutKeys) ||
+                    ((keyData == ControlF4) && CloseButton.EnableCtrlF4))
+                {
+                    _tabStrip.PerformCloseButtonClick(SelectedTab.TabStripButton);
+                    return true;
+                }
             }
 
             return base.ProcessCmdKey(ref msg, keyData);
         }
 
+        [UIPermission(SecurityAction.LinkDemand, Window = UIPermissionWindow.AllWindows)]
         protected override bool ProcessDialogKey(Keys keyData)
         {
             if (EnableCtrlTab && TabPages.Count > 1)
@@ -483,7 +492,7 @@ namespace WindowsFormsAero
             Invalidate(true);
         }
 
-        private bool ProcessCtrlNumber(ref Message msg, Keys keyData)
+        private bool ProcessCtrlNumber(Keys keyData)
         {
             int? newTab = null;
             var keyCode = keyData & Keys.KeyCode;
