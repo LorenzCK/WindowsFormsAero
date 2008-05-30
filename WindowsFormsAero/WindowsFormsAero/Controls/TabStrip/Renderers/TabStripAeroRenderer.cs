@@ -22,7 +22,6 @@ namespace WindowsFormsAero
         private const int BusyImagePadding = 12;
 
         private static readonly Color TabBorderColor = Color.FromArgb(145, 150, 162);
-        private static readonly Color TabStripBorderColor = Color.FromArgb(101, 112, 123);
         
         private static readonly Color[] SelectedColors = new Color[]
         {

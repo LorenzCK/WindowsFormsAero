@@ -1,7 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 using System.Windows.Forms;
 
 namespace WindowsFormsAero
@@ -11,6 +10,7 @@ namespace WindowsFormsAero
     {
         private readonly TabStrip _tabStrip;
 
+        [SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         internal AeroTabControlButton(TabStrip tabStrip)
         {
             _tabStrip = tabStrip;

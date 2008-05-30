@@ -178,7 +178,7 @@ namespace WindowsFormsAero
             }
         }
 
-        bool IExtenderProvider.CanExtend(object extendee)
+        public bool CanExtend(object extendee)
         {
             return extendee is Form;
         }
@@ -313,7 +313,6 @@ namespace WindowsFormsAero
                 if (!(_form.FrameExtent.Size.IsEmpty))
                 {
                     var margins = MARGINS.FromPadding(_form.FrameExtent);
-                    var form = _form.Form;
 
                     NativeMethods.DwmExtendFrameIntoClientArea(GetHandleRef(), margins);
                 }
@@ -356,14 +355,29 @@ namespace WindowsFormsAero
                     col = 2;
                 }
 
-                var results = new FrameHitTestResult[,]
+                var results = new FrameHitTestResult[][]
                 {
-                    { FrameHitTestResult.TopLeft, (resize ? FrameHitTestResult.Top : FrameHitTestResult.Caption), FrameHitTestResult.TopRight },
-                    { FrameHitTestResult.Left, FrameHitTestResult.Nowhere, FrameHitTestResult.Right },
-                    { FrameHitTestResult.BottomLeft, FrameHitTestResult.Bottom, FrameHitTestResult.BottomRight }
+                    new FrameHitTestResult[] 
+                    {
+                        FrameHitTestResult.TopLeft, 
+                        (resize ? FrameHitTestResult.Top : FrameHitTestResult.Caption), 
+                        FrameHitTestResult.TopRight 
+                    },
+                    new FrameHitTestResult[]
+                    { 
+                        FrameHitTestResult.Left, 
+                        FrameHitTestResult.Nowhere, 
+                        FrameHitTestResult.Right 
+                    },
+                    new FrameHitTestResult[] 
+                    {
+                        FrameHitTestResult.BottomLeft, 
+                        FrameHitTestResult.Bottom, 
+                        FrameHitTestResult.BottomRight 
+                    }
                 };
 
-                return results[row, col];
+                return results[row][col];
             }
         }
     }

@@ -12,6 +12,7 @@ using System.Drawing;
 using System.Windows.Forms;
 using System.Windows.Forms.Layout;
 using WindowsFormsAero.InteropServices;
+using System.Security.Permissions;
 
 namespace WindowsFormsAero
 {
@@ -186,7 +187,7 @@ namespace WindowsFormsAero
                         ++index;
                     }
 
-                    throw new IndexOutOfRangeException(
+                    throw new ArgumentOutOfRangeException(
                         string.Format(System.Globalization.CultureInfo.CurrentCulture,
                         Resources.Strings.TabStripInvalidTabIndex, value));
                 }
@@ -530,6 +531,7 @@ namespace WindowsFormsAero
             UpdateBusyTabTimer();
         }
 
+        [SecurityPermission(SecurityAction.LinkDemand, Flags = SecurityPermissionFlag.UnmanagedCode)]
         protected override void WndProc(ref Message m)
         {
             if (_tabDragger != null)
@@ -666,7 +668,6 @@ namespace WindowsFormsAero
 
         private Int32 TabInsertionPoint
         {
-            get { return _tabInsertionMark; }
             set
             {
                 if (_tabInsertionMark != value)

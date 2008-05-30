@@ -34,6 +34,7 @@ namespace WindowsFormsAero.InteropServices
 
         #region dwmapi!DwmGetColorizationColor
 
+        [return: MarshalAs(UnmanagedType.Bool)]
         [DllImport(Dll.DwmApi, ExactSpelling = true, PreserveSig = false, SetLastError = false)]
         [ReliabilityContract(Consistency.WillNotCorruptState, Cer.MayFail)]
         public static extern bool DwmGetColorizationColor(

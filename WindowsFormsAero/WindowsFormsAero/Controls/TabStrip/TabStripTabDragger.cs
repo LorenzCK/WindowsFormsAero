@@ -110,14 +110,14 @@ namespace WindowsFormsAero
                             }
                             else
                             {
-                                _owner.TabInsertionPoint = _owner.Items[dropTabIndex - 1].Bounds.Right - _owner._layout.TabOverlap;
+                                _owner.TabInsertionPoint = _owner.Items[dropTabIndex - 1].Bounds.Right - TabStripLayoutEngine.TabOverlap;
                             }
                         }
                         else
                         {
                             if (_owner.RightToLeft == RightToLeft.Yes)
                             {
-                                _owner.TabInsertionPoint = _owner.Items[dropTabIndex].Bounds.Right - _owner._layout.TabOverlap;
+                                _owner.TabInsertionPoint = _owner.Items[dropTabIndex].Bounds.Right - TabStripLayoutEngine.TabOverlap;
                             }
                             else
                             {
@@ -173,11 +173,6 @@ namespace WindowsFormsAero
                 return tabOverIndex;
             }
 
-            private Point GetPointRelativeTo(ToolStripItem item, Point pt)
-            {
-                return new Point(pt.X - item.Bounds.X, pt.Y - item.Bounds.Y);
-            }
-
             private void EndDrag()
             {
                 if (_draggedTab != null)
@@ -192,7 +187,12 @@ namespace WindowsFormsAero
                 }
             }
 
-            private Cursor TabDragCursor
+            private static Point GetPointRelativeTo(ToolStripItem item, Point pt)
+            {
+                return new Point(pt.X - item.Bounds.X, pt.Y - item.Bounds.Y);
+            }
+
+            private static Cursor TabDragCursor
             {
                 get
                 {

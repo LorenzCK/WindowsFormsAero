@@ -10,7 +10,7 @@ namespace WindowsFormsAero
         Nowhere = 0,
         Client = 1,
         Caption = 2,
-        Sysmenu = 3,
+        SystemMenu = 3,
         Size = 4,
         Menu = 5,
         HScroll = 6,

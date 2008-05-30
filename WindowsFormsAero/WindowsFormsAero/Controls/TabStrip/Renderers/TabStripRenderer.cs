@@ -18,8 +18,8 @@ namespace WindowsFormsAero
         private readonly Rectangle _closeRectangle;
         private readonly TabStripCloseButtonState _closeState;
 
-        public TabStripItemRenderEventArgs(Graphics g, TabStripButtonBase item, Rectangle closeRectangle, TabStripCloseButtonState closeState)
-            : base (g, item)
+        public TabStripItemRenderEventArgs(Graphics graphics, TabStripButtonBase item, Rectangle closeRectangle, TabStripCloseButtonState closeState)
+            : base (graphics, item)
         {
             _closeRectangle = closeRectangle;
             _closeState = closeState;
@@ -78,16 +78,15 @@ namespace WindowsFormsAero
         }
     }
 
-    [Serializable]
     public sealed class TabStripInsertionMarkRenderEventArgs : EventArgs
     {
         private readonly Graphics _graphics;
         private readonly TabStrip _tabStrip;
         private readonly Int32 _location;
 
-        public TabStripInsertionMarkRenderEventArgs(Graphics g, TabStrip tabStrip, Int32 location)
+        public TabStripInsertionMarkRenderEventArgs(Graphics graphics, TabStrip tabStrip, Int32 location)
         {
-            _graphics = g;
+            _graphics = graphics;
             _tabStrip = tabStrip;
             _location = location;
         }
@@ -113,8 +112,8 @@ namespace WindowsFormsAero
     {
         private Int32 _tickCount;
 
-        public TabStripItemBusyImageRenderEventArgs(Graphics g, ToolStripItem item, Rectangle imageRectangle)
-            : base(g, item, imageRectangle)
+        public TabStripItemBusyImageRenderEventArgs(Graphics graphics, ToolStripItem item, Rectangle imageRectangle)
+            : base(graphics, item, imageRectangle)
         {
             Initialize();
         }
@@ -141,17 +140,11 @@ namespace WindowsFormsAero
         }
     }
 
-    public delegate void TabStripItemRenderEventHandler(object sender, TabStripItemRenderEventArgs e);
-    public delegate void TabStripScrollButtonRenderEventHandler(object sender, TabStripScrollButtonRenderEventArgs e);
-    public delegate void TabStripItemBusyImageRenderEventHandler(object sender, TabStripItemBusyImageRenderEventArgs e);
-    public delegate void TabStripInsertionMarkRenderEventHandler(object sender, TabStripInsertionMarkRenderEventArgs e);
-
     public abstract class TabStripRenderer : ToolStripRenderer
     {
         private readonly static object EventRenderTabInsertionMark = new object();
         private readonly static object EventRenderTabItemBackground = new object();
         private readonly static object EventRenderTabItemBusyImage = new object();
-        private readonly static object EventRenderTabListItemBackground = new object();
         private readonly static object EventRenderTabScrollChevron = new object();
 
         private readonly EventHandlerList  Events = new EventHandlerList();
@@ -178,25 +171,25 @@ namespace WindowsFormsAero
             get { return SystemColors.Control; }
         }
 
-        public event TabStripInsertionMarkRenderEventHandler RenderTabInsertionMark
+        public event EventHandler<TabStripInsertionMarkRenderEventArgs> RenderTabInsertionMark
         {
             add { Events.AddHandler(EventRenderTabInsertionMark, value); }
             remove { Events.RemoveHandler(EventRenderTabInsertionMark, value); }
         }
 
-        public event TabStripItemRenderEventHandler RenderTabItemBackground
+        public event EventHandler<TabStripItemRenderEventArgs> RenderTabItemBackground
         {
             add { Events.AddHandler(EventRenderTabItemBackground, value); }
             remove { Events.RemoveHandler(EventRenderTabItemBackground, value); }
         }
 
-        public event TabStripItemBusyImageRenderEventHandler RenderTabBusyItemImage
+        public event EventHandler<TabStripItemBusyImageRenderEventArgs> RenderTabBusyItemImage
         {
             add { Events.AddHandler(EventRenderTabItemBusyImage, value); }
             remove { Events.RemoveHandler(EventRenderTabItemBusyImage, value); } 
         }
 
-        public event TabStripScrollButtonRenderEventHandler RenderTabScrollChevron
+        public event EventHandler<TabStripScrollButtonRenderEventArgs> RenderTabScrollChevron
         {
             add { Events.AddHandler(EventRenderTabScrollChevron, value); }
             remove { Events.RemoveHandler(EventRenderTabScrollChevron, value); }
@@ -206,7 +199,7 @@ namespace WindowsFormsAero
         {
             OnRenderTabInsertionMark(e);
 
-            var handler = Events[EventRenderTabInsertionMark] as TabStripInsertionMarkRenderEventHandler;
+            var handler = Events[EventRenderTabInsertionMark] as EventHandler<TabStripInsertionMarkRenderEventArgs>;
 
             if (handler != null)
             {
@@ -230,7 +223,7 @@ namespace WindowsFormsAero
         {
             OnRenderTabItemBusyImage(e);
 
-            var handler = Events[EventRenderTabItemBusyImage] as TabStripItemBusyImageRenderEventHandler;
+            var handler = Events[EventRenderTabItemBusyImage] as EventHandler<TabStripItemBusyImageRenderEventArgs>;
 
             if (handler != null)
             {
@@ -242,7 +235,7 @@ namespace WindowsFormsAero
         {
             OnRenderTabScrollChevron(e);
 
-            var handler = Events[EventRenderTabScrollChevron] as TabStripScrollButtonRenderEventHandler;
+            var handler = Events[EventRenderTabScrollChevron] as EventHandler<TabStripScrollButtonRenderEventArgs>;
 
             if (handler != null)
             {

@@ -150,12 +150,12 @@ namespace WindowsFormsAero
                 if (item.Checked)
                 {
                     int checkBackground = MenuPopupCheckBackgroundState.Normal;
-                    int checkType = MenuPopupCheckState.CheckMarkNormal;
+                    int checkType = MenuPopupCheckState.CheckmarkNormal;
 
                     if (!e.Item.Enabled)
                     {
                         checkBackground = MenuPopupCheckBackgroundState.Disabled;
-                        checkType = MenuPopupCheckState.CheckMarkDisabled;
+                        checkType = MenuPopupCheckState.CheckmarkDisabled;
                     }
 
                     SetParameters(MenuPart.PopupCheckBackground, checkBackground);
@@ -261,7 +261,7 @@ namespace WindowsFormsAero
 
             if (toolStrip.Renderer != this)
             {
-                Detach((ToolStrip)(sender));
+                Detach(toolStrip);
             }
         }
 
@@ -370,8 +370,6 @@ namespace WindowsFormsAero
 
         private static int GetItemState(ToolStripItem item)
         {
-            bool hot = item.Selected;
-
             if (item.Owner.IsDropDown)
             {
                 if (item.Enabled)

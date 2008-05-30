@@ -8,6 +8,7 @@
 using System;
 using System.Drawing;
 using System.Windows.Forms;
+using System.Globalization;
 
 namespace WindowsFormsAero
 {
@@ -90,7 +91,14 @@ namespace WindowsFormsAero
                     tabIndex = -1;
 
                 Render:
-                    TextRenderer.DrawText(e.Graphics, tabIndex.ToString(), font, rect, Color.Red, TextFormatFlags.Left);
+                    TextRenderer.DrawText(
+                        e.Graphics, 
+                        tabIndex.ToString(CultureInfo.CurrentUICulture), 
+                        font, 
+                        rect, 
+                        Color.Red, 
+                        TextFormatFlags.Left
+                    );
                 }
             }
         }

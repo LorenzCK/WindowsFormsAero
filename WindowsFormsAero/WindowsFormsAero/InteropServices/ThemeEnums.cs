@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 
 namespace WindowsFormsAero.InteropServices
 {
@@ -10,6 +11,7 @@ namespace WindowsFormsAero.InteropServices
         Caption = 3603
     }
 
+    [SuppressMessage("Microsoft.Design", "CA1008:EnumsShouldHaveZeroValue")]
     public enum MenuPart : int
     {
         MENU_MENUITEM_TMSCHEMA = 1,
@@ -60,8 +62,8 @@ namespace WindowsFormsAero.InteropServices
 
     public static class MenuPopupCheckState
     {
-        public const int CheckMarkNormal = 1;
-        public const int CheckMarkDisabled = 2;
+        public const int CheckmarkNormal = 1;
+        public const int CheckmarkDisabled = 2;
         public const int BulletNormal = 3;
         public const int BulletDisabled = 4;
     }
@@ -73,7 +75,7 @@ namespace WindowsFormsAero.InteropServices
         public const int Bitmap = 3;
     }
 
-    public static class MenuPopupSubMenuState
+    public static class MenuPopupSubmenuState
     {
         public const int Normal = 1;
         public const int Disabled = 2;

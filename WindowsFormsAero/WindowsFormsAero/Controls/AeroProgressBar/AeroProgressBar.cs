@@ -3,6 +3,7 @@ using System.ComponentModel;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using WindowsFormsAero.InteropServices;
+using System.Security.Permissions;
 
 namespace WindowsFormsAero
 {
@@ -39,6 +40,7 @@ namespace WindowsFormsAero
 
         protected override CreateParams CreateParams
         {
+            [SecurityPermission(SecurityAction.LinkDemand, Flags = SecurityPermissionFlag.UnmanagedCode)]
             get
             {
                 var cp = base.CreateParams;

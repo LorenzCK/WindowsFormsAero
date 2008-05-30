@@ -5,7 +5,7 @@ namespace WindowsFormsAero
 {
     partial class AeroTabControl
     {
-        public new class ControlCollection : Control.ControlCollection
+        private new class ControlCollection : Control.ControlCollection
         {
             public ControlCollection(AeroTabControl owner)
                 : base(owner)

@@ -185,7 +185,7 @@ namespace WindowsFormsAero
             }
         }
 
-        bool IExtenderProvider.CanExtend(object extendee)
+        public bool CanExtend(object extendee)
         {
             return extendee is ToolStrip;
         }

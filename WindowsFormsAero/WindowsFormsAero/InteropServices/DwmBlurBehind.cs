@@ -3,19 +3,19 @@ using System.Runtime.InteropServices;
 
 namespace WindowsFormsAero.InteropServices
 {
-    [Serializable, Flags]
-    public enum DwmBlurBehindFlags
-    {
-        None = 0,
-        Enable = 1,
-        BlurRegion = 2,
-        TransitionOnMaximized = 4,
-    }
-
     [Serializable]
     [StructLayout(LayoutKind.Sequential)]
     public sealed class DwmBlurBehind
     {
+        [Serializable, Flags]
+        private enum DwmBlurBehindFlags
+        {
+            None = 0,
+            Enable = 1,
+            BlurRegion = 2,
+            TransitionOnMaximized = 4,
+        }
+
         private DwmBlurBehindFlags _dwFlags;
         private Boolean _fEnable;
         private IntPtr _hRgnBlur;
