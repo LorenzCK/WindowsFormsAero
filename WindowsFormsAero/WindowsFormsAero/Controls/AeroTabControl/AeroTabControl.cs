@@ -41,6 +41,19 @@ namespace WindowsFormsAero
             EnableCtrlNumbers = true;
             EnableCtrlTab = true;
 
+            SetStyle(
+                ControlStyles.AllPaintingInWmPaint |
+                ControlStyles.OptimizedDoubleBuffer |
+                ControlStyles.UserPaint | 
+                ControlStyles.Opaque, true);
+
+            SetStyle(
+                ControlStyles.Selectable |
+                ControlStyles.StandardClick |
+                ControlStyles.StandardDoubleClick |
+                ControlStyles.SupportsTransparentBackColor |
+                ControlStyles.UserMouse, false);
+
             _pageCollection = new TabPageCollection(this);
             
             _closeButton = new AeroTabControlCloseButton(_tabStrip);
@@ -356,68 +369,116 @@ namespace WindowsFormsAero
 
         private void Add(AeroTabPage page)
         {
-            page.Visible = false;
-            page.Dock = DockStyle.Fill;
+            bool suspendPaint = (_hideSingleTab && (_pages.Count == 1));
 
-            _pages.Add(page);
+            if (suspendPaint)
+            {
+                SetRedraw(this, false);
+                SetRedraw(_tabStrip, false);
+            }
 
-            _tabStrip.SuspendLayout();
-            _tabStrip.Items.Add(page.TabStripButton);
-            _tabStrip.ResumeLayout();
+            try
+            {
+                page.Visible = false;
+                page.Dock = DockStyle.Fill;
 
-            UpdateTabStripVisibility();
+                _pages.Add(page);
+
+                _tabStrip.SuspendLayout();
+                _tabStrip.Items.Add(page.TabStripButton);
+                _tabStrip.ResumeLayout();
+
+                UpdateTabStripVisibility();
+            }
+            finally
+            {
+                if (suspendPaint)
+                {
+                    SetRedraw(_tabStrip, true);
+                    SetRedraw(this, true);
+
+                    Invalidate(true);
+                }
+            }
         }
 
         private void AddRange(IList<AeroTabPage> pages)
         {
-            var buttons = new TabStripButton[pages.Count];
+            //BeginUpdate();
 
-            for (int i = 0; i < pages.Count; ++i)
-            {
-                pages[i].Visible = false;
-                pages[i].Dock = DockStyle.Fill;
-                buttons[i] = pages[i].TabStripButton;
-            }
+            //try
+            //{
+                var buttons = new TabStripButton[pages.Count];
 
-            _pages.AddRange(pages);
+                for (int i = 0; i < pages.Count; ++i)
+                {
+                    pages[i].Visible = false;
+                    pages[i].Dock = DockStyle.Fill;
+                    buttons[i] = pages[i].TabStripButton;
+                }
 
-            _tabStrip.SuspendLayout();
-            _tabStrip.Items.AddRange(buttons);
-            _tabStrip.ResumeLayout();
+                _pages.AddRange(pages);
 
-            UpdateTabStripVisibility();
+                _tabStrip.SuspendLayout();
+                _tabStrip.Items.AddRange(buttons);
+                _tabStrip.ResumeLayout();
+
+                UpdateTabStripVisibility();
+            //}
+            //finally
+            //{
+            //    EndUpdate();
+            //}
         }
 
         private void Remove(AeroTabPage page)
         {
-            if (_tabStrip.Items.Contains(page.TabStripButton))
-            {
-                _tabStrip.SuspendLayout();
-                _tabStrip.Items.Remove(page.TabStripButton);
-                _tabStrip.ResumeLayout();
-            }
+            //BeginUpdate();
 
-            if (_pages.Contains(page))
-            {
-                _pages.Remove(page);
-            }
+            //try
+            //{
+                if (_tabStrip.Items.Contains(page.TabStripButton))
+                {
+                    _tabStrip.SuspendLayout();
+                    _tabStrip.Items.Remove(page.TabStripButton);
+                    _tabStrip.ResumeLayout();
+                }
 
-            UpdateTabStripVisibility();
+                if (_pages.Contains(page))
+                {
+                    _pages.Remove(page);
+                }
+
+                UpdateTabStripVisibility();
+            //}
+            //finally
+            //{
+            //    EndUpdate();
+            //}
         }
 
         private void RemoveAllTabs()
         {
-            SuspendLayout();
-            _tabStrip.SuspendLayout();
+            //BeginUpdate();
 
-            SelectedTab = null;
-            
-            _tabStrip.RemoveAllTabs();
-            _pages.Clear();
+            //try
+            //{
+                SuspendLayout();
+                _tabStrip.SuspendLayout();
 
-            _tabStrip.ResumeLayout();
-            UpdateTabStripVisibility();
-            ResumeLayout();
+                SelectedTab = null;
+
+                _tabStrip.RemoveAllTabs();
+                _pages.Clear();
+
+                _tabStrip.ResumeLayout();
+                UpdateTabStripVisibility();
+                ResumeLayout();
+            //}
+            //finally
+            //{
+            //    EndUpdate();
+            //}
         }
 
         private void InvokeNewTabButtonClicked(object sender, EventArgs e)
@@ -437,7 +498,7 @@ namespace WindowsFormsAero
 
         private void InvokeSelectedTabChanged(object sender, EventArgs e)
         {
-            BeginUpdate();
+            SetRedraw(this, false);
 
             try
             {
@@ -461,7 +522,8 @@ namespace WindowsFormsAero
             }
             finally
             {
-                EndUpdate();
+                SetRedraw(this, true);
+                Invalidate(true);
             }
 
             OnSelectedTabChanged(e);
@@ -470,26 +532,6 @@ namespace WindowsFormsAero
         private void InvokeSelectedTabChanging(object sender, CancelEventArgs e)
         {
             OnSelectedTabChanging(e);
-        }
-
-        private void BeginUpdate()
-        {
-            NativeMethods.SendMessage(
-                new HandleRef(this, Handle),
-                WindowMessages.WM_SETREDRAW,
-                IntPtr.Zero,
-                IntPtr.Zero);
-        }
-
-        private void EndUpdate()
-        {
-            NativeMethods.SendMessage(
-                new HandleRef(this, Handle),
-                WindowMessages.WM_SETREDRAW,
-                new IntPtr(1),
-                IntPtr.Zero);
-
-            Invalidate(true);
         }
 
         private bool ProcessCtrlNumber(Keys keyData)
@@ -534,6 +576,15 @@ namespace WindowsFormsAero
             {
                 _tabStrip.Visible = true;
             }
+        }
+
+        private static void SetRedraw(Control control, Boolean redraw)
+        {
+            NativeMethods.SendMessage(
+                new HandleRef(control, control.Handle),
+                WindowMessages.WM_SETREDRAW,
+                redraw ? new IntPtr(1) : IntPtr.Zero,
+                IntPtr.Zero);
         }
     }
 }
