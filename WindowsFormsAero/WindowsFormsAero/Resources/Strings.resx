@@ -124,6 +124,9 @@
   <data name="CloseTab" xml:space="preserve">
     <value>Close Tab</value>
   </data>
+  <data name="DefaultTabText" xml:space="preserve">
+    <value>Connecting...</value>
+  </data>
   <data name="DwmEffectProviderOnlyOneForm" xml:space="preserve">
     <value>A DwmEffectProvider can support only one Form.</value>
   </data>

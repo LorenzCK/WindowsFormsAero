@@ -59,6 +59,7 @@ namespace WindowsFormsAero
         private TabStripTabDragger _tabDragger;
         private Int32 _tabInsertionMark = -1;
 
+        private String _defaultTabText;
         private String _closeButtonText;
         private Boolean _tabListVisible = true;
         private CloseButtonVisibility _closeButtonVisibility = CloseButtonVisibility.ExceptSingleTab;
@@ -74,6 +75,7 @@ namespace WindowsFormsAero
             Items.Add(_newTab);
 
             ResetCloseButtonText();
+            ResetDefaultTabText();
             ResetNewTabButtonText();
             ResetTabListButtonText();
         }
@@ -154,44 +156,11 @@ namespace WindowsFormsAero
             }
         }
 
-        [DefaultValue(null)]
-        public TabStripButton SelectedTab
+        [Browsable(true)]
+        public string DefaultTabText
         {
-            get { return _selectedTab; }
-            set { SetSelectedTab(value, false); }
-        }
-
-        [Browsable(false)] 
-        [DefaultValue(-1)]
-        public int SelectedTabIndex
-        {
-            get { return _selectedIndex; }
-            set 
-            {
-                if (value == -1)
-                {
-                    SelectedTab = null;
-                }
-                else
-                {
-                    int index = 0;
-
-                    foreach (var item in ItemsOfType<TabStripButton>())
-                    {
-                        if (index == value)
-                        {
-                            SelectedTab = item;
-                            return;
-                        }
-
-                        ++index;
-                    }
-
-                    throw new ArgumentOutOfRangeException(
-                        string.Format(System.Globalization.CultureInfo.CurrentCulture,
-                        Resources.Strings.TabStripInvalidTabIndex, value));
-                }
-            }
+            get { return _defaultTabText; }
+            set { _defaultTabText = value; }
         }
 
         [Browsable(true)]
@@ -240,6 +209,46 @@ namespace WindowsFormsAero
             {
                 _newTab.Text = value;
                 _newTab.ToolTipText = value;
+            }
+        }
+
+        [DefaultValue(null)]
+        public TabStripButton SelectedTab
+        {
+            get { return _selectedTab; }
+            set { SetSelectedTab(value, false); }
+        }
+
+        [Browsable(false)]
+        [DefaultValue(-1)]
+        public int SelectedTabIndex
+        {
+            get { return _selectedIndex; }
+            set
+            {
+                if (value == -1)
+                {
+                    SelectedTab = null;
+                }
+                else
+                {
+                    int index = 0;
+
+                    foreach (var item in ItemsOfType<TabStripButton>())
+                    {
+                        if (index == value)
+                        {
+                            SelectedTab = item;
+                            return;
+                        }
+
+                        ++index;
+                    }
+
+                    throw new ArgumentOutOfRangeException(
+                        string.Format(System.Globalization.CultureInfo.CurrentCulture,
+                        Resources.Strings.TabStripInvalidTabIndex, value));
+                }
             }
         }
 
@@ -780,6 +789,16 @@ namespace WindowsFormsAero
         private bool ShouldSerializeTabListButtonText()
         {
             return TabListButtonText != DefaultTabListButtonText;
+        }
+
+        private void ResetDefaultTabText()
+        {
+            _defaultTabText = Resources.Strings.DefaultTabText;
+        }
+
+        private bool ShouldSerializeDefaultTabText()
+        {
+            return _defaultTabText != Resources.Strings.DefaultTabText;
         }
     }
 }
