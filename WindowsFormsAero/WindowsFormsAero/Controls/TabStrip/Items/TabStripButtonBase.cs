@@ -137,6 +137,11 @@ namespace WindowsFormsAero
             get { return false; }
         }
 
+        internal virtual string TextOrDefault
+        {
+            get { return Text; }
+        }
+
         internal TabStripButtonLayout InternalLayout
         {
             get { return _layout ?? (_layout = new TabStripButtonLayout(this)); }

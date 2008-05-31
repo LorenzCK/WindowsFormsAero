@@ -277,7 +277,7 @@ namespace WindowsFormsAero
                     e.Graphics, this, InternalLayout.ImageRectangle));
 
                 OnPaintText(new ToolStripItemTextRenderEventArgs(
-                    e.Graphics, this, Text, InternalLayout.TextRectangle,
+                    e.Graphics, this, TextOrDefault, InternalLayout.TextRectangle,
                     ForeColor, Font, TextAlign));
             }
             else
@@ -319,6 +319,27 @@ namespace WindowsFormsAero
             base.OnParentChanged(oldParent, newParent);
         }
 
+        internal Boolean CanClose
+        {
+            get
+            {
+                if (Owner.CloseButtonVisibility == CloseButtonVisibility.Never)
+                {
+                    return false;
+                }
+
+                if (Owner.CloseButtonVisibility == CloseButtonVisibility.ExceptSingleTab)
+                {
+                    if (IsSingleTab)
+                    {
+                        return false;
+                    }
+                }
+
+                return IsClosable;
+            }
+        }
+
         internal override Size CloseButtonSize
         {
             get
@@ -355,24 +376,19 @@ namespace WindowsFormsAero
             get { return Checked && CanClose; }
         }
 
-        internal Boolean CanClose
+        internal override string TextOrDefault
         {
             get
             {
-                if (Owner.CloseButtonVisibility == CloseButtonVisibility.Never)
+                if (string.IsNullOrEmpty(Text))
                 {
-                    return false;
-                }
-
-                if (Owner.CloseButtonVisibility == CloseButtonVisibility.ExceptSingleTab)
-                {
-                    if (IsSingleTab)
+                    if (Owner != null)
                     {
-                        return false;
+                        return Owner.DefaultTabText;
                     }
                 }
 
-                return IsClosable;
+                return Text;
             }
         }
 

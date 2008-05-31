@@ -79,6 +79,15 @@ namespace WindowsFormsAero.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Connecting....
+        /// </summary>
+        internal static string DefaultTabText {
+            get {
+                return ResourceManager.GetString("DefaultTabText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to A DwmEffectProvider can support only one Form..
         /// </summary>
         internal static string DwmEffectProviderOnlyOneForm {

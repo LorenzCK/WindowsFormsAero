@@ -32,7 +32,7 @@ namespace WindowsFormsAero
                 CloseRectangle = CutRectangleFromRight(ref DisplayRectangle, btn.CloseButtonSize, btn.Padding, ContentAlignment.MiddleCenter);
             }
 
-            if (!string.IsNullOrEmpty(btn.Text) && ((btn.DisplayStyle & ToolStripItemDisplayStyle.Text) != 0))
+            if (!string.IsNullOrEmpty(btn.TextOrDefault) && ((btn.DisplayStyle & ToolStripItemDisplayStyle.Text) != 0))
             {
                 TextRectangle = DisplayRectangle;
             }
