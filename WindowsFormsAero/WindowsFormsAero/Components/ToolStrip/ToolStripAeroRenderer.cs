@@ -158,11 +158,18 @@ namespace WindowsFormsAero
                         checkType = MenuPopupCheckState.CheckmarkDisabled;
                     }
 
+                    var rect = e.Item.Bounds;
+
+                    rect.X += 2;
+                    rect.Y -= 1;
+                    rect.Width = rect.Height - 1;
+                    rect.Height -= 2;
+
                     SetParameters(MenuPart.PopupCheckBackground, checkBackground);
-                    Renderer.DrawBackground(e.Graphics, e.ImageRectangle);
+                    Renderer.DrawBackground(e.Graphics, rect);
 
                     SetParameters(MenuPart.PopupCheck, checkType);
-                    Renderer.DrawBackground(e.Graphics, e.ImageRectangle);
+                    Renderer.DrawBackground(e.Graphics, rect);
                 }
             }
             else
@@ -204,7 +211,7 @@ namespace WindowsFormsAero
                 rect.Y = 0;
                 rect.X += 2;
                 rect.Width -= 3;
-                rect.Height = e.ToolStrip.Height - 2;
+                rect.Height = e.ToolStrip.Height - 5;
             }
 
             Renderer.DrawBackground(e.Graphics, rect, rect);
