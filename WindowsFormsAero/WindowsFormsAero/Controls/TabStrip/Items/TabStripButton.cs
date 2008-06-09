@@ -270,6 +270,13 @@ namespace WindowsFormsAero
         {
             if (Renderer != null)
             {
+                var textFlags = TextFormatFlags.EndEllipsis | TextFormatFlags.VerticalCenter | TextFormatFlags.SingleLine;
+
+                if (RightToLeft == RightToLeft.Yes)
+                {
+                    textFlags |= TextFormatFlags.RightToLeft;
+                }
+
                 OnPaintBackground(new TabStripItemRenderEventArgs(
                     e.Graphics, this, InternalLayout.CloseRectangle, _closeButtonState));
 
@@ -278,7 +285,7 @@ namespace WindowsFormsAero
 
                 OnPaintText(new ToolStripItemTextRenderEventArgs(
                     e.Graphics, this, TextOrDefault, InternalLayout.TextRectangle,
-                    ForeColor, Font, TextAlign));
+                    ForeColor, Font, textFlags));
             }
             else
             {

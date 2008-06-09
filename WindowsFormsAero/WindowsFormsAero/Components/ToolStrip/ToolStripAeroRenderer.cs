@@ -134,7 +134,7 @@ namespace WindowsFormsAero
             if (e.ToolStrip.IsDropDown)
             {
                 Rectangle displayRect = e.ToolStrip.DisplayRectangle;
-                Rectangle marginRect = new Rectangle(0, displayRect.Top, displayRect.Left, displayRect.Height);
+                Rectangle marginRect = new Rectangle(0, displayRect.Top, displayRect.Left - 4, displayRect.Height);
 
                 SetParameters(MenuPart.PopupGutter, 0);
                 Renderer.DrawBackground(e.Graphics, marginRect, marginRect);
@@ -192,6 +192,18 @@ namespace WindowsFormsAero
             }
 
             base.OnRenderItemText(e);
+        }
+
+        protected override void OnRenderItemImage(ToolStripItemImageRenderEventArgs e)
+        {
+            if (e.Item.Enabled)
+            {
+                base.OnRenderItemImage(e);
+            }
+            else
+            {
+                ControlPaint.DrawImageDisabled(e.Graphics, e.Image, e.ImageRectangle.X, e.ImageRectangle.Y, Color.Transparent);
+            }
         }
 
         protected override void OnRenderMenuItemBackground(ToolStripItemRenderEventArgs e)

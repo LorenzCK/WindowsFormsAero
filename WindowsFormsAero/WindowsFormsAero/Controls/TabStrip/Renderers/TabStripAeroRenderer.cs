@@ -205,10 +205,18 @@ namespace WindowsFormsAero
         {
             if (e.ImageRectangle.Width > 0 && e.ImageRectangle.Height > 0)
             {
-                e.Graphics.DrawImage(e.Image, e.ImageRectangle);
+                if (e.Item.Enabled)
+                {
+                    e.Graphics.DrawImage(e.Image, e.ImageRectangle);
+                }
+                else
+                {
+                    base.OnRenderItemImage(e);
+                }
             }
         }
 
+#if TABSTRIP_AERORENDERER_GDIPLUS
         protected override void OnRenderItemText(ToolStripItemTextRenderEventArgs e)
         {
             if (e.Item is TabStripButtonBase)
@@ -237,6 +245,7 @@ namespace WindowsFormsAero
                 base.OnRenderItemText(e);
             }
         }
+#endif
 
         protected override void OnRenderTabScrollChevron(TabStripScrollButtonRenderEventArgs e)
         {
