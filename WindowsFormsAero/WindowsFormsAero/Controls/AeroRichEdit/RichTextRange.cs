@@ -43,7 +43,7 @@ namespace WindowsFormsAero
                 start.Collapse(TomConstants.Start);
                 end.Collapse(TomConstants.End);
 
-                return start.GetIndex(TomConstants.Line) != end.GetIndex(TomConstants.Line);
+                return start.GetIndex(TomConstants.Line) == end.GetIndex(TomConstants.Line);
             }
         }
 
