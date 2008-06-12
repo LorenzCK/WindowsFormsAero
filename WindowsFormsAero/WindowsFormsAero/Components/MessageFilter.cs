@@ -21,6 +21,7 @@ namespace WindowsFormsAero
         public void Dispose()
         {
             AssignControl(null);
+            GC.SuppressFinalize(this);
         }
 
         protected HandleRef GetHandleRef()

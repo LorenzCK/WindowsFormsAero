@@ -7,7 +7,7 @@ namespace WindowsFormsAero.InteropServices
 {
     [Serializable]
     [StructLayout(LayoutKind.Sequential)]
-    public struct POINT : IEquatable<POINT>, IFormattable
+    internal struct POINT : IEquatable<POINT>, IFormattable
     {
         public readonly int X;
         public readonly int Y;

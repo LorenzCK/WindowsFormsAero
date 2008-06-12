@@ -12,7 +12,7 @@ namespace WindowsFormsAero.InteropServices
     }
 
     [SuppressMessage("Microsoft.Design", "CA1008:EnumsShouldHaveZeroValue")]
-    public enum MenuPart : int
+    internal enum MenuPart : int
     {
         MENU_MENUITEM_TMSCHEMA = 1,
         MENU_MENUDROPDOWN_TMSCHEMA = 2,
@@ -36,49 +36,49 @@ namespace WindowsFormsAero.InteropServices
         MENU_SYSTEMRESTORE = 20
     }
 
-    public static class MenuBarState
+    internal static class MenuBarState
     {
-        public const int Active = 1;
-        public const int Inactive = 2;
+        internal const int Active = 1;
+        internal const int Inactive = 2;
     }
 
-    public static class MenuBarItemStates
+    internal static class MenuBarItemStates
     {
-        public const int Normal = 1;
-        public const int Hot = 2;
-        public const int Pushed = 3;
-        public const int Disabled = 4;
-        public const int DisabledHot = 5;
-        public const int DisabledPushed = 6;
+        internal const int Normal = 1;
+        internal const int Hot = 2;
+        internal const int Pushed = 3;
+        internal const int Disabled = 4;
+        internal const int DisabledHot = 5;
+        internal const int DisabledPushed = 6;
     }
 
-    public static class MenuPopupItemStates 
+    internal static class MenuPopupItemStates 
     {
-        public const int Normal = 1;
-        public const int Hot = 2;
-        public const int Disabled = 3;
-        public const int DisabledHot = 4;
+        internal const int Normal = 1;
+        internal const int Hot = 2;
+        internal const int Disabled = 3;
+        internal const int DisabledHot = 4;
     }
 
-    public static class MenuPopupCheckState
+    internal static class MenuPopupCheckState
     {
-        public const int CheckmarkNormal = 1;
-        public const int CheckmarkDisabled = 2;
-        public const int BulletNormal = 3;
-        public const int BulletDisabled = 4;
+        internal const int CheckmarkNormal = 1;
+        internal const int CheckmarkDisabled = 2;
+        internal const int BulletNormal = 3;
+        internal const int BulletDisabled = 4;
     }
 
-    public static class MenuPopupCheckBackgroundState
+    internal static class MenuPopupCheckBackgroundState
     {
-        public const int Disabled = 1;
-        public const int Normal = 2;
-        public const int Bitmap = 3;
+        internal const int Disabled = 1;
+        internal const int Normal = 2;
+        internal const int Bitmap = 3;
     }
 
-    public static class MenuPopupSubmenuState
+    internal static class MenuPopupSubmenuState
     {
-        public const int Normal = 1;
-        public const int Disabled = 2;
+        internal const int Normal = 1;
+        internal const int Disabled = 2;
     }
 
 

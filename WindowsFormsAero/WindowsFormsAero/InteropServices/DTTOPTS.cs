@@ -28,7 +28,7 @@ namespace WindowsFormsAero.InteropServices
     }
 
     [Serializable]
-    public enum ThemeFont : int
+    internal enum ThemeFont : int
     {
         None = 0,
         Caption = 801,
