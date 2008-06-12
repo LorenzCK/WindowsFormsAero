@@ -209,6 +209,20 @@ namespace WindowsFormsAero.InteropServices
 
         #endregion
 
+        #region user32!GetForegroundWindow
+
+        [DllImport(
+            Dll.User32,
+            SetLastError = true,
+            ExactSpelling = true,
+            CallingConvention = CallingConvention.Winapi
+        )]
+        [SuppressUnmanagedCodeSecurity]
+        [ReliabilityContract(Consistency.WillNotCorruptState, Cer.MayFail)]
+        internal static extern IntPtr GetForegroundWindow();
+
+        #endregion
+
         #region user32!GetKeyboardState
 
         [DllImport(
@@ -309,7 +323,7 @@ namespace WindowsFormsAero.InteropServices
 
         #endregion
 
-        #region user32!SendMessage(IntPtr, UInt32, IntPtr, out Object)
+        #region user32!SendMessage(IntPtr, UInt32, IntPtr, [IUnknown] out Object)
 
         [DllImport(
             Dll.User32,
@@ -325,6 +339,24 @@ namespace WindowsFormsAero.InteropServices
                  out Object lParam);
 
         #endregion
+
+        #region user32!SendMessage(IntPtr, UInt32, IntPtr, [Any] Object)
+
+        [DllImport(
+            Dll.User32,
+            BestFitMapping = false,
+            SetLastError = true
+        )]
+        [ReliabilityContract(Consistency.WillNotCorruptState, Cer.MayFail)]
+        internal static extern IntPtr SendMessage(
+            [In] HandleRef hWnd,
+            [In] UInt32 Msg,
+            [In] IntPtr wParam,
+            [In, Out, MarshalAs(UnmanagedType.AsAny)] 
+                 Object lParam);
+
+        #endregion
+
 
         #region user32!SendMessage(IntPtr, UInt32, IntPtr, ref RECT)
 
