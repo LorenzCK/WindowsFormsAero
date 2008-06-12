@@ -272,7 +272,7 @@ namespace WindowsFormsAero
             return PixelsToPoints(pixels, LogPixelsY);
         }
 
-        private static int PixelsToPoints(int pixels, int logPixels)
+        private static int PixelsToPoints(int pixels, double logPixels)
         {
             return (int)(((pixels / logPixels) * 72.0));
         }
