@@ -324,7 +324,7 @@ namespace WindowsFormsAero
                 var frame = new RECT();
 
                 if (!NativeMethods.AdjustWindowRectEx(
-                    frame,
+                    ref frame,
                     WindowStyles.WS_OVERLAPPEDWINDOW & ~WindowStyles.WS_CAPTION,
                     false,
                     0))

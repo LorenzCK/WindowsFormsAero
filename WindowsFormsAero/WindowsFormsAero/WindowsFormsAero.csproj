@@ -83,6 +83,26 @@
     <Compile Include="Controls\AeroProgressBar\AeroProgressBar.cs">
     </Compile>
     <Compile Include="Controls\AeroProgressBar\AeroProgressBarStatus.cs" />
+    <Compile Include="Controls\AeroRichEdit\AeroRichEdit.cs" />
+    <Compile Include="Controls\AeroRichEdit\AeroRichEditUnprotectedScope.cs" />
+    <Compile Include="Controls\AeroRichEdit\RichTextDocument.cs" />
+    <Compile Include="Controls\AeroRichEdit\RichTextFont.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Controls\AeroRichEdit\RichTextParagraph.cs" />
+    <Compile Include="Controls\AeroRichEdit\RichTextRange.cs" />
+    <Compile Include="Controls\AeroRichEdit\RichTextSelection.cs" />
+    <Compile Include="Controls\AeroRichEdit\RichTextUnderline.cs" />
+    <Compile Include="Controls\AeroRichEdit\RichTextUnderlineColor.cs" />
+    <Compile Include="InteropServices\DeviceCapability.cs" />
+    <Compile Include="InteropServices\DVASPECT.cs" />
+    <Compile Include="InteropServices\GetRichEditObjectInterfaces.cs" />
+    <Compile Include="InteropServices\ILockBytes.cs" />
+    <Compile Include="InteropServices\ITextDocument.cs" />
+    <Compile Include="InteropServices\ITextFont.cs" />
+    <Compile Include="InteropServices\ITextPara.cs" />
+    <Compile Include="InteropServices\ITextRange.cs" />
+    <Compile Include="InteropServices\ITextSelection.cs" />
     <Compile Include="Controls\AeroTabControl\AeroTabControl..TabPageCollection.cs" />
     <Compile Include="Controls\AeroTabControl\AeroTabControl..ControlCollection.cs" />
     <Compile Include="Controls\AeroTabControl\AeroTabControlCloseButton.cs" />
@@ -90,12 +110,10 @@
     <Compile Include="Controls\AeroTabControl\AeroTabControlTabListButton.cs" />
     <Compile Include="Controls\AeroTextBox\AeroTextBox.cs">
     </Compile>
-    <Compile Include="Controls\SearchTextBox\SearchTextBox.cs">
-    </Compile>
-    <Compile Include="Controls\SearchTextBox\SearchTextBoxRenderer.cs" />
-    <Compile Include="Controls\SearchTextBox\SearchTextBoxTextBox.cs" />
-    <Compile Include="Controls\SearchTextBox\SearchTextBoxStrip.cs">
-    </Compile>
+    <None Include="Controls\SearchTextBox\SearchTextBox.cs" />
+    <None Include="Controls\SearchTextBox\SearchTextBoxRenderer.cs" />
+    <None Include="Controls\SearchTextBox\SearchTextBoxTextBox.cs" />
+    <None Include="Controls\SearchTextBox\SearchTextBoxStrip.cs" />
     <Compile Include="Controls\TabStrip\Items\TabStripButtonAccessibleObject.cs" />
     <Compile Include="Controls\TabStrip\Layout\TabStripButtonLayout.cs" />
     <Compile Include="Controls\TabStrip\Items\TabStripTabListButton.cs" />
@@ -107,24 +125,40 @@
     <Compile Include="Forms\AeroForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\DropShadowForm.cs" />
+    <Compile Include="Forms\DropShadowForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="InteropServices\DTTOPTS.cs" />
+    <Compile Include="InteropServices\IEnumUnknown.cs" />
     <Compile Include="InteropServices\ImageType.cs" />
+    <Compile Include="InteropServices\IOleClientSite.cs" />
+    <Compile Include="InteropServices\IOleContainer.cs" />
+    <Compile Include="InteropServices\IRichEditOle.cs" />
+    <Compile Include="InteropServices\IStorage.cs" />
+    <Compile Include="InteropServices\ITextStoryRanges.cs" />
     <Compile Include="InteropServices\KeyboardLowLevelHookInfo.cs" />
     <Compile Include="InteropServices\LoadImageFlags.cs" />
+    <Compile Include="InteropServices\NMHDR.cs" />
     <Compile Include="InteropServices\POINT.cs" />
     <Compile Include="InteropServices\RECT.cs" />
+    <Compile Include="InteropServices\RichEditEvent.cs" />
+    <Compile Include="InteropServices\RichEditObject.cs" />
+    <Compile Include="InteropServices\RichEditObjectFlags.cs" />
     <Compile Include="InteropServices\SafeWindowsHookHandle.cs" />
     <Compile Include="InteropServices\SetWindowPosFlags.cs" />
+    <Compile Include="InteropServices\SIZEL.cs" />
+    <Compile Include="InteropServices\StorageFlags.cs" />
+    <Compile Include="InteropServices\TomConstants.cs" />
     <Compile Include="InteropServices\TOOLINFO.cs" />
     <Compile Include="InteropServices\ToolTipFlags.cs" />
     <Compile Include="InteropServices\VirtualKeyMapType.cs" />
+    <Compile Include="InteropServices\WindowNotifications.cs" />
     <Compile Include="InteropServices\WindowsHookType.cs" />
     <Compile Include="Static\DesktopComposition.cs" />
     <Compile Include="Extensions\ControlExtensions.cs" />
     <Compile Include="Extensions\GraphicsExtensions.cs" />
     <Compile Include="InteropServices\AncestorType.cs" />
-    <Compile Include="InteropServices\DwmBlurBehind.cs" />
+    <Compile Include="Components\Dwm\DwmBlurBehind.cs" />
     <Compile Include="InteropServices\MARGINS.cs" />
     <Compile Include="InteropServices\ThemeEnums.cs" />
     <Compile Include="InteropServices\NativeMethods.cs" />
@@ -132,7 +166,7 @@
     <Compile Include="InteropServices\WindowMessages.cs" />
     <Compile Include="InteropServices\WindowStyles.cs" />
     <Compile Include="LayoutUtils.cs" />
-    <Compile Include="Static\ThemeTextRenderer.cs" />
+    <None Include="Static\ThemeTextRenderer.cs" />
     <Compile Include="Static\VistaOSFeature.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resources\Images.cs" />

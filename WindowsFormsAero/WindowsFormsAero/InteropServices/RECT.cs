@@ -1,22 +1,17 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Runtime.InteropServices;
 using System.Drawing;
+using System.Runtime.InteropServices;
 
 namespace WindowsFormsAero.InteropServices
 {
+    [Serializable]
     [StructLayout(LayoutKind.Sequential)]
-    public sealed class RECT
+    internal struct RECT
     {
         public readonly int Left;
         public readonly int Top;
         public readonly int Right;
         public readonly int Bottom;
-
-        public RECT()
-        {
-        }
 
         public RECT(int left, int  top, int right, int bottom)
         {
