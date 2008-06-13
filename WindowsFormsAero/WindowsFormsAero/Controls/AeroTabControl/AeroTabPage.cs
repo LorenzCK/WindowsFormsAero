@@ -98,6 +98,16 @@ namespace WindowsFormsAero
             set { TabStripButton.IsBusy = value; }
         }
 
+        [Browsable(true)]
+        [DefaultValue(true)]
+        [EditorBrowsable(EditorBrowsableState.Always)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
+        public bool IsClosable
+        {
+            get { return _button.IsClosable; }
+            set { _button.IsClosable = value; }
+        }
+
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
