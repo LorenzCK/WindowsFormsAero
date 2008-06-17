@@ -1,9 +1,9 @@
 ﻿using System;
 
-namespace WindowsFormsAero.InteropServices
+namespace WindowsFormsAero
 {
     [Serializable]
-    internal enum WindowsHookType
+    public enum WindowsHookType
     {
         MessageFilter = -1,
         JournalRecord = 0,

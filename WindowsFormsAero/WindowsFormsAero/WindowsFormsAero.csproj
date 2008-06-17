@@ -67,6 +67,8 @@
     <None Include="Components\Hooks\HookWindowSingleton.cs" />
     <None Include="Components\Hooks\KeyboardHook.cs" />
     <None Include="Components\Hooks\LowLevelKeyboardHook.cs" />
+    <Compile Include="Components\Hooks\WindowsHook.cs">
+    </Compile>
     <Compile Include="Components\ToolStrip\HiddenMenuStrip.cs">
     </Compile>
     <Compile Include="Components\MessageFilter.cs" />
@@ -153,7 +155,7 @@
     <Compile Include="InteropServices\ToolTipFlags.cs" />
     <Compile Include="InteropServices\VirtualKeyMapType.cs" />
     <Compile Include="InteropServices\WindowNotifications.cs" />
-    <Compile Include="InteropServices\WindowsHookType.cs" />
+    <Compile Include="Components\Hooks\WindowsHookType.cs" />
     <Compile Include="Static\DesktopComposition.cs" />
     <Compile Include="Extensions\ControlExtensions.cs" />
     <Compile Include="Extensions\GraphicsExtensions.cs" />
@@ -227,8 +229,8 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Resources\SearchStop.png" />
-    <EmbeddedResource Include="Resources\SearchStart.png" />
+    <None Include="Resources\SearchStop.png" />
+    <None Include="Resources\SearchStart.png" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Attributes\" />
