@@ -404,17 +404,17 @@ namespace WindowsFormsAero.InteropServices
             [In] WindowsHookType idHook,
             [In] IntPtr lpfn,
             [In] NativeModule hMod,
-            [In] UInt32 dwThreadId);
+            [In] Int32 dwThreadId);
 
-        internal static SafeWindowsHookHandle SetWindowsHookEx(WindowsHookType hookType, Delegate procedure)
-        {
-            return SetWindowsHookEx(hookType, Marshal.GetFunctionPointerForDelegate(procedure), NativeModule.Invalid, 0);
-        }
+        //internal static SafeWindowsHookHandle SetWindowsHookEx(WindowsHookType hookType, Delegate procedure)
+        //{
+        //    return SetWindowsHookEx(hookType, Marshal.GetFunctionPointerForDelegate(procedure), NativeModule.Invalid, 0);
+        //}
 
-        internal static SafeWindowsHookHandle SetWindowsHookEx(KeyboardLowLevelHookProc proc)
-        {
-            return SetWindowsHookEx(WindowsHookType.KeyboardLowLevel, proc);
-        }
+        //internal static SafeWindowsHookHandle SetWindowsHookEx(KeyboardLowLevelHookProc proc)
+        //{
+        //    return SetWindowsHookEx(WindowsHookType.KeyboardLowLevel, proc);
+        //}
 
         #endregion
 
