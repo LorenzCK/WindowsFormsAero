@@ -21,7 +21,7 @@
     <SccProvider>SAK</SccProvider>
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>..\PrivateKey.snk</AssemblyOriginatorKeyFile>
-    <Win32Resource>D:\c#\AeroForms\WindowsFormsAero\Resources\Native.res</Win32Resource>
+    <Win32Resource>D:\WinFormsAero\WindowsFormsAero\WindowsFormsAero\Resources\Native.res</Win32Resource>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -44,10 +44,8 @@
   <ItemGroup>
     <Reference Include="Accessibility" />
     <Reference Include="System" />
-    <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
-    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\AssemblyInfo.Shared.cs">

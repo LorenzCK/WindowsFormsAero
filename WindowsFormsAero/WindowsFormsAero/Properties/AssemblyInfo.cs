@@ -8,8 +8,8 @@ internal static class ThisAssembly
     public const string Version = "2.0.0.0";
     public const string Product = "Windows Forms Aero controls";
 
-    public const string Copyright = "Copyright \u00a9 2007-2008 The Windows Vista Controls Project\n" +
-                                    "http://www.CodePlex.com/VistaControls/";
+    public const string Copyright = "Copyright \u00a9 2007-2008 The Windows Forms Aero Project\n" +
+                                    "http://www.CodePlex.com/WindowsFormsAero/";
 
     internal const string DesignAssemblyName = "WindowsFormsAero.Design";
     internal const string DesignAssemblyFullName = DesignAssemblyName + ", " +

@@ -65,7 +65,7 @@ namespace WindowsFormsAero.InteropServices
         internal const int EM_GETEVENTMASK = (WM_USER + 59);
         internal const int EM_GETOLEINTERFACE = (WM_USER + 60);
         internal const int EM_SETEVENTMASK = (WM_USER + 69);
-
+        internal const int EM_SETZOOM = (WM_USER + 225);
         //
         // List View Messages
         //
