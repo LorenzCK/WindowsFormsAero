@@ -13,6 +13,8 @@ namespace WindowsFormsAero
         private IRichEditOle _ole;
         private RichTextDocument _document;
 
+        private static readonly object EventZoomFactorChanged = new object();
+
         internal bool _allowProtectedModifications;
 
         public void BeginUpdate()
@@ -118,6 +120,12 @@ namespace WindowsFormsAero
             }
         }
 
+        public event EventHandler ZoomFactorChanged
+        {
+            add { Events.AddHandler(EventZoomFactorChanged, value); }
+            remove { Events.RemoveHandler(EventZoomFactorChanged, value); }
+        }
+
         public AeroRichEditUnprotectedScope AllowProtectedUpdates()
         {
             return new AeroRichEditUnprotectedScope(this);
@@ -151,6 +159,26 @@ namespace WindowsFormsAero
             }
         }
 
+        protected override void OnMouseWheel(MouseEventArgs e)
+        {
+            base.OnMouseWheel(e);
+
+            if ((ModifierKeys & Keys.Control) == Keys.Control)
+            {
+                OnZoomFactorChanged(EventArgs.Empty);
+            }
+        }
+
+        protected virtual void OnZoomFactorChanged(EventArgs e)
+        {
+            var handler = Events[EventZoomFactorChanged] as EventHandler;
+
+            if (handler != null)
+            {
+                handler(this, e);
+            }
+        }
+
         [SecurityPermission(SecurityAction.LinkDemand, Flags = SecurityPermissionFlag.UnmanagedCode)]
         protected override void WndProc(ref Message m)
         {
@@ -172,8 +200,13 @@ namespace WindowsFormsAero
                     return;
                 }
             }
-
+            
             base.WndProc(ref m);
+
+            if (m.Msg == WindowMessages.EM_SETZOOM)
+            {
+                OnZoomFactorChanged(EventArgs.Empty);
+            }
         }
 
         private RECT FormattingRect
