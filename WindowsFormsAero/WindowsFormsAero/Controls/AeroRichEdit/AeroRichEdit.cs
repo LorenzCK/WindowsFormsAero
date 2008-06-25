@@ -165,7 +165,14 @@ namespace WindowsFormsAero
 
             if ((ModifierKeys & Keys.Control) == Keys.Control)
             {
-                OnZoomFactorChanged(EventArgs.Empty);
+                if (e.Delta > 0)
+                {
+                    ZoomFactor += 0.1f;
+                }
+                else
+                {
+                    ZoomFactor -= 0.1f;
+                }
             }
         }
 
