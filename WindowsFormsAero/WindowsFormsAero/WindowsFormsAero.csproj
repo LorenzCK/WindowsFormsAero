@@ -21,7 +21,7 @@
     <SccProvider>SAK</SccProvider>
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>..\PrivateKey.snk</AssemblyOriginatorKeyFile>
-    <Win32Resource>D:\WinFormsAero\WindowsFormsAero\WindowsFormsAero\Resources\Native.res</Win32Resource>
+    <Win32Resource>D:\C#\AeroForms\WindowsFormsAero\Resources\Native.res</Win32Resource>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>

@@ -22,74 +22,86 @@ namespace WindowsFormsAero
             base.Initialize(toolStrip);
         }
 
-        //This is broken for RTL
         protected override void OnRenderArrow(ToolStripArrowRenderEventArgs e)
         {
-            //if (IsSupported)
-            //{
-            //    int stateId = e.Item.Enabled ?
-            //        MenuPopupSubMenuState.Normal :
-            //        MenuPopupSubMenuState.Disabled;
-
-            //    SetParameters(MenuPart.PopupSubmenu, stateId);
-            //    _renderer.DrawBackground(e.Graphics, e.ArrowRectangle);
-            //}
-            //else
-            //{
-            //    base.OnRenderArrow(e);
-            //}
-
+            e.ArrowColor = GetForegroundColor(e.Item);
             base.OnRenderArrow(e);
         }
 
         protected override void OnRenderToolStripBackground(ToolStripRenderEventArgs e)
         {
-            if (!IsSupported)
+            if (IsSupported)
             {
-                base.OnRenderToolStripBackground(e);
-                return;
-            }
+                if (e.ToolStrip.IsDropDown)
+                {
+                    SetParameters(MenuPart.PopupBackground, 0);
+                    DrawBackground(e);
+                }
+                else if (e.ToolStrip is MenuStrip)
+                {
+                    SetParameters(MenuPart.BarBackground, e.ToolStrip.Enabled ?
+                        MenuBarState.Active : MenuBarState.Inactive);
 
-            if (e.ToolStrip.IsDropDown)
-            {
-                SetParameters(MenuPart.PopupBackground, 0);
-                DrawBackground(e);
+                    DrawBackground(e);
+                }
             }
-            else if (e.ToolStrip is MenuStrip)
+            else
             {
-                SetParameters(MenuPart.BarBackground, e.ToolStrip.Enabled ?
-                    MenuBarState.Active : MenuBarState.Inactive);
-
-                DrawBackground(e);
+                if (e.ToolStrip.IsDropDown)
+                {
+                    e.Graphics.Clear(SystemColors.Menu);
+                }
+                else
+                {
+                    e.Graphics.Clear(SystemColors.MenuBar);
+                }
             }
         }
 
         protected override void OnRenderToolStripBorder(ToolStripRenderEventArgs e)
         {
-            if (!IsSupported)
+            if (IsSupported)
             {
-                base.OnRenderToolStripBorder(e);
-                return;
+                SetParameters(MenuPart.PopupBorders, 0);
+
+                if (e.ToolStrip.IsDropDown)
+                {
+                    Region oldClip = e.Graphics.Clip;
+
+                    //Tool strip borders are rendered *after* the content, for some reason.
+                    //So we have to exclude the inside of the popup otherwise we'll draw over it.
+
+                    Rectangle insideRect = e.ToolStrip.ClientRectangle;
+
+                    insideRect.Inflate(-1, -1);
+                    e.Graphics.ExcludeClip(insideRect);
+
+                    Renderer.DrawBackground(e.Graphics, e.ToolStrip.ClientRectangle, e.AffectedBounds);
+
+                    //Restore the old clip in case the Graphics is used again (does that ever happen?)
+                    e.Graphics.Clip = oldClip;
+                }
             }
-
-            SetParameters(MenuPart.PopupBorders, 0);
-
-            if (e.ToolStrip.IsDropDown)
+            else
             {
-                Region oldClip = e.Graphics.Clip;
+                var clientRect = e.ToolStrip.ClientRectangle;
 
-                //Tool strip borders are rendered *after* the content, for some reason.
-                //So we have to exclude the inside of the popup otherwise we'll draw over it.
-
-                Rectangle insideRect = e.ToolStrip.ClientRectangle;
-
-                insideRect.Inflate(-1, -1);
-                e.Graphics.ExcludeClip(insideRect);
-
-                Renderer.DrawBackground(e.Graphics, e.ToolStrip.ClientRectangle, e.AffectedBounds);
-
-                //Restore the old clip in case the Graphics is used again (does that ever happen?)
-                e.Graphics.Clip = oldClip;
+                if (e.ToolStrip.IsDropDown)
+                {
+                    if (SystemInformation.IsFlatMenuEnabled)
+                    {
+                        e.Graphics.DrawRectangle(SystemPens.ControlDark, clientRect);
+                    }
+                    else
+                    {
+                        ControlPaint.DrawBorder3D(e.Graphics, clientRect, Border3DStyle.Raised);
+                    }
+                }
+                else
+                {
+                    e.Graphics.DrawLine(SystemPens.ButtonHighlight, 0, clientRect.Bottom - 1, clientRect.Width, clientRect.Bottom - 1);
+                    e.Graphics.DrawLine(SystemPens.ButtonShadow, 0, clientRect.Bottom - 2, clientRect.Width, clientRect.Bottom - 2);
+                }
             }
         }
 
@@ -158,12 +170,11 @@ namespace WindowsFormsAero
                         checkType = MenuPopupCheckState.CheckmarkDisabled;
                     }
 
-                    var rect = e.Item.Bounds;
-
-                    rect.X += 2;
-                    rect.Y -= 1;
-                    rect.Width = rect.Height - 1;
-                    rect.Height -= 2;
+                    var rect = e.Item.ContentRectangle;
+                    
+                    //rect.X += 2;
+                    //rect.Y -= 1;
+                    rect.Width = rect.Height + 1;
 
                     SetParameters(MenuPart.PopupCheckBackground, checkBackground);
                     Renderer.DrawBackground(e.Graphics, rect);
@@ -180,18 +191,25 @@ namespace WindowsFormsAero
 
         protected override void OnRenderItemText(ToolStripItemTextRenderEventArgs e)
         {
-            if (!IsSupported)
-            {
-                base.OnRenderItemText(e);
-                return;
-            }
-
-            if (e.Item.Owner.IsDropDown || e.Item.Owner is MenuStrip)
-            {
-                e.TextColor = Renderer.GetColor(ColorProperty.TextColor);
-            }
-
+            e.TextColor = GetForegroundColor(e.Item);
             base.OnRenderItemText(e);
+        }
+
+        private Color GetForegroundColor(ToolStripItem item)
+        {
+            if (item.IsOnDropDown || item.Owner is MenuStrip)
+            {
+                if (IsSupported)
+                {
+                    return Renderer.GetColor(ColorProperty.TextColor);
+                }
+                else
+                {
+                    return (item.Selected || item.Pressed) ? SystemColors.HighlightText : SystemColors.MenuText;
+                }
+            }
+
+            return item.ForeColor;
         }
 
         protected override void OnRenderItemImage(ToolStripItemImageRenderEventArgs e)
@@ -208,25 +226,41 @@ namespace WindowsFormsAero
 
         protected override void OnRenderMenuItemBackground(ToolStripItemRenderEventArgs e)
         {
-            if (!IsSupported)
+            var rect = e.Item.ContentRectangle;
+
+            if (IsSupported)
             {
-                base.OnRenderMenuItemBackground(e);
-                return;
+                SetItemParameters(e.Item);
+
+                if (!e.Item.IsOnDropDown)
+                {
+                    rect.Y = 0;
+                    rect.X += 2;
+                    rect.Width -= 3;
+                    rect.Height = e.ToolStrip.Height - 5;
+                }
+
+                Renderer.DrawBackground(e.Graphics, rect, rect);
             }
-
-            SetItemParameters(e.Item);
-
-            Rectangle rect = e.Item.ContentRectangle;
-
-            if (!e.Item.Owner.IsDropDown)
+            else
             {
-                rect.Y = 0;
-                rect.X += 2;
-                rect.Width -= 3;
-                rect.Height = e.ToolStrip.Height - 5;
-            }
+                if (e.Item.IsOnDropDown)
+                {
+                    rect.X += 1;
+                    rect.Width -= 1;
+                    rect.Height += 1;
+                }
+                else
+                {
+                    rect.Y = 0;
+                    rect.Height = e.ToolStrip.Height;
+                }
 
-            Renderer.DrawBackground(e.Graphics, rect, rect);
+                if (e.Item.Selected || e.Item.Pressed)
+                {
+                    e.Graphics.FillRectangle(SystemBrushes.MenuHighlight, rect);
+                }
+            }
         }
 
         protected override void OnRenderSeparator(ToolStripSeparatorRenderEventArgs e)
@@ -267,80 +301,9 @@ namespace WindowsFormsAero
         //    //base.OnRenderOverflowButtonBackground(e);
         //}
 
-        private void OnPaddingChanged(object sender, EventArgs e)
-        {
-            var toolStrip = (ToolStrip)(sender);
-
-            _paddings[toolStrip] = toolStrip.Padding;
-        }
-
-        private void OnRendererChanged(object sender, EventArgs e)
-        {
-            var toolStrip = (ToolStrip)(sender);
-
-            if (toolStrip.Renderer != this)
-            {
-                Detach(toolStrip);
-            }
-        }
-
-        private void OnSystemColorsChanged(object sender, EventArgs e)
-        {
-            var toolStrip = (ToolStrip)(sender);
-
-            if (IsSupported)
-            {
-                try
-                {
-                    toolStrip.PaddingChanged -= OnPaddingChanged;
-                    toolStrip.Padding = Padding.Empty;
-                }
-                finally
-                {
-                    toolStrip.PaddingChanged += OnPaddingChanged;
-                }
-            }
-            else
-            {
-                try
-                {
-                    toolStrip.PaddingChanged -= OnPaddingChanged;
-                    toolStrip.Padding = _paddings[toolStrip];
-                }
-                finally
-                {
-                    toolStrip.PaddingChanged += OnPaddingChanged;
-                }
-            }
-        }
-
         private void Attach(ToolStrip toolStrip)
         {
-            bool attached = _paddings.ContainsKey(toolStrip);
-
-            _paddings[toolStrip] = toolStrip.Padding;
-
-            if (IsSupported)
-            {
-                toolStrip.Padding = Padding.Empty;
-            }
-
-            if (!attached)
-            {
-                toolStrip.PaddingChanged += OnPaddingChanged;
-                toolStrip.RendererChanged += OnRendererChanged;
-                toolStrip.SystemColorsChanged += OnSystemColorsChanged;
-            }
-        }
-
-        private void Detach(ToolStrip toolStrip)
-        {
-            toolStrip.PaddingChanged -= OnPaddingChanged;
-            toolStrip.RendererChanged -= OnRendererChanged;
-            toolStrip.SystemColorsChanged -= OnSystemColorsChanged;
-
-            toolStrip.Padding = _paddings[toolStrip];
-            _paddings.Remove(toolStrip);
+            toolStrip.Padding = Padding.Empty;
         }
 
         private void SetParameters(MenuPart part, int state)
