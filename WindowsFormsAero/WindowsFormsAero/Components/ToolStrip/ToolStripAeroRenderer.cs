@@ -172,8 +172,6 @@ namespace WindowsFormsAero
 
                     var rect = e.Item.ContentRectangle;
                     
-                    //rect.X += 2;
-                    //rect.Y -= 1;
                     rect.Width = rect.Height + 1;
 
                     SetParameters(MenuPart.PopupCheckBackground, checkBackground);
@@ -292,14 +290,6 @@ namespace WindowsFormsAero
                 return _renderer;
             }
         }
-
-        //protected override void OnRenderOverflowButtonBackground(ToolStripItemRenderEventArgs e)
-        //{
-        //    _renderer.SetParameters(VisualStyleElement.Rebar.Chevron.Normal);
-        //    _renderer.DrawBackground(e.Graphics, e.Item.ContentRectangle);
-
-        //    //base.OnRenderOverflowButtonBackground(e);
-        //}
 
         private void Attach(ToolStrip toolStrip)
         {
