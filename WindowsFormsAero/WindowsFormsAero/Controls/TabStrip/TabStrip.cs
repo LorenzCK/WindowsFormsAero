@@ -415,6 +415,16 @@ namespace WindowsFormsAero
             }
         }
 
+        protected override void OnDoubleClick(EventArgs e)
+        {
+            base.OnDoubleClick(e);
+
+            if (GetItemAt(PointToClient(MousePosition)) == null)
+            {
+                PerformNewTabButtonClick();
+            }
+        }
+
         protected override void OnItemAdded(ToolStripItemEventArgs e)
         {
             if (_clearingTabs)
