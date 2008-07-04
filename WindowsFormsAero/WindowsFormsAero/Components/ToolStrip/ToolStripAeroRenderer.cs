@@ -13,9 +13,6 @@ namespace WindowsFormsAero
 
         private VisualStyleRenderer _renderer;
 
-        private readonly Dictionary<ToolStrip, Padding> _paddings =
-            new Dictionary<ToolStrip, Padding>();
-
         protected override void Initialize(ToolStrip toolStrip)
         {
             Attach(toolStrip);

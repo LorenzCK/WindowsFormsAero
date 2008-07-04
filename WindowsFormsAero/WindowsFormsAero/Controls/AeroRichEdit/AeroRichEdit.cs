@@ -36,8 +36,34 @@ namespace WindowsFormsAero
             }
 
             var clientSite = RichEditOle.GetClientSite();
-            RichEditOle.InsertObject(RichEditObject.FromControl(charIndex, clientSite, control));
 
+            try
+            {
+                RichEditOle.InsertObject(RichEditObject.FromControl(charIndex, clientSite, control));
+            }
+            finally
+            {
+                Marshal.ReleaseComObject(clientSite);
+            }
+        }
+
+        public void InsertBitmap(Int32 charIndex, Bitmap bitmap)
+        {
+            if (bitmap == null)
+            {
+                throw new ArgumentNullException("bitmap");
+            }
+
+            var clientSite = RichEditOle.GetClientSite();
+
+            try
+            {
+                RichEditOle.InsertObject(RichEditObject.FromBitmap(charIndex, clientSite, bitmap));
+            }
+            finally
+            {
+                Marshal.ReleaseComObject(clientSite);
+            }
         }
 
         public new int FontHeight
@@ -246,7 +272,6 @@ namespace WindowsFormsAero
             return NativeMethods.SendMessage(new HandleRef(this, Handle), msg, wParam, lParam);
         }
 
-        
         private IntPtr SendMessage(uint msg, IntPtr wParam, ref RECT lParam)
         {
             return NativeMethods.SendMessage(new HandleRef(this, Handle), msg, wParam, ref lParam);
@@ -256,51 +281,6 @@ namespace WindowsFormsAero
         {
             return NativeMethods.SendMessage(new HandleRef(this, Handle), msg, wParam, out lParam);
         }
-
-        #region RichEdit50W
-
-        //protected override CreateParams CreateParams
-        //{
-        //    get
-        //    {
-        //        EnsureBGShell.InteropLoaded();
-
-        //        CreateParams cp = base.CreateParams;
-        //        cp.ClassName = "RICHEDIT50W";
-
-        //        return cp;
-        //    }
-        //}
-
-        //private static void EnsureBGShell.InteropLoaded()
-        //{
-        //    if (hBGShell.Interop == IntPtr.Zero)
-        //    {
-        //        IntPtr h = NativeMethods.LoadLibrary("BGShell.Interop.dll");
-
-        //        if (h == IntPtr.Zero)
-        //        {
-        //            throw GetLastWin32Exception();
-        //        }
-
-        //        if (Interlocked.CompareExchange(ref hBGShell.Interop, h, IntPtr.Zero) != IntPtr.Zero)
-        //        {
-        //            if (!NativeMethods.FreeLibrary(h))
-        //            {
-        //                throw GetLastWin32Exception();
-        //            }
-        //        }
-        //    }
-        //}
-
-        //private static Exception GetLastWin32Exception()
-        //{
-        //    return Marshal.GetExceptionForHR(Marshal.GetHRForLastWin32Error());
-        //}
-
-        //private static IntPtr hBGShell.Interop;
-
-        #endregion
 
         public static int PixelsToPointsX(int pixels)
         {
@@ -315,6 +295,24 @@ namespace WindowsFormsAero
         private static int PixelsToPoints(int pixels, double logPixels)
         {
             return (int)(((pixels / logPixels) * 72.0));
+        }
+
+        private static void SetupLogPixels()
+        {
+            IntPtr hDesktopDC = NativeMethods.GetDC(new HandleRef());
+
+            if (hDesktopDC != IntPtr.Zero)
+            {
+                try
+                {
+                    _logPixelsX = NativeMethods.GetDeviceCaps(hDesktopDC, DeviceCapability.LogPixelsX);
+                    _logPixelsY = NativeMethods.GetDeviceCaps(hDesktopDC, DeviceCapability.LogPixelsY);
+                }
+                finally
+                {
+                    NativeMethods.ReleaseDC(new HandleRef(), hDesktopDC);
+                }
+            }
         }
 
         private static int LogPixelsX
@@ -345,23 +343,5 @@ namespace WindowsFormsAero
 
         private static int _logPixelsX;
         private static int _logPixelsY;
-
-        private static void SetupLogPixels()
-        {
-            IntPtr hDesktopDC = NativeMethods.GetDC(new HandleRef());
-
-            if (hDesktopDC != IntPtr.Zero)
-            {
-                try
-                {
-                    _logPixelsX = NativeMethods.GetDeviceCaps(hDesktopDC, DeviceCapability.LogPixelsX);
-                    _logPixelsY = NativeMethods.GetDeviceCaps(hDesktopDC, DeviceCapability.LogPixelsY);
-                }
-                finally
-                {
-                    NativeMethods.ReleaseDC(new HandleRef(), hDesktopDC);
-                }
-            }
-        }
     }
 }

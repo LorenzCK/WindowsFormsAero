@@ -5,6 +5,7 @@
 // Copyright (c) 2008 Jachym Kouba
 // Licensed under Microsoft Reciprocal License (Ms-RL) 
 //--
+#if DEBUG
 using System;
 using System.Drawing;
 using System.Windows.Forms;
@@ -130,3 +131,4 @@ namespace WindowsFormsAero
         }
     }
 }
+#endif
