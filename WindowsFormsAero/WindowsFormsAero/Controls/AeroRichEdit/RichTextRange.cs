@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Drawing;
 using WindowsFormsAero.InteropServices;
+using System.Diagnostics.CodeAnalysis;
 
 namespace WindowsFormsAero
 {
@@ -102,6 +103,7 @@ namespace WindowsFormsAero
             get { return GetRangePoint(TomConstants.Start | TA_TOP | TA_LEFT); }
         }
 
+        [SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly", MessageId = "EndPoint")]
         public Point EndPoint
         {
             get { return GetRangePoint(TomConstants.End | TA_BOTTOM | TA_LEFT); }

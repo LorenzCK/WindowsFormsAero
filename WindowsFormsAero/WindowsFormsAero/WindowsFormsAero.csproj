@@ -95,7 +95,6 @@
     <Compile Include="Controls\AeroRichEdit\RichTextUnderline.cs" />
     <Compile Include="Controls\AeroRichEdit\RichTextUnderlineColor.cs" />
     <Compile Include="InteropServices\DeviceCapability.cs" />
-    <Compile Include="InteropServices\DVASPECT.cs" />
     <Compile Include="InteropServices\GetRichEditObjectInterfaces.cs" />
     <Compile Include="InteropServices\ILockBytes.cs" />
     <Compile Include="InteropServices\ITextDocument.cs" />
@@ -139,6 +138,7 @@
     <Compile Include="InteropServices\KeyboardLowLevelHookInfo.cs" />
     <Compile Include="InteropServices\LoadImageFlags.cs" />
     <Compile Include="InteropServices\NMHDR.cs" />
+    <Compile Include="InteropServices\OleRender.cs" />
     <Compile Include="InteropServices\POINT.cs" />
     <Compile Include="InteropServices\RECT.cs" />
     <Compile Include="InteropServices\RichEditEvent.cs" />

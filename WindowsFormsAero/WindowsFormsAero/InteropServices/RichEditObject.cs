@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
+using System.Drawing;
 
 namespace WindowsFormsAero.InteropServices
 {
+    using ComTypes = System.Runtime.InteropServices.ComTypes;
+
     [StructLayout(LayoutKind.Sequential)]
     internal sealed class RichEditObject
     {
@@ -19,43 +22,90 @@ namespace WindowsFormsAero.InteropServices
         private IStorage _storage;
         private IOleClientSite _site;
         private SIZEL _sizel;
-        private DVASPECT _dvaspect;
+        private ComTypes.DVASPECT _dvaspect;
         private RichEditObjectFlags _flags;
         private UInt32 _user;
 
-        public static RichEditObject FromControl(Int32 charIndex, IOleClientSite site,  Control control)
+        private static Guid IIDOf<T>()
         {
-            var clsid = Marshal.GenerateGuidForType(control.GetType());
-            var lpunk = Marshal.GetIUnknownForObject(control);
+            return Marshal.GenerateGuidForType(typeof(T));
+        }
 
-            const StorageFlags flags = 
-                StorageFlags.Create | StorageFlags.ReadWrite |
-                StorageFlags.ShareExclusive;
+        public static RichEditObject FromBitmap(Int32 charIndex, IOleClientSite site, Bitmap bitmap)
+        {
+            const int CF_BITMAP = 2;
+            var IID_IDataObject = IIDOf<ComTypes.IDataObject>();
 
+            var dataObject = new DataObject(bitmap);
+            var comDataObject = (ComTypes.IDataObject)(dataObject);
+            
+            var formatEtc = new ComTypes.FORMATETC()
+            {
+                lindex = -1,
+                ptd = IntPtr.Zero,
+                cfFormat = CF_BITMAP,
+                tymed = ComTypes.TYMED.TYMED_GDI,
+                dwAspect = ComTypes.DVASPECT.DVASPECT_CONTENT,
+            };
+
+            var storage = CreateIStorageOnHGlobal();
+            var oleObject = NativeMethods.OleCreateStaticFromData(dataObject,
+                                                                  ref IID_IDataObject,
+                                                                  OleRender.Format,
+                                                                  ref formatEtc,
+                                                                  site,
+                                                                  storage);
+
+            NativeMethods.OleSetContainedObject(oleObject, true);
+
+            return new RichEditObject()
+            {
+                _charIndex = charIndex,
+                _storage = storage,
+                _site = site,
+
+                _dvaspect = ComTypes.DVASPECT.DVASPECT_CONTENT,
+                _flags = RichEditObjectFlags.BelowBaseline | RichEditObjectFlags.InPlaceActive,
+                _clsid = Marshal.GenerateGuidForType(dataObject.GetType()),
+                _object = oleObject,
+            };
+        }
+
+        public static RichEditObject FromControl(Int32 charIndex, IOleClientSite site, Control control)
+        {
+            var storage = CreateIStorageOnHGlobal();
+
+            try
+            {
+                return new RichEditObject()
+                {
+                    _charIndex = charIndex,
+                    _storage = storage,
+                    _site = site,
+
+                    _dvaspect = ComTypes.DVASPECT.DVASPECT_CONTENT,
+                    _flags = RichEditObjectFlags.BelowBaseline | RichEditObjectFlags.InvertedSelect,
+                    _clsid = Marshal.GenerateGuidForType(control.GetType()),
+                    _object = Marshal.GetIUnknownForObject(control),
+                };
+            }
+            finally
+            {
+                Marshal.ReleaseComObject(storage);
+            }
+        }
+
+        private static IStorage CreateIStorageOnHGlobal()
+        {
             var bytes = NativeMethods.CreateILockBytesOnHGlobal(IntPtr.Zero, true);
 
             try
             {
-                var storage = NativeMethods.StgCreateDocfileOnILockBytes(bytes, flags, 0);
+                const StorageFlags CreateRWExclusive = StorageFlags.Create |
+                                                       StorageFlags.ReadWrite |
+                                                       StorageFlags.ShareExclusive;
 
-                try
-                {
-                    return new RichEditObject()
-                    {
-                        _charIndex = charIndex,
-                        _storage = storage,
-                        _site = site,
-
-                        _dvaspect = DVASPECT.Content,
-                        _flags = RichEditObjectFlags.BelowBaseline | RichEditObjectFlags.InvertedSelect,
-                        _clsid = clsid,
-                        _object = lpunk,
-                    };
-                }
-                finally
-                {
-                    Marshal.ReleaseComObject(storage);
-                }
+                return NativeMethods.StgCreateDocfileOnILockBytes(bytes, CreateRWExclusive, 0);
             }
             finally
             {
@@ -63,5 +113,4 @@ namespace WindowsFormsAero.InteropServices
             }
         }
     }
-
 }

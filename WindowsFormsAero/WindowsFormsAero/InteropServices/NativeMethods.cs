@@ -4,6 +4,7 @@ using System.Runtime.InteropServices;
 using System.Security;
 using System.Text;
 using System.Windows.Forms;
+using System.Runtime.InteropServices.ComTypes;
 
 namespace WindowsFormsAero.InteropServices
 {
@@ -139,6 +140,34 @@ namespace WindowsFormsAero.InteropServices
             [In] IntPtr hGlobal,
             [In, MarshalAs(UnmanagedType.Bool)] 
                  Boolean fDeleteOnRelease);
+
+        #endregion
+
+        #region ole32!OleCreateStaticFromData
+
+        [DllImport(Dll.Ole32, PreserveSig = false, CharSet = CharSet.Unicode, SetLastError = false)]
+        [ReliabilityContract(Consistency.WillNotCorruptState, Cer.MayFail)]
+        internal static extern IntPtr OleCreateStaticFromData(
+            [In, MarshalAs(UnmanagedType.Interface)]
+                 System.Runtime.InteropServices.ComTypes.IDataObject pSrcDataObj,
+            [In] ref Guid riid, 
+            [In] OleRender renderopt, 
+            [In] ref FORMATETC pFormatEtc,
+            [In, MarshalAs(UnmanagedType.Interface)]
+                 IOleClientSite pClientSite,
+            [In, MarshalAs(UnmanagedType.Interface)]
+                 IStorage pStg);
+
+        #endregion
+
+        #region
+
+        [DllImport(Dll.Ole32, PreserveSig = false, CharSet = CharSet.Unicode, SetLastError = false)]
+        internal static extern void OleSetContainedObject(
+            [In] IntPtr pUnk, 
+            [In, MarshalAs(UnmanagedType.Bool)]
+                 Boolean fContained);
+
 
         #endregion
 
@@ -356,7 +385,6 @@ namespace WindowsFormsAero.InteropServices
                  Object lParam);
 
         #endregion
-
 
         #region user32!SendMessage(IntPtr, UInt32, IntPtr, ref RECT)
 

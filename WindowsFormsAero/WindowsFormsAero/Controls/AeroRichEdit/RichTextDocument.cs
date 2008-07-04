@@ -42,7 +42,7 @@ namespace WindowsFormsAero
             get { return GetRange(Length, Length); }
         }
 
-        public RichTextRange Range
+        public RichTextRange DocumentRange
         {
             get { return GetRange(0, _richEdit.TextLength); }
         }
