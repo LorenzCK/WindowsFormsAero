@@ -85,6 +85,22 @@
   </Target>
   -->
   <PropertyGroup>
-    <PostBuildEvent>@"%25ProgramFiles%25\Microsoft SDKs\Windows\v6.0A\bin\gacutil.exe" /nologo /i "$(TargetPath)" /f</PostBuildEvent>
+    <PostBuildEvent>set PROCESSOR_ARCHITEW6432 &gt;nul 2&gt;nul
+
+if ErrorLevel 0 (
+    set NATIVE_PFILES=%25ProgramW6432%25
+    set IS_WOW64=TRUE
+) else (
+    set NATIVE_PFILES=%25ProgramFiles%25
+)
+
+set BIN=%25NATIVE_PFILES%25\Microsoft SDKs\Windows\v6.0A\bin
+set BIN64=%25BIN%25\x64
+
+"%25BIN%25\gacutil.exe" /nologo /i "$(TargetPath)" /f
+
+if (%25IS_WOW64%25) equ (TRUE) (
+    "%25BIN64%25\gacutil.exe" /nologo /i "$(TargetPath)" /f
+)</PostBuildEvent>
   </PropertyGroup>
 </Project>
