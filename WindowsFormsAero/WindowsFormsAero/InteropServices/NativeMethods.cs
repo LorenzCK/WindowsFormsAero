@@ -119,6 +119,18 @@ namespace WindowsFormsAero.InteropServices
 
         #endregion
 
+        #region kernel32!IsWow64Process
+
+        [return: MarshalAs(UnmanagedType.Bool)]
+        [DllImport(Dll.Kernel32, BestFitMapping = false, ExactSpelling = true, CharSet = CharSet.Auto, SetLastError = true)]
+        [ReliabilityContract(Consistency.WillNotCorruptState, Cer.MayFail)]
+        internal static extern bool IsWow64Process(
+            [In] IntPtr hProcess, 
+            [Out, MarshalAs(UnmanagedType.Bool)] 
+                 out bool pOldValue);
+
+        #endregion
+
         #region kernel32!LoadLibrary
 
         [DllImport(Dll.Kernel32, BestFitMapping = false, CharSet = CharSet.Auto, SetLastError = true)]
@@ -126,6 +138,25 @@ namespace WindowsFormsAero.InteropServices
         internal static extern NativeModule LoadLibrary(string lpFileName);
 
         #endregion
+
+        #region kernel32!Wow64DisableWow64FsRedirection
+
+        [return: MarshalAs(UnmanagedType.Bool)]
+        [DllImport(Dll.Kernel32, BestFitMapping = false, ExactSpelling = true, CharSet = CharSet.Auto, SetLastError = true)]
+        [ReliabilityContract(Consistency.WillNotCorruptState, Cer.MayFail)]
+        internal static extern bool Wow64DisableWow64FsRedirection([Out] out IntPtr pOldValue);
+
+        #endregion
+
+        #region kernel32!Wow64RevertWow64FsRedirection
+
+        [return: MarshalAs(UnmanagedType.Bool)]
+        [DllImport(Dll.Kernel32, BestFitMapping = false, ExactSpelling = true, CharSet = CharSet.Auto, SetLastError = true)]
+        [ReliabilityContract(Consistency.WillNotCorruptState, Cer.MayFail)]
+        internal static extern bool Wow64RevertWow64FsRedirection([In] IntPtr pOldValue);
+
+        #endregion
+
 
         #region ole32!CreateILockBytesOnHGlobal
 
@@ -160,7 +191,7 @@ namespace WindowsFormsAero.InteropServices
 
         #endregion
 
-        #region
+        #region ole32!OleSetContainedObject
 
         [DllImport(Dll.Ole32, PreserveSig = false, CharSet = CharSet.Unicode, SetLastError = false)]
         internal static extern void OleSetContainedObject(

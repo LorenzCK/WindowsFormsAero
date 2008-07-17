@@ -197,6 +197,7 @@
     </Compile>
     <Compile Include="Controls\TabStrip\Enums.cs" />
     <Compile Include="Controls\TabStrip\Renderers\TabStripAeroRenderer.cs" />
+    <Compile Include="Static\WindowsOnWindows64.cs" />
     <Service Include="{94E38DFF-614B-4cbd-B67C-F211BB35CE8B}" />
   </ItemGroup>
   <ItemGroup>
@@ -222,16 +223,8 @@
     <None Include="Resources\Native.res" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\WindowsFormsAero.HookLibrary\bin\HookLib.dll">
-      <Link>Resources\HookLib.dll</Link>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Resources\SearchStop.png" />
     <None Include="Resources\SearchStart.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Attributes\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

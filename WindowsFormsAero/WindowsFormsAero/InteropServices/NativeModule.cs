@@ -1,10 +1,10 @@
 ﻿using System;
-using Microsoft.Win32.SafeHandles;
 using System.Runtime.InteropServices;
+using Microsoft.Win32.SafeHandles;
 
 namespace WindowsFormsAero.InteropServices
 {
-    internal sealed class NativeModule : SafeHandle
+    public sealed class NativeModule : SafeHandle
     {
         private NativeModule()
             : base(IntPtr.Zero, true)
