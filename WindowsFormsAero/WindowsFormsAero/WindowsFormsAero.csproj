@@ -59,14 +59,6 @@
     <Compile Include="Components\Dwm\FrameHitTestResult.cs" />
     <Compile Include="Components\EnableableComponent.cs">
     </Compile>
-    <None Include="Components\Hooks\HookComponent.cs" />
-    <None Include="Components\Hooks\HookLibrary.cs" />
-    <None Include="Components\Hooks\HookWindow.cs" />
-    <None Include="Components\Hooks\HookWindowSingleton.cs" />
-    <None Include="Components\Hooks\KeyboardHook.cs" />
-    <None Include="Components\Hooks\LowLevelKeyboardHook.cs" />
-    <Compile Include="Components\Hooks\WindowsHook.cs">
-    </Compile>
     <Compile Include="Components\ToolStrip\HiddenMenuStrip.cs">
     </Compile>
     <Compile Include="Components\MessageFilter.cs" />
@@ -144,7 +136,6 @@
     <Compile Include="InteropServices\RichEditEvent.cs" />
     <Compile Include="InteropServices\RichEditObject.cs" />
     <Compile Include="InteropServices\RichEditObjectFlags.cs" />
-    <Compile Include="InteropServices\SafeWindowsHookHandle.cs" />
     <Compile Include="InteropServices\SetWindowPosFlags.cs" />
     <Compile Include="InteropServices\SIZEL.cs" />
     <Compile Include="InteropServices\StorageFlags.cs" />
@@ -153,7 +144,6 @@
     <Compile Include="InteropServices\ToolTipFlags.cs" />
     <Compile Include="InteropServices\VirtualKeyMapType.cs" />
     <Compile Include="InteropServices\WindowNotifications.cs" />
-    <Compile Include="Components\Hooks\WindowsHookType.cs" />
     <Compile Include="Static\DesktopComposition.cs" />
     <Compile Include="Extensions\ControlExtensions.cs" />
     <Compile Include="Extensions\GraphicsExtensions.cs" />
@@ -197,7 +187,7 @@
     </Compile>
     <Compile Include="Controls\TabStrip\Enums.cs" />
     <Compile Include="Controls\TabStrip\Renderers\TabStripAeroRenderer.cs" />
-    <Compile Include="Static\WindowsOnWindows64.cs" />
+    <Compile Include="InteropServices\WindowsOnWindows64.cs" />
     <Service Include="{94E38DFF-614B-4cbd-B67C-F211BB35CE8B}" />
   </ItemGroup>
   <ItemGroup>

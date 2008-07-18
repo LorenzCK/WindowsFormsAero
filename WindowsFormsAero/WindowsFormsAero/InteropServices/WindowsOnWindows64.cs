@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
-using WindowsFormsAero.InteropServices;
 
-namespace WindowsFormsAero
+namespace WindowsFormsAero.InteropServices
 {
     public static class WindowsOnWindows64
     {
