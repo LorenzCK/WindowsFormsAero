@@ -450,33 +450,6 @@ namespace WindowsFormsAero.InteropServices
 
         #endregion
 
-        #region user32!SetWindowsHookEx
-
-        [DllImport(
-            Dll.User32,
-            CharSet = CharSet.Auto,
-            SetLastError = true,
-            BestFitMapping = false,
-            CallingConvention = CallingConvention.Winapi)]
-        [ReliabilityContract(Consistency.WillNotCorruptState, Cer.MayFail)]
-        internal static extern SafeWindowsHookHandle SetWindowsHookEx(
-            [In] WindowsHookType idHook,
-            [In] IntPtr lpfn,
-            [In] NativeModule hMod,
-            [In] Int32 dwThreadId);
-
-        //internal static SafeWindowsHookHandle SetWindowsHookEx(WindowsHookType hookType, Delegate procedure)
-        //{
-        //    return SetWindowsHookEx(hookType, Marshal.GetFunctionPointerForDelegate(procedure), NativeModule.Invalid, 0);
-        //}
-
-        //internal static SafeWindowsHookHandle SetWindowsHookEx(KeyboardLowLevelHookProc proc)
-        //{
-        //    return SetWindowsHookEx(WindowsHookType.KeyboardLowLevel, proc);
-        //}
-
-        #endregion
-
         #region user32!ToUnicode
 
         [DllImport(
@@ -493,20 +466,6 @@ namespace WindowsFormsAero.InteropServices
             [Out, MarshalAs(UnmanagedType.LPWStr)] StringBuilder pwszBuff,
             [In] Int32 cchBuff,
             [In] UInt32 wFlags);
-
-        #endregion
-
-        #region user32!UnhookWindowsHookEx
-
-        [DllImport(
-            Dll.User32,
-            CharSet = CharSet.Auto,
-            SetLastError = true,
-            BestFitMapping = false,
-            CallingConvention = CallingConvention.Winapi)]
-        [ReliabilityContract(Consistency.WillNotCorruptState, Cer.MayFail)]
-        [return: MarshalAs(UnmanagedType.Bool)]
-        internal static extern bool UnhookWindowsHookEx(IntPtr hhk);
 
         #endregion
 
