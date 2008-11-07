@@ -8,7 +8,7 @@ using System.Windows.Forms;
 
 namespace WindowsFormsAero.Demo
 {
-    public partial class GlassForm : Form
+    public partial class GlassForm : AeroForm
     {
         public GlassForm()
         {
@@ -21,7 +21,7 @@ namespace WindowsFormsAero.Demo
 
             if (DesktopComposition.IsEnabled)
             {
-                
+                //.DesktopComposition.DesktopComposition.
             }
         }
     }

@@ -13,14 +13,19 @@ namespace WindowsFormsAero.InteropServices
 
         public IntPtr GetProcedureAddress(string name)
         {
-            IntPtr result = NativeMethods.GetProcAddress(this, name);
+            IntPtr result = TryGetProcedureAddress(name);
 
             if (result == IntPtr.Zero)
             {
-                Marshal.ThrowExceptionForHR(Marshal.GetHRForLastWin32Error());
+                throw Marshal.GetExceptionForHR(Marshal.GetHRForLastWin32Error());
             }
 
             return result;
+        }
+
+        public IntPtr TryGetProcedureAddress(string name)
+        {
+            return NativeMethods.GetProcAddress(this, name);
         }
 
         public bool ContainsProcedure(string name)

@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -61,15 +62,15 @@
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aeroTabControl1 = new WindowsFormsAero.AeroTabControl();
             this.aeroTabPage2 = new WindowsFormsAero.AeroTabPage();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.hookLog = new System.Windows.Forms.TextBox();
             this.aeroTabPage1 = new WindowsFormsAero.AeroTabPage();
             this.chkDebugRender = new System.Windows.Forms.CheckBox();
             this.propertyGrid1 = new System.Windows.Forms.PropertyGrid();
             this.aeroTabPage3 = new WindowsFormsAero.AeroTabPage();
-            this.searchTextBox1 = new WindowsFormsAero.SearchTextBox();
             this.button1 = new System.Windows.Forms.Button();
             this.aeroTextBox1 = new WindowsFormsAero.AeroTextBox();
             this.progressBarShowcase1 = new WindowsFormsAero.Demo.Controls.ProgressBarShowcase();
+            this.hook = new WindowsFormsAero.LowLevelKeyboardHook(this.components);
             this.menuStrip1.SuspendLayout();
             this.aeroTabControl1.SuspendLayout();
             this.aeroTabPage2.SuspendLayout();
@@ -320,7 +321,7 @@
             this.aeroTabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.aeroTabControl1.Location = new System.Drawing.Point(0, 28);
             this.aeroTabControl1.Name = "aeroTabControl1";
-            this.aeroTabControl1.SelectedTab = this.aeroTabPage3;
+            this.aeroTabControl1.SelectedTab = this.aeroTabPage2;
             this.aeroTabControl1.Size = new System.Drawing.Size(604, 325);
             this.aeroTabControl1.TabIndex = 0;
             this.aeroTabControl1.NewTabButtonClick += new System.EventHandler(this.aeroTabControl1_NewTabButtonClick);
@@ -328,22 +329,22 @@
             // 
             // aeroTabPage2
             // 
-            this.aeroTabPage2.Controls.Add(this.textBox1);
+            this.aeroTabPage2.Controls.Add(this.hookLog);
             this.aeroTabPage2.Image = global::WindowsFormsAero.Demo.Properties.Resources.Untitled;
             this.aeroTabPage2.Location = new System.Drawing.Point(2, 40);
             this.aeroTabPage2.Name = "aeroTabPage2";
             this.aeroTabPage2.Size = new System.Drawing.Size(600, 283);
             this.aeroTabPage2.TabIndex = 2;
-            this.aeroTabPage2.Text = "aeroTabPage2";
+            this.aeroTabPage2.Text = "Hook";
             // 
-            // textBox1
+            // hookLog
             // 
-            this.textBox1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.textBox1.Location = new System.Drawing.Point(0, 0);
-            this.textBox1.Multiline = true;
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(600, 283);
-            this.textBox1.TabIndex = 0;
+            this.hookLog.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.hookLog.Location = new System.Drawing.Point(0, 0);
+            this.hookLog.Multiline = true;
+            this.hookLog.Name = "hookLog";
+            this.hookLog.Size = new System.Drawing.Size(600, 283);
+            this.hookLog.TabIndex = 0;
             // 
             // aeroTabPage1
             // 
@@ -379,7 +380,6 @@
             // 
             // aeroTabPage3
             // 
-            this.aeroTabPage3.Controls.Add(this.searchTextBox1);
             this.aeroTabPage3.Controls.Add(this.button1);
             this.aeroTabPage3.Controls.Add(this.aeroTextBox1);
             this.aeroTabPage3.Controls.Add(this.progressBarShowcase1);
@@ -389,14 +389,6 @@
             this.aeroTabPage3.Size = new System.Drawing.Size(600, 283);
             this.aeroTabPage3.TabIndex = 3;
             this.aeroTabPage3.Text = "Simple Controls";
-            // 
-            // searchTextBox1
-            // 
-            this.searchTextBox1.Location = new System.Drawing.Point(116, 152);
-            this.searchTextBox1.Name = "searchTextBox1";
-            this.searchTextBox1.Size = new System.Drawing.Size(171, 23);
-            this.searchTextBox1.TabIndex = 3;
-            this.searchTextBox1.Text = "searchTextBox1";
             // 
             // button1
             // 
@@ -423,6 +415,13 @@
             this.progressBarShowcase1.Name = "progressBarShowcase1";
             this.progressBarShowcase1.Size = new System.Drawing.Size(446, 144);
             this.progressBarShowcase1.TabIndex = 0;
+            // 
+            // hook
+            // 
+            this.hook.Enabled = true;
+            this.hook.KeyUp += new System.Windows.Forms.KeyEventHandler(this.OnHookKeyUp);
+            this.hook.KeyDown += new System.Windows.Forms.KeyEventHandler(this.OnHookKeyDown);
+            this.hook.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.OnHookKeyPress);
             // 
             // Form1
             // 
@@ -454,7 +453,7 @@
         private AeroTabControl aeroTabControl1;
         private AeroTabPage aeroTabPage2;
         private AeroTabPage aeroTabPage1;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox hookLog;
         private AeroTabPage aeroTabPage3;
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
@@ -491,9 +490,7 @@
         private WindowsFormsAero.Demo.Controls.ProgressBarShowcase progressBarShowcase1;
         private AeroTextBox aeroTextBox1;
         private System.Windows.Forms.Button button1;
-        private SearchTextBox searchTextBox1;
-
-
+        private LowLevelKeyboardHook hook;
 
     }
 }
