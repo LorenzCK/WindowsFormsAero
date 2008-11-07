@@ -53,6 +53,23 @@ namespace WindowsFormsAero.Demo
             }
         }
 
+        private void OnHookKeyDown(object sender, KeyEventArgs e)
+        {
+            hookLog.AppendText("DOWN: " + e.KeyData.ToString() + '\n');
+        }
+
+        private void OnHookKeyPress(object sender, KeyPressEventArgs e)
+        {
+            hookLog.AppendText("PRESS: " + e.KeyChar + '\n');
+        }
+
+        private void OnHookKeyUp(object sender, KeyEventArgs e)
+        {
+            hookLog.AppendText("UP: " + e.KeyData.ToString() + '\n');
+        }
+
+        
+
         //protected override void OnLoad(EventArgs e)
         //{
         //    base.OnLoad(e);

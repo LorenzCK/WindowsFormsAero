@@ -11,20 +11,10 @@ namespace WindowsFormsAero.InteropServices
     [SuppressUnmanagedCodeSecurity]
     internal static class NativeMethods
     {
-        private static class Dll
-        {
-            internal const string DwmApi = "dwmapi";
-            internal const string Gdi32 = "gdi32";
-            internal const string Kernel32 = "kernel32";
-            internal const string Ole32 = "ole32";
-            internal const string User32 = "user32";
-            internal const string UxTheme = "uxtheme";
-        }
-
         #region dwmapi!DwmDefWindowProc
 
         [return: MarshalAs(UnmanagedType.Bool)]
-        [DllImport(Dll.DwmApi, CharSet = CharSet.Auto, ExactSpelling = true, SetLastError = true)]
+        [DllImport("dwmapi", CharSet = CharSet.Auto, ExactSpelling = true, SetLastError = true)]
         [ReliabilityContract(Consistency.WillNotCorruptState, Cer.MayFail)]
         internal static extern bool DwmDefWindowProc(
             [In] HandleRef hwnd,
@@ -39,7 +29,7 @@ namespace WindowsFormsAero.InteropServices
         #region dwmapi!DwmGetColorizationColor
 
         [return: MarshalAs(UnmanagedType.Bool)]
-        [DllImport(Dll.DwmApi, ExactSpelling = true, PreserveSig = false, SetLastError = false)]
+        [DllImport("dwmapi", ExactSpelling = true, PreserveSig = false, SetLastError = false)]
         [ReliabilityContract(Consistency.WillNotCorruptState, Cer.MayFail)]
         internal static extern bool DwmGetColorizationColor(
             [Out] out int pcrColorization
@@ -49,7 +39,7 @@ namespace WindowsFormsAero.InteropServices
 
         #region dwmapi!DwmIsCompositionEnabled
 
-        [DllImport(Dll.DwmApi, ExactSpelling = true, PreserveSig = false, SetLastError = false)]
+        [DllImport("dwmapi", ExactSpelling = true, PreserveSig = false, SetLastError = false)]
         [ReliabilityContract(Consistency.WillNotCorruptState, Cer.MayFail)]
         [return: MarshalAs(UnmanagedType.Bool)]
         internal static extern bool DwmIsCompositionEnabled();
@@ -58,7 +48,7 @@ namespace WindowsFormsAero.InteropServices
 
         #region dwmapi!DwmEnableComposition
 
-        [DllImport(Dll.DwmApi, ExactSpelling = true, PreserveSig = false, SetLastError = false)]
+        [DllImport("dwmapi", ExactSpelling = true, PreserveSig = false, SetLastError = false)]
         [ReliabilityContract(Consistency.WillNotCorruptState, Cer.MayFail)]
         internal static extern void DwmEnableComposition(
             [In] UInt32 uCompositionAction
@@ -68,7 +58,7 @@ namespace WindowsFormsAero.InteropServices
 
         #region dwmapi!DwmEnableBlurBehindWindow
 
-        [DllImport(Dll.DwmApi, ExactSpelling = true, PreserveSig = false, SetLastError = false)]
+        [DllImport("dwmapi", ExactSpelling = true, PreserveSig = false, SetLastError = false)]
         [ReliabilityContract(Consistency.WillNotCorruptState, Cer.MayFail)]
         internal static extern void DwmEnableBlurBehindWindow(
             [In] HandleRef hWnd,
@@ -78,7 +68,7 @@ namespace WindowsFormsAero.InteropServices
 
         #region dwmapi!DwmExtendFrameIntoClientArea
 
-        [DllImport(Dll.DwmApi, ExactSpelling = true, PreserveSig = false, SetLastError = false )]
+        [DllImport("dwmapi", ExactSpelling = true, PreserveSig = false, SetLastError = false )]
         [ReliabilityContract(Consistency.WillNotCorruptState, Cer.MayFail)]
         internal static extern void DwmExtendFrameIntoClientArea(
             [In] HandleRef hWnd,
@@ -86,10 +76,11 @@ namespace WindowsFormsAero.InteropServices
 
         #endregion
 
+
         #region gdi32!GetDeviceCaps
 
         [DllImport(
-            Dll.Gdi32,
+            "gdi32",
             SetLastError = true,
             CallingConvention = CallingConvention.Winapi
         )]
@@ -99,9 +90,10 @@ namespace WindowsFormsAero.InteropServices
 
         #endregion
 
+
         #region kernel32!FreeLibrary
 
-        [DllImport(Dll.Kernel32, SetLastError = true)]
+        [DllImport("kernel32", SetLastError = true)]
         [ReliabilityContract(Consistency.WillNotCorruptState, Cer.MayFail)]
         [return: MarshalAs(UnmanagedType.Bool)]
         internal static extern bool FreeLibrary(IntPtr handle);
@@ -110,7 +102,7 @@ namespace WindowsFormsAero.InteropServices
 
         #region kernel32!GetProcAddress
 
-        [DllImport(Dll.Kernel32, BestFitMapping = false, CharSet = CharSet.Auto, SetLastError = true)]
+        [DllImport("kernel32", BestFitMapping = false, CharSet = CharSet.Auto, SetLastError = true)]
         [ReliabilityContract(Consistency.WillNotCorruptState, Cer.MayFail)]
         internal static extern IntPtr GetProcAddress(
             [In] NativeModule handle, 
@@ -122,7 +114,7 @@ namespace WindowsFormsAero.InteropServices
         #region kernel32!IsWow64Process
 
         [return: MarshalAs(UnmanagedType.Bool)]
-        [DllImport(Dll.Kernel32, BestFitMapping = false, ExactSpelling = true, CharSet = CharSet.Auto, SetLastError = true)]
+        [DllImport("kernel32", BestFitMapping = false, ExactSpelling = true, CharSet = CharSet.Auto, SetLastError = true)]
         [ReliabilityContract(Consistency.WillNotCorruptState, Cer.MayFail)]
         internal static extern bool IsWow64Process(
             [In] IntPtr hProcess, 
@@ -133,7 +125,7 @@ namespace WindowsFormsAero.InteropServices
 
         #region kernel32!LoadLibrary
 
-        [DllImport(Dll.Kernel32, BestFitMapping = false, CharSet = CharSet.Auto, SetLastError = true)]
+        [DllImport("kernel32", BestFitMapping = false, CharSet = CharSet.Auto, SetLastError = true)]
         [ReliabilityContract(Consistency.WillNotCorruptState, Cer.MayFail)]
         internal static extern NativeModule LoadLibrary(string lpFileName);
 
@@ -142,7 +134,7 @@ namespace WindowsFormsAero.InteropServices
         #region kernel32!Wow64DisableWow64FsRedirection
 
         [return: MarshalAs(UnmanagedType.Bool)]
-        [DllImport(Dll.Kernel32, BestFitMapping = false, ExactSpelling = true, CharSet = CharSet.Auto, SetLastError = true)]
+        [DllImport("kernel32", BestFitMapping = false, ExactSpelling = true, CharSet = CharSet.Auto, SetLastError = true)]
         [ReliabilityContract(Consistency.WillNotCorruptState, Cer.MayFail)]
         internal static extern bool Wow64DisableWow64FsRedirection([Out] out IntPtr pOldValue);
 
@@ -151,7 +143,7 @@ namespace WindowsFormsAero.InteropServices
         #region kernel32!Wow64RevertWow64FsRedirection
 
         [return: MarshalAs(UnmanagedType.Bool)]
-        [DllImport(Dll.Kernel32, BestFitMapping = false, ExactSpelling = true, CharSet = CharSet.Auto, SetLastError = true)]
+        [DllImport("kernel32", BestFitMapping = false, ExactSpelling = true, CharSet = CharSet.Auto, SetLastError = true)]
         [ReliabilityContract(Consistency.WillNotCorruptState, Cer.MayFail)]
         internal static extern bool Wow64RevertWow64FsRedirection([In] IntPtr pOldValue);
 
@@ -161,7 +153,7 @@ namespace WindowsFormsAero.InteropServices
         #region ole32!CreateILockBytesOnHGlobal
 
         [DllImport(
-            Dll.Ole32,
+            "ole32",
             PreserveSig = false,
             SetLastError = true,
             CallingConvention = CallingConvention.Winapi
@@ -176,7 +168,7 @@ namespace WindowsFormsAero.InteropServices
 
         #region ole32!OleCreateStaticFromData
 
-        [DllImport(Dll.Ole32, PreserveSig = false, CharSet = CharSet.Unicode, SetLastError = false)]
+        [DllImport("ole32", PreserveSig = false, CharSet = CharSet.Unicode, SetLastError = false)]
         [ReliabilityContract(Consistency.WillNotCorruptState, Cer.MayFail)]
         internal static extern IntPtr OleCreateStaticFromData(
             [In, MarshalAs(UnmanagedType.Interface)]
@@ -193,7 +185,7 @@ namespace WindowsFormsAero.InteropServices
 
         #region ole32!OleSetContainedObject
 
-        [DllImport(Dll.Ole32, PreserveSig = false, CharSet = CharSet.Unicode, SetLastError = false)]
+        [DllImport("ole32", PreserveSig = false, CharSet = CharSet.Unicode, SetLastError = false)]
         internal static extern void OleSetContainedObject(
             [In] IntPtr pUnk, 
             [In, MarshalAs(UnmanagedType.Bool)]
@@ -205,7 +197,7 @@ namespace WindowsFormsAero.InteropServices
         #region ole32!StgCreateDocfileOnILockBytes
 
         [return: MarshalAs(UnmanagedType.Interface)]
-        [DllImport(Dll.Ole32, PreserveSig = false, CharSet = CharSet.Unicode, SetLastError = false)]
+        [DllImport("ole32", PreserveSig = false, CharSet = CharSet.Unicode, SetLastError = false)]
         [ReliabilityContract(Consistency.WillNotCorruptState, Cer.MayFail)]
         internal static extern IStorage StgCreateDocfileOnILockBytes(
             [In] ILockBytes plkbyt,
@@ -214,10 +206,11 @@ namespace WindowsFormsAero.InteropServices
 
         #endregion
 
+
         #region user32!AdjustWindowRectEx
 
         [return: MarshalAs(UnmanagedType.Bool)]
-        [DllImport(Dll.User32, SetLastError = true)]
+        [DllImport("user32", SetLastError = true)]
         [ReliabilityContract(Consistency.WillNotCorruptState, Cer.MayFail)]
         internal static extern bool AdjustWindowRectEx(
             [In, Out] ref RECT    lpRect,
@@ -230,7 +223,7 @@ namespace WindowsFormsAero.InteropServices
         #region user32!CallNextHookEx
 
         [DllImport(
-            Dll.User32,
+            "user32",
             CharSet = CharSet.Auto,
             SetLastError = true,
             BestFitMapping = false,
@@ -247,7 +240,7 @@ namespace WindowsFormsAero.InteropServices
         #region user32!DestroyIcon
 
         [return: MarshalAs(UnmanagedType.Bool)]
-        [DllImport(Dll.User32, BestFitMapping = false, SetLastError = true)]
+        [DllImport("user32", BestFitMapping = false, SetLastError = true)]
         [ReliabilityContract(Consistency.WillNotCorruptState, Cer.MayFail)]
         internal static extern bool DestroyIcon(IntPtr hIcon);
 
@@ -255,7 +248,7 @@ namespace WindowsFormsAero.InteropServices
 
         #region user32!GetAncestor
 
-        [DllImport(Dll.User32, CharSet = CharSet.Auto, ExactSpelling = true)]
+        [DllImport("user32", CharSet = CharSet.Auto, ExactSpelling = true)]
         [ReliabilityContract(Consistency.WillNotCorruptState, Cer.MayFail)]
         internal static extern IntPtr GetAncestor(IntPtr hWnd, AncestorType gaFlags);
 
@@ -263,7 +256,7 @@ namespace WindowsFormsAero.InteropServices
 
         #region user32!GetDC
 
-        [DllImport(Dll.User32, CharSet = CharSet.Auto, ExactSpelling = true, SetLastError = true)]
+        [DllImport("user32", CharSet = CharSet.Auto, ExactSpelling = true, SetLastError = true)]
         [ReliabilityContract(Consistency.WillNotCorruptState, Cer.MayFail)]
         internal static extern IntPtr GetDC(HandleRef hWnd);
 
@@ -272,7 +265,7 @@ namespace WindowsFormsAero.InteropServices
         #region user32!GetForegroundWindow
 
         [DllImport(
-            Dll.User32,
+            "user32",
             SetLastError = true,
             ExactSpelling = true,
             CallingConvention = CallingConvention.Winapi
@@ -283,10 +276,23 @@ namespace WindowsFormsAero.InteropServices
 
         #endregion
 
+        #region user32!GetKeyboardLayout
+
+        [DllImport(
+            "user32",
+            EntryPoint = "GetKeyboardLayout",
+            ExactSpelling = true,
+            SetLastError = true,
+            CallingConvention = CallingConvention.Winapi)]
+        [ReliabilityContract(Consistency.WillNotCorruptState, Cer.MayFail)]
+        internal static extern IntPtr GetKeyboardLayout([In] Int32 dwThread);
+
+        #endregion
+
         #region user32!GetKeyboardState
 
         [DllImport(
-            Dll.User32,
+            "user32",
             SetLastError = true,
             CallingConvention = CallingConvention.Winapi
         )]
@@ -296,10 +302,27 @@ namespace WindowsFormsAero.InteropServices
 
         #endregion
 
+        #region user32!GetWindowThreadProcessId
+
+        [DllImport(
+            "user32",
+            SetLastError = true,
+            ExactSpelling = true,
+            CallingConvention = CallingConvention.Winapi
+        )]
+        [SuppressUnmanagedCodeSecurity]
+        [ReliabilityContract(Consistency.WillNotCorruptState, Cer.MayFail)]
+        internal static extern Int32 GetWindowThreadProcessId(
+            [In] IntPtr hWnd,
+            [Out] out Int32 lpdwProcessId
+        );
+
+        #endregion
+
         #region user32!IsChild
 
         [DllImport(
-            Dll.User32,
+            "user32",
             SetLastError = false,
             ExactSpelling = true,
             CallingConvention = CallingConvention.Winapi
@@ -312,7 +335,7 @@ namespace WindowsFormsAero.InteropServices
 
         #region user32!LoadImage
 
-        [DllImport(Dll.User32, CharSet = CharSet.Auto, SetLastError = true, ThrowOnUnmappableChar = true, BestFitMapping = false)]
+        [DllImport("user32", CharSet = CharSet.Auto, SetLastError = true, ThrowOnUnmappableChar = true, BestFitMapping = false)]
         [ReliabilityContract(Consistency.WillNotCorruptState, Cer.MayFail)]
         internal static extern IntPtr LoadImage(
             [In] IntPtr hinst,
@@ -328,7 +351,7 @@ namespace WindowsFormsAero.InteropServices
         #region user32!MapVirtualKey
 
         [DllImport(
-            Dll.User32,
+            "user32",
             SetLastError = true,
             CharSet = CharSet.Auto,
             BestFitMapping = false,
@@ -346,7 +369,7 @@ namespace WindowsFormsAero.InteropServices
         #region user32!RegisterWindowMessage
 
         [DllImport(
-            Dll.User32,
+            "user32",
             CharSet = CharSet.Auto,
             SetLastError = true,
             BestFitMapping = false,
@@ -360,7 +383,7 @@ namespace WindowsFormsAero.InteropServices
 
         #region user32!ReleaseDC
 
-        [DllImport(Dll.User32, CharSet = CharSet.Auto, ExactSpelling = true, SetLastError = true)]
+        [DllImport("user32", CharSet = CharSet.Auto, ExactSpelling = true, SetLastError = true)]
         [ReliabilityContract(Consistency.WillNotCorruptState, Cer.MayFail)]
         [return: MarshalAs(UnmanagedType.Bool)]
         internal static extern bool ReleaseDC(HandleRef hWnd, IntPtr hDC);
@@ -370,7 +393,7 @@ namespace WindowsFormsAero.InteropServices
         #region user32!SendMessage(IntPtr, UInt32, IntPtr, IntPtr)
 
         [DllImport(
-            Dll.User32,
+            "user32",
             BestFitMapping = false,
             SetLastError = true
         )]
@@ -386,7 +409,7 @@ namespace WindowsFormsAero.InteropServices
         #region user32!SendMessage(IntPtr, UInt32, IntPtr, [IUnknown] out Object)
 
         [DllImport(
-            Dll.User32,
+            "user32",
             BestFitMapping = false,
             SetLastError = true
         )]
@@ -403,7 +426,7 @@ namespace WindowsFormsAero.InteropServices
         #region user32!SendMessage(IntPtr, UInt32, IntPtr, [Any] Object)
 
         [DllImport(
-            Dll.User32,
+            "user32",
             BestFitMapping = false,
             SetLastError = true
         )]
@@ -420,7 +443,7 @@ namespace WindowsFormsAero.InteropServices
         #region user32!SendMessage(IntPtr, UInt32, IntPtr, ref RECT)
 
         [DllImport(
-            Dll.User32,
+            "user32",
             BestFitMapping = false,
             SetLastError = true
         )]
@@ -437,7 +460,7 @@ namespace WindowsFormsAero.InteropServices
         #region user32!SetWindowPos
 
         [return: MarshalAs(UnmanagedType.Bool)]
-        [DllImport(Dll.User32, CharSet = CharSet.Auto, SetLastError = true)]
+        [DllImport("user32", CharSet = CharSet.Auto, SetLastError = true)]
         [ReliabilityContract(Consistency.WillNotCorruptState, Cer.MayFail)]
         internal static extern bool SetWindowPos(
             [In] HandleRef hWnd,
@@ -450,28 +473,78 @@ namespace WindowsFormsAero.InteropServices
 
         #endregion
 
-        #region user32!ToUnicode
+        #region user32!SetWindowsHookEx
 
         [DllImport(
-            Dll.User32,
-            CharSet = CharSet.Auto,
-            SetLastError = true,
+            "user32",
             BestFitMapping = false,
+            CharSet = CharSet.Unicode,
+            EntryPoint = "SetWindowsHookExW",
+            ExactSpelling = true,
+            SetLastError = true,
             CallingConvention = CallingConvention.Winapi)]
         [ReliabilityContract(Consistency.WillNotCorruptState, Cer.MayFail)]
-        internal static extern Int32 ToUnicode(
+        internal static extern SafeWindowsHookHandle SetWindowsHookEx(
+            [In] WindowsHookType idHook,
+            [In] IntPtr lpfn,
+            [In] NativeModule hMod,
+            [In] Int32 dwThreadId);
+
+        internal static SafeWindowsHookHandle SetWindowsHookEx(WindowsHookType hookType, Delegate procedure)
+        {
+            return SetWindowsHookEx(hookType, Marshal.GetFunctionPointerForDelegate(procedure), NativeModule.Invalid, 0);
+        }
+
+        internal static SafeWindowsHookHandle SetWindowsHookEx(KeyboardLowLevelHookProc proc)
+        {
+            return SetWindowsHookEx(WindowsHookType.KeyboardLowLevel, proc);
+        }
+
+        #endregion
+
+        #region user32!ToUnicodeEx
+
+        [DllImport(
+            "user32",
+            BestFitMapping = false, 
+            CharSet = CharSet.Unicode,
+            EntryPoint = "ToUnicodeEx",
+            ExactSpelling = true, 
+            SetLastError = true,
+            ThrowOnUnmappableChar = true,
+            CallingConvention = CallingConvention.Winapi)]
+        [ReliabilityContract(Consistency.WillNotCorruptState, Cer.MayFail)]
+        internal static extern Int32 ToUnicodeEx(
             [In] Keys wVirtKey,
             [In] UInt32 wScanCode,
             [In] Byte[] lpKeyState,
             [Out, MarshalAs(UnmanagedType.LPWStr)] StringBuilder pwszBuff,
             [In] Int32 cchBuff,
-            [In] UInt32 wFlags);
+            [In] UInt32 wFlags,
+            [In] IntPtr hkl);
+
+        #endregion
+
+        #region user32!UnhookWindowsHookEx
+
+        [DllImport(
+            "user32",
+            BestFitMapping = false,
+            CharSet = CharSet.Unicode,
+            EntryPoint = "UnhookWindowsHookEx",
+            ExactSpelling = true,
+            SetLastError = true,
+            CallingConvention = CallingConvention.Winapi)]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        [ReliabilityContract(Consistency.WillNotCorruptState, Cer.MayFail)]
+        internal static extern bool UnhookWindowsHookEx(
+            [In] IntPtr hhk);
 
         #endregion
 
         #region uxtheme!DrawThemeTextEx
 
-        [DllImport(Dll.UxTheme, CharSet = CharSet.Unicode, SetLastError = false, PreserveSig = false)]
+        [DllImport("uxtheme", CharSet = CharSet.Unicode, SetLastError = false, PreserveSig = false)]
         [ReliabilityContract(Consistency.WillNotCorruptState, Cer.MayFail)]
         internal static extern void DrawThemeTextEx(
             [In] IntPtr hTheme,
@@ -488,7 +561,7 @@ namespace WindowsFormsAero.InteropServices
 
         #region uxtheme!SetWindowTheme
 
-        [DllImport(Dll.UxTheme, CharSet= CharSet.Unicode, PreserveSig =false, SetLastError=false)]
+        [DllImport("uxtheme", CharSet= CharSet.Unicode, PreserveSig =false, SetLastError=false)]
         [ReliabilityContract(Consistency.WillNotCorruptState, Cer.MayFail)]
         internal static extern void SetWindowTheme(
             [In] HandleRef hWnd,

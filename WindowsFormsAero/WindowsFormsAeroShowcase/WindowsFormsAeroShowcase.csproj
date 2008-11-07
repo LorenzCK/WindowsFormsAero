@@ -2,7 +2,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.21022</ProductVersion>
+    <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{1F8DBC70-EB89-4D7B-A5C0-085ACDA74DA9}</ProjectGuid>
     <OutputType>WinExe</OutputType>
@@ -43,10 +43,6 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
-    <Reference Include="WindowsFormsAero, Version=2.0.0.0, Culture=neutral, PublicKeyToken=f1c7e2ffebe61981, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\WindowsFormsAero\bin\Debug\WindowsFormsAero.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controls\ProgressBarShowcase.cs">
@@ -95,6 +91,12 @@
   <ItemGroup>
     <None Include="app.manifest" />
     <None Include="Resources\Untitled.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\WindowsFormsAero\WindowsFormsAero.csproj">
+      <Project>{F63A0939-5ADD-4931-8066-6901B5FBEF67}</Project>
+      <Name>WindowsFormsAero</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
