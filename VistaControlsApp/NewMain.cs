@@ -203,5 +203,24 @@ namespace VistaControlsApp {
 			thumbnailViewer1.Update();
 		}
 
+        private void commandLink3_Click(object sender, EventArgs e)
+        {
+            ControlPanel cp = new ControlPanel();
+            cp.ShowDialog();
+            cp.Dispose();
+        }
+
+        private void commandLink1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void commandLink4_Click(object sender, EventArgs e)
+        {
+            HorizontalPanelExample hp = new HorizontalPanelExample();
+            hp.ShowDialog();
+            hp.Dispose();
+        }
+
 	}
 }
