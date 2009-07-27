@@ -42,11 +42,18 @@ namespace VistaControls
         /// be used with this, namingly the Label and LinkLabel default their back color to the color of the panel and for those controls
         /// to display properly on this panel, their BackColor will need to be Color.Transparent (otherwise, they'll display as a black
         /// box).  This should help to isolate the developer from having to research this.
+        /// 
+        /// To reduce flicker, especially when glass is enabled, I had to set all three of the below styles.
+        /// 
         /// </remarks>
         public HorizontalPanel()
         {
             this.BackColor = Color.Transparent;
             this.Font = new Font("Segoe UI", 9, FontStyle.Regular, GraphicsUnit.Point, 0);
+            SetStyle(ControlStyles.UserPaint, true);
+            SetStyle(ControlStyles.AllPaintingInWmPaint, true);
+            SetStyle(ControlStyles.DoubleBuffer, true);
+            this.UpdateStyles();
         }
 
         /// <summary>
@@ -84,12 +91,11 @@ namespace VistaControls
             Color aeroColor5 = Color.FromArgb(240, 244, 250);
             Color aeroColor6 = Color.FromArgb(241, 245, 251);
 
-            Rectangle rect = new Rectangle(0, 0, this.Width + 1, 1);
+            Rectangle rect = new Rectangle(0, 0, this.Width, 1);
             SolidBrush sb = new SolidBrush(aeroColor1);
             e.Graphics.FillRectangle(sb, rect);
 
-
-            rect = new Rectangle(this.Width - 2, 0, 1, this.Height);
+            rect = new Rectangle(0, 1, this.Width, 1);
             sb.Color = aeroColor2;
             e.Graphics.FillRectangle(sb, rect);
 

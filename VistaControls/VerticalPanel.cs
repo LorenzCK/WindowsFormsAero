@@ -42,11 +42,18 @@ namespace VistaControls
         /// be used with this, namingly the Label and LinkLabel default their back color to the color of the panel and for those controls
         /// to display properly on this panel, their BackColor will need to be Color.Transparent (otherwise, they'll display as a black
         /// box).  This should help to isolate the developer from having to research this.
+        /// 
+        /// To reduce flicker, especially when glass is enabled, I had to set all three of the below styles.
+        /// 
         /// </remarks>
         public VerticalPanel()
         {
             this.BackColor = Color.Transparent;
             this.Font = new Font("Segoe UI", 9, FontStyle.Regular, GraphicsUnit.Point, 0);
+            SetStyle(ControlStyles.UserPaint, true);
+            SetStyle(ControlStyles.AllPaintingInWmPaint, true);
+            SetStyle(ControlStyles.DoubleBuffer, true);
+            this.UpdateStyles();
         }
 
         /// <summary>
