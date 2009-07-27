@@ -14,7 +14,7 @@ using System.Windows.Forms;
  * 
  *  This control written by Blake Pell (bpell@indiana.edu, blakepell@hotmail.com, http://www.blakepell.com)
  *  Initial Date:  07/25/2009
- *  Last Updated:  07/25/2009
+ *  Last Updated:  07/27/2009
  * 
  *  This code is released under the Microsoft Community License (Ms-CL).
  *
@@ -134,8 +134,11 @@ namespace VistaControls
         /// The text that should be used for the caption.  If the caption is set to blank and the divider position is set to center then
         /// a simple divider line will be drawn.
         /// </summary>
+        /// <remarks>
+        /// After a change is made to the text property we want to invalidate the control so it triggers a new paint message being sent.
+        /// </remarks>
         [Description("The text that will display as the caption."), Category("Appearance"),DefaultValue("DividerLabel")]
-        public string Text
+        public override string Text
         {
             get
             {
@@ -144,6 +147,7 @@ namespace VistaControls
             set
             {
                 this._text = value;
+                this.Invalidate();
             }
         }
 
