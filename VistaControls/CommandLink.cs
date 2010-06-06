@@ -30,7 +30,12 @@ namespace VistaControls
             get
             {
                 CreateParams cp = base.CreateParams;
-                cp.Style |= NativeMethods.BS_COMMANDLINK;
+
+                //Fix for XP provided by jonpreece (http://windowsformsaero.codeplex.com/Thread/View.aspx?ThreadId=81391)
+                if (OsSupport.IsVistaOrBetter)
+                    cp.Style |= NativeMethods.BS_COMMANDLINK;
+                else
+                    cp.Style |= 1;
                 return cp;
             }
         }
