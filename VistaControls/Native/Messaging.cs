@@ -23,5 +23,9 @@ namespace VistaControls.Native {
 		[DllImport("user32.dll", SetLastError = false)]
 		public static extern bool PostMessage(IntPtr hWnd, uint Msg, IntPtr wParam, IntPtr lParam);
 
+        public const int WM_NCHITTEST = 0x84;
+
+        public const int HTCAPTION = 2;
+
 	}
 }

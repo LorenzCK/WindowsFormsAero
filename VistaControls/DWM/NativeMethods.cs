@@ -22,8 +22,7 @@ namespace VistaControls.Dwm
         #region DWM Thumbnail methods
 
         [Flags()]
-        public enum DwmThumbnailFlags
-        {
+        public enum DwmThumbnailFlags {
             RectDestination = 0x1,
             RectSource = 0x2,
             Opacity = 0x4,
@@ -31,8 +30,7 @@ namespace VistaControls.Dwm
             SourceClientAreaOnly = 0x10
         }
 
-        public struct DwmThumbnailProperties
-        {
+        public struct DwmThumbnailProperties {
             public DwmThumbnailFlags dwFlags;
             public Native.RECT rcDestination;
             public Native.RECT rcSource;
@@ -44,8 +42,7 @@ namespace VistaControls.Dwm
         }
 
 		[StructLayout(LayoutKind.Sequential)]
-		public struct DwmSize
-		{
+		public struct DwmSize {
 			public int Width;
 			public int Height;
 

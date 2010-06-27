@@ -131,6 +131,9 @@ namespace VistaControls.Dwm
         /// <param name="visible">Visibility flag.</param>
         /// <param name="onlyClientArea">If true, only the client area of the window will be rendered. Otherwise, the borders will be be rendered as well.</param>
         public void Update(Rectangle destination, Rectangle source, byte opacity, bool visible, bool onlyClientArea) {
+            if (source.Width < 1 || source.Height < 1)
+                throw new ArgumentException("Thumbnail source rectangle cannot have null or negative size.");
+
             //Full update
             NativeMethods.DwmThumbnailProperties prop = new NativeMethods.DwmThumbnailProperties();
             prop.dwFlags = NativeMethods.DwmThumbnailFlags.RectDestination |
@@ -155,7 +158,7 @@ namespace VistaControls.Dwm
         /// <param name="visible">Visibility flag.</param>
         /// <param name="onlyClientArea">If true, only the client area of the window will be rendered. Otherwise, the borders will be be rendered as well.</param>
         public void Update(Rectangle destination, byte opacity, bool visible, bool onlyClientArea) {
-            //Full update
+            //Partial update
             NativeMethods.DwmThumbnailProperties prop = new NativeMethods.DwmThumbnailProperties();
             prop.dwFlags = NativeMethods.DwmThumbnailFlags.RectDestination |
                            NativeMethods.DwmThumbnailFlags.Opacity |
