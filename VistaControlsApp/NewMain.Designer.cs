@@ -117,10 +117,17 @@ namespace VistaControlsApp
             this.searchTextBox1 = new VistaControls.SearchTextBox();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
+            this.button1 = new VistaControls.Button();
+            this.splitButton1 = new VistaControls.SplitButton();
             this.contextMenu1 = new System.Windows.Forms.ContextMenu();
             this.menuItem3 = new System.Windows.Forms.MenuItem();
             this.menuItem1 = new System.Windows.Forms.MenuItem();
             this.menuItem2 = new System.Windows.Forms.MenuItem();
+            this.commandLink1 = new VistaControls.CommandLink();
+            this.commandLink2 = new VistaControls.CommandLink();
+            this.commandLink3 = new VistaControls.CommandLink();
+            this.commandLink4 = new VistaControls.CommandLink();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.flowLayoutPanel2 = new System.Windows.Forms.FlowLayoutPanel();
             this.progressBar1 = new VistaControls.ProgressBar();
@@ -150,15 +157,9 @@ namespace VistaControlsApp
             this.imageList2 = new System.Windows.Forms.ImageList(this.components);
             this.tabPage5 = new System.Windows.Forms.TabPage();
             this.thumbnailViewer1 = new VistaControls.Dwm.ThumbnailViewer();
-            this.commandLink3 = new VistaControls.CommandLink();
-            this.commandLink2 = new VistaControls.CommandLink();
-            this.commandLink1 = new VistaControls.CommandLink();
-            this.splitButton1 = new VistaControls.SplitButton();
-            this.button1 = new VistaControls.Button();
-            this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
-            this.commandLink4 = new VistaControls.CommandLink();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
+            this.flowLayoutPanel1.SuspendLayout();
             this.tabPage2.SuspendLayout();
             this.flowLayoutPanel2.SuspendLayout();
             this.tabPage3.SuspendLayout();
@@ -166,7 +167,6 @@ namespace VistaControlsApp
             this.tabPage4.SuspendLayout();
             this.flowLayoutPanel3.SuspendLayout();
             this.tabPage5.SuspendLayout();
-            this.flowLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // imageList1
@@ -228,8 +228,8 @@ namespace VistaControlsApp
             this.searchTextBox1.Size = new System.Drawing.Size(196, 20);
             this.searchTextBox1.StartSearchOnEnter = true;
             this.searchTextBox1.TabIndex = 1;
-            this.searchTextBox1.SearchCancelled += new System.EventHandler(this.Search_cancelled);
             this.searchTextBox1.SearchStarted += new System.EventHandler(this.Search);
+            this.searchTextBox1.SearchCancelled += new System.EventHandler(this.Search_cancelled);
             // 
             // tabControl1
             // 
@@ -261,6 +261,43 @@ namespace VistaControlsApp
             this.tabPage1.Text = "Buttons";
             this.tabPage1.UseVisualStyleBackColor = true;
             // 
+            // flowLayoutPanel1
+            // 
+            this.flowLayoutPanel1.Controls.Add(this.button1);
+            this.flowLayoutPanel1.Controls.Add(this.splitButton1);
+            this.flowLayoutPanel1.Controls.Add(this.commandLink1);
+            this.flowLayoutPanel1.Controls.Add(this.commandLink2);
+            this.flowLayoutPanel1.Controls.Add(this.commandLink3);
+            this.flowLayoutPanel1.Controls.Add(this.commandLink4);
+            this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.flowLayoutPanel1.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
+            this.flowLayoutPanel1.Location = new System.Drawing.Point(3, 3);
+            this.flowLayoutPanel1.Name = "flowLayoutPanel1";
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(561, 281);
+            this.flowLayoutPanel1.TabIndex = 0;
+            // 
+            // button1
+            // 
+            this.button1.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.button1.Location = new System.Drawing.Point(3, 3);
+            this.button1.Name = "button1";
+            this.button1.ShowShield = true;
+            this.button1.Size = new System.Drawing.Size(122, 23);
+            this.button1.TabIndex = 0;
+            this.button1.Text = "Shield Button";
+            this.button1.UseVisualStyleBackColor = true;
+            // 
+            // splitButton1
+            // 
+            this.splitButton1.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.splitButton1.Location = new System.Drawing.Point(3, 32);
+            this.splitButton1.Name = "splitButton1";
+            this.splitButton1.Size = new System.Drawing.Size(122, 23);
+            this.splitButton1.SplitMenu = this.contextMenu1;
+            this.splitButton1.TabIndex = 1;
+            this.splitButton1.Text = "Split";
+            this.splitButton1.UseVisualStyleBackColor = true;
+            // 
             // contextMenu1
             // 
             this.contextMenu1.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
@@ -282,6 +319,52 @@ namespace VistaControlsApp
             // 
             this.menuItem2.Index = 2;
             this.menuItem2.Text = "Menu";
+            // 
+            // commandLink1
+            // 
+            this.commandLink1.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.commandLink1.Location = new System.Drawing.Point(3, 61);
+            this.commandLink1.Name = "commandLink1";
+            this.commandLink1.Note = "Note.";
+            this.commandLink1.Size = new System.Drawing.Size(207, 60);
+            this.commandLink1.TabIndex = 2;
+            this.commandLink1.Text = "Command Link";
+            this.commandLink1.UseVisualStyleBackColor = true;
+            this.commandLink1.Click += new System.EventHandler(this.commandLink1_Click);
+            // 
+            // commandLink2
+            // 
+            this.commandLink2.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.commandLink2.Location = new System.Drawing.Point(3, 127);
+            this.commandLink2.Name = "commandLink2";
+            this.commandLink2.Note = "Note 2.";
+            this.commandLink2.ShowShield = true;
+            this.commandLink2.Size = new System.Drawing.Size(207, 60);
+            this.commandLink2.TabIndex = 3;
+            this.commandLink2.Text = "Shield";
+            this.commandLink2.UseVisualStyleBackColor = true;
+            // 
+            // commandLink3
+            // 
+            this.commandLink3.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.commandLink3.Location = new System.Drawing.Point(3, 193);
+            this.commandLink3.Name = "commandLink3";
+            this.commandLink3.Size = new System.Drawing.Size(234, 62);
+            this.commandLink3.TabIndex = 4;
+            this.commandLink3.Text = "Show Test Vertical Panel";
+            this.commandLink3.UseVisualStyleBackColor = true;
+            this.commandLink3.Click += new System.EventHandler(this.commandLink3_Click);
+            // 
+            // commandLink4
+            // 
+            this.commandLink4.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.commandLink4.Location = new System.Drawing.Point(243, 3);
+            this.commandLink4.Name = "commandLink4";
+            this.commandLink4.Size = new System.Drawing.Size(261, 61);
+            this.commandLink4.TabIndex = 5;
+            this.commandLink4.Text = "Show Test Horizontal Panel";
+            this.commandLink4.UseVisualStyleBackColor = true;
+            this.commandLink4.Click += new System.EventHandler(this.commandLink4_Click);
             // 
             // tabPage2
             // 
@@ -508,7 +591,7 @@ namespace VistaControlsApp
             // textBox2
             // 
             this.textBox2.CueBannerText = "Cue banner (w/focus)";
-            this.textBox2.Location = new System.Drawing.Point(3, 31);
+            this.textBox2.Location = new System.Drawing.Point(3, 29);
             this.textBox2.Name = "textBox2";
             this.textBox2.ShowCueFocused = true;
             this.textBox2.Size = new System.Drawing.Size(196, 22);
@@ -526,7 +609,7 @@ namespace VistaControlsApp
             "3",
             "4",
             "5"});
-            this.comboBox1.Location = new System.Drawing.Point(3, 59);
+            this.comboBox1.Location = new System.Drawing.Point(3, 55);
             this.comboBox1.Name = "comboBox1";
             this.comboBox1.Size = new System.Drawing.Size(196, 21);
             this.comboBox1.TabIndex = 2;
@@ -538,7 +621,7 @@ namespace VistaControlsApp
             this.searchTextBox2.Cursor = System.Windows.Forms.Cursors.IBeam;
             this.searchTextBox2.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.searchTextBox2.ForeColor = System.Drawing.SystemColors.GrayText;
-            this.searchTextBox2.Location = new System.Drawing.Point(3, 86);
+            this.searchTextBox2.Location = new System.Drawing.Point(3, 82);
             this.searchTextBox2.Name = "searchTextBox2";
             this.searchTextBox2.Size = new System.Drawing.Size(196, 20);
             this.searchTextBox2.TabIndex = 3;
@@ -726,89 +809,6 @@ namespace VistaControlsApp
             this.thumbnailViewer1.Text = "thumbnailViewer1";
             this.thumbnailViewer1.ThumbnailAlignment = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // commandLink3
-            // 
-            this.commandLink3.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.commandLink3.Location = new System.Drawing.Point(3, 193);
-            this.commandLink3.Name = "commandLink3";
-            this.commandLink3.Size = new System.Drawing.Size(234, 62);
-            this.commandLink3.TabIndex = 4;
-            this.commandLink3.Text = "Show Test Vertical Panel";
-            this.commandLink3.UseVisualStyleBackColor = true;
-            this.commandLink3.Click += new System.EventHandler(this.commandLink3_Click);
-            // 
-            // commandLink2
-            // 
-            this.commandLink2.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.commandLink2.Location = new System.Drawing.Point(3, 127);
-            this.commandLink2.Name = "commandLink2";
-            this.commandLink2.Note = "Note 2.";
-            this.commandLink2.ShowShield = true;
-            this.commandLink2.Size = new System.Drawing.Size(207, 60);
-            this.commandLink2.TabIndex = 3;
-            this.commandLink2.Text = "Shield";
-            this.commandLink2.UseVisualStyleBackColor = true;
-            // 
-            // commandLink1
-            // 
-            this.commandLink1.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.commandLink1.Location = new System.Drawing.Point(3, 61);
-            this.commandLink1.Name = "commandLink1";
-            this.commandLink1.Note = "Note.";
-            this.commandLink1.Size = new System.Drawing.Size(207, 60);
-            this.commandLink1.TabIndex = 2;
-            this.commandLink1.Text = "Command Link";
-            this.commandLink1.UseVisualStyleBackColor = true;
-            this.commandLink1.Click += new System.EventHandler(this.commandLink1_Click);
-            // 
-            // splitButton1
-            // 
-            this.splitButton1.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.splitButton1.Location = new System.Drawing.Point(3, 32);
-            this.splitButton1.Name = "splitButton1";
-            this.splitButton1.Size = new System.Drawing.Size(122, 23);
-            this.splitButton1.SplitMenu = this.contextMenu1;
-            this.splitButton1.TabIndex = 1;
-            this.splitButton1.Text = "Split";
-            this.splitButton1.UseVisualStyleBackColor = true;
-            // 
-            // button1
-            // 
-            this.button1.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.button1.Location = new System.Drawing.Point(3, 3);
-            this.button1.Name = "button1";
-            this.button1.ShowShield = true;
-            this.button1.Size = new System.Drawing.Size(122, 23);
-            this.button1.TabIndex = 0;
-            this.button1.Text = "Shield Button";
-            this.button1.UseVisualStyleBackColor = true;
-            // 
-            // flowLayoutPanel1
-            // 
-            this.flowLayoutPanel1.Controls.Add(this.button1);
-            this.flowLayoutPanel1.Controls.Add(this.splitButton1);
-            this.flowLayoutPanel1.Controls.Add(this.commandLink1);
-            this.flowLayoutPanel1.Controls.Add(this.commandLink2);
-            this.flowLayoutPanel1.Controls.Add(this.commandLink3);
-            this.flowLayoutPanel1.Controls.Add(this.commandLink4);
-            this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.flowLayoutPanel1.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
-            this.flowLayoutPanel1.Location = new System.Drawing.Point(3, 3);
-            this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(561, 281);
-            this.flowLayoutPanel1.TabIndex = 0;
-            // 
-            // commandLink4
-            // 
-            this.commandLink4.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.commandLink4.Location = new System.Drawing.Point(243, 3);
-            this.commandLink4.Name = "commandLink4";
-            this.commandLink4.Size = new System.Drawing.Size(261, 61);
-            this.commandLink4.TabIndex = 5;
-            this.commandLink4.Text = "Show Test Horizontal Panel";
-            this.commandLink4.UseVisualStyleBackColor = true;
-            this.commandLink4.Click += new System.EventHandler(this.commandLink4_Click);
-            // 
             // NewMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -819,6 +819,7 @@ namespace VistaControlsApp
             this.Controls.Add(this.themedLabel2);
             this.Controls.Add(this.themedLabel1);
             this.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.HideTitle = true;
             this.Margin = new System.Windows.Forms.Padding(2);
             this.MaximizeBox = false;
             this.MinimumSize = new System.Drawing.Size(590, 455);
@@ -827,6 +828,7 @@ namespace VistaControlsApp
             this.Text = "Vista Controls";
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
+            this.flowLayoutPanel1.ResumeLayout(false);
             this.tabPage2.ResumeLayout(false);
             this.flowLayoutPanel2.ResumeLayout(false);
             this.tabPage3.ResumeLayout(false);
@@ -835,7 +837,6 @@ namespace VistaControlsApp
             this.flowLayoutPanel3.ResumeLayout(false);
             this.flowLayoutPanel3.PerformLayout();
             this.tabPage5.ResumeLayout(false);
-            this.flowLayoutPanel1.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }

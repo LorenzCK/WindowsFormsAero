@@ -83,7 +83,7 @@ namespace VistaControls.Dwm {
 		/// <param name="margins">Margins of the glass sheet.</param>
 		/// <remarks>
 		/// Eventual UI elements on the glass sheet will prevent the handler from receiving events
-		/// (except the ThemeText control, which manually redirects mouse events to the form)
+		/// (except the ThemeText control, which manually redirects mouse events to the form).
 		/// </remarks>
 		public static void HandleFormMovementOnGlass(Form form, Margins margins) {
 			HandleFormMovement tmpHandler = new HandleFormMovement(form, margins);

@@ -13,6 +13,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Runtime.InteropServices;
 using System.ComponentModel;
+using System.Drawing;
 
 namespace VistaControls.Dwm {
 
@@ -60,6 +61,22 @@ namespace VistaControls.Dwm {
 				);
 			}
 		}
+
+        /// <summary>
+        /// Returns whether a point in client coordinates is outside the margins defined by this instance.
+        /// </summary>
+        /// <param name="clientPoint">Point in client coordinates.</param>
+        public bool IsOutsideMargins(Point clientPoint, Size clientSize) {
+            return (clientPoint.X < _left ||
+                    clientPoint.X > (clientSize.Width - _right) ||
+                    clientPoint.Y < _top ||
+                    clientPoint.Y > (clientSize.Height - _bottom));
+        }
+
+        public override string ToString() {
+            return string.Format("Margins [{0},{1},{2},{3}]", _left, _top, _right, _bottom);
+        }
+
     }
 
 }

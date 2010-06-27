@@ -9,17 +9,17 @@
  *****************************************************/
 
 using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Windows.Forms;
 using System.ComponentModel;
 using System.Drawing;
+using System.Windows.Forms;
+using VistaControls.Native;
 
 namespace VistaControls.Dwm.Helpers {
 	public class GlassForm : Form {
 
 		public GlassForm() {
-			this.ResizeRedraw = true;
+			ResizeRedraw = true;
+            HandleMouseMove = true;
 		}
 
 		#region Properties
@@ -27,7 +27,8 @@ namespace VistaControls.Dwm.Helpers {
 		Margins _glassMargins = new Margins(0);
 
 		/// <summary>Gets or sets the glass margins of the form.</summary>
-		[Description("The glass margins which are extended inside the client area of the window."), Category("Appearance"), DefaultValue(null)]
+		[Description("The glass margins which are extended inside the client area of the window."),
+            Category("Appearance"), DefaultValue(null)]
 		public Margins GlassMargins {
 			get {
 				return _glassMargins;
@@ -39,25 +40,19 @@ namespace VistaControls.Dwm.Helpers {
 			}
 		}
 
-		bool _handleMouseMove = true;
-
 		/// <summary>Gets or sets whether mouse dragging should be handled automatically.</summary>
-		[Description("True if mouse dragging of the window should be handled automatically."), Category("Behavior"), DefaultValue(true)]
-		public bool HandleMouseMove {
-			get { return _handleMouseMove; }
-			set {
-				_handleMouseMove = value;
-
-				//Stop tracking if disabled
-				if(!value)
-					_tracking = false;
-			}
-		}
+        [Description("True if mouse dragging of the window should be handled automatically."),
+            Category("Behavior"), DefaultValue(true)]
+        public bool HandleMouseMove {
+            get;
+            set;
+        }
 
 		bool _glassEnabled = true;
 
 		/// <summary>Gets or sets whether the extended glass margin is enabled or not.</summary>
-		[Description("Enables or disables the glass margin."), Category("Appearance"), DefaultValue(true)]
+		[Description("Enables or disables the glass margin."),
+            Category("Appearance"), DefaultValue(true)]
 		public bool GlassEnabled {
 			get {
 				return _glassEnabled;
@@ -69,51 +64,33 @@ namespace VistaControls.Dwm.Helpers {
 			}
 		}
 
+        bool _hideTitle = false;
+
+        /// <summary>
+        /// Gets or sets whether the window title and icon should be hidden.
+        /// </summary>
+        [Description("Shows or hides the title and icon of the window."),
+            Category("Appearance"), DefaultValue(false)]
+        public bool HideTitle {
+            get {
+                return _hideTitle;
+            }
+            set {
+                _hideTitle = value;
+                
+                ApplyWindowTheme();
+            }
+        }
+
 		#endregion
 
 		#region Overriding
 
-		bool _tracking = false;
-		Point _lastPos;
+        protected override void OnShown(EventArgs e) {
+            ApplyWindowTheme();
 
-		protected override void OnMouseMove(MouseEventArgs e) {
-			if (_tracking) {
-				Point screen = this.PointToScreen(e.Location);
-
-				Point diff = new Point(screen.X - _lastPos.X, screen.Y - _lastPos.Y);
-
-				Point loc = this.Location;
-				loc.Offset(diff);
-				this.Location = loc;
-
-				_lastPos = screen;
-			}
-
-			base.OnMouseMove(e);
-		}
-
-		protected override void OnMouseUp(MouseEventArgs e) {
-			if (e.Button == MouseButtons.Left)
-				_tracking = false;
-
-			base.OnMouseUp(e);
-		}
-
-		protected override void OnMouseDown(MouseEventArgs e) {
-			if (e.Button == MouseButtons.Left && HandleMouseMove) {
-				if (_glassMargins.IsMarginless || (
-						e.X <= _glassMargins.Left ||
-						e.X >= this.ClientSize.Width - _glassMargins.Right ||
-						e.Y <= _glassMargins.Top ||
-						e.Y >= this.ClientSize.Height - _glassMargins.Bottom)
-					) {
-					_tracking = true;
-					_lastPos = this.PointToScreen(e.Location);
-				}
-			}
-
-			base.OnMouseDown(e);
-		}
+            base.OnShown(e);
+        }
 
 		protected override void OnPaint(PaintEventArgs e) {
 			base.OnPaint(e);
@@ -124,14 +101,34 @@ namespace VistaControls.Dwm.Helpers {
 					e.Graphics.Clear(Color.Black);
 				else {
 					e.Graphics.FillRectangles(Brushes.Black, new Rectangle[] {
-					new Rectangle(0, 0, ClientSize.Width, _glassMargins.Top),
-					new Rectangle(ClientSize.Width - _glassMargins.Right, 0, _glassMargins.Right, ClientSize.Height),
-					new Rectangle(0, ClientSize.Height - _glassMargins.Bottom, ClientSize.Width, _glassMargins.Bottom),
-					new Rectangle(0, 0, _glassMargins.Left, ClientSize.Height)
-				});
+					    new Rectangle(0, 0, ClientSize.Width, _glassMargins.Top),
+					    new Rectangle(ClientSize.Width - _glassMargins.Right, 0, _glassMargins.Right, ClientSize.Height),
+					    new Rectangle(0, ClientSize.Height - _glassMargins.Bottom, ClientSize.Width, _glassMargins.Bottom),
+					    new Rectangle(0, 0, _glassMargins.Left, ClientSize.Height)
+				    });
 				}
 			}
 		}
+
+        protected override void WndProc(ref Message m) {
+            //Respond to hit test messages with Caption if mouse on glass: will enable form moving/maximization
+            //as if mouse is on form caption.
+            if (m.Msg == Messaging.WM_NCHITTEST && HandleMouseMove) {
+                uint lparam = (uint)m.LParam.ToInt32();
+                ushort x = IntHelpers.LowWord(lparam);
+                ushort y = IntHelpers.HighWord(lparam);
+
+                //Check if mouse point if on form
+                var clientPoint = this.PointToClient(new Point(x, y));
+                if (_glassMargins.IsOutsideMargins(clientPoint, ClientSize)) {
+                    //Return caption hit
+                    m.Result = (IntPtr)Messaging.HTCAPTION;
+                    return;
+                }
+            }
+
+            base.WndProc(ref m);
+        }
 
 		#endregion
 
@@ -143,6 +140,16 @@ namespace VistaControls.Dwm.Helpers {
 
 			this.Invalidate();
 		}
+
+        private void ApplyWindowTheme() {
+            var attr = (HideTitle) ?
+                WindowThemeNonClientAttributes.NoDrawCaption | WindowThemeNonClientAttributes.NoDrawIcon :
+                WindowThemeNonClientAttributes.NullAttribute;
+
+            WindowTheme.SetWindowThemeNonClientAttributes(Handle,
+                WindowThemeNonClientAttributes.NoDrawCaption | WindowThemeNonClientAttributes.NoDrawIcon,
+                attr);
+        }
 
 	}
 }
