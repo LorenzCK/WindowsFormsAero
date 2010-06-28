@@ -98,5 +98,37 @@ namespace VistaControls.Dwm
 
         #endregion
 
-	}
+        #region Attributes
+
+        public enum DwmWindowAttribute : int {
+            DWMWA_NCRENDERING_ENABLED = 1,
+            DWMWA_FLIP3D_POLICY = 8,
+            DWMWA_DISALLOW_PEEK = 11,
+            DWMWA_EXCLUDED_FROM_PEEK = 12,
+        }
+
+        [DllImport("dwmapi.dll")]
+        public static extern int DwmSetWindowAttribute(IntPtr hwnd, DwmWindowAttribute dwAttribute, ref int pvAttribute, int cbAttribute);
+
+        public static int DwmSetWindowFlip3dPolicy(IntPtr hwnd, Flip3DPolicy policy) {
+            int iPolicy = (int)policy;
+            return DwmSetWindowAttribute(hwnd, DwmWindowAttribute.DWMWA_FLIP3D_POLICY,
+                ref iPolicy, Marshal.SizeOf(typeof(int)));
+        }
+
+        public static int DwmSetWindowDisallowPeek(IntPtr hwnd, bool disallowPeek) {
+            int iPrevent = (disallowPeek) ? 1 : 0;
+            return DwmSetWindowAttribute(hwnd, DwmWindowAttribute.DWMWA_DISALLOW_PEEK,
+                ref iPrevent, Marshal.SizeOf(typeof(int)));
+        }
+
+        public static int DwmSetWindowExcludedFromPeek(IntPtr hwnd, bool preventPeek) {
+            int iPrevent = (preventPeek) ? 1 : 0;
+            return DwmSetWindowAttribute(hwnd, DwmWindowAttribute.DWMWA_EXCLUDED_FROM_PEEK,
+                ref iPrevent, Marshal.SizeOf(typeof(int)));
+        }
+
+        #endregion
+
+    }
 }

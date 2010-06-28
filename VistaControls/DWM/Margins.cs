@@ -67,6 +67,9 @@ namespace VistaControls.Dwm {
         /// </summary>
         /// <param name="clientPoint">Point in client coordinates.</param>
         public bool IsOutsideMargins(Point clientPoint, Size clientSize) {
+            if (IsMarginless)
+                return true;
+
             return (clientPoint.X < _left ||
                     clientPoint.X > (clientSize.Width - _right) ||
                     clientPoint.Y < _top ||
