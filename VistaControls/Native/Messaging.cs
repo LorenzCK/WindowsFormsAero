@@ -24,8 +24,12 @@ namespace VistaControls.Native {
 		public static extern bool PostMessage(IntPtr hWnd, uint Msg, IntPtr wParam, IntPtr lParam);
 
         public const int WM_NCHITTEST = 0x84;
+        public const int WM_NCLBUTTONUP = 0x00A2;
+        public const int WM_NCLBUTTONDOWN = 0x00A1;
+        public const int WM_NCLBUTTONDBLCLK = 0x00A3;
 
         public const int HTCAPTION = 2;
+        public const int HTCLIENT = 1;
 
 	}
 }

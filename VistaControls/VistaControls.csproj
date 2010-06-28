@@ -21,7 +21,7 @@
     <FileUpgradeFlags>
     </FileUpgradeFlags>
     <OldToolsVersion>3.5</OldToolsVersion>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
     <UpgradeBackupLocation>
     </UpgradeBackupLocation>
     <PublishUrl>publish\</PublishUrl>
@@ -41,6 +41,7 @@
     <BootstrapperEnabled>true</BootstrapperEnabled>
     <StartupObject>
     </StartupObject>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -84,6 +85,7 @@
     <Compile Include="Design\SearchTextBoxDesigner.cs" />
     <Compile Include="Dwm\DwmCompositionException.cs" />
     <Compile Include="Dwm\DwmManager.cs" />
+    <Compile Include="Dwm\Flip3dPolicy.cs" />
     <Compile Include="Dwm\GlassHelper.cs" />
     <Compile Include="Dwm\Helpers\GlassForm.cs">
       <SubType>Form</SubType>

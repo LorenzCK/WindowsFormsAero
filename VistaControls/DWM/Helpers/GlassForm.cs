@@ -111,23 +111,26 @@ namespace VistaControls.Dwm.Helpers {
 		}
 
         protected override void WndProc(ref Message m) {
+            base.WndProc(ref m);
+
+            //Shortcut if disabled
+            if (!HandleMouseMove)
+                return;
+
             //Respond to hit test messages with Caption if mouse on glass: will enable form moving/maximization
             //as if mouse is on form caption.
-            if (m.Msg == Messaging.WM_NCHITTEST && HandleMouseMove) {
+            if (m.Msg == Messaging.WM_NCHITTEST && m.Result.ToInt32() == Messaging.HTCLIENT) {
                 uint lparam = (uint)m.LParam.ToInt32();
                 ushort x = IntHelpers.LowWord(lparam);
                 ushort y = IntHelpers.HighWord(lparam);
 
-                //Check if mouse point if on form
+                //Check if mouse pointer is on glass part of form
                 var clientPoint = this.PointToClient(new Point(x, y));
                 if (_glassMargins.IsOutsideMargins(clientPoint, ClientSize)) {
-                    //Return caption hit
                     m.Result = (IntPtr)Messaging.HTCAPTION;
                     return;
                 }
             }
-
-            base.WndProc(ref m);
         }
 
 		#endregion
