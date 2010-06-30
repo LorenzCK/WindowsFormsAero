@@ -15,7 +15,7 @@ using System.Runtime.InteropServices;
 
 namespace VistaControls.ThemeText {
 	
-	public static class NativeMethods {
+	internal static class NativeMethods {
 
 		#region DWM Text drawing
 

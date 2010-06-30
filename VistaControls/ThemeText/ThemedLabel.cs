@@ -402,7 +402,8 @@ namespace VistaControls.ThemeText {
 			base.OnInvalidated(e);
 
 			//Invalidate parent
-			this.Parent.Invalidate(this.ClientRectangle, false);
+            if(Parent != null)
+			    Parent.Invalidate(this.ClientRectangle, false);
 		}
 
 		protected override void OnPaint(PaintEventArgs e) {

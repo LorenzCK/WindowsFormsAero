@@ -27,7 +27,7 @@ namespace VistaControls.ThemeText.Options {
 
 		#region IThemeTextOption Members
 
-		public void Apply(ref NativeMethods.DTTOPTS options) {
+		internal override void Apply(ref NativeMethods.DTTOPTS options) {
 			options.dwFlags |= NativeMethods.DTTOPSFlags.DTT_BORDERCOLOR | NativeMethods.DTTOPSFlags.DTT_BORDERSIZE;
 			options.crBorder = ColorTranslator.ToWin32(BorderColor);
 			options.iBorderSize = BorderSize;

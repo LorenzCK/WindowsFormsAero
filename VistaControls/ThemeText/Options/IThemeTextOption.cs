@@ -13,9 +13,9 @@ using System.Collections.Generic;
 using System.Text;
 
 namespace VistaControls.ThemeText.Options {
-	public interface IThemeTextOption {
+	public abstract class IThemeTextOption {
 
-		void Apply(ref NativeMethods.DTTOPTS options);
+		internal abstract void Apply(ref NativeMethods.DTTOPTS options);
 
 	}
 }
