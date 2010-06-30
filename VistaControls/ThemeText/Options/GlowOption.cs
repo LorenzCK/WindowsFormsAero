@@ -13,21 +13,42 @@ using System.Collections.Generic;
 using System.Text;
 
 namespace VistaControls.ThemeText.Options {
+    /// <summary>
+    /// Applies a glow on the themed text.
+    /// </summary>
 	public class GlowOption : IThemeTextOption {
 
-		public const int cDefaultSize = 10;
-		public const int cWord2007Size = 15;
-		public const int cPreciseGlow = 2;
+        /// <summary>
+        /// Default glow size.
+        /// </summary>
+		public const int DefaultSize = 10;
 
+        /// <summary>
+        /// Glow size used commonly by Office 2007 in titles.
+        /// </summary>
+		public const int Word2007Size = 15;
+
+        /// <summary>
+        /// Precise glow effect.
+        /// </summary>
+		public const int PreciseGlow = 2;
+
+        /// <summary>
+        /// Instantiates a new glow effect for themed text.
+        /// </summary>
+        /// <param name="size">Size of the glow effect.</param>
 		public GlowOption(int size) {
 			Size = size;
 		}
 
+        /// <summary>
+        /// Gets or sets the size of the glow effect.
+        /// </summary>
 		public int Size { get; set; }
 
 		#region IThemeTextOption Members
 
-		public void Apply(ref NativeMethods.DTTOPTS options) {
+        internal override void Apply(ref NativeMethods.DTTOPTS options) {
 			options.dwFlags |= NativeMethods.DTTOPSFlags.DTT_GLOWSIZE;
 			options.iGlowSize = Size;
 		}
