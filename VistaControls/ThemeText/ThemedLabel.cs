@@ -310,7 +310,7 @@ namespace VistaControls.ThemeText {
 		#region Events
 
 		protected override void WndProc(ref Message m) {
-			if (/*_transparent &&*/ m.Msg == VistaControls.NativeMethods.WM_NCHITTEST) {
+			if (m.Msg == VistaControls.NativeMethods.WM_NCHITTEST && !DesignMode) {
 				base.WndProc(ref m);
 
 				m.Result = new IntPtr(VistaControls.NativeMethods.HTTRANSPARENT);
