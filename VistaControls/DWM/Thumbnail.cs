@@ -52,7 +52,7 @@ namespace VistaControls.Dwm
                 prop.opacity = value;
 
                 if (NativeMethods.DwmUpdateThumbnailProperties(this, ref prop) != 0)
-                    throw new DwmCompositionException(Resources.ExceptionMessages.DWMThumbnailUpdateFailure);
+                    throw new DwmCompositionException(Resources.ExceptionMessages.DwmThumbnailUpdateFailure);
             }
         }
 
@@ -66,7 +66,7 @@ namespace VistaControls.Dwm
                 prop.fSourceClientAreaOnly = value;
 
                 if (NativeMethods.DwmUpdateThumbnailProperties(this, ref prop) != 0)
-					throw new DwmCompositionException(Resources.ExceptionMessages.DWMThumbnailUpdateFailure);
+					throw new DwmCompositionException(Resources.ExceptionMessages.DwmThumbnailUpdateFailure);
             }
         }
 
@@ -79,7 +79,7 @@ namespace VistaControls.Dwm
                 prop.rcDestination = new Native.RECT(value);
 
                 if (NativeMethods.DwmUpdateThumbnailProperties(this, ref prop) != 0)
-					throw new DwmCompositionException(Resources.ExceptionMessages.DWMThumbnailUpdateFailure);
+					throw new DwmCompositionException(Resources.ExceptionMessages.DwmThumbnailUpdateFailure);
             }
         }
 
@@ -92,7 +92,7 @@ namespace VistaControls.Dwm
 				prop.rcSource = new Native.RECT(value);
 
                 if (NativeMethods.DwmUpdateThumbnailProperties(this, ref prop) != 0)
-					throw new DwmCompositionException(Resources.ExceptionMessages.DWMThumbnailUpdateFailure);
+					throw new DwmCompositionException(Resources.ExceptionMessages.DwmThumbnailUpdateFailure);
             }
         }
 
@@ -105,7 +105,7 @@ namespace VistaControls.Dwm
                 prop.fVisible = value;
 
                 if (NativeMethods.DwmUpdateThumbnailProperties(this, ref prop) != 0)
-					throw new DwmCompositionException(Resources.ExceptionMessages.DWMThumbnailUpdateFailure);
+					throw new DwmCompositionException(Resources.ExceptionMessages.DwmThumbnailUpdateFailure);
             }
         }
 
@@ -114,7 +114,7 @@ namespace VistaControls.Dwm
 			get {
 				NativeMethods.DwmSize size;
 				if (NativeMethods.DwmQueryThumbnailSourceSize(this, out size) != 0)
-					throw new DwmCompositionException(Resources.ExceptionMessages.DWMThumbnailQueryFailure);
+					throw new DwmCompositionException(Resources.ExceptionMessages.DwmThumbnailQueryFailure);
 
 				return size.ToSize();
 			}
@@ -149,7 +149,7 @@ namespace VistaControls.Dwm
             prop.fSourceClientAreaOnly = onlyClientArea;
 
             if (NativeMethods.DwmUpdateThumbnailProperties(this, ref prop) != 0)
-				throw new DwmCompositionException(Resources.ExceptionMessages.DWMThumbnailUpdateFailure);
+				throw new DwmCompositionException(Resources.ExceptionMessages.DwmThumbnailUpdateFailure);
         }
 
         /// <summary>Updates the thumbnail's display settings.</summary>
@@ -171,7 +171,7 @@ namespace VistaControls.Dwm
             prop.fSourceClientAreaOnly = onlyClientArea;
 
             if (NativeMethods.DwmUpdateThumbnailProperties(this, ref prop) != 0)
-				throw new DwmCompositionException(Resources.ExceptionMessages.DWMThumbnailUpdateFailure);
+				throw new DwmCompositionException(Resources.ExceptionMessages.DwmThumbnailUpdateFailure);
         }
 
         #endregion

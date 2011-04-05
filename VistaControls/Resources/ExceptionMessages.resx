@@ -120,19 +120,19 @@
   <data name="CommonControlEntryPointNotFound" xml:space="preserve">
     <value>Common Controls library version 6.0 not loaded. Must run on Vista and must provide a manifest.</value>
   </data>
-  <data name="DWMNotEnabled" xml:space="preserve">
+  <data name="DwmNotEnabled" xml:space="preserve">
     <value>Desktop composition is not enabled.</value>
   </data>
-  <data name="DWMOsNotSupported" xml:space="preserve">
+  <data name="DwmOsNotSupported" xml:space="preserve">
     <value>Desktop composition is not supported by operating system.</value>
   </data>
-  <data name="DWMThumbnailQueryFailure" xml:space="preserve">
+  <data name="DwmThumbnailQueryFailure" xml:space="preserve">
     <value>Unable to get thumbnail's original size.</value>
   </data>
-  <data name="DWMThumbnailUpdateFailure" xml:space="preserve">
+  <data name="DwmThumbnailUpdateFailure" xml:space="preserve">
     <value>Unable to update thumbnail properties.</value>
   </data>
-  <data name="DWMWindowMatch" xml:space="preserve">
+  <data name="DwmWindowMatch" xml:space="preserve">
     <value>Source and target windows cannot be the same.</value>
   </data>
   <data name="NativeCallFailure" xml:space="preserve">

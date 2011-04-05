@@ -38,15 +38,15 @@ namespace VistaControls.Dwm {
         /// <returns>A Thumbnail instance, needed to unregister and to update properties.</returns>
         public static Thumbnail Register(IntPtr destination, IntPtr source) {
             if (!OsSupport.IsVistaOrBetter)
-                throw new DwmCompositionException(Resources.ExceptionMessages.DWMOsNotSupported);
+                throw new DwmCompositionException(Resources.ExceptionMessages.DwmOsNotSupported);
 
             if (!OsSupport.IsCompositionEnabled)
-                throw new DwmCompositionException(Resources.ExceptionMessages.DWMNotEnabled);
+                throw new DwmCompositionException(Resources.ExceptionMessages.DwmNotEnabled);
 
             if (destination == source)
-                throw new DwmCompositionException(Resources.ExceptionMessages.DWMWindowMatch);
+                throw new DwmCompositionException(Resources.ExceptionMessages.DwmWindowMatch);
 
-            Thumbnail ret = new Thumbnail();
+            Thumbnail ret = null;
             if (NativeMethods.DwmRegisterThumbnail(destination, source, out ret) == 0) {
                 return ret;
             }

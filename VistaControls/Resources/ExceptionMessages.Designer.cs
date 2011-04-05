@@ -72,45 +72,45 @@ namespace VistaControls.Resources {
         /// <summary>
         ///   Looks up a localized string similar to Desktop composition is not enabled..
         /// </summary>
-        internal static string DWMNotEnabled {
+        internal static string DwmNotEnabled {
             get {
-                return ResourceManager.GetString("DWMNotEnabled", resourceCulture);
+                return ResourceManager.GetString("DwmNotEnabled", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Desktop composition is not supported by operating system..
         /// </summary>
-        internal static string DWMOsNotSupported {
+        internal static string DwmOsNotSupported {
             get {
-                return ResourceManager.GetString("DWMOsNotSupported", resourceCulture);
+                return ResourceManager.GetString("DwmOsNotSupported", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Unable to get thumbnail&apos;s original size..
         /// </summary>
-        internal static string DWMThumbnailQueryFailure {
+        internal static string DwmThumbnailQueryFailure {
             get {
-                return ResourceManager.GetString("DWMThumbnailQueryFailure", resourceCulture);
+                return ResourceManager.GetString("DwmThumbnailQueryFailure", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Unable to update thumbnail properties..
         /// </summary>
-        internal static string DWMThumbnailUpdateFailure {
+        internal static string DwmThumbnailUpdateFailure {
             get {
-                return ResourceManager.GetString("DWMThumbnailUpdateFailure", resourceCulture);
+                return ResourceManager.GetString("DwmThumbnailUpdateFailure", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Source and target windows cannot be the same..
         /// </summary>
-        internal static string DWMWindowMatch {
+        internal static string DwmWindowMatch {
             get {
-                return ResourceManager.GetString("DWMWindowMatch", resourceCulture);
+                return ResourceManager.GetString("DwmWindowMatch", resourceCulture);
             }
         }
         
