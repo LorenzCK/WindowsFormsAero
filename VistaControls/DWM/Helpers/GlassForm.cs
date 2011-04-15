@@ -15,32 +15,39 @@ using System.Windows.Forms;
 using WindowsFormsAero.Native;
 
 namespace WindowsFormsAero.Dwm.Helpers {
-	public class GlassForm : Form {
 
-		public GlassForm() {
-			ResizeRedraw = true;
+    /// <summary>
+    /// Form that automatically handles glass margins and mouse dragging.
+    /// </summary>
+    public class GlassForm : Form {
+
+        /// <summary>
+        /// Construct a new form without glass margins.
+        /// </summary>
+        public GlassForm() {
+            ResizeRedraw = true;
             HandleMouseMove = true;
-		}
+        }
 
-		#region Properties
+        #region Properties
 
-		Margins _glassMargins = new Margins(0);
+        Margins _glassMargins = new Margins(0);
 
-		/// <summary>Gets or sets the glass margins of the form.</summary>
-		[Description("The glass margins which are extended inside the client area of the window."),
+        /// <summary>Gets or sets the glass margins of the form.</summary>
+        [Description("The glass margins which are extended inside the client area of the window."),
             Category("Appearance"), DefaultValue(null)]
-		public Margins GlassMargins {
-			get {
-				return _glassMargins;
-			}
-			set {
-				_glassMargins = value;
+        public Margins GlassMargins {
+            get {
+                return _glassMargins;
+            }
+            set {
+                _glassMargins = value;
 
-				SetGlass();
-			}
-		}
+                SetGlass();
+            }
+        }
 
-		/// <summary>Gets or sets whether mouse dragging should be handled automatically.</summary>
+        /// <summary>Gets or sets whether mouse dragging should be handled automatically.</summary>
         [Description("True if mouse dragging of the window should be handled automatically."),
             Category("Behavior"), DefaultValue(true)]
         public bool HandleMouseMove {
@@ -48,27 +55,31 @@ namespace WindowsFormsAero.Dwm.Helpers {
             set;
         }
 
-		bool _glassEnabled = true;
+        bool _glassEnabled = true;
 
-		/// <summary>Gets or sets whether the extended glass margin is enabled or not.</summary>
-		[Description("Enables or disables the glass margin."),
+        /// <summary>Gets or sets whether the extended glass margin is enabled or not.</summary>
+        [Description("Enables or disables the glass margin."),
             Category("Appearance"), DefaultValue(true)]
-		public bool GlassEnabled {
-			get {
-				return _glassEnabled;
-			}
-			set {
-				_glassEnabled = value;
+        public bool GlassEnabled {
+            get {
+                return _glassEnabled;
+            }
+            set {
+                _glassEnabled = value;
 
-				SetGlass();
-			}
-		}
+                SetGlass();
+            }
+        }
 
         bool _hideTitle = false;
 
         /// <summary>
         /// Gets or sets whether the window title and icon should be hidden.
         /// </summary>
+        /// <remarks>
+        /// The window caption will still be visible, but title text and icon will not be.
+        /// A form with a hidden title will look like an Explorer window on Windows Vista or Windows 7.
+        /// </remarks>
         [Description("Shows or hides the title and icon of the window."),
             Category("Appearance"), DefaultValue(false)]
         public bool HideTitle {
@@ -77,38 +88,73 @@ namespace WindowsFormsAero.Dwm.Helpers {
             }
             set {
                 _hideTitle = value;
-                
+
                 ApplyWindowTheme();
             }
         }
 
-		#endregion
+        bool _hideCaption = false;
 
-		#region Overriding
+        /// <summary>
+        /// Gets or sets whether the window caption should be hidden altogether.
+        /// </summary>
+        /// <remarks>
+        /// Should be set before handle creation.
+        /// </remarks>
+        [Description("Shows or hides the window caption completely."),
+            Category("Appearance"), DefaultValue(false)]
+        public bool HideCaption {
+            get {
+                return _hideCaption;
+            }
+            set {
+                _hideCaption = value;
 
-        protected override void OnShown(EventArgs e) {
-            ApplyWindowTheme();
-
-            base.OnShown(e);
+                if (IsHandleCreated) {
+                    RecreateHandle();
+                }
+            }
         }
 
-		protected override void OnPaint(PaintEventArgs e) {
-			base.OnPaint(e);
+        #endregion
 
-			//Paint glass regions in black
-			if (!_glassMargins.IsNull && _glassEnabled) {
-				if (_glassMargins.IsMarginless)
-					e.Graphics.Clear(Color.Black);
-				else {
-					e.Graphics.FillRectangles(Brushes.Black, new Rectangle[] {
+        #region Overriding
+
+        protected override CreateParams CreateParams {
+            get {
+                var parms = base.CreateParams;
+                
+                if (HideCaption) {
+                    parms.Style &= ~0x00C00000; //Remove WS_CAPTION
+                }
+
+                return parms;
+            }
+        }
+
+        protected override void OnHandleCreated(EventArgs e) {
+            ApplyWindowTheme();
+
+            base.OnHandleCreated(e);
+        }
+
+        protected override void OnPaint(PaintEventArgs e) {
+            base.OnPaint(e);
+
+            //Paint glass regions in black
+            if (!_glassMargins.IsNull && _glassEnabled) {
+                if (_glassMargins.IsMarginless)
+                    e.Graphics.Clear(Color.Black);
+                else {
+                    e.Graphics.FillRectangles(Brushes.Black, new Rectangle[] {
 					    new Rectangle(0, 0, ClientSize.Width, _glassMargins.Top),
 					    new Rectangle(ClientSize.Width - _glassMargins.Right, 0, _glassMargins.Right, ClientSize.Height),
 					    new Rectangle(0, ClientSize.Height - _glassMargins.Bottom, ClientSize.Width, _glassMargins.Bottom),
 					    new Rectangle(0, 0, _glassMargins.Left, ClientSize.Height)
 				    });
-				}
-			}
-		}
+                }
+            }
+        }
 
         protected override void WndProc(ref Message m) {
             base.WndProc(ref m);
@@ -133,16 +179,16 @@ namespace WindowsFormsAero.Dwm.Helpers {
             }
         }
 
-		#endregion
+        #endregion
 
-		private void SetGlass() {
-			if (!_glassMargins.IsNull && _glassEnabled)
-				DwmManager.EnableGlassFrame(this, _glassMargins);
-			else
-				DwmManager.DisableGlassFrame(this);
+        private void SetGlass() {
+            if (!_glassMargins.IsNull && _glassEnabled)
+                DwmManager.EnableGlassFrame(this, _glassMargins);
+            else
+                DwmManager.DisableGlassFrame(this);
 
-			this.Invalidate();
-		}
+            this.Invalidate();
+        }
 
         private void ApplyWindowTheme() {
             var attr = (HideTitle) ?
@@ -154,5 +200,5 @@ namespace WindowsFormsAero.Dwm.Helpers {
                 attr);
         }
 
-	}
+    }
 }

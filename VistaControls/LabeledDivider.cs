@@ -23,20 +23,18 @@ using System.Windows.Forms;
 namespace WindowsFormsAero
 {
     /// <summary>
-    /// The labeled divider provides a Aero styled divider with an option caption, similiar to what is seen in the
-    /// Control Panel dialogs of Windows 7 and Vista.
+    /// The labeled divider provides a Aero styled divider with an optional caption,
+    /// similiar to what is seen in the Control Panel dialogs of Windows 7 and Vista.
     /// </summary>
-    public class LabeledDivider : Control
-    {        
+    public class LabeledDivider : Label {
         /// <summary>
         /// Constructor
         /// </summary>
         public LabeledDivider()
         {
-            this.Font = new Font("Segoe UI", 9, FontStyle.Regular, GraphicsUnit.Point, 0);
-            this._text = this.Name;
+            Font = new Font(Font.FontFamily, 9); //ensures that divider takes the "ambient" font from its parent
             this.ForeColor = Color.FromArgb(0, 51, 170);
-            this.Width = 200;
+            AutoSize = false;
         }
 
         /// <summary>
@@ -50,12 +48,14 @@ namespace WindowsFormsAero
         {
             base.OnPaint(e);
 
+            e.Graphics.Clear(BackColor);
+
             SolidBrush sbDividerColor = new SolidBrush(this._dividerColor);
             SolidBrush sbForeColor = new SolidBrush(this.ForeColor);
 
             // Draw the caption string, then get the size of it as it appears on the screen so
             // we know where to put the caption.
-            e.Graphics.DrawString(this.Text, this.Font, sbForeColor, 0, 0);
+            e.Graphics.DrawString(this.Text, this.Font, Brushes.Black, ClientRectangle.X, ClientRectangle.Y);
             SizeF sf = e.Graphics.MeasureString(this.Text, this.Font);
 
             // This didn't quiet get in the cente rso I had to add 1 pixel to the sf.Height / 2
@@ -72,7 +72,6 @@ namespace WindowsFormsAero
 
             sbForeColor.Dispose();
             sbDividerColor.Dispose();
-
         }
 
         /// <summary>
@@ -109,6 +108,7 @@ namespace WindowsFormsAero
             set
             {
                 this._dividerPosition = value;
+                this.Invalidate();
             }
         }
 
@@ -126,6 +126,7 @@ namespace WindowsFormsAero
             set
             {
                 this._dividerColor = value;
+                this.Invalidate();
             }
         }
 
