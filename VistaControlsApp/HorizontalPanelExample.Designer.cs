@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(HorizontalPanelExample));
-            this.horizontalPanel1 = new VistaControls.HorizontalPanel();
+            this.horizontalPanel1 = new WindowsFormsAero.HorizontalPanel();
             this.label6 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
@@ -38,7 +38,7 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.labeledDivider1 = new VistaControls.LabeledDivider();
+            this.labeledDivider1 = new WindowsFormsAero.LabeledDivider();
             this.label9 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
@@ -205,7 +205,7 @@
 
         #endregion
 
-        private VistaControls.HorizontalPanel horizontalPanel1;
+        private WindowsFormsAero.HorizontalPanel horizontalPanel1;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.PictureBox pictureBox1;
@@ -217,6 +217,6 @@
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label9;
-        private VistaControls.LabeledDivider labeledDivider1;
+        private WindowsFormsAero.LabeledDivider labeledDivider1;
     }
 }

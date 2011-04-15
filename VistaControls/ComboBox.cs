@@ -14,7 +14,7 @@ using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
 
-namespace VistaControls
+namespace WindowsFormsAero
 {
     [ToolboxBitmap(typeof(ComboBox))]
     public class ComboBox : System.Windows.Forms.ComboBox

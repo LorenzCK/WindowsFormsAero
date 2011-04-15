@@ -13,7 +13,7 @@ using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using System.Text;
 
-namespace VistaControls.TaskDialog {
+namespace WindowsFormsAero.TaskDialog {
 
     internal class NativeMethods {
 

@@ -20,7 +20,7 @@ using System.Windows.Forms;
  *
  **************************************************************************************************************/
 
-namespace VistaControls
+namespace WindowsFormsAero
 {
     /// <summary>
     /// The labeled divider provides a Aero styled divider with an option caption, similiar to what is seen in the

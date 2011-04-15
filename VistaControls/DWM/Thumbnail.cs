@@ -14,7 +14,7 @@ using System.Text;
 using System.Drawing;
 using System.Security.Permissions;
 
-namespace VistaControls.Dwm
+namespace WindowsFormsAero.Dwm
 {
     /// <summary>Handle to a DWM Thumbnail.</summary>
     public sealed class Thumbnail : System.Runtime.InteropServices.SafeHandle

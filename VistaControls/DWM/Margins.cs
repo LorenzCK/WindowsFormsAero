@@ -15,7 +15,7 @@ using System.Runtime.InteropServices;
 using System.ComponentModel;
 using System.Drawing;
 
-namespace VistaControls.Dwm {
+namespace WindowsFormsAero.Dwm {
 
     /// <summary>Margins structure for the Glass Sheet effect.</summary>
     [StructLayout(LayoutKind.Sequential)]

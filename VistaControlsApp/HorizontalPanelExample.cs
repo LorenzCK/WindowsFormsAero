@@ -8,7 +8,7 @@ using System.Windows.Forms;
 
 namespace VistaControlsApp
 {
-    public partial class HorizontalPanelExample : VistaControls.Dwm.Helpers.GlassForm
+    public partial class HorizontalPanelExample : WindowsFormsAero.Dwm.Helpers.GlassForm
     {
         public HorizontalPanelExample()
         {
@@ -20,7 +20,7 @@ namespace VistaControlsApp
             base.OnShown(e);
 
             //Initialize glass sheet
-            GlassMargins = new VistaControls.Dwm.Margins(0, 0, 30, 0);
+            GlassMargins = new WindowsFormsAero.Dwm.Margins(0, 0, 30, 0);
 
             // Place the panel on the form... since I'm not docking this control currently I just manually
             // put the position and the height in.

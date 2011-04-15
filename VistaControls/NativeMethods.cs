@@ -11,7 +11,7 @@
 using System;
 using System.Runtime.InteropServices;
 
-namespace VistaControls
+namespace WindowsFormsAero
 {
     /// <summary>
     /// Control style and notification constants
@@ -79,6 +79,7 @@ namespace VistaControls
         //Treeview extended styles
         public const int TVS_EX_AUTOHSCROLL = 0x0020;
         public const int TVS_EX_FADEINOUTEXPANDOS = 0x0040;
+        public const int TVS_EX_DOUBLEBUFFER = 0x0004;
         public const int GWL_STYLE = -16;
 
         //Listview universal constants

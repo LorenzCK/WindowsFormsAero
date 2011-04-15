@@ -13,7 +13,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Runtime.Serialization;
 
-namespace VistaControls.Dwm
+namespace WindowsFormsAero.Dwm
 {
     [Serializable]
     class DwmCompositionException : Exception

@@ -20,7 +20,7 @@ using System.ComponentModel;
  *
  **************************************************************************************************************/
 
-namespace VistaControls
+namespace WindowsFormsAero
 {
 
     /// <summary>

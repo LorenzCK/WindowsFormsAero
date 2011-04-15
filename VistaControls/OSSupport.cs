@@ -10,7 +10,7 @@
 
 using System;
 
-namespace VistaControls {
+namespace WindowsFormsAero {
 	
 	/// <summary>
 	/// Static class providing information about the current support for Vista-only features.

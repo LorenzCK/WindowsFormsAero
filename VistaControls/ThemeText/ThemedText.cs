@@ -11,7 +11,7 @@
 using System;
 using System.Drawing;
 
-namespace VistaControls.ThemeText {
+namespace WindowsFormsAero.ThemeText {
 	public partial class ThemedText : IDisposable {
 
 		public void Draw(Graphics g, RectangleF rect) {

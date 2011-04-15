@@ -12,7 +12,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace VistaControls.TaskDialog {
+namespace WindowsFormsAero.TaskDialog {
 
     /// <summary>Common Task Dialog icons. Determine the look of the main instruction.</summary>
     public enum TaskDialogIcon : long {

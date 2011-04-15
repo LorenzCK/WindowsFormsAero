@@ -15,7 +15,7 @@ using System.Drawing;
 using System.Windows.Forms;
 using System.Runtime.InteropServices;
 
-namespace VistaControls.Dwm {
+namespace WindowsFormsAero.Dwm {
 
     /// <summary>Main DWM class, provides Thumbnail registration, glass sheet effect and blur behind.</summary>
     public static class DwmManager {

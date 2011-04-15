@@ -128,9 +128,9 @@ namespace VistaControlsApp
 			this.label3 = new System.Windows.Forms.Label();
 			this.label2 = new System.Windows.Forms.Label();
 			this.label1 = new System.Windows.Forms.Label();
-			this.progressBar1 = new VistaControls.ProgressBar();
-			this.progressBar2 = new VistaControls.ProgressBar();
-			this.progressBar3 = new VistaControls.ProgressBar();
+			this.progressBar1 = new WindowsFormsAero.ProgressBar();
+			this.progressBar2 = new WindowsFormsAero.ProgressBar();
+			this.progressBar3 = new WindowsFormsAero.ProgressBar();
 			this.imageList1 = new System.Windows.Forms.ImageList(this.components);
 			this.groupBox2 = new System.Windows.Forms.GroupBox();
 			this.button2 = new System.Windows.Forms.Button();
@@ -141,22 +141,22 @@ namespace VistaControlsApp
 			this.button5 = new System.Windows.Forms.Button();
 			this.button4 = new System.Windows.Forms.Button();
 			this.button3 = new System.Windows.Forms.Button();
-			this.splitButton1 = new VistaControls.SplitButton();
+			this.splitButton1 = new WindowsFormsAero.SplitButton();
 			this.contextMenu1 = new System.Windows.Forms.ContextMenu();
 			this.menuItem1 = new System.Windows.Forms.MenuItem();
 			this.menuItem2 = new System.Windows.Forms.MenuItem();
-			this.themedLabel2 = new VistaControls.ThemeText.ThemedLabel();
-			this.themedLabel1 = new VistaControls.ThemeText.ThemedLabel();
-			this.treeView1 = new VistaControls.TreeView();
-			this.comboBox2 = new VistaControls.ComboBox();
-			this.listView2 = new VistaControls.ListView();
+			this.themedLabel2 = new WindowsFormsAero.ThemeText.ThemedLabel();
+			this.themedLabel1 = new WindowsFormsAero.ThemeText.ThemedLabel();
+			this.treeView1 = new WindowsFormsAero.TreeView();
+			this.comboBox2 = new WindowsFormsAero.ComboBox();
+			this.listView2 = new WindowsFormsAero.ListView();
 			this.columnHeader1 = new System.Windows.Forms.ColumnHeader();
 			this.columnHeader2 = new System.Windows.Forms.ColumnHeader();
-			this.textBox1 = new VistaControls.TextBox();
-			this.commandLink2 = new VistaControls.CommandLink();
-			this.commandLink1 = new VistaControls.CommandLink();
-			this.button1 = new VistaControls.Button();
-			this.searchTextBox1 = new VistaControls.SearchTextBox();
+			this.textBox1 = new WindowsFormsAero.TextBox();
+			this.commandLink2 = new WindowsFormsAero.CommandLink();
+			this.commandLink1 = new WindowsFormsAero.CommandLink();
+			this.button1 = new WindowsFormsAero.Button();
+			this.searchTextBox1 = new WindowsFormsAero.SearchTextBox();
 			this.groupBox1.SuspendLayout();
 			this.groupBox2.SuspendLayout();
 			this.SuspendLayout();
@@ -217,7 +217,7 @@ namespace VistaControlsApp
 			this.progressBar2.Location = new System.Drawing.Point(54, 43);
 			this.progressBar2.Margin = new System.Windows.Forms.Padding(2);
 			this.progressBar2.Name = "progressBar2";
-			this.progressBar2.ProgressState = VistaControls.ProgressBar.States.Error;
+			this.progressBar2.ProgressState = WindowsFormsAero.ProgressBar.States.Error;
 			this.progressBar2.Size = new System.Drawing.Size(349, 19);
 			this.progressBar2.TabIndex = 6;
 			this.progressBar2.Value = 50;
@@ -227,7 +227,7 @@ namespace VistaControlsApp
 			this.progressBar3.Location = new System.Drawing.Point(54, 66);
 			this.progressBar3.Margin = new System.Windows.Forms.Padding(2);
 			this.progressBar3.Name = "progressBar3";
-			this.progressBar3.ProgressState = VistaControls.ProgressBar.States.Paused;
+			this.progressBar3.ProgressState = WindowsFormsAero.ProgressBar.States.Paused;
 			this.progressBar3.Size = new System.Drawing.Size(349, 19);
 			this.progressBar3.TabIndex = 7;
 			this.progressBar3.Value = 50;
@@ -355,7 +355,7 @@ namespace VistaControlsApp
 			this.splitButton1.TabIndex = 27;
 			this.splitButton1.Text = "Increase";
 			this.splitButton1.UseVisualStyleBackColor = true;
-			this.splitButton1.SplitMenuOpening += new System.EventHandler<VistaControls.SplitButton.SplitMenuEventArgs>(this.Split_opening);
+			this.splitButton1.SplitMenuOpening += new System.EventHandler<WindowsFormsAero.SplitButton.SplitMenuEventArgs>(this.Split_opening);
 			this.splitButton1.Click += new System.EventHandler(this.Split_click);
 			// 
 			// contextMenu1
@@ -398,7 +398,7 @@ namespace VistaControlsApp
 			this.themedLabel1.Location = new System.Drawing.Point(0, 0);
 			this.themedLabel1.Name = "themedLabel1";
 			this.themedLabel1.Padding = new System.Windows.Forms.Padding(8, 0, 0, 0);
-			this.themedLabel1.ShadowType = VistaControls.ThemeText.Options.ShadowOption.ShadowType.Single;
+			this.themedLabel1.ShadowType = WindowsFormsAero.ThemeText.Options.ShadowOption.ShadowType.Single;
 			this.themedLabel1.Size = new System.Drawing.Size(454, 58);
 			this.themedLabel1.TabIndex = 25;
 			this.themedLabel1.Text = "Vista Controls for .NET 2.0";
@@ -674,23 +674,23 @@ namespace VistaControlsApp
 
         #endregion
 
-        private VistaControls.Button button1;
-        private VistaControls.CommandLink commandLink1;
-        private VistaControls.CommandLink commandLink2;
-        private VistaControls.ProgressBar progressBar1;
-        private VistaControls.ProgressBar progressBar2;
-        private VistaControls.ProgressBar progressBar3;
-        private VistaControls.TextBox textBox1;
+        private WindowsFormsAero.Button button1;
+        private WindowsFormsAero.CommandLink commandLink1;
+        private WindowsFormsAero.CommandLink commandLink2;
+        private WindowsFormsAero.ProgressBar progressBar1;
+        private WindowsFormsAero.ProgressBar progressBar2;
+        private WindowsFormsAero.ProgressBar progressBar3;
+        private WindowsFormsAero.TextBox textBox1;
         private System.Windows.Forms.ColumnHeader columnHeader1;
         private System.Windows.Forms.ColumnHeader columnHeader2;
-        private VistaControls.ComboBox comboBox2;
+        private WindowsFormsAero.ComboBox comboBox2;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
-        private VistaControls.TreeView treeView1;
+        private WindowsFormsAero.TreeView treeView1;
         private System.Windows.Forms.ImageList imageList1;
-        private VistaControls.ListView listView2;
+        private WindowsFormsAero.ListView listView2;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.Button button9;
         private System.Windows.Forms.Button button8;
@@ -699,13 +699,13 @@ namespace VistaControlsApp
         private System.Windows.Forms.Button button5;
         private System.Windows.Forms.Button button4;
 		private System.Windows.Forms.Button button3;
-		private VistaControls.ThemeText.ThemedLabel themedLabel1;
-		private VistaControls.ThemeText.ThemedLabel themedLabel2;
-		private VistaControls.SplitButton splitButton1;
+		private WindowsFormsAero.ThemeText.ThemedLabel themedLabel1;
+		private WindowsFormsAero.ThemeText.ThemedLabel themedLabel2;
+		private WindowsFormsAero.SplitButton splitButton1;
 		private System.Windows.Forms.Button button2;
 		private System.Windows.Forms.ContextMenu contextMenu1;
 		private System.Windows.Forms.MenuItem menuItem1;
 		private System.Windows.Forms.MenuItem menuItem2;
-		private VistaControls.SearchTextBox searchTextBox1;
+		private WindowsFormsAero.SearchTextBox searchTextBox1;
     }
 }

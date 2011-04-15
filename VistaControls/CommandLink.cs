@@ -15,7 +15,7 @@ using System.Drawing;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
-namespace VistaControls
+namespace WindowsFormsAero
 {
     [ToolboxBitmap(typeof(Button))]
     public class CommandLink: System.Windows.Forms.Button

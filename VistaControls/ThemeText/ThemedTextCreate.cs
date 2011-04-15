@@ -12,10 +12,10 @@ using System;
 using System.Drawing;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
-using VistaControls.ThemeText.Options;
+using WindowsFormsAero.ThemeText.Options;
 using System.Windows.Forms.VisualStyles;
 
-namespace VistaControls.ThemeText {
+namespace WindowsFormsAero.ThemeText {
 	
 	public partial class ThemedText : IDisposable {
 

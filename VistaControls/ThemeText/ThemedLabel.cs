@@ -14,16 +14,16 @@ using System.Text;
 using System.Drawing;
 using System.Windows.Forms;
 using System.ComponentModel;
-using VistaControls.ThemeText.Options;
+using WindowsFormsAero.ThemeText.Options;
 using System.Windows.Forms.VisualStyles;
 
 
-namespace VistaControls.ThemeText {
+namespace WindowsFormsAero.ThemeText {
 
 	/// <summary>
 	/// A Label containing some text that will be drawn with glowing border on top of the Glass Sheet effect.
 	/// </summary>
-	//[Designer("VistaControls.Design.ThemedLabelDesigner")]
+	//[Designer("WindowsFormsAero.Design.ThemedLabelDesigner")]
 	[DefaultProperty("Text")]
 	public class ThemedLabel : Control {
 
@@ -310,10 +310,10 @@ namespace VistaControls.ThemeText {
 		#region Events
 
 		protected override void WndProc(ref Message m) {
-			if (m.Msg == VistaControls.NativeMethods.WM_NCHITTEST && !DesignMode) {
+			if (m.Msg == WindowsFormsAero.NativeMethods.WM_NCHITTEST && !DesignMode) {
 				base.WndProc(ref m);
 
-				m.Result = new IntPtr(VistaControls.NativeMethods.HTTRANSPARENT);
+                m.Result = new IntPtr(WindowsFormsAero.NativeMethods.HTTRANSPARENT);
 
 				return;
 			}

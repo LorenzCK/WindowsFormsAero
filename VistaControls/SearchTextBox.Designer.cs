@@ -1,5 +1,5 @@
 using System.Drawing;
-namespace VistaControls
+namespace WindowsFormsAero
 {
 	partial class SearchTextBox
 	{
@@ -68,7 +68,7 @@ namespace VistaControls
 			this.searchImage.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
 						| System.Windows.Forms.AnchorStyles.Right)));
 			this.searchImage.Cursor = System.Windows.Forms.Cursors.Arrow;
-			this.searchImage.Image = global::VistaControls.Resources.Pictures.InactiveSearch;
+            this.searchImage.Image = global::WindowsFormsAero.Resources.Pictures.InactiveSearch;
 			this.searchImage.Location = new System.Drawing.Point(128, 0);
 			this.searchImage.Margin = new System.Windows.Forms.Padding(0);
 			this.searchImage.Name = "searchImage";

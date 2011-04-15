@@ -8,8 +8,8 @@
     <ProjectGuid>{0FD86E59-801B-458C-BC44-FF51B6D15F70}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>VistaControlsApp</RootNamespace>
-    <AssemblyName>VistaControlsApp</AssemblyName>
+    <RootNamespace>WindowsFormsAeroDemo</RootNamespace>
+    <AssemblyName>WindowsFormsAeroDemo</AssemblyName>
     <SccProjectName>
     </SccProjectName>
     <SccLocalPath>
@@ -41,7 +41,7 @@
     <BootstrapperEnabled>true</BootstrapperEnabled>
     <StartupObject>
     </StartupObject>
-    <ApplicationManifest>VistaControlsApp.exe.manifest</ApplicationManifest>
+    <ApplicationManifest>WindowsFormsAero.exe.manifest</ApplicationManifest>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -127,7 +127,7 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
-    <None Include="VistaControlsApp.exe.manifest" />
+    <None Include="WindowsFormsAero.exe.manifest" />
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Settings.settings</DependentUpon>
@@ -141,9 +141,9 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\VistaControls\VistaControls.csproj">
+    <ProjectReference Include="..\VistaControls\WindowsFormsAero.csproj">
       <Project>{058F123E-D366-4023-94EF-E4AF8EC5D101}</Project>
-      <Name>VistaControls</Name>
+      <Name>WindowsFormsAero</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

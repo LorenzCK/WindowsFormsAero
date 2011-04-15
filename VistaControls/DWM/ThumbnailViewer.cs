@@ -5,7 +5,7 @@ using System.Windows.Forms;
 using System.Drawing;
 using System.ComponentModel;
 
-namespace VistaControls.Dwm {
+namespace WindowsFormsAero.Dwm {
 	public class ThumbnailViewer : Control {
 
 		Thumbnail _thumbnail = null;

@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.aeroVerticalPanel1 = new VistaControls.VerticalPanel();
+            this.aeroVerticalPanel1 = new WindowsFormsAero.VerticalPanel();
             this.panel1 = new System.Windows.Forms.Panel();
             this.linkLabel1 = new System.Windows.Forms.LinkLabel();
             this.linkLabel2 = new System.Windows.Forms.LinkLabel();
@@ -146,7 +146,7 @@
 
         #endregion
 
-        private VistaControls.VerticalPanel aeroVerticalPanel1;
+        private WindowsFormsAero.VerticalPanel aeroVerticalPanel1;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.LinkLabel linkLabel3;
         private System.Windows.Forms.LinkLabel linkLabel2;

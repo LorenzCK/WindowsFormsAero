@@ -12,7 +12,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace VistaControls.ThemeText.Options {
+namespace WindowsFormsAero.ThemeText.Options {
 	public class OverlayOption : IThemeTextOption {
 
 		public OverlayOption(bool enabled) {

@@ -16,7 +16,7 @@ namespace VistaControlsApp
             Application.SetCompatibleTextRenderingDefault(false);
 
 			//Compatibility check
-			if (!VistaControls.OsSupport.IsVistaOrBetter)
+			if (!WindowsFormsAero.OsSupport.IsVistaOrBetter)
 				if (MessageBox.Show("It appears you are not running on Windows Vista. The controls and dialogs implemented in this application might not work or crash.\n\nDo you want to continue?", "Windows Vista required", MessageBoxButtons.YesNo, MessageBoxIcon.Error) == DialogResult.No)
 					return;
 

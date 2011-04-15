@@ -13,7 +13,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Runtime.InteropServices;
 
-namespace VistaControls.TaskDialog {
+namespace WindowsFormsAero.TaskDialog {
 
     /// <summary>Stores a Task Dialog message that will be sent to a dialog in order to update its state.</summary>
     internal class Message : IDisposable {

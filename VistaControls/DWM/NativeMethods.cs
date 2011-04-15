@@ -14,7 +14,7 @@ using System.Text;
 using System.Runtime.InteropServices;
 using System.Drawing;
 
-namespace VistaControls.Dwm
+namespace WindowsFormsAero.Dwm
 {
     internal static class NativeMethods
     {

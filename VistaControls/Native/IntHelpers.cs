@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace VistaControls.Native {
+namespace WindowsFormsAero.Native {
     internal static class IntHelpers {
 
         public static ushort LowWord(uint val) {

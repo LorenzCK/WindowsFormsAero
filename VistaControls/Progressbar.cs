@@ -13,7 +13,7 @@ using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
 
-namespace VistaControls
+namespace WindowsFormsAero
 {
     [ToolboxBitmap(typeof(ProgressBar))]
     public class ProgressBar:System.Windows.Forms.ProgressBar

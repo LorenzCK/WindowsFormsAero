@@ -13,7 +13,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Runtime.InteropServices;
 
-namespace VistaControls.ThemeText {
+namespace WindowsFormsAero.ThemeText {
 	
 	internal static class NativeMethods {
 
