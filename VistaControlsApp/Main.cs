@@ -6,12 +6,12 @@ using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
 using System.Runtime.InteropServices;
-using VistaControls.TaskDialog;
+using WindowsFormsAero.TaskDialog;
 using System.Drawing.Drawing2D;
 using System.Diagnostics;
 
 namespace VistaControlsApp {
-    public partial class Main : VistaControls.Dwm.Helpers.GlassForm {
+    public partial class Main : WindowsFormsAero.Dwm.Helpers.GlassForm {
 
 		Timer _timer;
 
@@ -25,7 +25,7 @@ namespace VistaControlsApp {
 			base.OnShown(e);
 
 			//Initialize glass sheet
-			GlassMargins = new VistaControls.Dwm.Margins(0, 0, 58, 28);
+			GlassMargins = new WindowsFormsAero.Dwm.Margins(0, 0, 58, 28);
 
 			//Init timer for animated footer
 			_timer = new Timer();
@@ -135,7 +135,7 @@ namespace VistaControlsApp {
             if (e.ButtonID == 9) {
                 e.PreventClosing = true;
 
-                VistaControls.TaskDialog.TaskDialog newDlg = new TaskDialog("Uploading...", "Upload");
+                WindowsFormsAero.TaskDialog.TaskDialog newDlg = new TaskDialog("Uploading...", "Upload");
                 newDlg.ShowProgressBar = true;
                 newDlg.EnableCallbackTimer = true;
                 newDlg.ProgressBarMaxRange = 90;
@@ -145,7 +145,7 @@ namespace VistaControlsApp {
                 newDlg.Footer = "Elapsed time: 0s.";
                 newDlg.FooterCommonIcon = TaskDialogIcon.Information;
 
-                VistaControls.TaskDialog.TaskDialog dlg = (VistaControls.TaskDialog.TaskDialog)sender;
+                WindowsFormsAero.TaskDialog.TaskDialog dlg = (WindowsFormsAero.TaskDialog.TaskDialog)sender;
                 dlg.Navigate(newDlg);
 
                 tickHandler = new EventHandler<TimerEventArgs>(dlg_Tick);
@@ -156,18 +156,18 @@ namespace VistaControlsApp {
         EventHandler<TimerEventArgs> tickHandler;
         int cTicks = 0;
         void dlg_Tick(object sender, TimerEventArgs e) {
-            VistaControls.TaskDialog.TaskDialog dlg = (VistaControls.TaskDialog.TaskDialog)sender;
+            WindowsFormsAero.TaskDialog.TaskDialog dlg = (WindowsFormsAero.TaskDialog.TaskDialog)sender;
 
             cTicks += (int)e.Ticks;
             dlg.Footer = "Elapsed time: " + cTicks / 1000 + "s.";
 
-            if (dlg.ProgressBarState == VistaControls.ProgressBar.States.Normal) {
+            if (dlg.ProgressBarState == WindowsFormsAero.ProgressBar.States.Normal) {
                 dlg.ProgressBarPosition += (int)e.Ticks / 100;
                 e.ResetCount = true;
             }
 
             if (dlg.ProgressBarPosition >= 90) {
-                VistaControls.TaskDialog.TaskDialog newDlg = new TaskDialog("Upload complete.", "Upload", "Thank you!");
+                WindowsFormsAero.TaskDialog.TaskDialog newDlg = new TaskDialog("Upload complete.", "Upload", "Thank you!");
                 newDlg.CustomButtons = new CustomButton[] {
                     new CustomButton(Result.Cancel, "Close")
                 };
@@ -194,7 +194,7 @@ namespace VistaControlsApp {
 			progressBar1.Value -= 10;
 		}
 
-		private void Split_opening(object sender, VistaControls.SplitButton.SplitMenuEventArgs e) {
+		private void Split_opening(object sender, WindowsFormsAero.SplitButton.SplitMenuEventArgs e) {
 			contextMenu1.MenuItems[0].Enabled = (progressBar1.Value < 100);
 			contextMenu1.MenuItems[1].Enabled = (progressBar1.Value > 0);
 		}

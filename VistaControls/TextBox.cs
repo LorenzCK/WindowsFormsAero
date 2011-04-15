@@ -13,7 +13,7 @@ using System;
 using System.ComponentModel;
 using System.Drawing;
 
-namespace VistaControls
+namespace WindowsFormsAero
 {
     [ToolboxBitmap(typeof(TextBox))]
     public class TextBox:System.Windows.Forms.TextBox

@@ -12,7 +12,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace VistaControls.ThemeText.Options {
+namespace WindowsFormsAero.ThemeText.Options {
 	public abstract class IThemeTextOption {
 
 		internal abstract void Apply(ref NativeMethods.DTTOPTS options);

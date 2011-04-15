@@ -5,12 +5,12 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("VistaControlsApp")]
-[assembly: AssemblyDescription("Vista Controls Demo")]
+[assembly: AssemblyTitle("WindowsFormsAero Demo")]
+[assembly: AssemblyDescription("Showcase for the WindowsFormsAero library.")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Not applicable")]
-[assembly: AssemblyProduct("VistaControlsApp")]
-[assembly: AssemblyCopyright("Copyright ©  2009")]
+[assembly: AssemblyCompany("")]
+[assembly: AssemblyProduct("WindowsFormsAero Demo")]
+[assembly: AssemblyCopyright("Copyright ©  2011")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -29,5 +29,5 @@ using System.Runtime.InteropServices;
 //      Build Number
 //      Revision
 //
-[assembly: AssemblyVersion("1.4.1.0")]
-[assembly: AssemblyFileVersion("1.4.1.0")]
+[assembly: AssemblyVersion("1.5.0.0")]
+[assembly: AssemblyFileVersion("1.5.0.0")]

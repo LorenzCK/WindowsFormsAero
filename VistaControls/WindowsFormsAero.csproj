@@ -8,8 +8,8 @@
     <ProjectGuid>{058F123E-D366-4023-94EF-E4AF8EC5D101}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>VistaControls</RootNamespace>
-    <AssemblyName>VistaControls</AssemblyName>
+    <RootNamespace>WindowsFormsAero</RootNamespace>
+    <AssemblyName>WindowsFormsAero</AssemblyName>
     <SccProjectName>
     </SccProjectName>
     <SccLocalPath>

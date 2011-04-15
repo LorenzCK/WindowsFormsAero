@@ -12,7 +12,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace VistaControls.TaskDialog {
+namespace WindowsFormsAero.TaskDialog {
 
     public class ClickEventArgs : EventArgs {
         public ClickEventArgs(int buttonID) {

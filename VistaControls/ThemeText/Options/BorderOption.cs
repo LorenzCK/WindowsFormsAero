@@ -13,7 +13,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Drawing;
 
-namespace VistaControls.ThemeText.Options {
+namespace WindowsFormsAero.ThemeText.Options {
 	public class BorderOption : IThemeTextOption {
 
 		public BorderOption(Color c, int size) {

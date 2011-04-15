@@ -12,7 +12,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace VistaControls.TaskDialog {
+namespace WindowsFormsAero.TaskDialog {
 
     /// <summary>Class that aggregates the results of an "indirect" Task Dialog.</summary>
     public class Results {

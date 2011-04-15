@@ -16,7 +16,7 @@ using System.ComponentModel;
 using System.Windows.Forms;
 using System.Windows.Forms.Design;
 
-namespace VistaControls.Design
+namespace WindowsFormsAero.Design
 {
 	internal class SearchTextBoxDesigner : ControlDesigner
 	{

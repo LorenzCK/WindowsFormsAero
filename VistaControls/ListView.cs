@@ -13,7 +13,7 @@ using System;
 using System.Drawing;
 using System.Windows.Forms;
 
-namespace VistaControls
+namespace WindowsFormsAero
 {
     [ToolboxBitmap(typeof(ListView))]
     public class ListView : System.Windows.Forms.ListView

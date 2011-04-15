@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Runtime.InteropServices;
 
-namespace VistaControls.Native {
+namespace WindowsFormsAero.Native {
 
     [Flags]
     internal enum WindowThemeNonClientAttributes : uint {

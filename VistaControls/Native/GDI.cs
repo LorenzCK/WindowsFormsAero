@@ -13,7 +13,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Runtime.InteropServices;
 
-namespace VistaControls.Native {
+namespace WindowsFormsAero.Native {
 	internal static class GDI {
 
 		#region DC and Blitting

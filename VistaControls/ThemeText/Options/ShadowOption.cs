@@ -13,7 +13,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Drawing;
 
-namespace VistaControls.ThemeText.Options {
+namespace WindowsFormsAero.ThemeText.Options {
 	public class ShadowOption : IThemeTextOption {
 
 		public enum ShadowType {
@@ -40,7 +40,7 @@ namespace VistaControls.ThemeText.Options {
 							   NativeMethods.DTTOPSFlags.DTT_SHADOWTYPE;
 
 			options.crShadow = ColorTranslator.ToWin32(Color);
-			options.ptShadowOffset = new VistaControls.Native.POINT(Offset);
+            options.ptShadowOffset = new WindowsFormsAero.Native.POINT(Offset);
 
 			switch (Type) {
 				case ShadowType.None:

@@ -12,7 +12,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace VistaControls.ThemeText.Options {
+namespace WindowsFormsAero.ThemeText.Options {
     /// <summary>
     /// Applies a glow on the themed text.
     /// </summary>

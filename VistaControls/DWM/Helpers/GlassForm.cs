@@ -12,9 +12,9 @@ using System;
 using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
-using VistaControls.Native;
+using WindowsFormsAero.Native;
 
-namespace VistaControls.Dwm.Helpers {
+namespace WindowsFormsAero.Dwm.Helpers {
 	public class GlassForm : Form {
 
 		public GlassForm() {

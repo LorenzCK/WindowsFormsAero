@@ -16,11 +16,11 @@ using System.Drawing;
 using System.Security.Permissions;
 using System.Windows.Forms;
 
-namespace VistaControls
+namespace WindowsFormsAero
 {
 	/// <summary>A standard WinForms text box presenting the common Vista "search" interface.
 	/// Reacts on user input by raising "SearchStarted" events.</summary>
-	[Designer(typeof(VistaControls.Design.SearchTextBoxDesigner))]
+    [Designer(typeof(WindowsFormsAero.Design.SearchTextBoxDesigner))]
 	[DefaultEvent("SearchStarted")]
 	[DefaultProperty("Text")]
 	public partial class SearchTextBox : Control

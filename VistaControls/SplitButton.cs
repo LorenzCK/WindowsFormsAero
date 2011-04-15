@@ -15,7 +15,7 @@ using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
 
-namespace VistaControls {
+namespace WindowsFormsAero {
 
 	public class SplitButton : Button {
 

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace VistaControls.Dwm {
+namespace WindowsFormsAero.Dwm {
     
     /// <summary>
     /// Determines a window's Flip 3D policy.
