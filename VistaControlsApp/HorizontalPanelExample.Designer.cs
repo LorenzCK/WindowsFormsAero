@@ -38,6 +38,10 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.panel2 = new System.Windows.Forms.Panel();
+            this.labeledDivider4 = new WindowsFormsAero.LabeledDivider();
+            this.labeledDivider3 = new WindowsFormsAero.LabeledDivider();
+            this.labeledDivider2 = new WindowsFormsAero.LabeledDivider();
             this.labeledDivider1 = new WindowsFormsAero.LabeledDivider();
             this.label9 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
@@ -45,6 +49,7 @@
             this.horizontalPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.panel1.SuspendLayout();
+            this.panel2.SuspendLayout();
             this.SuspendLayout();
             // 
             // horizontalPanel1
@@ -133,6 +138,7 @@
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.Color.White;
+            this.panel1.Controls.Add(this.panel2);
             this.panel1.Controls.Add(this.labeledDivider1);
             this.panel1.Controls.Add(this.label9);
             this.panel1.Controls.Add(this.label8);
@@ -141,6 +147,51 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(635, 296);
             this.panel1.TabIndex = 1;
+            // 
+            // panel2
+            // 
+            this.panel2.AutoScroll = true;
+            this.panel2.Controls.Add(this.labeledDivider4);
+            this.panel2.Controls.Add(this.labeledDivider3);
+            this.panel2.Controls.Add(this.labeledDivider2);
+            this.panel2.Location = new System.Drawing.Point(29, 167);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(337, 115);
+            this.panel2.TabIndex = 4;
+            // 
+            // labeledDivider4
+            // 
+            this.labeledDivider4.DividerColor = System.Drawing.Color.FromArgb(((int)(((byte)(176)))), ((int)(((byte)(191)))), ((int)(((byte)(222)))));
+            this.labeledDivider4.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F);
+            this.labeledDivider4.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(51)))), ((int)(((byte)(170)))));
+            this.labeledDivider4.Location = new System.Drawing.Point(3, 121);
+            this.labeledDivider4.Name = "labeledDivider4";
+            this.labeledDivider4.Size = new System.Drawing.Size(306, 33);
+            this.labeledDivider4.TabIndex = 2;
+            this.labeledDivider4.Text = "Divider 3";
+            // 
+            // labeledDivider3
+            // 
+            this.labeledDivider3.DividerColor = System.Drawing.Color.FromArgb(((int)(((byte)(176)))), ((int)(((byte)(191)))), ((int)(((byte)(222)))));
+            this.labeledDivider3.DividerPosition = WindowsFormsAero.LabeledDivider.DividerPositions.Below;
+            this.labeledDivider3.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F);
+            this.labeledDivider3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(51)))), ((int)(((byte)(170)))));
+            this.labeledDivider3.Location = new System.Drawing.Point(3, 67);
+            this.labeledDivider3.Name = "labeledDivider3";
+            this.labeledDivider3.Size = new System.Drawing.Size(306, 33);
+            this.labeledDivider3.TabIndex = 1;
+            this.labeledDivider3.Text = "Divider 2";
+            // 
+            // labeledDivider2
+            // 
+            this.labeledDivider2.DividerColor = System.Drawing.Color.FromArgb(((int)(((byte)(176)))), ((int)(((byte)(191)))), ((int)(((byte)(222)))));
+            this.labeledDivider2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F);
+            this.labeledDivider2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(51)))), ((int)(((byte)(170)))));
+            this.labeledDivider2.Location = new System.Drawing.Point(3, 9);
+            this.labeledDivider2.Name = "labeledDivider2";
+            this.labeledDivider2.Size = new System.Drawing.Size(306, 33);
+            this.labeledDivider2.TabIndex = 0;
+            this.labeledDivider2.Text = "Divider 1";
             // 
             // labeledDivider1
             // 
@@ -199,6 +250,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
+            this.panel2.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -218,5 +270,9 @@
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label9;
         private WindowsFormsAero.LabeledDivider labeledDivider1;
+        private System.Windows.Forms.Panel panel2;
+        private WindowsFormsAero.LabeledDivider labeledDivider4;
+        private WindowsFormsAero.LabeledDivider labeledDivider3;
+        private WindowsFormsAero.LabeledDivider labeledDivider2;
     }
 }
