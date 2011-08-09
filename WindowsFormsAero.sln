@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual C# Express 2010
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WindowsFormsAeroDemo", "VistaControlsApp\WindowsFormsAeroDemo.csproj", "{0FD86E59-801B-458C-BC44-FF51B6D15F70}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WindowsFormsAeroDemo", "WindowsFormsAeroDemo\WindowsFormsAeroDemo.csproj", "{0FD86E59-801B-458C-BC44-FF51B6D15F70}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WindowsFormsAero", "VistaControls\WindowsFormsAero.csproj", "{058F123E-D366-4023-94EF-E4AF8EC5D101}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WindowsFormsAero", "WindowsFormsAero\WindowsFormsAero.csproj", "{058F123E-D366-4023-94EF-E4AF8EC5D101}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -28,11 +28,11 @@ Global
 		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
 		SccTeamFoundationServer = https://tfs02.codeplex.com/
 		SccLocalPath0 = .
-		SccProjectUniqueName1 = VistaControls\\VistaControls.csproj
-		SccProjectName1 = VistaControls
-		SccLocalPath1 = VistaControls
-		SccProjectUniqueName2 = VistaControlsApp\\VistaControlsApp.csproj
-		SccProjectName2 = VistaControlsApp
-		SccLocalPath2 = VistaControlsApp
+		SccProjectUniqueName1 = WindowsFormsAero\\WindowsFormsAero.csproj
+		SccProjectName1 = WindowsFormsAero
+		SccLocalPath1 = WindowsFormsAero
+		SccProjectUniqueName2 = WindowsFormsAeroDemo\\WindowsFormsAeroDemo.csproj
+		SccProjectName2 = WindowsFormsAeroDemo
+		SccLocalPath2 = WindowsFormsAeroDemo
 	EndGlobalSection
 EndGlobal
