@@ -1,0 +1,28 @@
+﻿//--
+// Windows Forms Aero Controls
+// http://www.CodePlex.com/VistaControls
+//
+// Copyright (c) 2007 - 2008 http://www.CodePlex.com/VistaControls/People/ProjectPeople.aspx
+// Licensed under Microsoft Reciprocal License (Ms-RL) 
+//--
+
+//
+// TAB STRIP and AERO TAB CONTROL
+//
+// Written by Jachym Kouba, based on a code sample by Jessica Fosler
+// http://blogs.msdn.com/jfoscoding/archive/2006/12/20/bloopers-and-outtakes.aspx
+//
+// TabStrip resizing algorithm was inspired by MdiTabStrip by crcites
+// http://www.codeproject.com/KB/cpp/MDITabStrip.aspx
+
+//
+// TOOL STRIP AERO RENDERER
+//
+// Based on code by Lee Houghton 
+// http://wp.asztal.net/2007/12/vista-style-menus-in-dotnet/
+
+//
+// MESSAGE FILTER
+//
+// Shameless rip off from http://jfoscoding.googlepages.com/MessageFilter.cs
+//
