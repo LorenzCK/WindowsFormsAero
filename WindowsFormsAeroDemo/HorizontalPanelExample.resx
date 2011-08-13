@@ -117,6 +117,9 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="label8.Text" xml:space="preserve">
+    <value>The below is an example of the horizontal panel like is seen in the Computer dialog of Windows 7 and Windows Vista.    This can be used to display additional information for the form that you are currently on.</value>
+  </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="pictureBox1.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
@@ -204,8 +207,5 @@
         QDgqDomFtfDMtUtSQkJCSqKYOfSOHDhwYC837SLK/34TDv/fOX0vESYnJ3dnax3GzdACdpSdfOxCqXiy
         WH1iY2O9CCrbzduWLVs+X79+/eO7du36c3/e3Z9K+Ptb/v9F4J/xspJI2Bw+ewAAAABJRU5ErkJggg==
 </value>
-  </data>
-  <data name="label8.Text" xml:space="preserve">
-    <value>The below is an example of the horizontal panel like is seen in the Computer dialog of Windows 7 and Windows Vista.    This can be used to display additional information for the form that you are currently on.</value>
   </data>
 </root>

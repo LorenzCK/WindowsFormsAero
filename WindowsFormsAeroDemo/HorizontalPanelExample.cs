@@ -24,9 +24,9 @@ namespace VistaControlsApp
 
             // Place the panel on the form... since I'm not docking this control currently I just manually
             // put the position and the height in.
-            panel1.Top = 30;
-            panel1.Height = this.Height - 120;
-            horizontalPanel1.Top = panel1.Bottom;
+            panelTop.Top = 30;
+            panelTop.Height = this.Height - 120;
+            panelBottom.Top = panelTop.Bottom;
            
 
         }

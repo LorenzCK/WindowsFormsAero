@@ -14,6 +14,7 @@ using System.Text;
 using System.Runtime.InteropServices;
 using System.ComponentModel;
 using System.Drawing;
+using System.Windows.Forms;
 
 namespace WindowsFormsAero.Dwm {
 
@@ -44,6 +45,12 @@ namespace WindowsFormsAero.Dwm {
 		public int Top { get { return _top; } set { _top = value; } }
 		public int Bottom { get { return _bottom; } set { _bottom = value; } }
 
+        /// <summary>
+        /// Gets whether this margin represents a negative measure on each side.
+        /// </summary>
+        /// <remarks>
+        /// Used to specify non-existing margins on glass frames.
+        /// </remarks>
 		public bool IsMarginless {
 			get {
 				return (
@@ -53,6 +60,9 @@ namespace WindowsFormsAero.Dwm {
 			}
 		}
 
+        /// <summary>
+        /// Gets whether this margin measures 0 pixels on each side.
+        /// </summary>
 		public bool IsNull {
 			get {
 				return (
@@ -79,6 +89,20 @@ namespace WindowsFormsAero.Dwm {
         public override string ToString() {
             return string.Format("Margins [{0},{1},{2},{3}]", _left, _top, _right, _bottom);
         }
+
+        /// <summary>
+        /// Gets the margins value as a padding instance.
+        /// </summary>
+        /// <returns></returns>
+        public Padding AsPadding() {
+            return new Padding(_left, _top, _right, _bottom);
+        }
+
+        /// <summary>
+        /// Gets a static readonly 0-pixel margin.
+        /// This margin returns true on the IsNull property.
+        /// </summary>
+        public static readonly Margins Zero = new Margins(0);
 
     }
 
