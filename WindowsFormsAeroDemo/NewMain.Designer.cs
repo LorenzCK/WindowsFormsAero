@@ -30,87 +30,87 @@ namespace VistaControlsApp
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(NewMain));
-            System.Windows.Forms.TreeNode treeNode43 = new System.Windows.Forms.TreeNode("Node1");
-            System.Windows.Forms.TreeNode treeNode44 = new System.Windows.Forms.TreeNode("Node2");
-            System.Windows.Forms.TreeNode treeNode45 = new System.Windows.Forms.TreeNode("Node0");
-            System.Windows.Forms.TreeNode treeNode46 = new System.Windows.Forms.TreeNode("Node16");
-            System.Windows.Forms.TreeNode treeNode47 = new System.Windows.Forms.TreeNode("Node17");
-            System.Windows.Forms.TreeNode treeNode48 = new System.Windows.Forms.TreeNode("Node14", new System.Windows.Forms.TreeNode[] {
-            treeNode46,
-            treeNode47});
-            System.Windows.Forms.TreeNode treeNode49 = new System.Windows.Forms.TreeNode("Node15");
-            System.Windows.Forms.TreeNode treeNode50 = new System.Windows.Forms.TreeNode("Node12", new System.Windows.Forms.TreeNode[] {
-            treeNode45,
-            treeNode48,
-            treeNode49});
-            System.Windows.Forms.TreeNode treeNode51 = new System.Windows.Forms.TreeNode("Node2", new System.Windows.Forms.TreeNode[] {
-            treeNode50});
-            System.Windows.Forms.TreeNode treeNode52 = new System.Windows.Forms.TreeNode("Node37");
-            System.Windows.Forms.TreeNode treeNode53 = new System.Windows.Forms.TreeNode("Node36", new System.Windows.Forms.TreeNode[] {
-            treeNode52});
-            System.Windows.Forms.TreeNode treeNode54 = new System.Windows.Forms.TreeNode("Node35", new System.Windows.Forms.TreeNode[] {
-            treeNode53});
-            System.Windows.Forms.TreeNode treeNode55 = new System.Windows.Forms.TreeNode("Node33", new System.Windows.Forms.TreeNode[] {
-            treeNode54});
-            System.Windows.Forms.TreeNode treeNode56 = new System.Windows.Forms.TreeNode("Node32", new System.Windows.Forms.TreeNode[] {
-            treeNode55});
-            System.Windows.Forms.TreeNode treeNode57 = new System.Windows.Forms.TreeNode("Node11", new System.Windows.Forms.TreeNode[] {
-            treeNode56});
-            System.Windows.Forms.TreeNode treeNode58 = new System.Windows.Forms.TreeNode("Node8", new System.Windows.Forms.TreeNode[] {
-            treeNode57});
-            System.Windows.Forms.TreeNode treeNode59 = new System.Windows.Forms.TreeNode("Node34");
-            System.Windows.Forms.TreeNode treeNode60 = new System.Windows.Forms.TreeNode("Node9", new System.Windows.Forms.TreeNode[] {
-            treeNode59});
-            System.Windows.Forms.TreeNode treeNode61 = new System.Windows.Forms.TreeNode("Node10");
-            System.Windows.Forms.TreeNode treeNode62 = new System.Windows.Forms.TreeNode("Node3", new System.Windows.Forms.TreeNode[] {
-            treeNode58,
-            treeNode60,
-            treeNode61});
-            System.Windows.Forms.TreeNode treeNode63 = new System.Windows.Forms.TreeNode("Node4");
-            System.Windows.Forms.TreeNode treeNode64 = new System.Windows.Forms.TreeNode("Node29");
-            System.Windows.Forms.TreeNode treeNode65 = new System.Windows.Forms.TreeNode("Node41");
-            System.Windows.Forms.TreeNode treeNode66 = new System.Windows.Forms.TreeNode("Node40", new System.Windows.Forms.TreeNode[] {
-            treeNode65});
-            System.Windows.Forms.TreeNode treeNode67 = new System.Windows.Forms.TreeNode("Node39", new System.Windows.Forms.TreeNode[] {
-            treeNode66});
-            System.Windows.Forms.TreeNode treeNode68 = new System.Windows.Forms.TreeNode("Node38", new System.Windows.Forms.TreeNode[] {
-            treeNode67});
-            System.Windows.Forms.TreeNode treeNode69 = new System.Windows.Forms.TreeNode("Node30", new System.Windows.Forms.TreeNode[] {
-            treeNode68});
-            System.Windows.Forms.TreeNode treeNode70 = new System.Windows.Forms.TreeNode("Node31");
-            System.Windows.Forms.TreeNode treeNode71 = new System.Windows.Forms.TreeNode("Node27", new System.Windows.Forms.TreeNode[] {
-            treeNode64,
-            treeNode69,
-            treeNode70});
-            System.Windows.Forms.TreeNode treeNode72 = new System.Windows.Forms.TreeNode("Node26", new System.Windows.Forms.TreeNode[] {
-            treeNode71});
-            System.Windows.Forms.TreeNode treeNode73 = new System.Windows.Forms.TreeNode("Node5", new System.Windows.Forms.TreeNode[] {
-            treeNode72});
-            System.Windows.Forms.TreeNode treeNode74 = new System.Windows.Forms.TreeNode("Node25");
-            System.Windows.Forms.TreeNode treeNode75 = new System.Windows.Forms.TreeNode("Node23", new System.Windows.Forms.TreeNode[] {
-            treeNode74});
-            System.Windows.Forms.TreeNode treeNode76 = new System.Windows.Forms.TreeNode("Node24");
-            System.Windows.Forms.TreeNode treeNode77 = new System.Windows.Forms.TreeNode("Node21", new System.Windows.Forms.TreeNode[] {
-            treeNode75,
-            treeNode76});
-            System.Windows.Forms.TreeNode treeNode78 = new System.Windows.Forms.TreeNode("Node22");
-            System.Windows.Forms.TreeNode treeNode79 = new System.Windows.Forms.TreeNode("Node28");
-            System.Windows.Forms.TreeNode treeNode80 = new System.Windows.Forms.TreeNode("Node18", new System.Windows.Forms.TreeNode[] {
-            treeNode77,
-            treeNode78,
-            treeNode79});
-            System.Windows.Forms.TreeNode treeNode81 = new System.Windows.Forms.TreeNode("Node19");
-            System.Windows.Forms.TreeNode treeNode82 = new System.Windows.Forms.TreeNode("Node20");
-            System.Windows.Forms.TreeNode treeNode83 = new System.Windows.Forms.TreeNode("Node6", new System.Windows.Forms.TreeNode[] {
-            treeNode80,
-            treeNode81,
-            treeNode82});
-            System.Windows.Forms.TreeNode treeNode84 = new System.Windows.Forms.TreeNode("Node7");
-            System.Windows.Forms.ListViewItem listViewItem6 = new System.Windows.Forms.ListViewItem("Item 1", 0);
-            System.Windows.Forms.ListViewItem listViewItem7 = new System.Windows.Forms.ListViewItem("Item 2", 4);
-            System.Windows.Forms.ListViewItem listViewItem8 = new System.Windows.Forms.ListViewItem("Item 3", 10);
-            System.Windows.Forms.ListViewItem listViewItem9 = new System.Windows.Forms.ListViewItem("Item 4", 2);
-            System.Windows.Forms.ListViewItem listViewItem10 = new System.Windows.Forms.ListViewItem("Item 5", 3);
+            System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("Node1");
+            System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode("Node2");
+            System.Windows.Forms.TreeNode treeNode3 = new System.Windows.Forms.TreeNode("Node0");
+            System.Windows.Forms.TreeNode treeNode4 = new System.Windows.Forms.TreeNode("Node16");
+            System.Windows.Forms.TreeNode treeNode5 = new System.Windows.Forms.TreeNode("Node17");
+            System.Windows.Forms.TreeNode treeNode6 = new System.Windows.Forms.TreeNode("Node14", new System.Windows.Forms.TreeNode[] {
+            treeNode4,
+            treeNode5});
+            System.Windows.Forms.TreeNode treeNode7 = new System.Windows.Forms.TreeNode("Node15");
+            System.Windows.Forms.TreeNode treeNode8 = new System.Windows.Forms.TreeNode("Node12", new System.Windows.Forms.TreeNode[] {
+            treeNode3,
+            treeNode6,
+            treeNode7});
+            System.Windows.Forms.TreeNode treeNode9 = new System.Windows.Forms.TreeNode("Node2", new System.Windows.Forms.TreeNode[] {
+            treeNode8});
+            System.Windows.Forms.TreeNode treeNode10 = new System.Windows.Forms.TreeNode("Node37");
+            System.Windows.Forms.TreeNode treeNode11 = new System.Windows.Forms.TreeNode("Node36", new System.Windows.Forms.TreeNode[] {
+            treeNode10});
+            System.Windows.Forms.TreeNode treeNode12 = new System.Windows.Forms.TreeNode("Node35", new System.Windows.Forms.TreeNode[] {
+            treeNode11});
+            System.Windows.Forms.TreeNode treeNode13 = new System.Windows.Forms.TreeNode("Node33", new System.Windows.Forms.TreeNode[] {
+            treeNode12});
+            System.Windows.Forms.TreeNode treeNode14 = new System.Windows.Forms.TreeNode("Node32", new System.Windows.Forms.TreeNode[] {
+            treeNode13});
+            System.Windows.Forms.TreeNode treeNode15 = new System.Windows.Forms.TreeNode("Node11", new System.Windows.Forms.TreeNode[] {
+            treeNode14});
+            System.Windows.Forms.TreeNode treeNode16 = new System.Windows.Forms.TreeNode("Node8", new System.Windows.Forms.TreeNode[] {
+            treeNode15});
+            System.Windows.Forms.TreeNode treeNode17 = new System.Windows.Forms.TreeNode("Node34");
+            System.Windows.Forms.TreeNode treeNode18 = new System.Windows.Forms.TreeNode("Node9", new System.Windows.Forms.TreeNode[] {
+            treeNode17});
+            System.Windows.Forms.TreeNode treeNode19 = new System.Windows.Forms.TreeNode("Node10");
+            System.Windows.Forms.TreeNode treeNode20 = new System.Windows.Forms.TreeNode("Node3", new System.Windows.Forms.TreeNode[] {
+            treeNode16,
+            treeNode18,
+            treeNode19});
+            System.Windows.Forms.TreeNode treeNode21 = new System.Windows.Forms.TreeNode("Node4");
+            System.Windows.Forms.TreeNode treeNode22 = new System.Windows.Forms.TreeNode("Node29");
+            System.Windows.Forms.TreeNode treeNode23 = new System.Windows.Forms.TreeNode("Node41");
+            System.Windows.Forms.TreeNode treeNode24 = new System.Windows.Forms.TreeNode("Node40", new System.Windows.Forms.TreeNode[] {
+            treeNode23});
+            System.Windows.Forms.TreeNode treeNode25 = new System.Windows.Forms.TreeNode("Node39", new System.Windows.Forms.TreeNode[] {
+            treeNode24});
+            System.Windows.Forms.TreeNode treeNode26 = new System.Windows.Forms.TreeNode("Node38", new System.Windows.Forms.TreeNode[] {
+            treeNode25});
+            System.Windows.Forms.TreeNode treeNode27 = new System.Windows.Forms.TreeNode("Node30", new System.Windows.Forms.TreeNode[] {
+            treeNode26});
+            System.Windows.Forms.TreeNode treeNode28 = new System.Windows.Forms.TreeNode("Node31");
+            System.Windows.Forms.TreeNode treeNode29 = new System.Windows.Forms.TreeNode("Node27", new System.Windows.Forms.TreeNode[] {
+            treeNode22,
+            treeNode27,
+            treeNode28});
+            System.Windows.Forms.TreeNode treeNode30 = new System.Windows.Forms.TreeNode("Node26", new System.Windows.Forms.TreeNode[] {
+            treeNode29});
+            System.Windows.Forms.TreeNode treeNode31 = new System.Windows.Forms.TreeNode("Node5", new System.Windows.Forms.TreeNode[] {
+            treeNode30});
+            System.Windows.Forms.TreeNode treeNode32 = new System.Windows.Forms.TreeNode("Node25");
+            System.Windows.Forms.TreeNode treeNode33 = new System.Windows.Forms.TreeNode("Node23", new System.Windows.Forms.TreeNode[] {
+            treeNode32});
+            System.Windows.Forms.TreeNode treeNode34 = new System.Windows.Forms.TreeNode("Node24");
+            System.Windows.Forms.TreeNode treeNode35 = new System.Windows.Forms.TreeNode("Node21", new System.Windows.Forms.TreeNode[] {
+            treeNode33,
+            treeNode34});
+            System.Windows.Forms.TreeNode treeNode36 = new System.Windows.Forms.TreeNode("Node22");
+            System.Windows.Forms.TreeNode treeNode37 = new System.Windows.Forms.TreeNode("Node28");
+            System.Windows.Forms.TreeNode treeNode38 = new System.Windows.Forms.TreeNode("Node18", new System.Windows.Forms.TreeNode[] {
+            treeNode35,
+            treeNode36,
+            treeNode37});
+            System.Windows.Forms.TreeNode treeNode39 = new System.Windows.Forms.TreeNode("Node19");
+            System.Windows.Forms.TreeNode treeNode40 = new System.Windows.Forms.TreeNode("Node20");
+            System.Windows.Forms.TreeNode treeNode41 = new System.Windows.Forms.TreeNode("Node6", new System.Windows.Forms.TreeNode[] {
+            treeNode38,
+            treeNode39,
+            treeNode40});
+            System.Windows.Forms.TreeNode treeNode42 = new System.Windows.Forms.TreeNode("Node7");
+            System.Windows.Forms.ListViewItem listViewItem1 = new System.Windows.Forms.ListViewItem("Item 1", 0);
+            System.Windows.Forms.ListViewItem listViewItem2 = new System.Windows.Forms.ListViewItem("Item 2", 4);
+            System.Windows.Forms.ListViewItem listViewItem3 = new System.Windows.Forms.ListViewItem("Item 3", 10);
+            System.Windows.Forms.ListViewItem listViewItem4 = new System.Windows.Forms.ListViewItem("Item 4", 2);
+            System.Windows.Forms.ListViewItem listViewItem5 = new System.Windows.Forms.ListViewItem("Item 5", 3);
             this.imageList1 = new System.Windows.Forms.ImageList(this.components);
             this.themedLabel2 = new WindowsFormsAero.ThemeText.ThemedLabel();
             this.themedLabel1 = new WindowsFormsAero.ThemeText.ThemedLabel();
@@ -214,10 +214,12 @@ namespace VistaControlsApp
             // 
             // searchTextBox1
             // 
+            this.searchTextBox1.ActiveFont = new System.Drawing.Font("Segoe UI", 9F);
             this.searchTextBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.searchTextBox1.BackColor = System.Drawing.SystemColors.InactiveBorder;
             this.searchTextBox1.Cursor = System.Windows.Forms.Cursors.IBeam;
             this.searchTextBox1.ForeColor = System.Drawing.SystemColors.GrayText;
+            this.searchTextBox1.InactiveFont = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Italic);
             this.searchTextBox1.InactiveText = "Search tabs...";
             this.searchTextBox1.Location = new System.Drawing.Point(467, 53);
             this.searchTextBox1.Name = "searchTextBox1";
@@ -230,9 +232,9 @@ namespace VistaControlsApp
             // 
             // tabControl1
             // 
-            this.tabControl1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.tabControl1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.tabControl1.Controls.Add(this.tabPage1);
             this.tabControl1.Controls.Add(this.tabPage2);
             this.tabControl1.Controls.Add(this.tabPage3);
@@ -369,7 +371,7 @@ namespace VistaControlsApp
             this.tabPage2.Location = new System.Drawing.Point(4, 24);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(663, 333);
+            this.tabPage2.Size = new System.Drawing.Size(691, 333);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Progress bars";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -426,7 +428,7 @@ namespace VistaControlsApp
             this.tabPage3.Controls.Add(this.flowLayoutPanel4);
             this.tabPage3.Location = new System.Drawing.Point(4, 24);
             this.tabPage3.Name = "tabPage3";
-            this.tabPage3.Size = new System.Drawing.Size(663, 333);
+            this.tabPage3.Size = new System.Drawing.Size(691, 333);
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "Task Dialogs";
             this.tabPage3.UseVisualStyleBackColor = true;
@@ -556,7 +558,7 @@ namespace VistaControlsApp
             this.tabPage4.Location = new System.Drawing.Point(4, 24);
             this.tabPage4.Name = "tabPage4";
             this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage4.Size = new System.Drawing.Size(663, 333);
+            this.tabPage4.Size = new System.Drawing.Size(691, 333);
             this.tabPage4.TabIndex = 3;
             this.tabPage4.Text = "Data controls";
             this.tabPage4.UseVisualStyleBackColor = true;
@@ -574,7 +576,7 @@ namespace VistaControlsApp
             this.flowLayoutPanel3.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
             this.flowLayoutPanel3.Location = new System.Drawing.Point(3, 3);
             this.flowLayoutPanel3.Name = "flowLayoutPanel3";
-            this.flowLayoutPanel3.Size = new System.Drawing.Size(657, 329);
+            this.flowLayoutPanel3.Size = new System.Drawing.Size(657, 327);
             this.flowLayoutPanel3.TabIndex = 0;
             // 
             // textBox1
@@ -618,7 +620,7 @@ namespace VistaControlsApp
             this.searchTextBox2.Cursor = System.Windows.Forms.Cursors.IBeam;
             this.searchTextBox2.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.searchTextBox2.ForeColor = System.Drawing.SystemColors.GrayText;
-            this.searchTextBox2.InactiveFont = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Italic);
+            this.searchTextBox2.InactiveFont = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Italic);
             this.searchTextBox2.Location = new System.Drawing.Point(3, 82);
             this.searchTextBox2.Name = "searchTextBox2";
             this.searchTextBox2.Size = new System.Drawing.Size(228, 23);
@@ -631,124 +633,124 @@ namespace VistaControlsApp
             this.treeView1.ImageList = this.imageList1;
             this.treeView1.Location = new System.Drawing.Point(237, 3);
             this.treeView1.Name = "treeView1";
-            treeNode43.ImageIndex = 10;
-            treeNode43.Name = "Node1";
-            treeNode43.Text = "Node1";
-            treeNode44.ImageIndex = 1;
-            treeNode44.Name = "Node2";
-            treeNode44.Text = "Node2";
-            treeNode45.Name = "Node0";
-            treeNode45.Text = "Node0";
-            treeNode46.Name = "Node16";
-            treeNode46.Text = "Node16";
-            treeNode47.Name = "Node17";
-            treeNode47.Text = "Node17";
-            treeNode48.Name = "Node14";
-            treeNode48.Text = "Node14";
-            treeNode49.Name = "Node15";
-            treeNode49.Text = "Node15";
-            treeNode50.Name = "Node12";
-            treeNode50.Text = "Node12";
-            treeNode51.ImageIndex = 3;
-            treeNode51.Name = "Node2";
-            treeNode51.Text = "Node2";
-            treeNode52.Name = "Node37";
-            treeNode52.Text = "Node37";
-            treeNode53.ImageIndex = 8;
-            treeNode53.Name = "Node36";
-            treeNode53.Text = "Node36";
-            treeNode54.ImageIndex = 10;
-            treeNode54.Name = "Node35";
-            treeNode54.Text = "Node35";
-            treeNode55.ImageIndex = 4;
-            treeNode55.Name = "Node33";
-            treeNode55.Text = "Node33";
-            treeNode56.ImageIndex = 6;
-            treeNode56.Name = "Node32";
-            treeNode56.Text = "Node32";
-            treeNode57.ImageIndex = 4;
-            treeNode57.Name = "Node11";
-            treeNode57.Text = "Node11";
-            treeNode58.Name = "Node8";
-            treeNode58.Text = "Node8";
-            treeNode59.Name = "Node34";
-            treeNode59.Text = "Node34";
-            treeNode60.ImageIndex = 9;
-            treeNode60.Name = "Node9";
-            treeNode60.Text = "Node9";
-            treeNode61.Name = "Node10";
-            treeNode61.Text = "Node10";
-            treeNode62.ImageIndex = 5;
-            treeNode62.Name = "Node3";
-            treeNode62.Text = "Node3";
-            treeNode63.ImageIndex = 2;
-            treeNode63.Name = "Node4";
-            treeNode63.Text = "Node4";
-            treeNode64.ImageIndex = 1;
-            treeNode64.Name = "Node29";
-            treeNode64.Text = "Node29";
-            treeNode65.Name = "Node41";
-            treeNode65.Text = "Node41";
-            treeNode66.ImageIndex = 5;
-            treeNode66.Name = "Node40";
-            treeNode66.Text = "Node40";
-            treeNode67.ImageIndex = 6;
-            treeNode67.Name = "Node39";
-            treeNode67.Text = "Node39";
-            treeNode68.ImageIndex = 10;
-            treeNode68.Name = "Node38";
-            treeNode68.Text = "Node38";
-            treeNode69.ImageIndex = 9;
-            treeNode69.Name = "Node30";
-            treeNode69.Text = "Node30";
-            treeNode70.Name = "Node31";
-            treeNode70.Text = "Node31";
-            treeNode71.ImageIndex = 7;
-            treeNode71.Name = "Node27";
-            treeNode71.Text = "Node27";
-            treeNode72.Name = "Node26";
-            treeNode72.Text = "Node26";
-            treeNode73.ImageIndex = 3;
-            treeNode73.Name = "Node5";
-            treeNode73.Text = "Node5";
-            treeNode74.ImageIndex = 5;
-            treeNode74.Name = "Node25";
-            treeNode74.Text = "Node25";
-            treeNode75.ImageIndex = 4;
-            treeNode75.Name = "Node23";
-            treeNode75.Text = "Node23";
-            treeNode76.Name = "Node24";
-            treeNode76.Text = "Node24";
-            treeNode77.ImageIndex = 1;
-            treeNode77.Name = "Node21";
-            treeNode77.Text = "Node21";
-            treeNode78.ImageIndex = 2;
-            treeNode78.Name = "Node22";
-            treeNode78.Text = "Node22";
-            treeNode79.ImageIndex = 7;
-            treeNode79.Name = "Node28";
-            treeNode79.Text = "Node28";
-            treeNode80.Name = "Node18";
-            treeNode80.Text = "Node18";
-            treeNode81.Name = "Node19";
-            treeNode81.Text = "Node19";
-            treeNode82.ImageIndex = 10;
-            treeNode82.Name = "Node20";
-            treeNode82.Text = "Node20";
-            treeNode83.ImageIndex = 3;
-            treeNode83.Name = "Node6";
-            treeNode83.Text = "Node6";
-            treeNode84.Name = "Node7";
-            treeNode84.Text = "Node7";
+            treeNode1.ImageIndex = 10;
+            treeNode1.Name = "Node1";
+            treeNode1.Text = "Node1";
+            treeNode2.ImageIndex = 1;
+            treeNode2.Name = "Node2";
+            treeNode2.Text = "Node2";
+            treeNode3.Name = "Node0";
+            treeNode3.Text = "Node0";
+            treeNode4.Name = "Node16";
+            treeNode4.Text = "Node16";
+            treeNode5.Name = "Node17";
+            treeNode5.Text = "Node17";
+            treeNode6.Name = "Node14";
+            treeNode6.Text = "Node14";
+            treeNode7.Name = "Node15";
+            treeNode7.Text = "Node15";
+            treeNode8.Name = "Node12";
+            treeNode8.Text = "Node12";
+            treeNode9.ImageIndex = 3;
+            treeNode9.Name = "Node2";
+            treeNode9.Text = "Node2";
+            treeNode10.Name = "Node37";
+            treeNode10.Text = "Node37";
+            treeNode11.ImageIndex = 8;
+            treeNode11.Name = "Node36";
+            treeNode11.Text = "Node36";
+            treeNode12.ImageIndex = 10;
+            treeNode12.Name = "Node35";
+            treeNode12.Text = "Node35";
+            treeNode13.ImageIndex = 4;
+            treeNode13.Name = "Node33";
+            treeNode13.Text = "Node33";
+            treeNode14.ImageIndex = 6;
+            treeNode14.Name = "Node32";
+            treeNode14.Text = "Node32";
+            treeNode15.ImageIndex = 4;
+            treeNode15.Name = "Node11";
+            treeNode15.Text = "Node11";
+            treeNode16.Name = "Node8";
+            treeNode16.Text = "Node8";
+            treeNode17.Name = "Node34";
+            treeNode17.Text = "Node34";
+            treeNode18.ImageIndex = 9;
+            treeNode18.Name = "Node9";
+            treeNode18.Text = "Node9";
+            treeNode19.Name = "Node10";
+            treeNode19.Text = "Node10";
+            treeNode20.ImageIndex = 5;
+            treeNode20.Name = "Node3";
+            treeNode20.Text = "Node3";
+            treeNode21.ImageIndex = 2;
+            treeNode21.Name = "Node4";
+            treeNode21.Text = "Node4";
+            treeNode22.ImageIndex = 1;
+            treeNode22.Name = "Node29";
+            treeNode22.Text = "Node29";
+            treeNode23.Name = "Node41";
+            treeNode23.Text = "Node41";
+            treeNode24.ImageIndex = 5;
+            treeNode24.Name = "Node40";
+            treeNode24.Text = "Node40";
+            treeNode25.ImageIndex = 6;
+            treeNode25.Name = "Node39";
+            treeNode25.Text = "Node39";
+            treeNode26.ImageIndex = 10;
+            treeNode26.Name = "Node38";
+            treeNode26.Text = "Node38";
+            treeNode27.ImageIndex = 9;
+            treeNode27.Name = "Node30";
+            treeNode27.Text = "Node30";
+            treeNode28.Name = "Node31";
+            treeNode28.Text = "Node31";
+            treeNode29.ImageIndex = 7;
+            treeNode29.Name = "Node27";
+            treeNode29.Text = "Node27";
+            treeNode30.Name = "Node26";
+            treeNode30.Text = "Node26";
+            treeNode31.ImageIndex = 3;
+            treeNode31.Name = "Node5";
+            treeNode31.Text = "Node5";
+            treeNode32.ImageIndex = 5;
+            treeNode32.Name = "Node25";
+            treeNode32.Text = "Node25";
+            treeNode33.ImageIndex = 4;
+            treeNode33.Name = "Node23";
+            treeNode33.Text = "Node23";
+            treeNode34.Name = "Node24";
+            treeNode34.Text = "Node24";
+            treeNode35.ImageIndex = 1;
+            treeNode35.Name = "Node21";
+            treeNode35.Text = "Node21";
+            treeNode36.ImageIndex = 2;
+            treeNode36.Name = "Node22";
+            treeNode36.Text = "Node22";
+            treeNode37.ImageIndex = 7;
+            treeNode37.Name = "Node28";
+            treeNode37.Text = "Node28";
+            treeNode38.Name = "Node18";
+            treeNode38.Text = "Node18";
+            treeNode39.Name = "Node19";
+            treeNode39.Text = "Node19";
+            treeNode40.ImageIndex = 10;
+            treeNode40.Name = "Node20";
+            treeNode40.Text = "Node20";
+            treeNode41.ImageIndex = 3;
+            treeNode41.Name = "Node6";
+            treeNode41.Text = "Node6";
+            treeNode42.Name = "Node7";
+            treeNode42.Text = "Node7";
             this.treeView1.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
-            treeNode43,
-            treeNode44,
-            treeNode51,
-            treeNode62,
-            treeNode63,
-            treeNode73,
-            treeNode83,
-            treeNode84});
+            treeNode1,
+            treeNode2,
+            treeNode9,
+            treeNode20,
+            treeNode21,
+            treeNode31,
+            treeNode41,
+            treeNode42});
             this.treeView1.SelectedImageIndex = 0;
             this.treeView1.ShowLines = false;
             this.treeView1.Size = new System.Drawing.Size(142, 276);
@@ -757,11 +759,11 @@ namespace VistaControlsApp
             // listView1
             // 
             this.listView1.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem6,
-            listViewItem7,
-            listViewItem8,
-            listViewItem9,
-            listViewItem10});
+            listViewItem1,
+            listViewItem2,
+            listViewItem3,
+            listViewItem4,
+            listViewItem5});
             this.listView1.LargeImageList = this.imageList2;
             this.listView1.Location = new System.Drawing.Point(385, 3);
             this.listView1.Name = "listView1";
@@ -792,7 +794,7 @@ namespace VistaControlsApp
             this.tabPage5.Location = new System.Drawing.Point(4, 24);
             this.tabPage5.Name = "tabPage5";
             this.tabPage5.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage5.Size = new System.Drawing.Size(663, 333);
+            this.tabPage5.Size = new System.Drawing.Size(691, 333);
             this.tabPage5.TabIndex = 4;
             this.tabPage5.Text = "DWM";
             this.tabPage5.UseVisualStyleBackColor = true;
@@ -816,6 +818,7 @@ namespace VistaControlsApp
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.themedLabel2);
             this.Controls.Add(this.themedLabel1);
+            this.GlassEnabled = true;
             this.HideTitle = true;
             this.Margin = new System.Windows.Forms.Padding(2);
             this.MaximizeBox = false;
