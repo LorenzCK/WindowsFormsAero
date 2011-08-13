@@ -31,11 +31,10 @@ namespace WindowsFormsAero.Dwm.Helpers {
 
         #region Properties
 
-        Margins _glassMargins = new Margins(0);
+        Margins _glassMargins = Margins.Zero;
 
         /// <summary>Gets or sets the glass margins of the form.</summary>
-        [Description("The glass margins which are extended inside the client area of the window."),
-            Category("Appearance"), DefaultValue(null)]
+        /// <remarks>This property should be used when setting the margins from code.</remarks>
         public Margins GlassMargins {
             get {
                 return _glassMargins;
@@ -47,6 +46,22 @@ namespace WindowsFormsAero.Dwm.Helpers {
             }
         }
 
+        /// <summary>Gets or sets the glass margins of the form.</summary>
+        /// <remarks>This property should be used when setting the margins through the designer.</remarks>
+        [Description("The glass margins which are extended inside the client area of the window."),
+            Category("Appearance")]
+        public Padding GlassDesignerMargins {
+            get {
+                return _glassMargins.AsPadding();
+            }
+            set {
+                _glassMargins = new Margins(
+                    value.Left, value.Right,
+                    value.Top, value.Bottom
+                );
+            }
+        }
+
         /// <summary>Gets or sets whether mouse dragging should be handled automatically.</summary>
         [Description("True if mouse dragging of the window should be handled automatically."),
             Category("Behavior"), DefaultValue(true)]
@@ -55,19 +70,21 @@ namespace WindowsFormsAero.Dwm.Helpers {
             set;
         }
 
-        bool _glassEnabled = true;
+        bool _glassEnabled = false;
 
         /// <summary>Gets or sets whether the extended glass margin is enabled or not.</summary>
         [Description("Enables or disables the glass margin."),
-            Category("Appearance"), DefaultValue(true)]
+            Category("Appearance"), DefaultValue(false)]
         public bool GlassEnabled {
             get {
                 return _glassEnabled;
             }
             set {
-                _glassEnabled = value;
+                if (value != _glassEnabled) {
+                    _glassEnabled = value;
 
-                SetGlass();
+                    SetGlass();
+                }
             }
         }
 
@@ -182,6 +199,9 @@ namespace WindowsFormsAero.Dwm.Helpers {
         #endregion
 
         private void SetGlass() {
+            if (DesignMode)
+                return;
+
             if (!_glassMargins.IsNull && _glassEnabled)
                 DwmManager.EnableGlassFrame(this, _glassMargins);
             else
