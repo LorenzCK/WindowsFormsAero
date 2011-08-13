@@ -921,6 +921,11 @@
         </member>
         <member name="P:WindowsFormsAero.Dwm.Helpers.GlassForm.GlassMargins">
             <summary>Gets or sets the glass margins of the form.</summary>
+            <remarks>This property should be used when setting the margins from code.</remarks>
+        </member>
+        <member name="P:WindowsFormsAero.Dwm.Helpers.GlassForm.GlassDesignerMargins">
+            <summary>Gets or sets the glass margins of the form.</summary>
+            <remarks>This property should be used when setting the margins through the designer.</remarks>
         </member>
         <member name="P:WindowsFormsAero.Dwm.Helpers.GlassForm.HandleMouseMove">
             <summary>Gets or sets whether mouse dragging should be handled automatically.</summary>
@@ -1083,6 +1088,31 @@
             Returns whether a point in client coordinates is outside the margins defined by this instance.
             </summary>
             <param name="clientPoint">Point in client coordinates.</param>
+        </member>
+        <member name="M:WindowsFormsAero.Dwm.Margins.AsPadding">
+            <summary>
+            Gets the margins value as a padding instance.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="F:WindowsFormsAero.Dwm.Margins.Zero">
+            <summary>
+            Gets a static readonly 0-pixel margin.
+            This margin returns true on the IsNull property.
+            </summary>
+        </member>
+        <member name="P:WindowsFormsAero.Dwm.Margins.IsMarginless">
+            <summary>
+            Gets whether this margin represents a negative measure on each side.
+            </summary>
+            <remarks>
+            Used to specify non-existing margins on glass frames.
+            </remarks>
+        </member>
+        <member name="P:WindowsFormsAero.Dwm.Margins.IsNull">
+            <summary>
+            Gets whether this margin measures 0 pixels on each side.
+            </summary>
         </member>
     </members>
 </doc>
