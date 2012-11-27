@@ -167,7 +167,10 @@ namespace WindowsFormsAero.Dwm {
         /// <param name="policy">Desired Flip 3D policy.</param>
         /// <remarks>Is ignored on OSs that do not support Aero.</remarks>
         public static void SetWindowFlip3dPolicy(Form form, Flip3DPolicy policy) {
-            if (!OsSupport.IsVistaOrBetter || !OsSupport.IsCompositionEnabled)
+            if (!OsSupport.IsVistaOrBetter || OsSupport.IsEightOrBetter)
+                return;
+            
+            if (!OsSupport.IsCompositionEnabled)
                 return;
 
             if (NativeMethods.DwmSetWindowFlip3dPolicy(form.Handle, policy) != 0)
@@ -194,12 +197,23 @@ namespace WindowsFormsAero.Dwm {
         /// <param name="form">Form whose Aero Peek exclusion state is to be set.</param>
         /// <param name="excluded">Set to true to exlude the window from Aero Peek.</param>
         /// <remarks>Is ignored on OSs that do not support Aero Peek.</remarks>
-        public static void SetExludeFromPeek(Form form, bool excluded) {
+        public static void SetExcludeFromPeek(Form form, bool excluded) {
             if (!OsSupport.IsSevenOrBetter || !OsSupport.IsCompositionEnabled)
                 return;
 
             if (NativeMethods.DwmSetWindowExcludedFromPeek(form.Handle, excluded) != 0)
                 throw new Exception("Unable to exclude window from Aero Peek.");
+        }
+
+        /// <summary>
+        /// Sets a window's state in order to exclude (or include) it in Aero Peek.
+        /// </summary>
+        /// <param name="form">Form whose Aero Peek exclusion state is to be set.</param>
+        /// <param name="excluded">Set to true to exlude the window from Aero Peek.</param>
+        /// <remarks>Is ignored on OSs that do not support Aero Peek.</remarks>
+        [Obsolete("Method name corrected to SetExcludeFromPeek.")]
+        public static void SetExludeFromPeek(Form form, bool excluded) {
+            SetExcludeFromPeek(form, excluded);
         }
 
         #endregion

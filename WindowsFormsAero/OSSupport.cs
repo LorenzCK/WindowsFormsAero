@@ -19,6 +19,7 @@ namespace WindowsFormsAero {
 
 		const int VistaMajorVersion = 6;
         const int SevenMinorVersion = 1;
+        const int EightMinorVersion = 2;
 
 		/// <summary>
         /// Gets whether the running operating system is Windows Vista or a more recent version.
@@ -38,10 +39,31 @@ namespace WindowsFormsAero {
                 if (Environment.OSVersion.Platform != PlatformID.Win32NT)
                     return false;
 
-                if (Environment.OSVersion.Version.Major < VistaMajorVersion)
+                var version = Environment.OSVersion.Version;
+
+                if (version.Major < VistaMajorVersion)
                     return false;
-                else if (Environment.OSVersion.Version.Major == VistaMajorVersion)
-                    return (Environment.OSVersion.Version.Minor >= SevenMinorVersion);
+                else if (version.Major == VistaMajorVersion)
+                    return (version.Minor >= SevenMinorVersion);
+                else
+                    return true;
+            }
+        }
+
+        /// <summary>
+        /// Gets whether the running operating system is Windows 8 or a more recent version.
+        /// </summary>
+        public static bool IsEightOrBetter {
+            get {
+                if (Environment.OSVersion.Platform != PlatformID.Win32NT)
+                    return false;
+
+                var version = Environment.OSVersion.Version;
+
+                if (version.Major < VistaMajorVersion)
+                    return false;
+                else if (version.Major == VistaMajorVersion)
+                    return (version.Minor >= EightMinorVersion);
                 else
                     return true;
             }
