@@ -1,117 +1,70 @@
-/*
-* VISTA CONTROLS FOR .NET 2.0
-* ENHANCED BUTTON
-* 
-* Written by Marco Minerva, mailto:marco.minerva@gmail.com
-* 
-* This code is released under the Microsoft Community License (Ms-CL).
-* A copy of this license is available at
-* http://www.microsoft.com/resources/sharedsource/licensingbasics/limitedcommunitylicense.mspx
-*/
+/*****************************************************
+ * WindowsFormsAero
+ * https://github.com/LorenzCK/WindowsFormsAero
+ * http://windowsformsaero.codeplex.com
+ *
+ * Author: Marco Minerva <marco.minerva@gmail.com>
+ *         Lorenz Cuno Klopfenstein <lck@klopfenstein.net>
+ *****************************************************/
 
 using System;
 using System.ComponentModel;
 using System.Drawing;
-using System.Runtime.InteropServices;
 using System.Windows.Forms;
+using WindowsFormsAero.Native;
 
-namespace WindowsFormsAero
-{
+namespace WindowsFormsAero {
+
     [ToolboxBitmap(typeof(Button))]
-    public class Button : System.Windows.Forms.Button
-    {
-        public Button()
-        {
-            this.FlatStyle = FlatStyle.System;
+    public class Button : System.Windows.Forms.Button {
+
+        private bool _showShield = false;
+
+        [
+        Description("Gets or sets whether if the control should use an elevated shield icon."),
+        Category("Appearance"),
+        DefaultValue(false)
+        ]
+        public bool ShowShield {
+            get {
+                return _showShield;
+            }
+            set {
+                if(_showShield != value) {
+                    if(value) {
+                        //Shields are visible only with FlatStyle.System
+                        //which hides the button's image however
+                        FlatStyle = FlatStyle.System;
+                    }
+                    else if(Image != null) {
+                        //If no shield but image displayed, switch to FlatStyle.System
+                        //which is the only style showing the image
+                        FlatStyle = FlatStyle.Standard;
+                    }
+
+                    if (IsHandleCreated) {
+                        Methods.SendMessage(Handle,
+                            (uint)WindowMessage.BCM_SETSHIELD,
+                            0,
+                            (value) ? 1 : 0
+                        );
+                    }
+                }
+
+                _showShield = value;
+            }
         }
 
-        [DllImport("user32.dll", CharSet = CharSet.Auto)]
-        public static extern IntPtr SendMessage(IntPtr hWnd, int msg, int wParam, int lParam);
-        private Boolean useicon = true; //Checks if user wants to use an icon instead of a bitmap
-        private Bitmap image_;
-        //Image alignment is ignored at the moment. Property overrides inherited image property
-        //Supports images other than bitmap, supports transparency on .NET 2.0
-        [Description("Gets or sets the image that is displayed on a button control."), Category("Appearance"), DefaultValue(null)]
-        public new Bitmap Image
-        {
-            get
-            {
-                return image_;
-            }
-            set
-            {
-                image_ = value;
-                if (value != null)
-                {
-                    this.useicon = false;
-                    this.Icon = null;
-                }
-                this.SetShield(false);
-                SetImage();
-            }
-        }
-        private Icon icon_;
-        [Description("Gets or sets the icon that is displayed on a button control."), Category("Appearance"), DefaultValue(null)]
-        public Icon Icon
-        {
-            get
-            {
-                return icon_;
-            }
-            set
-            {
-                icon_ = value;
-                if (icon_ != null)
-                {
-                this.useicon = true;
-                }
-                this.SetShield(false);
-                SetImage();
-            }
-        }
-        [Description("Refreshes the image displayed on the button.")]
-        public void SetImage()
-        {
-            IntPtr iconhandle = IntPtr.Zero;
-            if (!this.useicon)
-            {
-                if (this.image_ != null)
-                {
-                    iconhandle = image_.GetHicon(); //Gets the handle of the bitmap
-                }
-            }
-            else
-            {
-                if (this.icon_ != null)
-                {
-                    iconhandle = this.Icon.Handle;
-                }
-            }
+        protected override void OnHandleCreated(EventArgs e) {
+            base.OnHandleCreated(e);
 
-            //Set the button to use the icon. If no icon or bitmap is used, no image is set.
-            SendMessage(this.Handle, NativeMethods.BM_SETIMAGE, 1, (int)iconhandle);
+            Methods.SendMessage(Handle,
+                (uint)WindowMessage.BCM_SETSHIELD,
+                0,
+                (_showShield) ? 1 : 0
+            );
         }
-        private Boolean showshield_ = false;
-        [Description("Gets or sets whether if the control should use an elevated shield icon."), Category("Appearance"), DefaultValue(false)]
-        public Boolean ShowShield
-        {
-            get
-            {
-                return showshield_;
-            }
-            set
-            {
-                showshield_ = value;
-                this.SetShield(value);
-                if (!value)
-                {
-                this.SetImage();
-                }
-            }
-        }
-        public void SetShield(Boolean Value)
-        {
-            NativeMethods.SendMessage(this.Handle, NativeMethods.BCM_SETSHIELD, IntPtr.Zero, new IntPtr(showshield_ ? 1 : 0));
-        }
+
     }
+
 }

@@ -1,22 +1,20 @@
 ﻿/*****************************************************
- *            Vista Controls for .NET 2.0
- * 
- * http://www.codeplex.com/vistacontrols
- * 
- * @author: Lorenz Cuno Klopfenstein
- * Licensed under Microsoft Community License (Ms-CL)
- * 
+ * WindowsFormsAero
+ * https://github.com/LorenzCK/WindowsFormsAero
+ * http://windowsformsaero.codeplex.com
+ *
+ * Author: Lorenz Cuno Klopfenstein <lck@klopfenstein.net>
  *****************************************************/
 
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Runtime.InteropServices;
 
 namespace WindowsFormsAero.TaskDialog {
 
-    /// <summary>Stores a Task Dialog message that will be sent to a dialog in order to update its state.</summary>
-    internal class Message : IDisposable {
+    /// <summary>
+    /// Stores a Task Dialog message that will be sent to a dialog in order to update its state.
+    /// </summary>
+    internal struct Message {
         
         /// <summary>Text values that can be updated.</summary>
         public enum DialogElements : int {
@@ -28,76 +26,97 @@ namespace WindowsFormsAero.TaskDialog {
 
         /// <summary>Simple int, int message.</summary>
         public Message(NativeMethods.TaskDialogMessages msg, int w, int l) {
+            UnsafeHandle = IntPtr.Zero;
             MessageType = msg;
-            wParam = w;
-            lParam = l;
+            WParam = w;
+            LParam = l;
+            ContainsTaskDialogConfig = false;
         }
 
         /// <summary>Simple int, bool message.</summary>
         public Message(NativeMethods.TaskDialogMessages msg, int w, bool l) {
+            UnsafeHandle = IntPtr.Zero;
             MessageType = msg;
-            wParam = w;
-            lParam = (l) ? 1 : 0;
+            WParam = w;
+            LParam = (l) ? 1 : 0;
+            ContainsTaskDialogConfig = false;
         }
 
         /// <summary>Simple bool, bool message.</summary>
         public Message(NativeMethods.TaskDialogMessages msg, bool w, bool l) {
+            UnsafeHandle = IntPtr.Zero;
             MessageType = msg;
-            wParam = (w) ? 1 : 0;
-            lParam = (l) ? 1 : 0;
+            WParam = (w) ? 1 : 0;
+            LParam = (l) ? 1 : 0;
+            ContainsTaskDialogConfig = false;
         }
 
-		/// <summary>Simple bool, int message.</summary>
-		public Message(NativeMethods.TaskDialogMessages msg, bool w, int l) {
-			MessageType = msg;
-			wParam = (w) ? 1 : 0;
-			lParam = l;
-		}
+        /// <summary>Simple bool, int message.</summary>
+        public Message(NativeMethods.TaskDialogMessages msg, bool w, int l) {
+            UnsafeHandle = IntPtr.Zero;
+            MessageType = msg;
+            WParam = (w) ? 1 : 0;
+            LParam = l;
+            ContainsTaskDialogConfig = false;
+        }
 
         /// <summary>Simple int, long (hi word and lo word) message.</summary>
         public Message(NativeMethods.TaskDialogMessages msg, int w, int l_hi, int l_lo) {
+            UnsafeHandle = IntPtr.Zero;
             MessageType = msg;
-            wParam = w;
-            lParam = (l_lo << 16) + l_hi;
+            WParam = w;
+            LParam = (l_lo << 16) + l_hi;
+            ContainsTaskDialogConfig = false;
         }
 
         /// <summary>Text updating message.</summary>
-		/// <remarks>The string will be marshaled: the Message must be correctly disposed after use.</remarks>
+        /// <remarks>The string will be marshaled: the Message must be correctly disposed after use.</remarks>
         public Message(NativeMethods.TaskDialogMessages msg, DialogElements element, string s) {
+            UnsafeHandle = Marshal.StringToHGlobalUni(s);
             MessageType = msg;
-            wParam = (int)element;
-
-            _unsafeHandle = Marshal.StringToHGlobalUni(s);
-            lParam = (int)_unsafeHandle;
+            WParam = (int)element;
+            LParam = (int)UnsafeHandle;
+            ContainsTaskDialogConfig = false;
         }
 
-		/// <summary>Navigation message.</summary>
-		/// <remarks>The config structure will be marshaled: must be correctly disposed after use.</remarks>
+        /// <summary>Navigation message.</summary>
+        /// <remarks>The config structure will be marshaled: must be correctly disposed after use.</remarks>
         public Message(NativeMethods.TaskDialogMessages msg, int w, NativeMethods.TaskDialogConfig config) {
+            UnsafeHandle = Marshal.AllocHGlobal(Marshal.SizeOf<NativeMethods.TaskDialogConfig>());
+            Marshal.StructureToPtr(config, UnsafeHandle, false);
             MessageType = msg;
-            wParam = w;
-
-            _unsafeHandle = Marshal.AllocHGlobal(Marshal.SizeOf(config));
-            Marshal.StructureToPtr(config, _unsafeHandle, false);
-            lParam = (int)_unsafeHandle;
+            WParam = w;
+            LParam = UnsafeHandle.ToInt32();
+            ContainsTaskDialogConfig = true;
         }
 
-        IntPtr _unsafeHandle = IntPtr.Zero;
+        private IntPtr UnsafeHandle;
 
-        public NativeMethods.TaskDialogMessages MessageType { get; set; }
+        public NativeMethods.TaskDialogMessages MessageType;
 
-        public int wParam { get; set; }
+        public int WParam;
 
-        public int lParam { get; set; }
+        public int LParam;
 
+        private bool ContainsTaskDialogConfig;
 
-        #region IDisposable Members
+        /// <summary>
+        /// Cleans up unmanages memory allocated by the message.
+        /// </summary>
+        /// <remarks>
+        /// This pattern is used instead of <see cref="IDisposable"/> to avoid
+        /// unnecessary memory allocations and boxing.
+        /// </remarks>
+        public static void Cleanup(Message m) {
+            if (m.UnsafeHandle != IntPtr.Zero) {
+                if (m.ContainsTaskDialogConfig) {
+                    Marshal.DestroyStructure<NativeMethods.TaskDialogConfig>(m.UnsafeHandle);
+                }
+                Marshal.FreeHGlobal(m.UnsafeHandle);
 
-        public void Dispose() {
-            if (_unsafeHandle != IntPtr.Zero)
-                Marshal.FreeHGlobal(_unsafeHandle);
+                m.UnsafeHandle = IntPtr.Zero;
+            }
         }
 
-        #endregion
     }
 }

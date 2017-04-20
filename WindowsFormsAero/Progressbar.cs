@@ -1,95 +1,84 @@
-/*
-* VISTA CONTROLS FOR .NET 2.0
-* ENHANCED PROGRESSBAR
-* 
-* Written by Marco Minerva, mailto:marco.minerva@gmail.com
-* 
-* This code is released under the Microsoft Community License (Ms-CL).
-* A copy of this license is available at
-* http://www.microsoft.com/resources/sharedsource/licensingbasics/limitedcommunitylicense.mspx
-*/
+/*****************************************************
+ * WindowsFormsAero
+ * https://github.com/LorenzCK/WindowsFormsAero
+ * http://windowsformsaero.codeplex.com
+ *
+ * Author: Marco Minerva <marco.minerva@gmail.com>
+ *         Lorenz Cuno Klopfenstein <lck@klopfenstein.net>
+ *****************************************************/
 
+using System;
 using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
+using WindowsFormsAero.Native;
 
-namespace WindowsFormsAero
-{
+namespace WindowsFormsAero {
+
     [ToolboxBitmap(typeof(ProgressBar))]
-    public class ProgressBar:System.Windows.Forms.ProgressBar
-    {
-        public ProgressBar()
-        {
-            NativeMethods.SendMessage(this.Handle, NativeMethods.PBM_SETSTATE, NativeMethods.PBST_NORMAL, 0);
-        }
+    public class ProgressBar : System.Windows.Forms.ProgressBar {
 
-        protected override CreateParams CreateParams
-        {
-            get
-            {
+        protected override CreateParams CreateParams {
+            get {
                 CreateParams cParams = base.CreateParams;
-                //Allows for smooth transition even when progressbar value is subtracted
-                cParams.Style |= NativeMethods.PBS_SMOOTHREVERSE;
+
+                // Enables smooth transition even when progressbar value is decreased
+                cParams.Style |= (int)Native.ProgressBarStyle.SmoothReverse;
+
                 return cParams;
             }
         }
 
-        public enum States
-        {
-            Normal, Error, Paused
-        }
+        private ProgressBarState _state = ProgressBarState.Normal;
 
-        private States ps_ = States.Normal;
-        [Description("Gets or sets the ProgressBar state."), Category("Appearance"), DefaultValue(States.Normal)]
-        public States ProgressState
-        {
-            get
-            {
-                return ps_;
+        [
+        Description("Gets or sets the ProgressBar state."),
+        Category("Appearance"),
+        DefaultValue(ProgressBarState.Normal)
+        ]
+        public ProgressBarState State {
+            get {
+                return _state;
             }
-            set
-            {
-                ps_ = value;
-                SetState(ps_);
-            }
-        }
+            set {
+                if(_state != value) {
+                    SetState(value);
+                }
 
-        public void SetState(States State)
-        {
-            NativeMethods.SendMessage(this.Handle, NativeMethods.PBM_SETSTATE, NativeMethods.PBST_NORMAL, 0);
-            //above required for values to be updated properly, but causes a slight flicker
-            switch (State)
-            {
-                case States.Normal:
-                    NativeMethods.SendMessage(this.Handle, NativeMethods.PBM_SETSTATE, NativeMethods.PBST_NORMAL, 0);
-                    break;
-                case States.Error:
-                    NativeMethods.SendMessage(this.Handle, NativeMethods.PBM_SETSTATE, NativeMethods.PBST_ERROR, 0);
-                    break;
-                case States.Paused:
-                    NativeMethods.SendMessage(this.Handle, NativeMethods.PBM_SETSTATE, NativeMethods.PBST_PAUSED, 0);
-                    break;
-                //case States.Partial:
-                //The blue progressbar is not available
-                //    VistaConstants.SendMessage(this.Handle, VistaConstants.PBM_SETSTATE, PBST_PARTIAL, 0);
-                //    break;
-                default:
-                    NativeMethods.SendMessage(this.Handle, NativeMethods.PBM_SETSTATE, NativeMethods.PBST_NORMAL, 0);
-                    break;
+                _state = value;
             }
         }
 
-        protected override void WndProc(ref Message m)
-        {
-            // Listen for operating system messages.
-            switch (m.Msg)
-            {
-                case NativeMethods.WM_PAINT:
-                    //Paint event
-                    SetState(ps_); //Paint the progressbar properly
-                    break;
+        private void SetState(ProgressBarState targetState) {
+            if (!IsHandleCreated)
+                return;
+
+            Methods.SendMessage(Handle, (uint)WindowMessage.PBM_SETSTATE,
+                (int)targetState.ToNative(), 0);
+        }
+
+        protected override void OnHandleCreated(EventArgs e) {
+            base.OnHandleCreated(e);
+
+            SetState(_state);
+        }
+
+        protected override void WndProc(ref Message m) {
+            //Intercept PBM_SETPOS messages that update the progressbar's value
+            //and switch to normal state if the progress bar is paused or in error
+            //(which prevents the progressbar from updating its value correctly).
+            if (m.Msg == (int)WindowMessage.PBM_SETPOS && _state != ProgressBarState.Normal) {
+                SetState(ProgressBarState.Normal);
             }
+
             base.WndProc(ref m);
+
+            //Switch back to original state if needed
+            if(m.Msg == (int)WindowMessage.PBM_SETPOS && _state != ProgressBarState.Normal) {
+                SetState(_state);
+            }
         }
+
     }
+
 }

@@ -1,6 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿/*****************************************************
+ * WindowsFormsAero
+ * https://github.com/LorenzCK/WindowsFormsAero
+ * http://windowsformsaero.codeplex.com
+ *
+ * Author: Lorenz Cuno Klopfenstein <lck@klopfenstein.net>
+ *****************************************************/
+
+using System;
 using System.Runtime.InteropServices;
 
 namespace WindowsFormsAero.Native {

@@ -41,16 +41,21 @@ namespace WindowsFormsAero.Dwm {
 
 			if (_topLevelForm != null) {
 				_thumbnail = DwmManager.Register(_topLevelForm, originHandle);
-				UpdateThumbnail(Visible);
+				UpdateThumbnailInternal(Visible);
 			}
 			else
 				throw new Exception("Control must have an owner.");
 		}
 
-		/// <summary>Forces and update of the thumbnail.</summary>
-		/// <remarks>Use this method if you know that the thumbnailed window has been resized and the thumbnail control should react to these changes.</remarks>
-		public void Update() {
-			UpdateThumbnail(Visible);
+		/// <summary>
+        /// Forces an update of the thumbnail.
+        /// </summary>
+		/// <remarks>
+        /// Use this method if you know that the thumbnailed window has been resized
+        /// and the thumbnail control should react to these changes.
+        /// </remarks>
+		public void UpdateThumbnail() {
+			UpdateThumbnailInternal(Visible);
 		}
 
 		#endregion
@@ -60,7 +65,7 @@ namespace WindowsFormsAero.Dwm {
 		protected override void OnVisibleChanged(EventArgs e) {
 			base.OnVisibleChanged(e);
 
-			UpdateThumbnail(Visible);
+			UpdateThumbnailInternal(Visible);
 		}
 
 		/* REMOVED 30/03/2008: doens't work correctly in some cases. Now the control uses an EventHandler that is registered
@@ -88,19 +93,19 @@ namespace WindowsFormsAero.Dwm {
 		}
 
 		void _parentControl_VisibleChanged(object sender, EventArgs e) {
-			UpdateThumbnail(_parentControl.Visible);
+			UpdateThumbnailInternal(_parentControl.Visible);
 		}
 
 		protected override void OnLocationChanged(EventArgs e) {
 			base.OnLocationChanged(e);
 
-			UpdateThumbnail(Visible);
+			UpdateThumbnailInternal(Visible);
 		}
 
 		protected override void OnSizeChanged(EventArgs e) {
 			base.OnSizeChanged(e);
 
-			UpdateThumbnail(Visible);
+			UpdateThumbnailInternal(Visible);
 		}
 
 		void originForm_FormClosed(object sender, FormClosedEventArgs e) {
@@ -111,7 +116,7 @@ namespace WindowsFormsAero.Dwm {
 		}
 
 		void originForm_SizeChanged(object sender, EventArgs e) {
-			Update();
+			UpdateThumbnail();
 		}
 
 		#endregion
@@ -125,7 +130,7 @@ namespace WindowsFormsAero.Dwm {
 			get { return _onlyClientArea; }
 			set {
 				_onlyClientArea = value;
-				UpdateThumbnail(Visible);
+				UpdateThumbnailInternal(Visible);
 			}
 		}
 
@@ -136,7 +141,7 @@ namespace WindowsFormsAero.Dwm {
 			get { return _opacity; }
 			set {
 				_opacity = value;
-				UpdateThumbnail(Visible);
+				UpdateThumbnailInternal(Visible);
 			}
 		}
 
@@ -146,7 +151,7 @@ namespace WindowsFormsAero.Dwm {
 			get { return _alignment; }
 			set {
 				_alignment = value;
-				UpdateThumbnail(Visible);
+				UpdateThumbnailInternal(Visible);
 			}
 		}
 
@@ -156,7 +161,7 @@ namespace WindowsFormsAero.Dwm {
 			get { return _scaleSmallerThumbnails; }
 			set {
 				_scaleSmallerThumbnails = value;
-				UpdateThumbnail(Visible);
+				UpdateThumbnailInternal(Visible);
 			}
 		}
 
@@ -167,7 +172,7 @@ namespace WindowsFormsAero.Dwm {
 		//Used to cache the visibility status: prevents calls to Thumbnail.Update when the thumbnail is not visible.
 		bool _lastVisibilityStatus = true;
 
-		protected void UpdateThumbnail(bool visible) {
+		protected void UpdateThumbnailInternal(bool visible) {
 			if (!_lastVisibilityStatus && !visible)
 				return;
 
@@ -211,7 +216,7 @@ namespace WindowsFormsAero.Dwm {
 
 			//Fit source rectangle to thumbnail rectangle
 			Size destination = this.ClientSize;
-			Size source = _thumbnail.SourceSize;
+			Size source = _thumbnail.GetSourceSize();
 
 			if (source.Width < destination.Width && source.Height < destination.Height && !_scaleSmallerThumbnails) {
 				destination = source;

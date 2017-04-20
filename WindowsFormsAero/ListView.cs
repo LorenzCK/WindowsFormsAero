@@ -1,42 +1,34 @@
-/*
-* VISTA CONTROLS FOR .NET 2.0
-* ENHANCED LISTVIEW
-* 
-* Written by Marco Minerva, mailto:marco.minerva@gmail.com
-* 
-* This code is released under the Microsoft Community License (Ms-CL).
-* A copy of this license is available at
-* http://www.microsoft.com/resources/sharedsource/licensingbasics/limitedcommunitylicense.mspx
-*/
+/*****************************************************
+ * WindowsFormsAero
+ * https://github.com/LorenzCK/WindowsFormsAero
+ * http://windowsformsaero.codeplex.com
+ *
+ * Author: Marco Minerva <marco.minerva@gmail.com>
+ *         Lorenz Cuno Klopfenstein <lck@klopfenstein.net>
+ *****************************************************/
 
 using System;
 using System.Drawing;
-using System.Windows.Forms;
+using WindowsFormsAero.Native;
 
-namespace WindowsFormsAero
-{
+namespace WindowsFormsAero {
+
     [ToolboxBitmap(typeof(ListView))]
-    public class ListView : System.Windows.Forms.ListView
-    {
-        private Boolean elv = false;
+    public class ListView : System.Windows.Forms.ListView {
 
-        protected override void WndProc(ref Message m)
-        {
-            // Listen for operating system messages.
-            switch (m.Msg)
-            {
-                case 15:
-                    //Paint event
-                    if (!elv)
-                    {
-                        //1-time run needed
-                        NativeMethods.SetWindowTheme(this.Handle, "explorer", null); //Explorer style
-                        NativeMethods.SendMessage(this.Handle, NativeMethods.LVM_SETEXTENDEDLISTVIEWSTYLE, NativeMethods.LVS_EX_DOUBLEBUFFER, NativeMethods.LVS_EX_DOUBLEBUFFER); //Blue selection, keeps other extended styles
-                        elv = true;
-                    }
-                    break;
-            }
-            base.WndProc(ref m);
+        protected override void OnHandleCreated(EventArgs e) {
+            base.OnHandleCreated(e);
+
+            //Set Explorer style
+            Methods.SetWindowTheme(Handle, "explorer", null);
+
+            //Blue selection, keeps other extended styles
+            Methods.SendMessage(Handle,
+                (uint)WindowMessage.LVM_SETEXTENDEDLISTVIEWSTYLE,
+                (uint)ListViewExtendedStyle.LVS_EX_DOUBLEBUFFER,
+                (uint)ListViewExtendedStyle.LVS_EX_DOUBLEBUFFER);
         }
+
     }
+
 }

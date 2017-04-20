@@ -1,56 +1,60 @@
-/*
-* VISTA CONTROLS FOR .NET 2.0
-* ENHANCED TREEVIEW
-* 
-* Written by Marco Minerva, mailto:marco.minerva@gmail.com
-* 
-* This code is released under the Microsoft Community License (Ms-CL).
-* A copy of this license is available at
-* http://www.microsoft.com/resources/sharedsource/licensingbasics/limitedcommunitylicense.mspx
-*/
+/*****************************************************
+ * WindowsFormsAero
+ * https://github.com/LorenzCK/WindowsFormsAero
+ * http://windowsformsaero.codeplex.com
+ *
+ * Author: Marco Minerva <marco.minerva@gmail.com>
+ *****************************************************/
 
 using System;
 using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
+using WindowsFormsAero.Native;
 
 namespace WindowsFormsAero {
-	[ToolboxBitmap(typeof(TreeView))]
-	public class TreeView : System.Windows.Forms.TreeView {
-		public TreeView() {
-			base.HotTracking = true;
-			base.ShowLines = false;
-		}
 
-		protected override CreateParams CreateParams {
-			get {
-				CreateParams cp = base.CreateParams;
-				cp.Style |= NativeMethods.TVS_NOHSCROLL;
-				return cp;
-			}
-		}
+    [ToolboxBitmap(typeof(TreeView))]
+    public class TreeView : System.Windows.Forms.TreeView {
 
-		[Browsable(false)]
-		private new bool HotTracking {
-			get { return base.HotTracking; }
-			set { base.HotTracking = true; }
-		}
+        public TreeView() {
+            base.HotTracking = true;
+            base.ShowLines = false;
+        }
 
-		[Browsable(false)]
-		private new bool ShowLines {
-			get { return base.ShowLines; }
-			set { base.ShowLines = false; }
-		}
+        protected override CreateParams CreateParams {
+            get {
+                CreateParams cp = base.CreateParams;
+                cp.Style |= (int)TreeViewStyle.TVS_NOHSCROLL;
+                return cp;
+            }
+        }
 
-		protected override void OnHandleCreated(EventArgs e) {
-			base.OnHandleCreated(e);
+        [Browsable(false)]
+        private new bool HotTracking {
+            get { return base.HotTracking; }
+            set { }
+        }
 
-			NativeMethods.SetWindowTheme(base.Handle, "explorer", null);
+        [Browsable(false)]
+        private new bool ShowLines {
+            get { return base.ShowLines; }
+            set { }
+        }
 
-			int style = NativeMethods.SendMessage(base.Handle, Convert.ToUInt32(NativeMethods.TVM_GETEXTENDEDSTYLE), 0, 0);
-			style |= (NativeMethods.TVS_EX_AUTOHSCROLL | NativeMethods.TVS_EX_FADEINOUTEXPANDOS | NativeMethods.TVS_EX_DOUBLEBUFFER);
-			NativeMethods.SendMessage(base.Handle, NativeMethods.TVM_SETEXTENDEDSTYLE, 0, style);
-			
-		}
-	}
+        protected override void OnHandleCreated(EventArgs e) {
+            base.OnHandleCreated(e);
+
+            Methods.SetWindowTheme(Handle, "explorer", null);
+
+            uint style = (uint)(Methods.SendMessage(Handle,
+                (uint)WindowMessage.TVM_GETEXTENDEDSTYLE, 0, 0).ToInt64());
+            style |= (uint)TreeViewExtendedStyle.TVS_EX_AUTOHSCROLL;
+            style |= (uint)TreeViewExtendedStyle.TVS_EX_FADEINOUTEXPANDOS;
+            style |= (uint)TreeViewExtendedStyle.TVS_EX_DOUBLEBUFFER;
+            Methods.SendMessage(Handle, (uint)WindowMessage.TVM_SETEXTENDEDSTYLE, 0, style);
+        }
+
+    }
+
 }

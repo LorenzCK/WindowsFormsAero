@@ -1,37 +1,27 @@
-﻿using System;
-using System.Collections.Generic;
+﻿/*****************************************************
+ * WindowsFormsAero
+ * https://github.com/LorenzCK/WindowsFormsAero
+ * http://windowsformsaero.codeplex.com
+ *
+ * Author: Blake Pell <bpell@indiana.edu> http://www.blakepell.com
+ *****************************************************/
+
 using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Text;
 using System.Windows.Forms;
 
-/**************************************************************************************************************
- *
- *  Aero Controls FOR .NET 2.0
- *  
- *  LabeledDivider Control
- * 
- *  This control written by Blake Pell (bpell@indiana.edu, blakepell@hotmail.com, http://www.blakepell.com)
- *  Initial Date:  07/25/2009
- *  Last Updated:  07/27/2009
- * 
- *  This code is released under the Microsoft Community License (Ms-CL).
- *
- **************************************************************************************************************/
+namespace WindowsFormsAero {
 
-namespace WindowsFormsAero
-{
     /// <summary>
     /// The labeled divider provides a Aero styled divider with an optional caption,
     /// similiar to what is seen in the Control Panel dialogs of Windows 7 and Vista.
     /// </summary>
     public class LabeledDivider : Label {
+
         /// <summary>
         /// Constructor
         /// </summary>
-        public LabeledDivider()
-        {
+        public LabeledDivider() {
             Font = new Font(Font.FontFamily, 9); //ensures that divider takes the "ambient" font from its parent
             this.ForeColor = Color.FromArgb(0, 51, 170);
             AutoSize = false;
@@ -44,8 +34,7 @@ namespace WindowsFormsAero
         /// <remarks>
         /// The colors in use here were extracted from an image of the Control Panel taken from a Windows 7 RC1 installation.
         /// </remarks>
-        protected override void OnPaint(PaintEventArgs e)
-        {
+        protected override void OnPaint(PaintEventArgs e) {
             base.OnPaint(e);
 
             e.Graphics.Clear(BackColor);
@@ -59,13 +48,11 @@ namespace WindowsFormsAero
             SizeF sf = e.Graphics.MeasureString(this.Text, this.Font);
 
             // This didn't quiet get in the cente rso I had to add 1 pixel to the sf.Height / 2
-            if (this.DividerPosition == DividerPositions.Center)
-            {
-                Rectangle rect = new Rectangle((int)sf.Width, ((int)sf.Height / 2) + 1, this.Width - (int)sf.Width, 1);            
+            if (this.DividerPosition == DividerPositions.Center) {
+                Rectangle rect = new Rectangle((int)sf.Width, ((int)sf.Height / 2) + 1, this.Width - (int)sf.Width, 1);
                 e.Graphics.FillRectangle(sbDividerColor, rect);
             }
-            else if (this.DividerPosition == DividerPositions.Below) 
-            {
+            else if (this.DividerPosition == DividerPositions.Below) {
                 Rectangle rect = new Rectangle(1, (int)sf.Height, this.Width, 1);
                 e.Graphics.FillRectangle(sbDividerColor, rect);
             }
@@ -77,16 +64,15 @@ namespace WindowsFormsAero
         /// <summary>
         /// The positions that the divider line can be drawn in
         /// </summary>
-        public enum DividerPositions 
-        { 
+        public enum DividerPositions {
             /// <summary>
             /// The divider will be centered after the text caption and will begin drawing after the string.  This is the default behavior.
             /// </summary>
-            Center, 
+            Center,
             /// <summary>
             /// The divider will be drawn below the text caption.
             /// </summary>
-            Below 
+            Below
         };
 
         private DividerPositions _dividerPosition = DividerPositions.Center;
@@ -99,14 +85,11 @@ namespace WindowsFormsAero
         /// 7 and Vista UI's.
         /// </remarks>
         [Description("The placement of the divider line."), Category("Appearance"), DefaultValue(DividerPositions.Center)]
-        public DividerPositions DividerPosition
-        {
-            get
-            {
+        public DividerPositions DividerPosition {
+            get {
                 return this._dividerPosition;
             }
-            set
-            {
+            set {
                 this._dividerPosition = value;
                 this.Invalidate();
             }
@@ -117,14 +100,11 @@ namespace WindowsFormsAero
         /// The color of the divider line.
         /// </summary>
         [Description("The color of the divider line."), Category("Appearance")]
-        public Color DividerColor
-        {
-            get
-            {
+        public Color DividerColor {
+            get {
                 return this._dividerColor;
             }
-            set
-            {
+            set {
                 this._dividerColor = value;
                 this.Invalidate();
             }
@@ -138,19 +118,17 @@ namespace WindowsFormsAero
         /// <remarks>
         /// After a change is made to the text property we want to invalidate the control so it triggers a new paint message being sent.
         /// </remarks>
-        [Description("The text that will display as the caption."), Category("Appearance"),DefaultValue("DividerLabel")]
-        public override string Text
-        {
-            get
-            {
+        [Description("The text that will display as the caption."), Category("Appearance"), DefaultValue("DividerLabel")]
+        public override string Text {
+            get {
                 return this._text;
             }
-            set
-            {
+            set {
                 this._text = value;
                 this.Invalidate();
             }
         }
 
     }
+
 }

@@ -1,17 +1,13 @@
 ﻿/*****************************************************
- *            Vista Controls for .NET 2.0
- * 
- * http://www.codeplex.com/vistacontrols
- * 
- * @author: Lorenz Cuno Klopfenstein
- * Licensed under Microsoft Community License (Ms-CL)
- * 
+ * WindowsFormsAero
+ * https://github.com/LorenzCK/WindowsFormsAero
+ * http://windowsformsaero.codeplex.com
+ *
+ * Author: Lorenz Cuno Klopfenstein <lck@klopfenstein.net>
  *****************************************************/
 
 using System;
-using System.Collections.Generic;
 using System.Runtime.InteropServices;
-using System.Text;
 
 namespace WindowsFormsAero.TaskDialog {
 
@@ -24,7 +20,7 @@ namespace WindowsFormsAero.TaskDialog {
             int dwCommonButtons, IntPtr pszIcon, out int pnButton);
 
         /// <summary>Indirect Task Dialog call. Allows complex dialogs with interaction logic (via callback).</summary>
-        [DllImport("comctl32.dll", CharSet = CharSet.Unicode, PreserveSig=false)]
+        [DllImport("comctl32.dll", CharSet = CharSet.Unicode)]
         public static extern IntPtr TaskDialogIndirect(ref TaskDialogConfig pTaskConfig,
             out int pnButton, out int pnRadioButton, out bool pfVerificationFlagChecked);
 
@@ -37,7 +33,7 @@ namespace WindowsFormsAero.TaskDialog {
             public IntPtr hwndParent;
             public IntPtr hInstance;
             public TaskDialogFlags dwFlags;
-            public TaskDialogButton dwCommonButtons;
+            public CommonButton dwCommonButtons;
             [MarshalAs(UnmanagedType.LPWStr)]
             public string pszWindowTitle;
             public IntPtr hMainIcon;

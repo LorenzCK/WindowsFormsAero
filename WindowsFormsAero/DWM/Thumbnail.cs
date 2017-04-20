@@ -1,31 +1,47 @@
 ﻿/*****************************************************
- *            Vista Controls for .NET 2.0
- * 
- * http://www.codeplex.com/vistacontrols
- * 
- * @author: Lorenz Cuno Klopfenstein
- * Licensed under Microsoft Community License (Ms-CL)
- * 
+ * WindowsFormsAero
+ * https://github.com/LorenzCK/WindowsFormsAero
+ * http://windowsformsaero.codeplex.com
+ *
+ * Author: Lorenz Cuno Klopfenstein <lck@klopfenstein.net>
  *****************************************************/
 
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Drawing;
 using System.Security.Permissions;
+using WindowsFormsAero.Native;
+using WindowsFormsAero.Resources;
 
-namespace WindowsFormsAero.Dwm
-{
-    /// <summary>Handle to a DWM Thumbnail.</summary>
-    public sealed class Thumbnail : System.Runtime.InteropServices.SafeHandle
-    {
+namespace WindowsFormsAero.Dwm {
+
+    /// <summary>
+    /// Handle to a DWM Thumbnail.
+    /// </summary>
+    /// <remarks>
+    /// Handles to <see cref="Thumbnail"/> can be created only through
+    /// <see cref="DwmManager"/> by registering a new thumbnail of an existing Form or
+    /// Win32 window. Thumbnails can be manipulated and should be disposed through this
+    /// class.
+    /// Thumbnails can be automatically handled by the <see cref="ThumbnailViewer"/>
+    /// Windows Forms control.
+    /// The <see cref="Update(Rectangle, byte, bool, bool)"/> or <see
+    /// cref="Update(Rectangle, Rectangle, byte, bool, bool)"/> methods must be called
+    /// at least once in order for the Thumbnail to be visible.
+    /// </remarks>
+    public sealed class Thumbnail : System.Runtime.InteropServices.SafeHandle {
+
         internal Thumbnail()
             : base(IntPtr.Zero, true) {
         }
 
+        internal Thumbnail(IntPtr handle)
+            : base(IntPtr.Zero, true) {
+
+            SetHandle(handle);
+        }
+
         #region Handle logic
 
-        /// <summary>Returns true if the handle is valid, false if the handle has been closed or hasn't been initialized.</summary>
         public override bool IsInvalid {
             [SecurityPermission(SecurityAction.LinkDemand, UnmanagedCode = true)]
             get {
@@ -35,146 +51,213 @@ namespace WindowsFormsAero.Dwm
 
         [SecurityPermission(SecurityAction.LinkDemand, UnmanagedCode = true)]
         protected override bool ReleaseHandle() {
+            if(handle == IntPtr.Zero) {
+                return true;
+            }
+
             //Unregister the thumbnail
-            return (NativeMethods.DwmUnregisterThumbnail(handle) == 0);
+            return (DwmMethods.DwmUnregisterThumbnail(handle) == 0);
         }
 
-        #endregion
+        #endregion Handle logic
 
-        #region Thumbnail properties
+        #region Thumbnail properties and methods
 
-		/// <summary>Sets the thumbnail opacity value, from 0 to 255 (opaque).</summary>
+        byte _opacity = 255;
+
+        /// <summary>
+        /// Gets or sets the thumbnail opacity value, from 0 (transparent) to 255 (fully
+        /// opaque).
+        /// </summary>
+        /// <remarks>
+        /// This property appears to be ignored in Windows 10 Anniversary Update.
+        /// </remarks>
         public byte Opacity {
             set {
-                NativeMethods.DwmThumbnailProperties prop = new NativeMethods.DwmThumbnailProperties();
-                prop.dwFlags = NativeMethods.DwmThumbnailFlags.Opacity;
+                var prop = new DwmThumbnailProperties {
+                    opacity = value,
+                    dwFlags = DwmThumbnailFlags.Opacity
+                };
 
-                prop.opacity = value;
+                if (DwmMethods.DwmUpdateThumbnailProperties(handle, ref prop) != 0) {
+                    throw new DwmCompositionException(ExceptionMessages.DwmThumbnailUpdateFailure);
+                }
 
-                if (NativeMethods.DwmUpdateThumbnailProperties(this, ref prop) != 0)
-                    throw new DwmCompositionException(Resources.ExceptionMessages.DwmThumbnailUpdateFailure);
+                _opacity = value;
+            }
+            get {
+                return _opacity;
             }
         }
 
-		/// <summary>Sets whether only the client area of the thumbnailed window should be shown or
-		/// the entire window area.</summary>
+        bool _clientArea = false;
+
+        /// <summary>
+        /// Gets or sets whether only the client area of the thumbnailed window should be
+        /// shown or its entire window area.
+        /// </summary>
         public bool ShowOnlyClientArea {
             set {
-                NativeMethods.DwmThumbnailProperties prop = new NativeMethods.DwmThumbnailProperties();
-                prop.dwFlags = NativeMethods.DwmThumbnailFlags.SourceClientAreaOnly;
+                var prop = new DwmThumbnailProperties {
+                    fSourceClientAreaOnly = value,
+                    dwFlags = DwmThumbnailFlags.SourceClientAreaOnly
+                };
 
-                prop.fSourceClientAreaOnly = value;
+                if (DwmMethods.DwmUpdateThumbnailProperties(handle, ref prop) != 0)
+                    throw new DwmCompositionException(ExceptionMessages.DwmThumbnailUpdateFailure);
 
-                if (NativeMethods.DwmUpdateThumbnailProperties(this, ref prop) != 0)
-					throw new DwmCompositionException(Resources.ExceptionMessages.DwmThumbnailUpdateFailure);
+                _clientArea = value;
+            }
+            get {
+                return _clientArea;
             }
         }
 
-		/// <summary>Area in the destination window on which the thumbnail should be drawn.</summary>
-        public System.Drawing.Rectangle DestinationRectangle {
+        private Rectangle _destination;
+
+        /// <summary>
+        /// Gets or sets the area in the destination window on which the thumbnail should
+        /// be drawn.
+        /// </summary>
+        public Rectangle DestinationRectangle {
             set {
-                NativeMethods.DwmThumbnailProperties prop = new NativeMethods.DwmThumbnailProperties();
-                prop.dwFlags = NativeMethods.DwmThumbnailFlags.RectDestination;
+                var prop = new DwmThumbnailProperties {
+                    rcDestination = new Rect(value),
+                    dwFlags = DwmThumbnailFlags.RectDestination
+                };
 
-                prop.rcDestination = new Native.RECT(value);
-
-                if (NativeMethods.DwmUpdateThumbnailProperties(this, ref prop) != 0)
-					throw new DwmCompositionException(Resources.ExceptionMessages.DwmThumbnailUpdateFailure);
+                if (DwmMethods.DwmUpdateThumbnailProperties(handle, ref prop) != 0)
+                    throw new DwmCompositionException(ExceptionMessages.DwmThumbnailUpdateFailure);
+            }
+            get {
+                return _destination;
             }
         }
 
-		/// <summary>Region of the source window that should be drawn.</summary>
-        public System.Drawing.Rectangle SourceRectangle {
+        /// <summary>
+        /// Sets the region of the source window that should be drawn.
+        /// </summary>
+        /// <remarks>
+        /// This read-only property cannot be unset once set.
+        /// In order to reset the Thumbnail's source rectangle, a new  instance must be
+        /// created.
+        /// </remarks>
+        public Rectangle SourceRectangle {
             set {
-                NativeMethods.DwmThumbnailProperties prop = new NativeMethods.DwmThumbnailProperties();
-                prop.dwFlags = NativeMethods.DwmThumbnailFlags.RectSource;
+                if (value.Width < 1 || value.Height < 1)
+                    throw new ArgumentException(ExceptionMessages.DwmThumbnailSourceInvalid);
 
-				prop.rcSource = new Native.RECT(value);
+                var prop = new DwmThumbnailProperties {
+                    rcSource = new Rect(value),
+                    dwFlags = DwmThumbnailFlags.RectSource
+                };
 
-                if (NativeMethods.DwmUpdateThumbnailProperties(this, ref prop) != 0)
-					throw new DwmCompositionException(Resources.ExceptionMessages.DwmThumbnailUpdateFailure);
+                if (DwmMethods.DwmUpdateThumbnailProperties(handle, ref prop) != 0)
+                    throw new DwmCompositionException(ExceptionMessages.DwmThumbnailUpdateFailure);
             }
         }
 
-		/// <summary>Sets whether the thumbnail should be drawn or not.</summary>
+        bool _visible = false;
+
+        /// <summary>
+        /// Gets or sets whether the thumbnail should be shown or not.
+        /// </summary>
         public bool Visible {
             set {
-                NativeMethods.DwmThumbnailProperties prop = new NativeMethods.DwmThumbnailProperties();
-                prop.dwFlags = NativeMethods.DwmThumbnailFlags.Visible;
+                var prop = new DwmThumbnailProperties {
+                    fVisible = value,
+                    dwFlags = DwmThumbnailFlags.Visible
+                };
 
-                prop.fVisible = value;
-
-                if (NativeMethods.DwmUpdateThumbnailProperties(this, ref prop) != 0)
-					throw new DwmCompositionException(Resources.ExceptionMessages.DwmThumbnailUpdateFailure);
+                if (DwmMethods.DwmUpdateThumbnailProperties(handle, ref prop) != 0)
+                    throw new DwmCompositionException(ExceptionMessages.DwmThumbnailUpdateFailure);
+            }
+            get {
+                return _visible;
             }
         }
 
-		/// <summary>Gets the thumbnail's original size.</summary>
-		public Size SourceSize {
-			get {
-				NativeMethods.DwmSize size;
-				if (NativeMethods.DwmQueryThumbnailSourceSize(this, out size) != 0)
-					throw new DwmCompositionException(Resources.ExceptionMessages.DwmThumbnailQueryFailure);
+        /// <summary>
+        /// Retrieves the thumbnailed window's size.
+        /// </summary>
+        public System.Drawing.Size GetSourceSize() {
+            DwmSize size;
+            if (DwmMethods.DwmQueryThumbnailSourceSize(handle, out size) != 0)
+                throw new DwmCompositionException(ExceptionMessages.DwmThumbnailQueryFailure);
 
-				return size.ToSize();
-			}
-		}
+            return size.ToSize();
+        }
 
-        #endregion
-
-        #region Thumbnail updating
-
-        /// <summary>Updates the thumbnail's display settings.</summary>
+        /// <summary>
+        /// Updates the thumbnail's display settings.
+        /// </summary>
         /// <param name="destination">Drawing region on destination window.</param>
         /// <param name="source">Origin region from source window.</param>
         /// <param name="opacity">Opacity. 0 is transparent, 255 opaque.</param>
         /// <param name="visible">Visibility flag.</param>
-        /// <param name="onlyClientArea">If true, only the client area of the window will be rendered. Otherwise, the borders will be be rendered as well.</param>
+        /// <param name="onlyClientArea">
+        /// If true, only the client area of the window will be rendered. Otherwise, the
+        /// borders will be be rendered as well.
+        /// </param>
         public void Update(Rectangle destination, Rectangle source, byte opacity, bool visible, bool onlyClientArea) {
             if (source.Width < 1 || source.Height < 1)
-                throw new ArgumentException("Thumbnail source rectangle cannot have null or negative size.");
+                throw new ArgumentException(ExceptionMessages.DwmThumbnailSourceInvalid);
 
-            //Full update
-            NativeMethods.DwmThumbnailProperties prop = new NativeMethods.DwmThumbnailProperties();
-            prop.dwFlags = NativeMethods.DwmThumbnailFlags.RectDestination |
-                           NativeMethods.DwmThumbnailFlags.RectSource |
-                           NativeMethods.DwmThumbnailFlags.Opacity |
-                           NativeMethods.DwmThumbnailFlags.Visible |
-                           NativeMethods.DwmThumbnailFlags.SourceClientAreaOnly;
+            var prop = new DwmThumbnailProperties {
+                rcDestination = new Rect(destination),
+                rcSource = new Rect(source),
+                opacity = opacity,
+                fVisible = visible,
+                fSourceClientAreaOnly = onlyClientArea,
+                dwFlags = DwmThumbnailFlags.RectDestination |
+                          DwmThumbnailFlags.RectSource |
+                          DwmThumbnailFlags.Opacity |
+                          DwmThumbnailFlags.Visible |
+                          DwmThumbnailFlags.SourceClientAreaOnly
+            };
 
-			prop.rcDestination = new Native.RECT(destination);
-			prop.rcSource = new Native.RECT(source);
-            prop.opacity = opacity;
-            prop.fVisible = visible;
-            prop.fSourceClientAreaOnly = onlyClientArea;
+            if (DwmMethods.DwmUpdateThumbnailProperties(handle, ref prop) != 0)
+                throw new DwmCompositionException(ExceptionMessages.DwmThumbnailUpdateFailure);
 
-            if (NativeMethods.DwmUpdateThumbnailProperties(this, ref prop) != 0)
-				throw new DwmCompositionException(Resources.ExceptionMessages.DwmThumbnailUpdateFailure);
+            _destination = destination;
+            _opacity = opacity;
+            _visible = visible;
+            _clientArea = ShowOnlyClientArea;
         }
 
-        /// <summary>Updates the thumbnail's display settings.</summary>
+        /// <summary>
+        /// Updates the thumbnail's display settings.
+        /// </summary>
         /// <param name="destination">Drawing region on destination window.</param>
         /// <param name="opacity">Opacity. 0 is transparent, 255 opaque.</param>
         /// <param name="visible">Visibility flag.</param>
-        /// <param name="onlyClientArea">If true, only the client area of the window will be rendered. Otherwise, the borders will be be rendered as well.</param>
+        /// <param name="onlyClientArea">
+        /// If true, only the client area of the window will be rendered. Otherwise, the
+        /// borders will be be rendered as well.
+        /// </param>
         public void Update(Rectangle destination, byte opacity, bool visible, bool onlyClientArea) {
-            //Partial update
-            NativeMethods.DwmThumbnailProperties prop = new NativeMethods.DwmThumbnailProperties();
-            prop.dwFlags = NativeMethods.DwmThumbnailFlags.RectDestination |
-                           NativeMethods.DwmThumbnailFlags.Opacity |
-                           NativeMethods.DwmThumbnailFlags.Visible |
-                           NativeMethods.DwmThumbnailFlags.SourceClientAreaOnly;
+            var prop = new DwmThumbnailProperties {
+                rcDestination = new Rect(destination),
+                opacity = opacity,
+                fVisible = visible,
+                fSourceClientAreaOnly = onlyClientArea,
+                dwFlags = DwmThumbnailFlags.RectDestination |
+                          DwmThumbnailFlags.Opacity |
+                          DwmThumbnailFlags.Visible |
+                          DwmThumbnailFlags.SourceClientAreaOnly
+            };
 
-			prop.rcDestination = new Native.RECT(destination);
-            prop.opacity = opacity;
-            prop.fVisible = visible;
-            prop.fSourceClientAreaOnly = onlyClientArea;
+            if (DwmMethods.DwmUpdateThumbnailProperties(handle, ref prop) != 0)
+                throw new DwmCompositionException(ExceptionMessages.DwmThumbnailUpdateFailure);
 
-            if (NativeMethods.DwmUpdateThumbnailProperties(this, ref prop) != 0)
-				throw new DwmCompositionException(Resources.ExceptionMessages.DwmThumbnailUpdateFailure);
+            _destination = destination;
+            _opacity = opacity;
+            _visible = visible;
+            _clientArea = ShowOnlyClientArea;
         }
 
         #endregion
 
     }
+
 }

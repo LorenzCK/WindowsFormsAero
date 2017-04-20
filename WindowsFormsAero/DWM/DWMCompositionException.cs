@@ -1,23 +1,19 @@
 ﻿/*****************************************************
- *            Vista Controls for .NET 2.0
- * 
- * http://www.codeplex.com/vistacontrols
- * 
- * @author: Lorenz Cuno Klopfenstein
- * Licensed under Microsoft Community License (Ms-CL)
- * 
+ * WindowsFormsAero
+ * https://github.com/LorenzCK/WindowsFormsAero
+ * http://windowsformsaero.codeplex.com
+ *
+ * Author: Lorenz Cuno Klopfenstein <lck@klopfenstein.net>
  *****************************************************/
 
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Runtime.Serialization;
 
-namespace WindowsFormsAero.Dwm
-{
+namespace WindowsFormsAero.Dwm {
+
     [Serializable]
-    class DwmCompositionException : Exception
-    {
+    class DwmCompositionException : Exception {
+
         public DwmCompositionException(string m)
             : base(m) {
         }
@@ -29,5 +25,7 @@ namespace WindowsFormsAero.Dwm
         public DwmCompositionException(SerializationInfo info, StreamingContext context)
             : base(info, context) {
         }
+
     }
+
 }

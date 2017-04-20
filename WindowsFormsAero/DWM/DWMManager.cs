@@ -1,29 +1,33 @@
 ﻿/*****************************************************
- *            Vista Controls for .NET 2.0
- * 
- * http://www.codeplex.com/vistacontrols
- * 
- * @author: Lorenz Cuno Klopfenstein
- * Licensed under Microsoft Community License (Ms-CL)
- * 
+ * WindowsFormsAero
+ * https://github.com/LorenzCK/WindowsFormsAero
+ * http://windowsformsaero.codeplex.com
+ *
+ * Author: Lorenz Cuno Klopfenstein <lck@klopfenstein.net>
  *****************************************************/
 
 using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Drawing;
 using System.Windows.Forms;
-using System.Runtime.InteropServices;
+using WindowsFormsAero.Native;
+using WindowsFormsAero.Resources;
 
 namespace WindowsFormsAero.Dwm {
 
-    /// <summary>Main DWM class, provides Thumbnail registration, glass sheet effect and blur behind.</summary>
+    /// <summary>
+    /// Access to DWM features (e.g., thumbnail registration, glass sheet effect, and
+    /// blur behind).
+    /// </summary>
     public static class DwmManager {
 
-        #region Thumbnail registration and unregistration
+        #region Thumbnail registration
 
-        /// <summary>Registers a thumbnail to be drawn on a Windows Form.</summary>
-        /// <remarks>The thumbnail will not be drawn until you update the thumbnail's properties calling Update().</remarks>
+        /// <summary>
+        /// Registers a thumbnail to be drawn on a Windows Form.
+        /// </summary>
+        /// <remarks>
+        /// The thumbnail will not be drawn until you update the thumbnail's properties
+        /// using <see cref="Thumbnail.Update"/>.
+        /// </remarks>
         /// <param name="destination">The Windows Form instance on which to draw the thumbnail.</param>
         /// <param name="source">The handle (HWND) of the window that has to be drawn.</param>
         /// <returns>A Thumbnail instance, needed to unregister and to update properties.</returns>
@@ -31,38 +35,32 @@ namespace WindowsFormsAero.Dwm {
             return Register(destination.Handle, source);
         }
 
-        /// <summary>Registers a thumbnail to be drawn on a window.</summary>
-        /// <remarks>The thumbnail will not be drawn until you update the thumbnail's properties calling Update().</remarks>
-        /// <param name="destination">The handle (HWND) of the window on which the thumbnail will be drawn.</param>
-        /// <param name="source">The handle (HWND) of the window that has to be drawn.</param>
+        /// <summary>
+        /// Registers a thumbnail to be drawn on a window.
+        /// </summary>
+        /// <remarks>
+        /// The thumbnail will not be drawn until you update the thumbnail's properties
+        /// using <see cref="Thumbnail.Update"/>.
+        /// </remarks>
+        /// <param name="destination">The handle (Win32 HWND) of the window on which the thumbnail will be drawn.</param>
+        /// <param name="source">The handle (Win32 HWND) of the window that has to be drawn.</param>
         /// <returns>A Thumbnail instance, needed to unregister and to update properties.</returns>
         public static Thumbnail Register(IntPtr destination, IntPtr source) {
             if (!OsSupport.IsVistaOrBetter)
-                throw new DwmCompositionException(Resources.ExceptionMessages.DwmOsNotSupported);
+                throw new DwmCompositionException(ExceptionMessages.DwmOsNotSupported);
 
             if (!OsSupport.IsCompositionEnabled)
-                throw new DwmCompositionException(Resources.ExceptionMessages.DwmNotEnabled);
+                throw new DwmCompositionException(ExceptionMessages.DwmNotEnabled);
 
             if (destination == source)
-                throw new DwmCompositionException(Resources.ExceptionMessages.DwmWindowMatch);
+                throw new DwmCompositionException(ExceptionMessages.DwmWindowMatch);
 
-            Thumbnail ret = null;
-            if (NativeMethods.DwmRegisterThumbnail(destination, source, out ret) == 0) {
-                return ret;
+            IntPtr ret;
+            if (DwmMethods.DwmRegisterThumbnail(destination, source, out ret) == 0) {
+                return new Thumbnail(ret);
             }
             else {
-                throw new DwmCompositionException(String.Format(Resources.ExceptionMessages.NativeCallFailure, "DwmRegisterThumbnail"));
-            }
-        }
-
-
-        /// <summary>Unregisters the thumbnail handle.</summary>
-        /// <remarks>The handle is unvalid after the call and should not be used again.</remarks>
-        /// <param name="handle">A handle to a registered thumbnail.</param>
-        [Obsolete("Dispose the Thumbnail instance to unregister the DWM thumbnail.")]
-        public static void Unregister(Thumbnail handle) {
-            if (handle != null) {
-                handle.Close();
+                throw new DwmCompositionException(string.Format(ExceptionMessages.NativeCallFailure, nameof(DwmMethods.DwmRegisterThumbnail)));
             }
         }
 
@@ -70,93 +68,106 @@ namespace WindowsFormsAero.Dwm {
 
         #region Blur Behind
 
-        /// <summary>Enable the Aero "Blur Behind" effect on the whole client area. Background must be black.</summary>
+        /// <summary>
+        /// Enable the Aero "Blur Behind" effect on the whole client area.
+        /// Background of the clint area must be painted in black.
+        /// </summary>
         public static void EnableBlurBehind(IntPtr hWnd) {
             if (!OsSupport.IsVistaOrBetter || !OsSupport.IsCompositionEnabled)
                 return;
 
-            NativeMethods.BlurBehind bb = new NativeMethods.BlurBehind();
-            bb.dwFlags = NativeMethods.BlurBehindFlags.Enable;
-            bb.fEnable = true;
-            bb.hRgnBlur = (IntPtr)0;
+            var bb = new DwmBlurBehind {
+                fEnable = true,
+                hRgnBlur = IntPtr.Zero,
+                dwFlags = DwmBlurBehindFlags.Enable
+            };
 
-            NativeMethods.DwmEnableBlurBehindWindow(hWnd, ref bb);
+            DwmMethods.DwmEnableBlurBehindWindow(hWnd, ref bb);
         }
 
-        /// <summary>Enable the Aero "Blur Behind" effect on the whole client area. Background must be black.</summary>
-        /// <param name="form"></param>
+        /// <summary>
+        /// Enable the Aero "Blur Behind" effect on the whole client area.
+        /// Background of the client area must be painted black.
+        /// </summary>
         public static void EnableBlurBehind(Form form) {
             EnableBlurBehind(form.Handle);
         }
 
-        /// <summary>Enable the Aero "Blur Behind" effect on a specific region. Background of the region must be black.</summary>
-        public static void EnableBlurBehind(IntPtr hWnd, IntPtr regionHandle) {
-            if (!OsSupport.IsVistaOrBetter || !OsSupport.IsCompositionEnabled)
-                return;
-
-            NativeMethods.BlurBehind bb = new NativeMethods.BlurBehind();
-            bb.dwFlags = NativeMethods.BlurBehindFlags.Enable | NativeMethods.BlurBehindFlags.BlurRegion;
-            bb.fEnable = true;
-            bb.hRgnBlur = regionHandle;
-
-            NativeMethods.DwmEnableBlurBehindWindow(hWnd, ref bb);
-        }
-
-        /// <summary>Disables the Aero "Blur Behind" effect.</summary>
+        /// <summary>
+        /// Disables the Aero "Blur Behind" effect.
+        /// </summary>
         public static void DisableBlurBehind(IntPtr hWnd) {
             if (!OsSupport.IsVistaOrBetter || !OsSupport.IsCompositionEnabled)
                 return;
 
-            NativeMethods.BlurBehind bb = new NativeMethods.BlurBehind();
-            bb.dwFlags = NativeMethods.BlurBehindFlags.Enable;
-            bb.fEnable = false;
+            var bb = new DwmBlurBehind {
+                fEnable = false,
+                dwFlags = DwmBlurBehindFlags.Enable
+            };
 
-            NativeMethods.DwmEnableBlurBehindWindow(hWnd, ref bb);
+            DwmMethods.DwmEnableBlurBehindWindow(hWnd, ref bb);
         }
 
         #endregion
 
         #region Glass Frame
 
-        /// <summary>Extends the Aero "Glass Frame" into the client area. Background must be black.</summary>
-        public static void EnableGlassFrame(Form window, Margins margins) {
+        /// <summary>
+        /// Extends the Aero "Glass Frame" into the client area.
+        /// Background on which the frame is extended must be black.
+        /// </summary>
+        public static void EnableGlassFrame(Form window, Padding margins) {
             InternalGlassFrame(window.Handle, margins);
         }
 
-        /// <summary>Extends the Aero "Glass Frame" into the client area. Background must be black.</summary>
-        public static void EnableGlassFrame(IntPtr hWnd, Margins margins) {
+        /// <summary>
+        /// Extends the Aero "Glass Frame" into the client area.
+        /// Background on which the frame is extended must be black.
+        /// </summary>
+        public static void EnableGlassFrame(IntPtr hWnd, Padding margins) {
             InternalGlassFrame(hWnd, margins);
         }
 
-        /// <summary>Extends the Aero "Glass Frame" to the whole client area ("Glass Sheet" effect). Background must be black.</summary>
+        /// <summary>
+        /// Extends the Aero "Glass Frame" to the whole client area.
+        /// Background of the window must be black.
+        /// </summary>
         public static void EnableGlassSheet(Form window) {
-            InternalGlassFrame(window.Handle, new Margins(-1));
+            InternalGlassFrame(window.Handle, new Padding(-1));
         }
 
-        /// <summary>Extends the Aero "Glass Frame" to the whole client area ("Glass Sheet" effect). Background must be black.</summary>
+        /// <summary>
+        /// Extends the Aero "Glass Frame" to the whole client area.
+        /// Background of the window must be black.
+        /// </summary>
         public static void EnableGlassSheet(IntPtr hWnd) {
-            InternalGlassFrame(hWnd, new Margins(-1));
+            InternalGlassFrame(hWnd, new Padding(-1));
         }
 
-        /// <summary>Disables the Aero "Glass Frame".</summary>
+        /// <summary>
+        /// Disables the Aero "Glass Frame".
+        /// </summary>
         public static void DisableGlassFrame(Form window) {
-            InternalGlassFrame(window.Handle, new Margins(0));
+            InternalGlassFrame(window.Handle, new Padding(0));
         }
 
-        /// <summary>Disables the Aero "Glass Frame".</summary>
+        /// <summary>
+        /// Disables the Aero "Glass Frame".
+        /// </summary>
         public static void DisableGlassFrame(IntPtr hWnd) {
-            InternalGlassFrame(hWnd, new Margins(0));
+            InternalGlassFrame(hWnd, new Padding(0));
         }
 
-        private static void InternalGlassFrame(IntPtr hWnd, Margins margins) {
+        private static void InternalGlassFrame(IntPtr hWnd, Padding margins) {
             if (!OsSupport.IsVistaOrBetter || !OsSupport.IsCompositionEnabled)
                 return;
 
-            if (NativeMethods.DwmExtendFrameIntoClientArea(hWnd, ref margins) != 0)
-                throw new DwmCompositionException(String.Format(Resources.ExceptionMessages.NativeCallFailure, "DwmExtendFrameIntoClientArea"));
+            var nativeMargins = Margins.FromPadding(margins);
+            if (DwmMethods.DwmExtendFrameIntoClientArea(hWnd, ref nativeMargins) != 0)
+                throw new DwmCompositionException(string.Format(ExceptionMessages.NativeCallFailure, nameof(DwmMethods.DwmExtendFrameIntoClientArea)));
         }
 
-        #endregion
+        #endregion Glass Frame
 
         #region DWM Attributes
 
@@ -169,30 +180,30 @@ namespace WindowsFormsAero.Dwm {
         public static void SetWindowFlip3dPolicy(Form form, Flip3DPolicy policy) {
             if (!OsSupport.IsVistaOrBetter || OsSupport.IsEightOrBetter)
                 return;
-            
+
             if (!OsSupport.IsCompositionEnabled)
                 return;
 
-            if (NativeMethods.DwmSetWindowFlip3dPolicy(form.Handle, policy) != 0)
-                throw new Exception("Unable to change window Flip 3D policy.");
+            if (DwmMethods.DwmSetWindowFlip3dPolicy(form.Handle, policy) != 0)
+                throw new Exception(ExceptionMessages.DwmFlip3dFailPolicy);
         }
 
         /// <summary>
-        /// Disallows Aero Peek on a window (or allows it).
+        /// Sets whether Aero Peek is enabled or disabled on a window.
         /// </summary>
-        /// <param name="form">Form whose Aero Peek preview should be disabled.</param>
-        /// <param name="disallowPeek">True if Aero Peek should be disabled for the window.</param>
+        /// <param name="form">Form whose Aero Peek state should be altered.</param>
+        /// <param name="disallowPeek">True if Aero Peek should be disabled for the window. False otherwise.</param>
         /// <remarks>Is ignored on OSs that do not support Aero Peek.</remarks>
         public static void SetDisallowPeek(Form form, bool disallowPeek) {
             if (!OsSupport.IsSevenOrBetter || !OsSupport.IsCompositionEnabled)
                 return;
 
-            if (NativeMethods.DwmSetWindowDisallowPeek(form.Handle, disallowPeek) != 0)
-                throw new Exception("Unable to disallow window from Aero Peek.");
+            if (DwmMethods.DwmSetWindowDisallowPeek(form.Handle, disallowPeek) != 0)
+                throw new Exception(ExceptionMessages.DwmDisallowPeekFail);
         }
 
         /// <summary>
-        /// Sets a window's state in order to exclude (or include) it in Aero Peek.
+        /// Sets whether Aero Peek excludes or includes a window.
         /// </summary>
         /// <param name="form">Form whose Aero Peek exclusion state is to be set.</param>
         /// <param name="excluded">Set to true to exlude the window from Aero Peek.</param>
@@ -201,22 +212,12 @@ namespace WindowsFormsAero.Dwm {
             if (!OsSupport.IsSevenOrBetter || !OsSupport.IsCompositionEnabled)
                 return;
 
-            if (NativeMethods.DwmSetWindowExcludedFromPeek(form.Handle, excluded) != 0)
-                throw new Exception("Unable to exclude window from Aero Peek.");
+            if (DwmMethods.DwmSetWindowExcludedFromPeek(form.Handle, excluded) != 0)
+                throw new Exception(ExceptionMessages.DwmExcludePeekFail);
         }
 
-        /// <summary>
-        /// Sets a window's state in order to exclude (or include) it in Aero Peek.
-        /// </summary>
-        /// <param name="form">Form whose Aero Peek exclusion state is to be set.</param>
-        /// <param name="excluded">Set to true to exlude the window from Aero Peek.</param>
-        /// <remarks>Is ignored on OSs that do not support Aero Peek.</remarks>
-        [Obsolete("Method name corrected to SetExcludeFromPeek.")]
-        public static void SetExludeFromPeek(Form form, bool excluded) {
-            SetExcludeFromPeek(form, excluded);
-        }
-
-        #endregion
+        #endregion DWM Attributes
 
     }
+
 }

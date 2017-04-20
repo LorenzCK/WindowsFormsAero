@@ -112,13 +112,22 @@
     <value>2.0</value>
   </resheader>
   <resheader name="reader">
-    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <resheader name="writer">
-    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="CommonControlEntryPointNotFound" xml:space="preserve">
-    <value>Common Controls library version 6.0 not loaded. Must run on Vista and must provide a manifest.</value>
+    <value>Common Controls library version 6.0 not loaded. Application must run on Vista and must provide a manifest.</value>
+  </data>
+  <data name="DwmDisallowPeekFail" xml:space="preserve">
+    <value>Unable to disallow Aero Peek for target window.</value>
+  </data>
+  <data name="DwmExcludePeekFail" xml:space="preserve">
+    <value>Unable to exclude window from Aero Peek.</value>
+  </data>
+  <data name="DwmFlip3dFailPolicy" xml:space="preserve">
+    <value>Unable to change window Flip 3D policy.</value>
   </data>
   <data name="DwmNotEnabled" xml:space="preserve">
     <value>Desktop composition is not enabled.</value>
@@ -127,7 +136,10 @@
     <value>Desktop composition is not supported by operating system.</value>
   </data>
   <data name="DwmThumbnailQueryFailure" xml:space="preserve">
-    <value>Unable to get thumbnail's original size.</value>
+    <value>Unable to get thumbnail's window size.</value>
+  </data>
+  <data name="DwmThumbnailSourceInvalid" xml:space="preserve">
+    <value>Thumbnail source rectangle cannot have null or negative size.</value>
   </data>
   <data name="DwmThumbnailUpdateFailure" xml:space="preserve">
     <value>Unable to update thumbnail properties.</value>
@@ -140,6 +152,6 @@
     <comment>{0}: name of the method</comment>
   </data>
   <data name="TaskDialogFailure" xml:space="preserve">
-    <value>Failed to create TaskDialog.</value>
+    <value>Failed to create Task Dialog.</value>
   </data>
 </root>
