@@ -1,0 +1,40 @@
+﻿<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2013/05/nuspec.xsd">
+    <metadata>
+        <id>Windows-Forms-Aero</id>
+
+        <version>3.0.0</version>
+        <releaseNotes>
+Code refactoring and clean up, includes breaking changes from version 2.*.
+Minor memory leaks fixed.
+        </releaseNotes>
+
+        <authors>Marco Minerva, Lorenz Cuno Klopfenstein</authors>
+        <owners>LorenzCK</owners>
+
+        <licenseUrl>http://opensource.org/licenses/MS-RL</licenseUrl>
+        <requireLicenseAcceptance>false</requireLicenseAcceptance>
+
+        <projectUrl>https://github.com/LorenzCK/WindowsFormsAero</projectUrl>
+
+        <!--<iconUrl>http://github.com/contoso/UsefulStuff/nuget_icon.png</iconUrl>-->
+
+        <summary>Windows Forms library with modern common controls for Windows Vista and greater.</summary>
+        <description>
+A Windows Forms library that provides common controls with many of the modern features introduced with Vista and more recent Windows versions.
+Common controls include modern buttons, combo boxes (with cue banner), command links, native-looking list views, progress bars with status, and Windows Explorer-like tree views.
+The library also includes additional modules that wrap functionalities such as TaskDialogs, "glass sheet" forms, text on glass, live thumbnails using the Windows DWM, and so on.
+        </description>
+        
+        <tags>winforms aero windows controls library windowsforms windowsformsaero taskdialog dwm</tags>
+
+        <dependencies>
+            <!-- none -->
+        </dependencies>
+    </metadata>
+
+    <files>
+        <file src="src\WindowsFormsAero\bin\Release\WindowsFormsAero.dll" target="lib\net461" />
+        <file src="src\WindowsFormsAero\bin\Release\WindowsFormsAero.pdb" target="lib\net461" />
+    </files>
+</package>
