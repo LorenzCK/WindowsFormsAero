@@ -8,7 +8,11 @@ WindowsFormsAero was started by [Marco Minerva](https://github.com/marcominerva)
 
 ## Download
 
-Download the [latest release](https://github.com/LorenzCK/WindowsFormsAero/releases/latest).
+Download the [latest release](https://github.com/LorenzCK/WindowsFormsAero/releases/latest) or get it [via NuGet](https://www.nuget.org/packages/Windows-Forms-Aero):
+
+```
+Install-Package Windows-Forms-Aero
+```
 
 ## Contributors
 
