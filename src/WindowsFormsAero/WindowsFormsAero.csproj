@@ -110,9 +110,11 @@
     <Compile Include="Native\Rect.cs" />
     <Compile Include="Native\Size.cs" />
     <Compile Include="Native\StructWrapper.cs" />
+    <Compile Include="Native\SystemErrorCode.cs" />
     <Compile Include="Native\TextShadowType.cs" />
     <Compile Include="Native\TreeViewExtendedStyle.cs" />
     <Compile Include="Native\TreeViewStyle.cs" />
+    <Compile Include="Native\UwpMethods.cs" />
     <Compile Include="Native\WindowExStyles.cs" />
     <Compile Include="Native\WindowLong.cs" />
     <Compile Include="Native\WindowMessage.cs" />
@@ -138,6 +140,7 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="SplitMenuEventArgs.cs" />
+    <Compile Include="StoreAppHelper.cs" />
     <Compile Include="TaskDialog\CommonButtonResult.cs" />
     <Compile Include="TaskDialog\CustomButton.cs" />
     <Compile Include="TaskDialog\EventArgs.cs" />
