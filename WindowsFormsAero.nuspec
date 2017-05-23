@@ -4,7 +4,7 @@
         <id>Windows-Forms-Aero</id>
         <title>WindowsFormsAero (Official)</title>
 
-        <version>3.0.0</version>
+        <version>3.0.1</version>
         <releaseNotes>
 Code refactoring and clean up, includes breaking changes from version 2.*.
 Minor memory leaks fixed.
@@ -37,5 +37,10 @@ The library also includes additional modules that wrap functionalities such as T
     <files>
         <file src="src\WindowsFormsAero\bin\Release\WindowsFormsAero.dll" target="lib\net461" />
         <file src="src\WindowsFormsAero\bin\Release\WindowsFormsAero.pdb" target="lib\net461" />
+        <file src="src\WindowsFormsAero\bin\Release\WindowsFormsAero.xml" target="lib\net461" />
+
+        <file src="src\WindowsFormsAero\bin\Release-NET40\WindowsFormsAero.dll" target="lib\net40" />
+        <file src="src\WindowsFormsAero\bin\Release-NET40\WindowsFormsAero.pdb" target="lib\net40" />
+        <file src="src\WindowsFormsAero\bin\Release-NET40\WindowsFormsAero.xml" target="lib\net40" />
     </files>
 </package>
