@@ -82,7 +82,7 @@ namespace WindowsFormsAero.TaskDialog {
         /// <summary>Navigation message.</summary>
         /// <remarks>The config structure will be marshaled: must be correctly disposed after use.</remarks>
         public Message(NativeMethods.TaskDialogMessages msg, int w, NativeMethods.TaskDialogConfig config) {
-            UnsafeHandle = Marshal.AllocHGlobal(Marshal.SizeOf<NativeMethods.TaskDialogConfig>());
+            UnsafeHandle = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(NativeMethods.TaskDialogConfig)));
             Marshal.StructureToPtr(config, UnsafeHandle, false);
             MessageType = msg;
             WParam = w;
@@ -110,7 +110,7 @@ namespace WindowsFormsAero.TaskDialog {
         public static void Cleanup(Message m) {
             if (m.UnsafeHandle != IntPtr.Zero) {
                 if (m.ContainsTaskDialogConfig) {
-                    Marshal.DestroyStructure<NativeMethods.TaskDialogConfig>(m.UnsafeHandle);
+                    Marshal.DestroyStructure(m.UnsafeHandle, typeof(NativeMethods.TaskDialogConfig));
                 }
                 Marshal.FreeHGlobal(m.UnsafeHandle);
 

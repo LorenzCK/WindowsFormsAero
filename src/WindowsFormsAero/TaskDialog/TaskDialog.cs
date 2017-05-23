@@ -771,7 +771,7 @@ namespace WindowsFormsAero.TaskDialog {
             //Setup configuration structure
             config.hwndParent = owner;
             config.hInstance = IntPtr.Zero; //will never use resources
-            config.cbSize = (uint)Marshal.SizeOf<NativeMethods.TaskDialogConfig>();
+            config.cbSize = (uint)Marshal.SizeOf(typeof(NativeMethods.TaskDialogConfig));
 
             //Icons
             config.hMainIcon = (IntPtr)CommonIcon;
@@ -802,11 +802,11 @@ namespace WindowsFormsAero.TaskDialog {
             //Special Buttons
             if (CustomButtons != null) {
                 config.cButtons = (uint)CustomButtons.Length;
-                config.pButtons = Marshal.AllocHGlobal(Marshal.SizeOf<CustomButton>() * CustomButtons.Length);
+                config.pButtons = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(CustomButton)) * CustomButtons.Length);
 
                 for (int i = 0; i < CustomButtons.Length; ++i) {
                     unsafe {
-                        Marshal.StructureToPtr(CustomButtons[i], (IntPtr)((byte*)config.pButtons + i * Marshal.SizeOf<CustomButton>()), false);
+                        Marshal.StructureToPtr(CustomButtons[i], (IntPtr)((byte*)config.pButtons + i * Marshal.SizeOf(typeof(CustomButton))), false);
                     }
                 }
             }
@@ -819,11 +819,11 @@ namespace WindowsFormsAero.TaskDialog {
             //Radio Buttons
             if (RadioButtons != null) {
                 config.cRadioButtons = (uint)RadioButtons.Length;
-                config.pRadioButtons = Marshal.AllocHGlobal(Marshal.SizeOf<CustomButton>() * RadioButtons.Length);
+                config.pRadioButtons = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(CustomButton)) * RadioButtons.Length);
 
                 for (int i = 0; i < RadioButtons.Length; ++i) {
                     unsafe {
-                        Marshal.StructureToPtr(RadioButtons[i], (IntPtr)((byte*)config.pRadioButtons + i * Marshal.SizeOf<CustomButton>()), false);
+                        Marshal.StructureToPtr(RadioButtons[i], (IntPtr)((byte*)config.pRadioButtons + i * Marshal.SizeOf(typeof(CustomButton))), false);
                     }
                 }
             }
@@ -844,7 +844,7 @@ namespace WindowsFormsAero.TaskDialog {
             if (config.pButtons != IntPtr.Zero) {
                 for (int i = 0; i < config.cButtons; ++i) {
                     unsafe {
-                        Marshal.DestroyStructure((IntPtr)((byte*)config.pButtons + i * Marshal.SizeOf<CustomButton>()), typeof(CustomButton));
+                        Marshal.DestroyStructure((IntPtr)((byte*)config.pButtons + i * Marshal.SizeOf(typeof(CustomButton))), typeof(CustomButton));
                     }
                 }
                 Marshal.FreeHGlobal(config.pButtons);
@@ -854,7 +854,7 @@ namespace WindowsFormsAero.TaskDialog {
             if (config.pRadioButtons != IntPtr.Zero) {
                 for (int i = 0; i < config.cRadioButtons; ++i) {
                     unsafe {
-                        Marshal.DestroyStructure((IntPtr)((byte*)config.pRadioButtons + i * Marshal.SizeOf<CustomButton>()), typeof(CustomButton));
+                        Marshal.DestroyStructure((IntPtr)((byte*)config.pRadioButtons + i * Marshal.SizeOf(typeof(CustomButton))), typeof(CustomButton));
                     }
                 }
                 Marshal.FreeHGlobal(config.pRadioButtons);

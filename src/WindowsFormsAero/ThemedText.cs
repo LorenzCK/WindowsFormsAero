@@ -186,7 +186,7 @@ namespace WindowsFormsAero {
 
             // Create a DIB-Bitmap on which to draw
             var info = new BitmapInfo() {
-                biSize = Marshal.SizeOf<BitmapInfo>(),
+                biSize = Marshal.SizeOf(typeof(BitmapInfo)),
                 biWidth = width,
                 biHeight = -height, // DIB use top-down ref system, thus we set negative height
                 biPlanes = 1,
@@ -202,7 +202,7 @@ namespace WindowsFormsAero {
 
             // Prepare options
             var dttOpts = new DttOpts {
-                dwSize = Marshal.SizeOf<DttOpts>(),
+                dwSize = Marshal.SizeOf(typeof(DttOpts)),
                 dwFlags = DttOptsFlags.DTT_COMPOSITED | DttOptsFlags.DTT_TEXTCOLOR,
                 crText = _win32Color
             };

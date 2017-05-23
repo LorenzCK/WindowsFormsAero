@@ -22,19 +22,19 @@ namespace WindowsFormsAero.Native {
 
         public StructWrapper(T s) {
             Ptr = Marshal.AllocHGlobal(Marshal.SizeOf(s));
-            Marshal.StructureToPtr<T>(s, Ptr, false);
+            Marshal.StructureToPtr(s, Ptr, false);
         }
 
         ~StructWrapper() {
             if (Ptr != IntPtr.Zero) {
-                Marshal.DestroyStructure<T>(Ptr);
+                Marshal.DestroyStructure(Ptr, typeof(T));
                 Marshal.FreeHGlobal(Ptr);
                 Ptr = IntPtr.Zero;
             }
         }
 
         public void Dispose() {
-            Marshal.DestroyStructure<T>(Ptr);
+            Marshal.DestroyStructure(Ptr, typeof(T));
             Marshal.FreeHGlobal(Ptr);
             Ptr = IntPtr.Zero;
 
