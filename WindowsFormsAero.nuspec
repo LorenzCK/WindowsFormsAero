@@ -8,6 +8,7 @@
         <releaseNotes>
 Code refactoring and clean up, includes breaking changes from version 2.*.
 Minor memory leaks fixed.
+Added XML documentation and .NET 4.0 version.
         </releaseNotes>
 
         <authors>Marco Minerva, Lorenz Cuno Klopfenstein</authors>
