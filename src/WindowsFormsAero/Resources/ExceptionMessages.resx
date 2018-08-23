@@ -120,6 +120,9 @@
   <data name="CommonControlEntryPointNotFound" xml:space="preserve">
     <value>Common Controls library version 6.0 not loaded. Application must run on Vista and must provide a manifest.</value>
   </data>
+  <data name="DwmCloakFail" xml:space="preserve">
+    <value>Unable to cloak target window.</value>
+  </data>
   <data name="DwmDisallowPeekFail" xml:space="preserve">
     <value>Unable to disallow Aero Peek for target window.</value>
   </data>
@@ -128,6 +131,9 @@
   </data>
   <data name="DwmFlip3dFailPolicy" xml:space="preserve">
     <value>Unable to change window Flip 3D policy.</value>
+  </data>
+  <data name="DwmFreezeRepresentationFail" xml:space="preserve">
+    <value>Unable to set DWM frozen representation.</value>
   </data>
   <data name="DwmNotEnabled" xml:space="preserve">
     <value>Desktop composition is not enabled.</value>

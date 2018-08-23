@@ -68,6 +68,7 @@
     <Compile Include="CommandLink.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Dwm\CloakedStatus.cs" />
     <Compile Include="Dwm\DwmCompositionException.cs" />
     <Compile Include="Dwm\DwmManager.cs" />
     <Compile Include="Flip3dPolicy.cs" />

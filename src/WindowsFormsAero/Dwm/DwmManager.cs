@@ -55,8 +55,7 @@ namespace WindowsFormsAero.Dwm {
             if (destination == source)
                 throw new DwmCompositionException(ExceptionMessages.DwmWindowMatch);
 
-            IntPtr ret;
-            if (DwmMethods.DwmRegisterThumbnail(destination, source, out ret) == 0) {
+            if (DwmMethods.DwmRegisterThumbnail(destination, source, out IntPtr ret) == 0) {
                 return new Thumbnail(ret);
             }
             else {
@@ -174,17 +173,28 @@ namespace WindowsFormsAero.Dwm {
         /// <summary>
         /// Sets a window's Flip 3D policy.
         /// </summary>
-        /// <param name="form">Form whose policy is to be set.</param>
+        /// <param name="form">Form whose Flip 3D state should be altered.</param>
         /// <param name="policy">Desired Flip 3D policy.</param>
         /// <remarks>Is ignored on OSs that do not support Aero.</remarks>
         public static void SetWindowFlip3dPolicy(Form form, Flip3DPolicy policy) {
+            SetWindowFlip3dPolicy(form.Handle, policy);
+        }
+
+        /// <summary>
+        /// Sets a window's Flip 3D policy.
+        /// </summary>
+        /// <param name="hwnd">Handle of the window whose Flip 3D state should be altered.</param>
+        /// <param name="policy">Desired Flip 3D policy.</param>
+        /// <remarks>Is ignored on OSs that do not support Aero.</remarks>
+        public static void SetWindowFlip3dPolicy(IntPtr hwnd, Flip3DPolicy policy) {
+            // Works only on Vista
             if (!OsSupport.IsVistaOrBetter || OsSupport.IsEightOrBetter)
                 return;
 
             if (!OsSupport.IsCompositionEnabled)
                 return;
 
-            if (DwmMethods.DwmSetWindowFlip3dPolicy(form.Handle, policy) != 0)
+            if (DwmMethods.DwmSetWindowFlip3dPolicy(hwnd, policy) != 0)
                 throw new Exception(ExceptionMessages.DwmFlip3dFailPolicy);
         }
 
@@ -195,10 +205,20 @@ namespace WindowsFormsAero.Dwm {
         /// <param name="disallowPeek">True if Aero Peek should be disabled for the window. False otherwise.</param>
         /// <remarks>Is ignored on OSs that do not support Aero Peek.</remarks>
         public static void SetDisallowPeek(Form form, bool disallowPeek) {
+            SetDisallowPeek(form.Handle, disallowPeek);
+        }
+
+        /// <summary>
+        /// Sets whether Aero Peek is enabled or disabled on a window.
+        /// </summary>
+        /// <param name="hwnd">Handle of the window whose Aero Peek state should be altered.</param>
+        /// <param name="disallowPeek">True if Aero Peek should be disabled for the window. False otherwise.</param>
+        /// <remarks>Is ignored on OSs that do not support Aero Peek.</remarks>
+        public static void SetDisallowPeek(IntPtr hwnd, bool disallowPeek) {
             if (!OsSupport.IsSevenOrBetter || !OsSupport.IsCompositionEnabled)
                 return;
 
-            if (DwmMethods.DwmSetWindowDisallowPeek(form.Handle, disallowPeek) != 0)
+            if (DwmMethods.DwmSetWindowDisallowPeek(hwnd, disallowPeek) != 0)
                 throw new Exception(ExceptionMessages.DwmDisallowPeekFail);
         }
 
@@ -216,8 +236,93 @@ namespace WindowsFormsAero.Dwm {
                 throw new Exception(ExceptionMessages.DwmExcludePeekFail);
         }
 
-        #endregion DWM Attributes
+        /// <summary>
+        /// Gets whether a form is cloaked.
+        /// </summary>
+        /// <remarks>Always returns <see cref="CloakedStatus.Uncloaked"/> on unsupported OSs.</remarks>
+        public static CloakedStatus IsCloaked(Form form) {
+            return IsCloaked(form.Handle);
+        }
 
-    }
+        /// <summary>
+        /// Gets whether a window is cloaked.
+        /// </summary>
+        /// <remarks>Always returns <see cref="CloakedStatus.Uncloaked"/> on unsupported OSs.</remarks>
+        public static CloakedStatus IsCloaked(IntPtr hwnd) {
+            if (!OsSupport.IsEightOrBetter)
+                return CloakedStatus.Uncloaked;
+
+            return DwmMethods.DwmGetWindowCloaked(hwnd);
+        }
+
+        /// <summary>
+        /// Sets a form's cloak status.
+        /// </summary>
+        /// <remarks>Is ignored on OSs that do not support cloaking.</remarks>
+        public static void SetCloak(Form form, bool cloak) {
+            SetCloak(form.Handle, cloak);
+        }
+
+        /// <summary>
+        /// Sets a window's cloak status.
+        /// </summary>
+        /// <remarks>Is ignored on OSs that do not support cloaking.</remarks>
+        public static void SetCloak(IntPtr hwnd, bool cloak) {
+            if (!OsSupport.IsEightOrBetter)
+                return;
+
+            if (DwmMethods.DwmSetWindowCloaked(hwnd, cloak) != 0)
+                throw new Exception(ExceptionMessages.DwmCloakFail);
+        }
+
+        /// <summary>
+        /// Gets whether a window's DWM representation is frozen.
+        /// </summary>
+        /// <param name="hwnd">Handle of the window whose representation status must be returned.</param>
+        /// <returns>Returns false on OSs that do not support frozen DWM representation.</returns>
+        public static bool IsFrozen(IntPtr hwnd) {
+            if (!OsSupport.IsEightOrBetter)
+                return false;
+
+            return DwmMethods.DwmGetWindowFreezeRepresentation(hwnd);
+        }
+
+        /// <summary>
+        /// Gets whether a window's DWM representation is frozen.
+        /// </summary>
+        /// <param name="form">Form whose representation status must be returned.</param>
+        /// <returns>Returns false on OSs that do not support frozen DWM representation.</returns>
+        public static bool IsFrozen(Form form) {
+            return IsFrozen(form.Handle);
+        }
+
+        /// <summary>
+        /// Sets whether a window's DWM representation is frozen.
+        /// </summary>
+        /// <param name="hwnd">Handle of the window whose representation status should be set.</param>
+        /// <param name="freeze">True if the window's DWM representation should be frozen.</param>
+        /// <remarks>Is ignored on OSs that do not support frozen DWM representation.</remarks>
+        public static void SetFrozenRepresentation(IntPtr hwnd, bool freeze) {
+            if (!OsSupport.IsEightOrBetter)
+                return;
+
+            if(DwmMethods.DwmSetWindowFreezeRepresentation(hwnd, freeze) != 0) {
+                throw new Exception(ExceptionMessages.DwmFreezeRepresentationFail);
+            }
+        }
+
+        /// <summary>
+        /// Sets whether a window's DWM representation is frozen.
+        /// </summary>
+        /// <param name="form">Form whose representation status should be set.</param>
+        /// <param name="freeze">True if the window's DWM representation should be frozen.</param>
+        /// <remarks>Is ignored on OSs that do not support frozen DWM representation.</remarks>
+        public static void SetFrozenRepresentation(Form form, bool freeze) {
+            SetFrozenRepresentation(form.Handle, freeze);
+        }
+
+            #endregion DWM Attributes
+
+        }
 
 }
