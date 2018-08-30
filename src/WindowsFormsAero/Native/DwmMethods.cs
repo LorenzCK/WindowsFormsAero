@@ -88,7 +88,7 @@ namespace WindowsFormsAero.Native {
         public static extern int DwmGetWindowAttribute(IntPtr hwnd, DwmWindowAttribute dwAttribute, out int pvAttribute, int cbAttribute);
 
         public static Dwm.CloakedStatus DwmGetWindowCloaked(IntPtr hwnd) {
-            DwmGetWindowAttribute(hwnd, DwmWindowAttribute.DWMWA_CLOAKED, out int retValue, Marshal.SizeOf<int>());
+            DwmGetWindowAttribute(hwnd, DwmWindowAttribute.DWMWA_CLOAKED, out int retValue, Marshal.SizeOf(typeof(int)));
 
             if (!Enum.IsDefined(typeof(Dwm.CloakedStatus), retValue)) {
                 return Dwm.CloakedStatus.Uncloaked;
@@ -98,7 +98,7 @@ namespace WindowsFormsAero.Native {
         }
 
         public static bool DwmGetWindowFreezeRepresentation(IntPtr hwnd) {
-            if(DwmGetWindowAttribute(hwnd, DwmWindowAttribute.DWMWA_CLOAKED, out int retValue, Marshal.SizeOf<int>()) != 0) {
+            if(DwmGetWindowAttribute(hwnd, DwmWindowAttribute.DWMWA_CLOAKED, out int retValue, Marshal.SizeOf(typeof(int))) != 0) {
                 return false;
             }
 
