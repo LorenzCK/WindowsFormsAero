@@ -25,7 +25,7 @@ namespace WindowsFormsAero {
         /// Taken from https://github.com/qmatteoq/DesktopBridgeHelpers by Matteo Pagani.
         /// </remarks>
         public static bool IsRunningAsStoreApp() {
-            if (!OsSupport.IsEightOrBetter) {
+            if (!OsSupport.IsEightOrLater) {
                 return false;
             }
             else {

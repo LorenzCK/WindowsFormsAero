@@ -46,7 +46,7 @@ namespace WindowsFormsAero.Dwm {
         /// <param name="source">The handle (Win32 HWND) of the window that has to be drawn.</param>
         /// <returns>A Thumbnail instance, needed to unregister and to update properties.</returns>
         public static Thumbnail Register(IntPtr destination, IntPtr source) {
-            if (!OsSupport.IsVistaOrBetter)
+            if (!OsSupport.IsVistaOrLater)
                 throw new DwmCompositionException(ExceptionMessages.DwmOsNotSupported);
 
             if (!OsSupport.IsCompositionEnabled)
@@ -72,7 +72,7 @@ namespace WindowsFormsAero.Dwm {
         /// Background of the clint area must be painted in black.
         /// </summary>
         public static void EnableBlurBehind(IntPtr hWnd) {
-            if (!OsSupport.IsVistaOrBetter || !OsSupport.IsCompositionEnabled)
+            if (!OsSupport.IsVistaOrLater || !OsSupport.IsCompositionEnabled)
                 return;
 
             var bb = new DwmBlurBehind {
@@ -96,7 +96,7 @@ namespace WindowsFormsAero.Dwm {
         /// Disables the Aero "Blur Behind" effect.
         /// </summary>
         public static void DisableBlurBehind(IntPtr hWnd) {
-            if (!OsSupport.IsVistaOrBetter || !OsSupport.IsCompositionEnabled)
+            if (!OsSupport.IsVistaOrLater || !OsSupport.IsCompositionEnabled)
                 return;
 
             var bb = new DwmBlurBehind {
@@ -158,7 +158,7 @@ namespace WindowsFormsAero.Dwm {
         }
 
         private static void InternalGlassFrame(IntPtr hWnd, Padding margins) {
-            if (!OsSupport.IsVistaOrBetter || !OsSupport.IsCompositionEnabled)
+            if (!OsSupport.IsVistaOrLater || !OsSupport.IsCompositionEnabled)
                 return;
 
             var nativeMargins = Margins.FromPadding(margins);
@@ -188,7 +188,7 @@ namespace WindowsFormsAero.Dwm {
         /// <remarks>Is ignored on OSs that do not support Aero.</remarks>
         public static void SetWindowFlip3dPolicy(IntPtr hwnd, Flip3DPolicy policy) {
             // Works only on Vista
-            if (!OsSupport.IsVistaOrBetter || OsSupport.IsEightOrBetter)
+            if (!OsSupport.IsVistaOrLater || OsSupport.IsEightOrLater)
                 return;
 
             if (!OsSupport.IsCompositionEnabled)
@@ -215,7 +215,7 @@ namespace WindowsFormsAero.Dwm {
         /// <param name="disallowPeek">True if Aero Peek should be disabled for the window. False otherwise.</param>
         /// <remarks>Is ignored on OSs that do not support Aero Peek.</remarks>
         public static void SetDisallowPeek(IntPtr hwnd, bool disallowPeek) {
-            if (!OsSupport.IsSevenOrBetter || !OsSupport.IsCompositionEnabled)
+            if (!OsSupport.IsSevenOrLater || !OsSupport.IsCompositionEnabled)
                 return;
 
             if (DwmMethods.DwmSetWindowDisallowPeek(hwnd, disallowPeek) != 0)
@@ -229,7 +229,7 @@ namespace WindowsFormsAero.Dwm {
         /// <param name="excluded">Set to true to exlude the window from Aero Peek.</param>
         /// <remarks>Is ignored on OSs that do not support Aero Peek.</remarks>
         public static void SetExcludeFromPeek(Form form, bool excluded) {
-            if (!OsSupport.IsSevenOrBetter || !OsSupport.IsCompositionEnabled)
+            if (!OsSupport.IsSevenOrLater || !OsSupport.IsCompositionEnabled)
                 return;
 
             if (DwmMethods.DwmSetWindowExcludedFromPeek(form.Handle, excluded) != 0)
@@ -249,7 +249,7 @@ namespace WindowsFormsAero.Dwm {
         /// </summary>
         /// <remarks>Always returns <see cref="CloakedStatus.Uncloaked"/> on unsupported OSs.</remarks>
         public static CloakedStatus IsCloaked(IntPtr hwnd) {
-            if (!OsSupport.IsEightOrBetter)
+            if (!OsSupport.IsEightOrLater)
                 return CloakedStatus.Uncloaked;
 
             return DwmMethods.DwmGetWindowCloaked(hwnd);
@@ -268,7 +268,7 @@ namespace WindowsFormsAero.Dwm {
         /// </summary>
         /// <remarks>Is ignored on OSs that do not support cloaking.</remarks>
         public static void SetCloak(IntPtr hwnd, bool cloak) {
-            if (!OsSupport.IsEightOrBetter)
+            if (!OsSupport.IsEightOrLater)
                 return;
 
             if (DwmMethods.DwmSetWindowCloaked(hwnd, cloak) != 0)
@@ -281,7 +281,7 @@ namespace WindowsFormsAero.Dwm {
         /// <param name="hwnd">Handle of the window whose representation status must be returned.</param>
         /// <returns>Returns false on OSs that do not support frozen DWM representation.</returns>
         public static bool IsFrozen(IntPtr hwnd) {
-            if (!OsSupport.IsEightOrBetter)
+            if (!OsSupport.IsEightOrLater)
                 return false;
 
             return DwmMethods.DwmGetWindowFreezeRepresentation(hwnd);
@@ -303,7 +303,7 @@ namespace WindowsFormsAero.Dwm {
         /// <param name="freeze">True if the window's DWM representation should be frozen.</param>
         /// <remarks>Is ignored on OSs that do not support frozen DWM representation.</remarks>
         public static void SetFrozenRepresentation(IntPtr hwnd, bool freeze) {
-            if (!OsSupport.IsEightOrBetter)
+            if (!OsSupport.IsEightOrLater)
                 return;
 
             if(DwmMethods.DwmSetWindowFreezeRepresentation(hwnd, freeze) != 0) {

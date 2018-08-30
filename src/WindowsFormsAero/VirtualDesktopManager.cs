@@ -39,7 +39,7 @@ namespace WindowsFormsAero {
         /// <returns>True if the provided window is on the currently active virtual desktop or if there is only one desktop.</returns>
         /// <remarks>Always returns true on OSs that do not support virtual desktops.</remarks>
         public static bool IsWindowOnCurrentVirtualDesktop(IntPtr topLevelHwnd) {
-            if(!OsSupport.IsTenOrBetter) {
+            if(!OsSupport.IsTenOrLater) {
                 // Only one virtual desktop exists
                 return true;
             }
@@ -64,7 +64,7 @@ namespace WindowsFormsAero {
         /// <returns>Virtual desktop handle hosting the provided top-level window.</returns>
         /// <remarks>Returns default virtual desktop handle on OSs that do not support virtual desktops.</remarks>
         public static VirtualDesktop GetWindowDesktopId(IntPtr topLevelHwnd) {
-            if (!OsSupport.IsTenOrBetter) {
+            if (!OsSupport.IsTenOrLater) {
                 // Default to virtual desktop with empty ID
                 return new VirtualDesktop(Guid.Empty);
             }
@@ -89,7 +89,7 @@ namespace WindowsFormsAero {
         /// <param name="target">Target virtual desktop handle.</param>
         /// <remarks>Is ignored on OSs that do not support virtual desktops.</remarks>
         public static void MoveWindowToDesktop(IntPtr topLevelHwnd, VirtualDesktop target) {
-            if(!OsSupport.IsTenOrBetter) {
+            if(!OsSupport.IsTenOrLater) {
                 return;
             }
 

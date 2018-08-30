@@ -27,7 +27,19 @@ namespace WindowsFormsAero {
         /// Gets whether the running operating system is Windows Vista or a more recent
         /// version.
         /// </summary>
+        [Obsolete("Use IsVistaOrLater")]
         public static bool IsVistaOrBetter {
+            get {
+                return (Environment.OSVersion.Platform == PlatformID.Win32NT &&
+                        Environment.OSVersion.Version.Major >= VistaMajorVersion);
+            }
+        }
+
+        /// <summary>
+        /// Gets whether the running operating system is Windows Vista or a more recent
+        /// version.
+        /// </summary>
+        public static bool IsVistaOrLater {
             get {
                 return (Environment.OSVersion.Platform == PlatformID.Win32NT &&
                         Environment.OSVersion.Version.Major >= VistaMajorVersion);
@@ -38,7 +50,18 @@ namespace WindowsFormsAero {
         /// Gets whether the running operating system is Windows Seven or a more recent
         /// version.
         /// </summary>
+        [Obsolete("Use IsSevenOrLater")]
         public static bool IsSevenOrBetter {
+            get {
+                return IsSevenOrLater;
+            }
+        }
+
+        /// <summary>
+        /// Gets whether the running operating system is Windows Seven or a more recent
+        /// version.
+        /// </summary>
+        public static bool IsSevenOrLater {
             get {
                 if (Environment.OSVersion.Platform != PlatformID.Win32NT)
                     return false;
@@ -57,7 +80,18 @@ namespace WindowsFormsAero {
         /// Gets whether the running operating system is Windows 8 or a more recent
         /// version.
         /// </summary>
+        [Obsolete("Use IsEightOrLater")]
         public static bool IsEightOrBetter {
+            get {
+                return IsEightOrLater;
+            }
+        }
+
+        /// <summary>
+        /// Gets whether the running operating system is Windows 8 or a more recent
+        /// version.
+        /// </summary>
+        public static bool IsEightOrLater {
             get {
                 if (Environment.OSVersion.Platform != PlatformID.Win32NT)
                     return false;
@@ -77,7 +111,18 @@ namespace WindowsFormsAero {
         /// Gets whether the running operating system is Windows 8.1 or a more recent
         /// version.
         /// </summary>
+        [Obsolete("Use IsEightDotOneOrLater")]
         public static bool IsEightDotOneOrBetter {
+            get {
+                return IsEightDotOneOrLater;
+            }
+        }
+
+        /// <summary>
+        /// Gets whether the running operating system is Windows 8.1 or a more recent
+        /// version.
+        /// </summary>
+        public static bool IsEightDotOneOrLater {
             get {
                 if (Environment.OSVersion.Platform != PlatformID.Win32NT)
                     return false;
@@ -97,7 +142,18 @@ namespace WindowsFormsAero {
         /// Gets whether the running operating system is Windows 10 or a more recent
         /// version.
         /// </summary>
+        [Obsolete("Use IsTenOrLater")]
         public static bool IsTenOrBetter {
+            get {
+                return IsTenOrLater;
+            }
+        }
+
+        /// <summary>
+        /// Gets whether the running operating system is Windows 10 or a more recent
+        /// version.
+        /// </summary>
+        public static bool IsTenOrLater {
             get {
                 if (Environment.OSVersion.Platform != PlatformID.Win32NT)
                     return false;
@@ -115,9 +171,20 @@ namespace WindowsFormsAero {
         /// Gets whether the running operating system is Windows 10 "Anniversary Edition"
         /// or a more recent version.
         /// </summary>
+        [Obsolete("Use IsTenAnniversaryEditionOrLater")]
         public static bool IsTenAnniversaryEditionOrBetter {
             get {
-                if (!IsTenOrBetter)
+                return IsTenAnniversaryEditionOrLater;
+            }
+        }
+
+        /// <summary>
+        /// Gets whether the running operating system is Windows 10 "Anniversary Edition"
+        /// or a more recent version.
+        /// </summary>
+        public static bool IsTenAnniversaryEditionOrLater {
+            get {
+                if (!IsTenOrLater)
                     return false;
 
                 return Environment.OSVersion.Version.Build >= TenAnniversaryBuild;
@@ -129,13 +196,11 @@ namespace WindowsFormsAero {
         /// </summary>
         public static bool IsCompositionEnabled {
             get {
-                if (!IsVistaOrBetter)
+                if (!IsVistaOrLater)
                     return false;
 
                 try {
-                    bool enabled;
-                    DwmMethods.DwmIsCompositionEnabled(out enabled);
-
+                    DwmMethods.DwmIsCompositionEnabled(out bool enabled);
                     return enabled;
                 }
                 catch (Exception) {

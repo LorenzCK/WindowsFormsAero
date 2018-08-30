@@ -23,7 +23,7 @@ namespace WindowsFormsAero {
                 CreateParams cp = base.CreateParams;
 
                 //Fix for XP provided by jonpreece (http://windowsformsaero.codeplex.com/Thread/View.aspx?ThreadId=81391)
-                if (OsSupport.IsVistaOrBetter)
+                if (OsSupport.IsVistaOrLater)
                     cp.Style |= (int)(IsDefault ? ButtonStyle.DefaultCommandLink : ButtonStyle.CommandLink);
                 else
                     cp.Style |= (int)(IsDefault ? ButtonStyle.PushButton : ButtonStyle.DefaultPushButton);
