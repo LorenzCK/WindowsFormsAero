@@ -8,11 +8,34 @@ WindowsFormsAero was started by [Marco Minerva](https://github.com/marcominerva)
 
 ## Download
 
-Download the [latest release](https://github.com/LorenzCK/WindowsFormsAero/releases/latest) or get it [via NuGet](https://www.nuget.org/packages/Windows-Forms-Aero):
+[![NuGet](https://img.shields.io/nuget/v/Windows-Forms-Aero.svg)](https://www.nuget.org/packages/Windows-Forms-Aero)
+
+Get the latest version through NuGet:
 
 ```
 Install-Package Windows-Forms-Aero
 ```
+
+## Version history
+
+### 3.1
+
+* Add support for additional DWM window attributes (`DWMWA_CLOAKED` and `DWMWA_FREEZE_REPRESENTATION`).
+* Add support for public Virtual Desktop APIs (Windows&nbsp;10).
+
+### 3.0.1
+
+* Add simple `StoreAppHelper.IsRunningAsStoreApp()` helper to check whether a program is running as a packaged Windows Store app.
+* Add .NET&nbsp;4.0 support.
+* Add XML documentation to NuGet.
+
+### 3.0
+
+First release after migration to GitHub.
+* Breaking changes from v2.*.
+* Major code refactoring and clean up.
+* Minor memory leaks fixed.
+* Progress bars now correctly change state.
 
 ## Contributors
 

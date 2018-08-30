@@ -24,8 +24,8 @@ Added support for public Virtual Desktop APIs and additional DWM attributes.
         <summary>Windows Forms library with modern common controls for Windows Vista and later.</summary>
         <description>
 A Windows Forms library that provides common controls with many of the modern features introduced with Vista and more recent Windows versions.
-Common controls include modern buttons, combo boxes (with cue banner), command links, native-looking list views, progress bars with status, and Windows Explorer-like tree views.
-The library also includes additional modules that wrap functionalities such as TaskDialogs, "glass sheet" forms, text on glass, live thumbnails using the Windows DWM, and so on.
+
+Common controls include modern buttons, combo boxes (with cue banner), command links, native-looking list views, progress bars with status, and Windows Explorer-like tree views. The library also includes additional modules that wrap functionalities such as TaskDialogs, “glass sheet” forms, text on glass, live thumbnails using the Windows DWM, virtual desktop APIs, and so on.
         </description>
         
         <tags>winforms aero windows controls library windowsforms windowsformsaero taskdialog dwm</tags>
