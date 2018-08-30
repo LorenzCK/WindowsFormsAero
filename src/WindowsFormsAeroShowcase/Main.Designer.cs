@@ -234,6 +234,10 @@ namespace WindowsFormsAeroShowcase {
             this.imageList2 = new System.Windows.Forms.ImageList(this.components);
             this.tabPage5 = new System.Windows.Forms.TabPage();
             this.thumbnailViewer1 = new WindowsFormsAero.Dwm.ThumbnailViewer();
+            this.tabPage6 = new System.Windows.Forms.TabPage();
+            this.labelVDesktopId = new System.Windows.Forms.Label();
+            this.labelVDesktopCurrent = new System.Windows.Forms.Label();
+            this.buttonVDesktop = new WindowsFormsAero.Button();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.flowLayoutPanel1.SuspendLayout();
@@ -244,10 +248,11 @@ namespace WindowsFormsAeroShowcase {
             this.tabPage4.SuspendLayout();
             this.flowLayoutPanel3.SuspendLayout();
             this.tabPage5.SuspendLayout();
+            this.tabPage6.SuspendLayout();
             this.SuspendLayout();
-            // 
+            //
             // imageList1
-            // 
+            //
             this.imageList1.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageList1.ImageStream")));
             this.imageList1.TransparentColor = System.Drawing.Color.Transparent;
             this.imageList1.Images.SetKeyName(0, "audiosrv.dll_I00cb_0409.png");
@@ -261,10 +266,10 @@ namespace WindowsFormsAeroShowcase {
             this.imageList1.Images.SetKeyName(8, "digitalx.exe_I0065_0409.png");
             this.imageList1.Images.SetKeyName(9, "hdwwiz.exe_I05dd_0409.png");
             this.imageList1.Images.SetKeyName(10, "setup_wm.exe_I0046_0409.png");
-            // 
+            //
             // themedLabel2
-            // 
-            this.themedLabel2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            //
+            this.themedLabel2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.themedLabel2.Cursor = System.Windows.Forms.Cursors.Default;
             this.themedLabel2.Location = new System.Drawing.Point(0, 698);
@@ -276,10 +281,10 @@ namespace WindowsFormsAeroShowcase {
             this.themedLabel2.Text = "Welcome! Take a look around.";
             this.themedLabel2.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.themedLabel2.TextAlignVertical = System.Windows.Forms.VisualStyles.VerticalAlignment.Center;
-            // 
+            //
             // themedLabel1
-            // 
-            this.themedLabel1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            //
+            this.themedLabel1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.themedLabel1.Font = new System.Drawing.Font("Segoe UI Light", 26F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.themedLabel1.Location = new System.Drawing.Point(0, 0);
@@ -290,26 +295,27 @@ namespace WindowsFormsAeroShowcase {
             this.themedLabel1.TabIndex = 25;
             this.themedLabel1.Text = "Windows Forms Aero";
             this.themedLabel1.TextAlignVertical = System.Windows.Forms.VisualStyles.VerticalAlignment.Center;
-            // 
+            //
             // tabControl1
-            // 
-            this.tabControl1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
+            //
+            this.tabControl1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tabControl1.Controls.Add(this.tabPage1);
             this.tabControl1.Controls.Add(this.tabPage2);
             this.tabControl1.Controls.Add(this.tabPage3);
             this.tabControl1.Controls.Add(this.tabPage4);
             this.tabControl1.Controls.Add(this.tabPage5);
+            this.tabControl1.Controls.Add(this.tabPage6);
             this.tabControl1.Location = new System.Drawing.Point(0, 95);
             this.tabControl1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
             this.tabControl1.Size = new System.Drawing.Size(999, 602);
             this.tabControl1.TabIndex = 0;
-            // 
+            //
             // tabPage1
-            // 
+            //
             this.tabPage1.BackColor = System.Drawing.Color.Transparent;
             this.tabPage1.Controls.Add(this.flowLayoutPanel1);
             this.tabPage1.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -322,9 +328,9 @@ namespace WindowsFormsAeroShowcase {
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Buttons";
             this.tabPage1.UseVisualStyleBackColor = true;
-            // 
+            //
             // flowLayoutPanel1
-            // 
+            //
             this.flowLayoutPanel1.Controls.Add(this.button1);
             this.flowLayoutPanel1.Controls.Add(this.splitButton2);
             this.flowLayoutPanel1.Controls.Add(this.splitButton1);
@@ -339,9 +345,9 @@ namespace WindowsFormsAeroShowcase {
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
             this.flowLayoutPanel1.Size = new System.Drawing.Size(983, 554);
             this.flowLayoutPanel1.TabIndex = 0;
-            // 
+            //
             // button1
-            // 
+            //
             this.button1.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.button1.Location = new System.Drawing.Point(4, 5);
             this.button1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
@@ -351,9 +357,9 @@ namespace WindowsFormsAeroShowcase {
             this.button1.TabIndex = 0;
             this.button1.Text = "Shield Button";
             this.button1.UseVisualStyleBackColor = true;
-            // 
+            //
             // splitButton2
-            // 
+            //
             this.splitButton2.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.splitButton2.Location = new System.Drawing.Point(4, 60);
             this.splitButton2.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
@@ -363,31 +369,31 @@ namespace WindowsFormsAeroShowcase {
             this.splitButton2.TabIndex = 6;
             this.splitButton2.Text = "Split";
             this.splitButton2.UseVisualStyleBackColor = true;
-            // 
+            //
             // contextMenu1
-            // 
+            //
             this.contextMenu1.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
             this.menuItem3,
             this.menuItem1,
             this.menuItem2});
-            // 
+            //
             // menuItem3
-            // 
+            //
             this.menuItem3.Index = 0;
             this.menuItem3.Text = "Automatic";
-            // 
+            //
             // menuItem1
-            // 
+            //
             this.menuItem1.Index = 1;
             this.menuItem1.Text = "Context";
-            // 
+            //
             // menuItem2
-            // 
+            //
             this.menuItem2.Index = 2;
             this.menuItem2.Text = "Menu";
-            // 
+            //
             // splitButton1
-            // 
+            //
             this.splitButton1.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.splitButton1.Location = new System.Drawing.Point(4, 115);
             this.splitButton1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
@@ -398,9 +404,9 @@ namespace WindowsFormsAeroShowcase {
             this.splitButton1.TabIndex = 1;
             this.splitButton1.Text = "Split left";
             this.splitButton1.UseVisualStyleBackColor = true;
-            // 
+            //
             // commandLink1
-            // 
+            //
             this.commandLink1.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.commandLink1.Location = new System.Drawing.Point(4, 170);
             this.commandLink1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
@@ -411,9 +417,9 @@ namespace WindowsFormsAeroShowcase {
             this.commandLink1.Text = "Command Link";
             this.commandLink1.UseVisualStyleBackColor = true;
             this.commandLink1.Click += new System.EventHandler(this.commandLink1_Click);
-            // 
+            //
             // commandLink2
-            // 
+            //
             this.commandLink2.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.commandLink2.Location = new System.Drawing.Point(4, 295);
             this.commandLink2.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
@@ -424,9 +430,9 @@ namespace WindowsFormsAeroShowcase {
             this.commandLink2.TabIndex = 3;
             this.commandLink2.Text = "Shield";
             this.commandLink2.UseVisualStyleBackColor = true;
-            // 
+            //
             // commandLink3
-            // 
+            //
             this.commandLink3.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.commandLink3.Location = new System.Drawing.Point(4, 420);
             this.commandLink3.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
@@ -436,9 +442,9 @@ namespace WindowsFormsAeroShowcase {
             this.commandLink3.Text = "Show Test Vertical Panel";
             this.commandLink3.UseVisualStyleBackColor = true;
             this.commandLink3.Click += new System.EventHandler(this.commandLink3_Click);
-            // 
+            //
             // commandLink4
-            // 
+            //
             this.commandLink4.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.commandLink4.Location = new System.Drawing.Point(402, 5);
             this.commandLink4.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
@@ -448,9 +454,9 @@ namespace WindowsFormsAeroShowcase {
             this.commandLink4.Text = "Show Test Horizontal Panel";
             this.commandLink4.UseVisualStyleBackColor = true;
             this.commandLink4.Click += new System.EventHandler(this.commandLink4_Click);
-            // 
+            //
             // tabPage2
-            // 
+            //
             this.tabPage2.Controls.Add(this.flowLayoutPanel2);
             this.tabPage2.Location = new System.Drawing.Point(4, 34);
             this.tabPage2.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
@@ -460,9 +466,9 @@ namespace WindowsFormsAeroShowcase {
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Progress bars";
             this.tabPage2.UseVisualStyleBackColor = true;
-            // 
+            //
             // flowLayoutPanel2
-            // 
+            //
             this.flowLayoutPanel2.Controls.Add(this.progressBar1);
             this.flowLayoutPanel2.Controls.Add(this.progressBar2);
             this.flowLayoutPanel2.Controls.Add(this.progressBar3);
@@ -474,18 +480,18 @@ namespace WindowsFormsAeroShowcase {
             this.flowLayoutPanel2.Name = "flowLayoutPanel2";
             this.flowLayoutPanel2.Size = new System.Drawing.Size(983, 554);
             this.flowLayoutPanel2.TabIndex = 0;
-            // 
+            //
             // progressBar1
-            // 
+            //
             this.progressBar1.Location = new System.Drawing.Point(4, 5);
             this.progressBar1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.progressBar1.Name = "progressBar1";
             this.progressBar1.Size = new System.Drawing.Size(591, 45);
             this.progressBar1.TabIndex = 0;
             this.progressBar1.Value = 70;
-            // 
+            //
             // progressBar2
-            // 
+            //
             this.progressBar2.Location = new System.Drawing.Point(4, 60);
             this.progressBar2.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.progressBar2.Name = "progressBar2";
@@ -493,9 +499,9 @@ namespace WindowsFormsAeroShowcase {
             this.progressBar2.State = WindowsFormsAero.ProgressBarState.Paused;
             this.progressBar2.TabIndex = 1;
             this.progressBar2.Value = 50;
-            // 
+            //
             // progressBar3
-            // 
+            //
             this.progressBar3.Location = new System.Drawing.Point(4, 115);
             this.progressBar3.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.progressBar3.Name = "progressBar3";
@@ -503,18 +509,18 @@ namespace WindowsFormsAeroShowcase {
             this.progressBar3.State = WindowsFormsAero.ProgressBarState.Error;
             this.progressBar3.TabIndex = 2;
             this.progressBar3.Value = 30;
-            // 
+            //
             // progressBar4
-            // 
+            //
             this.progressBar4.Location = new System.Drawing.Point(4, 170);
             this.progressBar4.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.progressBar4.Name = "progressBar4";
             this.progressBar4.Size = new System.Drawing.Size(591, 45);
             this.progressBar4.Style = System.Windows.Forms.ProgressBarStyle.Marquee;
             this.progressBar4.TabIndex = 3;
-            // 
+            //
             // tabPage3
-            // 
+            //
             this.tabPage3.Controls.Add(this.flowLayoutPanel4);
             this.tabPage3.Location = new System.Drawing.Point(4, 34);
             this.tabPage3.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
@@ -523,9 +529,9 @@ namespace WindowsFormsAeroShowcase {
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "Task Dialogs";
             this.tabPage3.UseVisualStyleBackColor = true;
-            // 
+            //
             // flowLayoutPanel4
-            // 
+            //
             this.flowLayoutPanel4.Controls.Add(this.button2);
             this.flowLayoutPanel4.Controls.Add(this.button11);
             this.flowLayoutPanel4.Controls.Add(this.button3);
@@ -543,9 +549,9 @@ namespace WindowsFormsAeroShowcase {
             this.flowLayoutPanel4.Name = "flowLayoutPanel4";
             this.flowLayoutPanel4.Size = new System.Drawing.Size(991, 564);
             this.flowLayoutPanel4.TabIndex = 0;
-            // 
+            //
             // button2
-            // 
+            //
             this.button2.Location = new System.Drawing.Point(4, 5);
             this.button2.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.button2.Name = "button2";
@@ -554,9 +560,9 @@ namespace WindowsFormsAeroShowcase {
             this.button2.Text = "Information";
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.td_info);
-            // 
+            //
             // button11
-            // 
+            //
             this.button11.Location = new System.Drawing.Point(4, 60);
             this.button11.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.button11.Name = "button11";
@@ -565,9 +571,9 @@ namespace WindowsFormsAeroShowcase {
             this.button11.Text = "Warning";
             this.button11.UseVisualStyleBackColor = true;
             this.button11.Click += new System.EventHandler(this.ts_warning);
-            // 
+            //
             // button3
-            // 
+            //
             this.button3.Location = new System.Drawing.Point(4, 115);
             this.button3.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.button3.Name = "button3";
@@ -576,9 +582,9 @@ namespace WindowsFormsAeroShowcase {
             this.button3.Text = "Error";
             this.button3.UseVisualStyleBackColor = true;
             this.button3.Click += new System.EventHandler(this.td_error);
-            // 
+            //
             // button8
-            // 
+            //
             this.button8.Location = new System.Drawing.Point(4, 170);
             this.button8.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.button8.Name = "button8";
@@ -587,9 +593,9 @@ namespace WindowsFormsAeroShowcase {
             this.button8.Text = "Shield";
             this.button8.UseVisualStyleBackColor = true;
             this.button8.Click += new System.EventHandler(this.td_shield);
-            // 
+            //
             // button4
-            // 
+            //
             this.button4.Location = new System.Drawing.Point(4, 225);
             this.button4.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.button4.Name = "button4";
@@ -598,9 +604,9 @@ namespace WindowsFormsAeroShowcase {
             this.button4.Text = "Security Error";
             this.button4.UseVisualStyleBackColor = true;
             this.button4.Click += new System.EventHandler(this.td_shielderror);
-            // 
+            //
             // button5
-            // 
+            //
             this.button5.Location = new System.Drawing.Point(4, 280);
             this.button5.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.button5.Name = "button5";
@@ -609,9 +615,9 @@ namespace WindowsFormsAeroShowcase {
             this.button5.Text = "Security Success";
             this.button5.UseVisualStyleBackColor = true;
             this.button5.Click += new System.EventHandler(this.td_shieldsuccess);
-            // 
+            //
             // button6
-            // 
+            //
             this.button6.Location = new System.Drawing.Point(4, 335);
             this.button6.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.button6.Name = "button6";
@@ -620,9 +626,9 @@ namespace WindowsFormsAeroShowcase {
             this.button6.Text = "Blue shield";
             this.button6.UseVisualStyleBackColor = true;
             this.button6.Click += new System.EventHandler(this.td_blueshield);
-            // 
+            //
             // button7
-            // 
+            //
             this.button7.Location = new System.Drawing.Point(4, 390);
             this.button7.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.button7.Name = "button7";
@@ -631,9 +637,9 @@ namespace WindowsFormsAeroShowcase {
             this.button7.Text = "Gray shield";
             this.button7.UseVisualStyleBackColor = true;
             this.button7.Click += new System.EventHandler(this.td_grayshield);
-            // 
+            //
             // button10
-            // 
+            //
             this.button10.Location = new System.Drawing.Point(4, 445);
             this.button10.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.button10.Name = "button10";
@@ -642,9 +648,9 @@ namespace WindowsFormsAeroShowcase {
             this.button10.Text = "Complex dialog";
             this.button10.UseVisualStyleBackColor = true;
             this.button10.Click += new System.EventHandler(this.td_complex);
-            // 
+            //
             // button9
-            // 
+            //
             this.button9.Location = new System.Drawing.Point(199, 5);
             this.button9.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.button9.Name = "button9";
@@ -653,9 +659,9 @@ namespace WindowsFormsAeroShowcase {
             this.button9.Text = "Progress bar dialog";
             this.button9.UseVisualStyleBackColor = true;
             this.button9.Click += new System.EventHandler(this.td_progress);
-            // 
+            //
             // tabPage4
-            // 
+            //
             this.tabPage4.Controls.Add(this.flowLayoutPanel3);
             this.tabPage4.Location = new System.Drawing.Point(4, 34);
             this.tabPage4.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
@@ -665,9 +671,9 @@ namespace WindowsFormsAeroShowcase {
             this.tabPage4.TabIndex = 3;
             this.tabPage4.Text = "Data controls";
             this.tabPage4.UseVisualStyleBackColor = true;
-            // 
+            //
             // flowLayoutPanel3
-            // 
+            //
             this.flowLayoutPanel3.AutoScroll = true;
             this.flowLayoutPanel3.Controls.Add(this.textBox1);
             this.flowLayoutPanel3.Controls.Add(this.textBox2);
@@ -684,18 +690,18 @@ namespace WindowsFormsAeroShowcase {
             this.flowLayoutPanel3.Name = "flowLayoutPanel3";
             this.flowLayoutPanel3.Size = new System.Drawing.Size(983, 554);
             this.flowLayoutPanel3.TabIndex = 0;
-            // 
+            //
             // textBox1
-            // 
+            //
             this.textBox1.CueBannerText = "Cue banner";
             this.textBox1.Location = new System.Drawing.Point(4, 5);
             this.textBox1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(324, 31);
             this.textBox1.TabIndex = 0;
-            // 
+            //
             // textBox2
-            // 
+            //
             this.textBox2.CueBannerText = "Cue banner (w/focus)";
             this.textBox2.Location = new System.Drawing.Point(4, 46);
             this.textBox2.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
@@ -703,9 +709,9 @@ namespace WindowsFormsAeroShowcase {
             this.textBox2.ShowCueFocused = true;
             this.textBox2.Size = new System.Drawing.Size(324, 31);
             this.textBox2.TabIndex = 1;
-            // 
+            //
             // comboBox1
-            // 
+            //
             this.comboBox1.CueBannerText = "Cue banner";
             this.comboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBox1.FlatStyle = System.Windows.Forms.FlatStyle.System;
@@ -721,13 +727,13 @@ namespace WindowsFormsAeroShowcase {
             this.comboBox1.Name = "comboBox1";
             this.comboBox1.Size = new System.Drawing.Size(324, 33);
             this.comboBox1.TabIndex = 2;
-            // 
+            //
             // treeView1
-            // 
+            //
             this.treeView1.HotTracking = true;
             this.treeView1.ImageIndex = 0;
             this.treeView1.ImageList = this.imageList1;
-            this.treeView1.Location = new System.Drawing.Point(337, 5);
+            this.treeView1.Location = new System.Drawing.Point(336, 5);
             this.treeView1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.treeView1.Name = "treeView1";
             treeNode1.ImageIndex = 10;
@@ -852,22 +858,22 @@ namespace WindowsFormsAeroShowcase {
             this.treeView1.ShowLines = false;
             this.treeView1.Size = new System.Drawing.Size(201, 446);
             this.treeView1.TabIndex = 4;
-            // 
+            //
             // label1
-            // 
+            //
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(336, 456);
+            this.label1.Location = new System.Drawing.Point(335, 456);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(125, 25);
             this.label1.TabIndex = 7;
             this.label1.Text = "Aero tree view";
-            // 
+            //
             // treeView2
-            // 
+            //
             this.treeView2.HotTracking = true;
             this.treeView2.ImageIndex = 0;
             this.treeView2.ImageList = this.imageList1;
-            this.treeView2.Location = new System.Drawing.Point(546, 5);
+            this.treeView2.Location = new System.Drawing.Point(545, 5);
             this.treeView2.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.treeView2.Name = "treeView2";
             treeNode43.ImageIndex = 10;
@@ -992,18 +998,18 @@ namespace WindowsFormsAeroShowcase {
             this.treeView2.ShowLines = false;
             this.treeView2.Size = new System.Drawing.Size(201, 446);
             this.treeView2.TabIndex = 6;
-            // 
+            //
             // label2
-            // 
+            //
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(545, 456);
+            this.label2.Location = new System.Drawing.Point(544, 456);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(158, 25);
             this.label2.TabIndex = 8;
             this.label2.Text = "Standard tree view";
-            // 
+            //
             // listView1
-            // 
+            //
             this.listView1.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
             listViewItem1,
             listViewItem2,
@@ -1011,16 +1017,16 @@ namespace WindowsFormsAeroShowcase {
             listViewItem4,
             listViewItem5});
             this.listView1.LargeImageList = this.imageList2;
-            this.listView1.Location = new System.Drawing.Point(755, 5);
+            this.listView1.Location = new System.Drawing.Point(754, 5);
             this.listView1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.listView1.Name = "listView1";
             this.listView1.Size = new System.Drawing.Size(423, 379);
             this.listView1.SmallImageList = this.imageList1;
             this.listView1.TabIndex = 5;
             this.listView1.UseCompatibleStateImageBehavior = false;
-            // 
+            //
             // imageList2
-            // 
+            //
             this.imageList2.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageList2.ImageStream")));
             this.imageList2.TransparentColor = System.Drawing.Color.Transparent;
             this.imageList2.Images.SetKeyName(0, "audiosrv.dll_I00cb_0409.png");
@@ -1034,9 +1040,9 @@ namespace WindowsFormsAeroShowcase {
             this.imageList2.Images.SetKeyName(8, "digitalx.exe_I0065_0409.png");
             this.imageList2.Images.SetKeyName(9, "hdwwiz.exe_I05dd_0409.png");
             this.imageList2.Images.SetKeyName(10, "setup_wm.exe_I0046_0409.png");
-            // 
+            //
             // tabPage5
-            // 
+            //
             this.tabPage5.Controls.Add(this.thumbnailViewer1);
             this.tabPage5.Location = new System.Drawing.Point(4, 34);
             this.tabPage5.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
@@ -1046,9 +1052,9 @@ namespace WindowsFormsAeroShowcase {
             this.tabPage5.TabIndex = 4;
             this.tabPage5.Text = "DWM";
             this.tabPage5.UseVisualStyleBackColor = true;
-            // 
+            //
             // thumbnailViewer1
-            // 
+            //
             this.thumbnailViewer1.Location = new System.Drawing.Point(10, 12);
             this.thumbnailViewer1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.thumbnailViewer1.Name = "thumbnailViewer1";
@@ -1057,9 +1063,48 @@ namespace WindowsFormsAeroShowcase {
             this.thumbnailViewer1.TabIndex = 0;
             this.thumbnailViewer1.Text = "thumbnailViewer1";
             this.thumbnailViewer1.ThumbnailAlignment = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
+            //
+            // tabPage6
+            //
+            this.tabPage6.Controls.Add(this.labelVDesktopId);
+            this.tabPage6.Controls.Add(this.labelVDesktopCurrent);
+            this.tabPage6.Controls.Add(this.buttonVDesktop);
+            this.tabPage6.Location = new System.Drawing.Point(4, 34);
+            this.tabPage6.Name = "tabPage6";
+            this.tabPage6.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage6.Size = new System.Drawing.Size(991, 564);
+            this.tabPage6.TabIndex = 5;
+            this.tabPage6.Text = "Virtual desktops";
+            this.tabPage6.UseVisualStyleBackColor = true;
+            //
+            // labelVDesktopId
+            //
+            this.labelVDesktopId.Location = new System.Drawing.Point(8, 103);
+            this.labelVDesktopId.Name = "labelVDesktopId";
+            this.labelVDesktopId.Size = new System.Drawing.Size(618, 45);
+            this.labelVDesktopId.TabIndex = 2;
+            this.labelVDesktopId.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            //
+            // labelVDesktopCurrent
+            //
+            this.labelVDesktopCurrent.Location = new System.Drawing.Point(8, 58);
+            this.labelVDesktopCurrent.Name = "labelVDesktopCurrent";
+            this.labelVDesktopCurrent.Size = new System.Drawing.Size(618, 45);
+            this.labelVDesktopCurrent.TabIndex = 1;
+            this.labelVDesktopCurrent.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            //
+            // buttonVDesktop
+            //
+            this.buttonVDesktop.Location = new System.Drawing.Point(10, 10);
+            this.buttonVDesktop.Name = "buttonVDesktop";
+            this.buttonVDesktop.Size = new System.Drawing.Size(223, 45);
+            this.buttonVDesktop.TabIndex = 0;
+            this.buttonVDesktop.Text = "Refresh in 5 seconds";
+            this.buttonVDesktop.UseVisualStyleBackColor = true;
+            this.buttonVDesktop.Click += new System.EventHandler(this.buttonVDesktop_Click);
+            //
             // Main
-            // 
+            //
             this.AutoScaleDimensions = new System.Drawing.SizeF(144F, 144F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.ClientSize = new System.Drawing.Size(999, 750);
@@ -1083,6 +1128,7 @@ namespace WindowsFormsAeroShowcase {
             this.flowLayoutPanel3.ResumeLayout(false);
             this.flowLayoutPanel3.PerformLayout();
             this.tabPage5.ResumeLayout(false);
+            this.tabPage6.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -1137,5 +1183,9 @@ namespace WindowsFormsAeroShowcase {
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private WindowsFormsAero.SplitButton splitButton2;
+        private System.Windows.Forms.TabPage tabPage6;
+        private System.Windows.Forms.Label labelVDesktopId;
+        private System.Windows.Forms.Label labelVDesktopCurrent;
+        private WindowsFormsAero.Button buttonVDesktop;
     }
 }

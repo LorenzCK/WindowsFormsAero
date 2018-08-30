@@ -102,6 +102,7 @@
     <Compile Include="Native\DwmWindowAttribute.cs" />
     <Compile Include="Native\HitTest.cs" />
     <Compile Include="Native\IntHelpers.cs" />
+    <Compile Include="Native\IVirtualDesktopManager.cs" />
     <Compile Include="Native\ListViewExtendedStyle.cs" />
     <Compile Include="Native\Margins.cs" />
     <Compile Include="Native\Methods.cs" />
@@ -165,6 +166,8 @@
     <Compile Include="VerticalPanel.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="VirtualDesktop.cs" />
+    <Compile Include="VirtualDesktopManager.cs" />
     <Service Include="{94E38DFF-614B-4cbd-B67C-F211BB35CE8B}" />
   </ItemGroup>
   <ItemGroup>
@@ -177,6 +180,7 @@
       <LastGenOutput>Pictures.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

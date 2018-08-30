@@ -1,7 +1,9 @@
 using System;
 using System.ComponentModel;
 using System.Drawing;
+using System.Threading.Tasks;
 using System.Windows.Forms;
+using WindowsFormsAero;
 using WindowsFormsAero.TaskDialog;
 
 namespace WindowsFormsAeroShowcase {
@@ -160,6 +162,28 @@ namespace WindowsFormsAeroShowcase {
             hp.Dispose();
         }
 
+        private async void buttonVDesktop_Click(object sender, EventArgs e) {
+            // Some delay to allow users to switch virtual desktop
+
+            buttonVDesktop.Text = "5...";
+            await Task.Delay(1000);
+            buttonVDesktop.Text = "4...";
+            await Task.Delay(1000);
+            buttonVDesktop.Text = "3...";
+            await Task.Delay(1000);
+            buttonVDesktop.Text = "2...";
+            await Task.Delay(1000);
+            buttonVDesktop.Text = "1...";
+            await Task.Delay(1000);
+
+            buttonVDesktop.Text = "Refresh again?";
+
+            labelVDesktopCurrent.Text = (VirtualDesktopManager.IsWindowOnCurrentVirtualDesktop(this)) ?
+                "Form is on currently active virtual desktop" :
+                "Form is NOT on currently active virtual desktop";
+
+            labelVDesktopId.Text = VirtualDesktopManager.GetWindowDesktopId(this).Id.ToString();
+        }
     }
 
 }
