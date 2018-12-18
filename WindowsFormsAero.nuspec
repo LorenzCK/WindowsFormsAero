@@ -17,7 +17,7 @@ Added support for public Virtual Desktop APIs and additional DWM attributes.
 
         <projectUrl>https://github.com/LorenzCK/WindowsFormsAero</projectUrl>
 
-        <!--<iconUrl>http://github.com/contoso/UsefulStuff/nuget_icon.png</iconUrl>-->
+        <iconUrl>https://raw.githubusercontent.com/LorenzCK/WindowsFormsAero/master/icon/WindowsFormsAero-64.png</iconUrl>
         
         <repository type="git" url="https://github.com/LorenzCK/WindowsFormsAero.git" />
 

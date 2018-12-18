@@ -1,3 +1,5 @@
+![WindowsFormsAero logo](https://raw.githubusercontent.com/LorenzCK/WindowsFormsAero/master/icon/WindowsFormsAero-128.png)
+
 # WindowsFormsAero
 
 WindowsFormsAero is a *Windows Forms* library that provides native controls with many of the modern features introduced with Windows Vista and more recent Windows versions.
@@ -5,6 +7,8 @@ Many controls—such as buttons, command buttons, and textboxes—support the fu
 For instance shield icons, cue banners, and so on.
 
 WindowsFormsAero was started by [Marco Minerva](https://github.com/marcominerva) in January 2007 and was initially hosted on [Codeplex](http://windowsformsaero.codeplex.com).
+
+The WindowsFormsAero icon has been kindly provided by&nbsp;[Enner&nbsp;Pérez](https://github.com/ennerperez).
 
 ## Download
 
@@ -45,3 +49,4 @@ First release after migration to GitHub.
 * Blake Pell
 * multippt
 * Nicholas Kwan
+* [Enner Pérez](https://github.com/ennerperez)
