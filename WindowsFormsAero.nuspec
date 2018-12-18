@@ -12,7 +12,7 @@ Added support for public Virtual Desktop APIs and additional DWM attributes.
         <authors>Marco Minerva, Lorenz Cuno Klopfenstein</authors>
         <owners>LorenzCK</owners>
 
-        <licenseUrl>http://opensource.org/licenses/MS-RL</licenseUrl>
+        <license type="expression">MS-RL</license>
         <requireLicenseAcceptance>false</requireLicenseAcceptance>
 
         <projectUrl>https://github.com/LorenzCK/WindowsFormsAero</projectUrl>
