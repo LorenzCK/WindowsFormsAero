@@ -15,7 +15,7 @@ namespace WindowsFormsAero.TaskDialog {
     /// Stores a Task Dialog message that will be sent to a dialog in order to update its state.
     /// </summary>
     internal struct Message {
-        
+
         /// <summary>Text values that can be updated.</summary>
         public enum DialogElements : int {
             TDE_CONTENT,
@@ -28,8 +28,8 @@ namespace WindowsFormsAero.TaskDialog {
         public Message(NativeMethods.TaskDialogMessages msg, int w, int l) {
             UnsafeHandle = IntPtr.Zero;
             MessageType = msg;
-            WParam = w;
-            LParam = l;
+            WParam = new IntPtr(w);
+            LParam = new IntPtr(l);
             ContainsTaskDialogConfig = false;
         }
 
@@ -37,8 +37,8 @@ namespace WindowsFormsAero.TaskDialog {
         public Message(NativeMethods.TaskDialogMessages msg, int w, bool l) {
             UnsafeHandle = IntPtr.Zero;
             MessageType = msg;
-            WParam = w;
-            LParam = (l) ? 1 : 0;
+            WParam = new IntPtr(w);
+            LParam = new IntPtr(l ? 1 : 0);
             ContainsTaskDialogConfig = false;
         }
 
@@ -46,8 +46,8 @@ namespace WindowsFormsAero.TaskDialog {
         public Message(NativeMethods.TaskDialogMessages msg, bool w, bool l) {
             UnsafeHandle = IntPtr.Zero;
             MessageType = msg;
-            WParam = (w) ? 1 : 0;
-            LParam = (l) ? 1 : 0;
+            WParam = new IntPtr(w ? 1 : 0);
+            LParam = new IntPtr(l ? 1 : 0);
             ContainsTaskDialogConfig = false;
         }
 
@@ -55,8 +55,8 @@ namespace WindowsFormsAero.TaskDialog {
         public Message(NativeMethods.TaskDialogMessages msg, bool w, int l) {
             UnsafeHandle = IntPtr.Zero;
             MessageType = msg;
-            WParam = (w) ? 1 : 0;
-            LParam = l;
+            WParam = new IntPtr(w ? 1 : 0);
+            LParam = new IntPtr(l);
             ContainsTaskDialogConfig = false;
         }
 
@@ -64,8 +64,8 @@ namespace WindowsFormsAero.TaskDialog {
         public Message(NativeMethods.TaskDialogMessages msg, int w, int l_hi, int l_lo) {
             UnsafeHandle = IntPtr.Zero;
             MessageType = msg;
-            WParam = w;
-            LParam = (l_lo << 16) + l_hi;
+            WParam = new IntPtr(w);
+            LParam = new IntPtr((l_lo << 16) + l_hi);
             ContainsTaskDialogConfig = false;
         }
 
@@ -74,8 +74,8 @@ namespace WindowsFormsAero.TaskDialog {
         public Message(NativeMethods.TaskDialogMessages msg, DialogElements element, string s) {
             UnsafeHandle = Marshal.StringToHGlobalUni(s);
             MessageType = msg;
-            WParam = (int)element;
-            LParam = (int)UnsafeHandle;
+            WParam = new IntPtr((int)element);
+            LParam = UnsafeHandle;
             ContainsTaskDialogConfig = false;
         }
 
@@ -85,8 +85,8 @@ namespace WindowsFormsAero.TaskDialog {
             UnsafeHandle = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(NativeMethods.TaskDialogConfig)));
             Marshal.StructureToPtr(config, UnsafeHandle, false);
             MessageType = msg;
-            WParam = w;
-            LParam = UnsafeHandle.ToInt32();
+            WParam = new IntPtr(w);
+            LParam = UnsafeHandle;
             ContainsTaskDialogConfig = true;
         }
 
@@ -94,9 +94,9 @@ namespace WindowsFormsAero.TaskDialog {
 
         public NativeMethods.TaskDialogMessages MessageType;
 
-        public int WParam;
+        public IntPtr WParam;
 
-        public int LParam;
+        public IntPtr LParam;
 
         private bool ContainsTaskDialogConfig;
 
