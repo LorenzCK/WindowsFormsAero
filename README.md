@@ -22,6 +22,12 @@ Install-Package Windows-Forms-Aero
 
 ## Version history
 
+### 3.1.1
+
+* Fixed [bug with TaskDialog APIs on x64](https://github.com/LorenzCK/WindowsFormsAero/issues/5) (thanks Piotr Zięzio).
+* Added icon (thanks Enner Pérez).
+* [Added Source Link](https://github.com/LorenzCK/WindowsFormsAero/issues/6) (thanks MagicAndre1981).
+
 ### 3.1
 
 * Add support for additional DWM window attributes (`DWMWA_CLOAKED` and `DWMWA_FREEZE_REPRESENTATION`).
@@ -50,3 +56,5 @@ First release after migration to GitHub.
 * multippt
 * Nicholas Kwan
 * [Enner Pérez](https://github.com/ennerperez)
+* [Piotr Zięzio](https://github.com/pziezio)
+* [MagicAndre1981](https://github.com/MagicAndre1981)

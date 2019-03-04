@@ -2,11 +2,14 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2013/05/nuspec.xsd">
     <metadata>
         <id>Windows-Forms-Aero</id>
-        <title>WindowsFormsAero (Official)</title>
+        <title>WindowsFormsAero</title>
 
-        <version>3.1</version>
+        <version>3.1.1</version>
         <releaseNotes>
-Added support for public Virtual Desktop APIs and additional DWM attributes.
+Fixed bug with TaskDialog APIs on x64 (thanks Piotr Zięzio).
+Added icon (thanks Enner Pérez).
+Added Source Link (thanks MagicAndre1981).
+Updated NuGet information.
         </releaseNotes>
 
         <authors>Marco Minerva, Lorenz Cuno Klopfenstein</authors>
