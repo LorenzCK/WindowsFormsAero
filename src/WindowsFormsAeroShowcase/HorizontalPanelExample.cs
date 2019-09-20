@@ -14,5 +14,9 @@ namespace WindowsFormsAeroShowcase {
             label6.Text = "Intel(R) Pentium(R) 4 CPU 3.40 Ghz (Quad Core)";
         }
 
+        private void PanelTop_Paint(object sender, System.Windows.Forms.PaintEventArgs e)
+        {
+
+        }
     }
 }

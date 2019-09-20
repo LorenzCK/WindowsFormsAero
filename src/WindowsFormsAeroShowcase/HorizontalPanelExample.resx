@@ -117,6 +117,9 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="label10.Text" xml:space="preserve">
+    <value>Lorem ipsum dolor sit amet consectetur, adipiscing elit porta sollicitudin dui placerat, pellentesque magnis ligula fames. Primis mus placerat condimentum elementum bibendum lacinia, congue nisl vel donec commodo, morbi himenaeos molestie mi quis. Accumsan convallis facilisi ante faucibus conubia porttitor vivamus lobortis et malesuada, quis praesent quam quisque sociosqu auctor dui litora consequat.</value>
+  </data>
   <data name="label8.Text" xml:space="preserve">
     <value>The below is an example of the horizontal panel like is seen in the Computer dialog of Windows 7 and Windows Vista.    This can be used to display additional information for the form that you are currently on.</value>
   </data>
