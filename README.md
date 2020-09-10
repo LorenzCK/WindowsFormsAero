@@ -52,7 +52,7 @@ First release after migration to GitHub.
 * [Marco Minerva](https://github.com/marcominerva)
 * [Lorenz Cuno Klopfenstein](https://github.com/lorenzck)
 * [Julie Koubová](https://github.com/juliekoubova)
-* Blake Pell
+* [Blake Pell](https:github.com/blakepell)
 * multippt
 * Nicholas Kwan
 * [Enner Pérez](https://github.com/ennerperez)
